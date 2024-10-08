@@ -19,11 +19,12 @@ end
 
 bimodule ImplREL (Impl | Impl) =
 
+  /* test1 | test1 : true ==e> Agree result */
   meth test1 (|) : (int|int)
     ensures { Agree result }
   = Var x: int | x: int in
     (havoc x | skip);
-    Havoc x { Agree x };
+    Havoc x { Agree x }; /* TODO: Change to "havocRight" */
     |_ result := x _|;
 
   predicate sameParity(n: int | n: int) =
@@ -90,12 +91,22 @@ bimodule AB (A | B) =
     Var | b: int in
     ( x := n | x := 0 );
     Havoc b { [> b >] = [< x <] - [> x >] };
+
+    Var | xsnap: int in
+    Havoc xsnap { x =:= xsnap };
+
     WhileR b <> 0 do
       invariant { [< x <] >= [> x >] }
       invariant { [> b >] = [< x <] - [> x >] }
-      variant { [> b >] }
+      /* variant { [> b >] } NOTE: Will be written: variant { b } */
+
+      variant { [> xsnap - x >] }
+
       (skip | x := x+1);
       Havoc b { [> b >] = [< x <] - [> x >] }
+
+      Havoc xsnap { x =:= xsnap };
+
     done;
     |_ result := x _|;
 
@@ -202,7 +213,7 @@ module E : EMPTY =
       havoc x;
       o := l + x
     else
-      havoc x;
+      havoc x; /* x := any nat */
       if (x > l) then
         o := x;
       else
@@ -213,6 +224,7 @@ module E : EMPTY =
 
 end
 
+/* FIXME: Does not verify */
 bimodule EREL (E | E) =
 
   meth noninterference2 (h: int, l: int | h: int, l: int) : (int | int)
