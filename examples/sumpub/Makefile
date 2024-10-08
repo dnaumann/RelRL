@@ -6,11 +6,11 @@ POST_PROCESS=../../util/post-process.sed
 
 all: sumpub.mlw
 
-presumpub.mlw: sumpub.rl
+sumpub.mlw: sumpub.rl
 	$(WHYREL) -margin 80 -o $@ $^
 
-sumpub.mlw: presumpub.mlw
-	python3 post-process.py $< > $@
+# sumpub.mlw: presumpub.mlw
+# 	python3 post-process.py $< > $@
 
 ide: sumpub.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) -L $(THEORY_DIR) $<
@@ -32,5 +32,5 @@ smoke: sumpub.mlw
 
 .PHONY: clean
 clean:
-	rm -f presumpub.mlw
+	# rm -f presumpub.mlw
 	rm -f sumpub.mlw

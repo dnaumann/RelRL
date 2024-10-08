@@ -22,4 +22,6 @@ module Sumpub_theory
   function tl (l: intList) : intList
   axiom tl_cons : forall x:int, r:intList. tl (Cons x r) = r
 
+  let function cons (x: int) (r: intList) = Cons x r
+
 end

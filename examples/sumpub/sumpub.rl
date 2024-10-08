@@ -5,6 +5,7 @@ interface LIST =
   extern type intList with default = nil
   extern hd (intList) : int
   extern tl (intList) : intList
+  extern cons (int,intList) : intList
   extern sumList (intList) : int
 
   class Node { value : int; pub : bool; nxt : Node; }
@@ -24,14 +25,12 @@ interface LIST =
       let nxt = n.nxt in
       nxt in rep
 
-  predicate listpub (n:Node, l:intList) = false /* !!! REPLACED !!! */
-/* If listpub could be expressed in our source language:
-
-   inductive listpub : Node -> intList -> PROP =
-   | listpub_nil : listpub null nil
-   | listpub_del : n.pub = false -> listpub n.nxt l -> listpub n l
-   | listpub_pub : n.pub = true  -> listpub n.nxt l -> listpub n (cons n.value l)
-*/
+  inductive listpub (n: Node, l: intList) =
+    | listpub_nil : listpub(null,nil)
+    | listpub_del : forall n: Node, l: intList.
+      n.pub = false -> let nxt = n.nxt in listpub(nxt,l) -> listpub(n,l)
+    | listpub_pub : forall n: Node, l: intList.
+      n.pub = true  -> let nxt = n.nxt in listpub(nxt,l) -> let v = n.value in listpub(n,cons(v,l))
 
    predicate listpubL (xs:List, ls:intList) =
     xs <> null ->
