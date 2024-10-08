@@ -12,6 +12,28 @@ type ident =
   | Id of string
   | Qualid of string * string list
 
+(* FUTURE: Potentially model identifiers as follows: *)
+module Ident : sig
+  type t
+  val name : t -> string
+  val fresh : string -> t
+  val refresh : t -> t
+end = struct
+  type t = Name of string
+         | Gensym of string * int
+
+  let count = ref 0
+
+  let name = function
+    | Name x -> x
+    | Gensym(x,k) -> x ^ Int.to_string k
+
+  let fresh = fun x -> incr count; Gensym(x, !count)
+
+  let refresh = function
+    | Name x | Gensym (x,_) -> incr count; Gensym (x, !count)
+end
+
 type ty =
   | Tctor of ident * ty node list
 

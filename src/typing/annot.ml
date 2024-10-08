@@ -1360,21 +1360,31 @@ let rec all_existify (b: bicommand) : bicommand =
     let modif = Bisplit (Acommand Skip, Acommand (Havoc x)) in
     mk_biseq ([Biassert check; modif; Biassume rf])
   | Bisplit (c1, c2) -> Bisplit (c1, unary_all_existify c2)
-  | Bisync (Call _) -> failwith "Sync'd procedures not supported at the moment."
-  | Bisync ac -> all_existify (Bisplit (Acommand ac, Acommand ac))
+  | Bisync ac -> Bisync ac
   | Bivardecl (l, r, body) -> Bivardecl (l, r, all_existify body)
   | Biseq (cc1, cc2) -> Biseq (all_existify cc1, all_existify cc2)
   | Biif (e, e', cc1, cc2) -> Biif (e, e', all_existify cc1, all_existify cc2)
   | Biif4 (e, e', bs) -> Biif4 (e, e', map_fourwayif all_existify bs)
-  | Biupdate (x, y) -> Biupdate (x, y)
+  | Biupdate (x, y) -> Biupdate (x, y) (* "Link x with y" *)
+  | Biassert rf -> Biassert rf
+  | Biassume rf ->
+    warn "Relational assumptions are not treated soundly except after right havocs.";
+    Biassume rf
   | Biwhile (e, e', (lg, rg), annot, cc) ->
+    (* TODO: Need a way of generating fresh identifiers *)
     failwith "WORKING HERE"
-  | _ -> failwith "NOT IMPLEMENTED"
 
 and unary_all_existify (c: command) : command =
   match c with
+  | Acommand (Call (x,m,args)) ->
+    (* TODO: Add support for forward underapproximation specs *)
+    (* c : P ~e~> Q  is the same as skip|c : [> P >] =e=> [> Q >] *)
+    warn "Calls to procedures on the right are not treated soundly.";
+    Acommand (Call (x,m,args))
   | Acommand ac -> Acommand ac
-  | Assume f -> Assume f
+  | Assume f ->
+    warn "Unary assumptions are not treated soundly.";
+    Assume f
   | Assert f -> Assert f
   | Vardecl (c, m, ty, body) -> Vardecl (c, m, ty, unary_all_existify body)
   | Seq (c1, c2) -> Seq (unary_all_existify c1, unary_all_existify c2)
