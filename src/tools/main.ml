@@ -18,6 +18,7 @@ let no_encap_check       = ref false
 let no_frame_lemma       = ref false
 let no_resolve_for_locEq = ref false
 let no_simplify_effects  = ref false
+let all_exists_mode      = ref false
 
 let output : out_channel option ref = ref None
 
@@ -145,6 +146,9 @@ let args =
 
    "-type-check", Set only_typecheck_flag,
    " Type check program and exit";
+
+   "-all-exists", Set all_exists_mode,
+   " Intepret relational specs as forall-exists";
 
    "-debug", Set debug,
    " Print debug information";
