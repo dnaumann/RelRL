@@ -1183,6 +1183,8 @@ let rec eqv_command c c' = match c, c' with
 (* Functions on biprograms and projections                                    *)
 (* -------------------------------------------------------------------------- *)
 
+let mk_seq xs = foldr1 (fun x y -> Seq(x,y)) xs
+
 let mk_biseq xs = foldr1 (fun x y -> Biseq(x,y)) xs
 
 let map_fourwayif f {then_then; then_else; else_then; else_else} =
@@ -1352,13 +1354,19 @@ let rec projr_bicommand (cc: bicommand) : bicommand =
     let biwframe = ([], eff) in
     Biwhile (false_exp, e, ag, {biwinvariants; biwvariant; biwframe}, cc')
 
+(* Source programs are not allowed to have vars that start with this prefix. *)
+let reserved_id_prefix = "q__"
+
+let mk_fresh_id : string -> ident =
+  let c = ref 0 in
+  fun name -> incr c; Id (reserved_id_prefix ^ name ^ Int.to_string !c)
+
 let rec all_existify (b: bicommand) : bicommand =
   match b with
   | Bihavoc_right (x, rf) ->
     let xbind = {name = x; in_rgn = None; is_non_null = false} in
     let check = Rquant (Exists, ([], [xbind]), rf) in
-    let modif = Bisplit (Acommand Skip, Acommand (Havoc x)) in
-    mk_biseq ([Biassert check; modif; Biassume rf])
+    mk_biseq [Biassert check; Bihavoc_right (x, rf)]
   | Bisplit (c1, c2) -> Bisplit (c1, unary_all_existify c2)
   | Bisync ac -> Bisync ac
   | Bivardecl (l, r, body) -> Bivardecl (l, r, all_existify body)
@@ -1370,9 +1378,51 @@ let rec all_existify (b: bicommand) : bicommand =
   | Biassume rf ->
     warn "Relational assumptions are not treated soundly except after right havocs.";
     Biassume rf
-  | Biwhile (e, e', (lg, rg), annot, cc) ->
-    (* TODO: Need a way of generating fresh identifiers *)
-    failwith "WORKING HERE"
+  | Biwhile (e, e', (lg, rg), annot, cc) when is_false_ag rg ->
+    (* This loop never does right-only iterations so we don't need a variant *)
+    Biwhile (e, e', (lg, rg), annot, all_existify cc)
+  | Biwhile (e, e', (lg, rg), {biwframe; biwinvariants; biwvariant}, cc) ->
+    begin match biwvariant with
+      | None -> raise @@ Invalid_argument "all_existify: expected variant"
+      | Some vnt ->
+        let vfresh = mk_fresh_id "vnt" in
+        let vnt_snap = Evar (vfresh -: vnt.ty) -: vnt.ty in
+        let vnt_snap' = Bivalue (Right vnt_snap -: vnt.ty) -: vnt.ty in
+        let zero = Biconst (Eint 0 -: Tint) -: Tint in
+        let vnt_ge0 = Bibinop (Ast.Leq, zero, vnt_snap') in
+        let vnt_dec = Bibinop (Ast.Lt, vnt, vnt_snap') in
+        let vnt_ini = Rbiexp (Bibinop (Ast.Equal, vnt_snap', vnt) -: Tbool) in
+        let hav_vnt = Bihavoc_right (vfresh -: vnt.ty, vnt_ini) in
+        let bfresh = mk_fresh_id "b" in
+        let b_snap = Evar (bfresh -: Tbool) -: Tbool in
+        let b_snap' = Bivalue (Right b_snap -: Tbool) -: Tbool in
+        let rgt_only : rformula =
+          let lft_e = Rbiexp (Bivalue (Left e -: Tbool) -: Tbool) in
+          let rgt_e' = Rbiexp (Bivalue (Right e' -: Tbool) -: Tbool) in
+          let neg_lft = Rnot (Rconn (Ast.Conj, lft_e, lg)) in
+          let enab_rgt = Rconn (Ast.Conj, rgt_e', rg) in
+          Rconn (Ast.Conj, neg_lft, enab_rgt) in
+        let b_ini = Rconn (Ast.Iff, Rbiexp b_snap', rgt_only) in
+        let hav_b = Bihavoc_right (bfresh -: Tbool, b_ini) in
+        let vnt_ge0_asrt =
+          let vnt_ge0' = Rbiexp (vnt_ge0 -: Tbool) in
+          Biassert (Rconn (Ast.Imp, Rbiexp b_snap', vnt_ge0')) in
+        let vnt_dec_asrt =
+          let vnt_dec' = Rbiexp (vnt_dec -: Tbool) in
+          Biassert (Rconn (Ast.Imp, Rbiexp b_snap', vnt_dec')) in
+        let body = mk_biseq [
+            hav_vnt;
+            hav_b;
+            all_existify cc;
+            vnt_ge0_asrt;
+            vnt_dec_asrt;
+          ] in
+        let cc' =
+          let v = vfresh -: vnt.ty, None, vnt.ty in
+          let b = bfresh -: Tbool, None, Tbool in
+          Bivardecl (None, Some v, Bivardecl (None, Some b, body)) in
+        Biwhile (e, e', (lg, rg), {biwframe; biwinvariants; biwvariant}, cc')
+    end
 
 and unary_all_existify (c: command) : command =
   match c with
@@ -1389,7 +1439,25 @@ and unary_all_existify (c: command) : command =
   | Vardecl (c, m, ty, body) -> Vardecl (c, m, ty, unary_all_existify body)
   | Seq (c1, c2) -> Seq (unary_all_existify c1, unary_all_existify c2)
   | If (e, c1, c2) -> If (e, unary_all_existify c1, unary_all_existify c2)
-  | While (e, spec, c) -> failwith "WORKING HERE"
+  | While (e, spec, c) ->
+    begin match spec.wvariant with
+      | None -> raise @@ Invalid_argument "unary_all_existify: expected variant"
+      | Some vnt ->
+        let vfresh = mk_fresh_id "vnt" in
+        let vnt_snap = Evar (vfresh -: vnt.ty) -: vnt.ty in
+        let zero = Econst (Eint 0 -: Tint) -: Tint in
+        let vnt_ge0 = Ebinop (Ast.Leq, zero, vnt_snap) in
+        let vnt_dec = Ebinop (Ast.Lt, vnt, vnt_snap) in
+        let vnt_ge0_asrt = Assert (Fexp (vnt_ge0 -: Tbool)) in
+        let vnt_dec_asrt = Assert (Fexp (vnt_dec -: Tbool)) in
+        let c' = unary_all_existify c in
+        let c' = mk_seq [c'; vnt_ge0_asrt; vnt_dec_asrt] in
+        While (e, spec, Vardecl(vfresh -: vnt.ty, None, vnt.ty, c'))
+    end
+
+and is_false_ag (f: rformula) = match f with
+  | Rleft Ffalse | Rright Ffalse | Rboth Ffalse -> true
+  | _ -> false
 
 let projl_rformula_simplify (rf: rformula) : formula =
   let f = projl_rformula rf in

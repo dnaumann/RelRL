@@ -366,7 +366,19 @@ let wf_ident loc id : (unit, string) result =
            this version\n"
           (string_of_ident id)
       ) loc in
+  let check_prefix = function
+    | Id name ->
+      if String.starts_with ~prefix:T.reserved_id_prefix name
+      then error_out (
+          Printf.sprintf
+            "%s is a reserved identifier prefix and cannot be \
+             used in source programs\n"
+            T.reserved_id_prefix
+        ) loc
+      else ok ()
+    | Qualid _ -> assert false in
   let* name = get_name id in
+  let* () = check_prefix id in
   if not (List.mem name disallowed_ident_names)
   then ok ()
   else error_out

@@ -189,6 +189,7 @@ let set_debug_flags () =
 let set_behaviour_flags () =
   Encap_check.do_encap_check := not !no_encap_check;
   Translate.gen_frame_lemma := not !no_frame_lemma;
+  Translate.all_exists_mode := !all_exists_mode;
   Pretrans.simplify_effects := not !no_simplify_effects
 
 let main () =
