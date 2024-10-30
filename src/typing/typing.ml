@@ -11,7 +11,7 @@ type ity = T.ity
 let ( -: ) = T.( -: )
 
 let tc_debug = ref false
-
+let all_exists_mode = ref false
 
 (* -------------------------------------------------------------------------- *)
 (* Typing environments                                                        *)
@@ -1752,10 +1752,14 @@ let rec tc_bicommand env cc : (T.bicommand, string) result =
   let { left_tenv = lenv; right_tenv = renv; _ } = env in
   match cc.elt with
   | Bihavoc_right (x, r) ->
-    let* () = wf_ident cc.loc x in
-    let* x_ty = find_in_ctxt env.right_tenv x cc.loc in
-    let* rfrm = tc_rformula env r in
-    ok (T.Bihavoc_right (x -: x_ty, rfrm))
+    if !all_exists_mode then
+      let* () = wf_ident cc.loc x in
+      let* x_ty = find_in_ctxt env.right_tenv x cc.loc in
+      let* rfrm = tc_rformula env r in
+      ok (T.Bihavoc_right (x -: x_ty, rfrm))
+    else
+      let msg = "HavocR only allowed when -all-exists is set" in
+      error_out msg cc.loc
   | Bisplit (lc, rc) ->
     let* lc' = tc_command lenv lc in
     let* rc' = tc_command renv rc in
@@ -1803,6 +1807,16 @@ let rec tc_bicommand env cc : (T.bicommand, string) result =
     let* then_else = tc_bicommand env tf in
     let* else_then = tc_bicommand env ft in
     let* else_else = tc_bicommand env ff in
+    let left = T.projl_simplify in
+    let right = T.projr_simplify in
+    let* () =
+      (* TODO: Use Result monad *)
+      assert (T.eqv_command (left then_then) (left then_else));
+      assert (T.eqv_command (left else_then) (left else_else));
+      assert (T.eqv_command (right then_then) (right else_then));
+      assert (T.eqv_command (right then_else) (right else_else));
+      ok ()
+    in
     ok (T.Biif4 (lguard', rguard', {then_then;then_else;else_then;else_else}))
   | Biwhile (lguard, rguard, align, bwspec, body) ->
     let* lguard', lguard_ty = tc_exp lenv lguard in

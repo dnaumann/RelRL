@@ -1637,6 +1637,41 @@ end
 
 
 (* -------------------------------------------------------------------------- *)
+(* All-exists mode transformations                                            *)
+(* -------------------------------------------------------------------------- *)
+
+(* [2024-10-29] A new design for transformations.  The [Map_penv]
+   module should include functions that map over other types, e.g.,
+   commands, effects, etc. *)
+module Map_penv : sig
+  val map_bicommand : (bicommand -> bicommand) -> penv -> penv
+end = struct
+  let map_bicommand (f: bicommand -> bicommand) penv : penv =
+    let on_bimeth_def mdef =
+      let Bimethod (bimdecl, com) = mdef in
+      Bimethod (bimdecl, Option.map f com) in
+    let on_bimodule_elt = function
+      | Bimdl_mdef m -> Bimdl_mdef (on_bimeth_def m)
+      | elt -> elt in
+    let on_bimodule_def b =
+      {b with bimdl_elts = map on_bimodule_elt b.bimdl_elts} in
+    let walk = function
+      | Relation_module bm ->
+        Relation_module (on_bimodule_def bm)
+      | m -> m in
+    M.map walk penv
+end
+
+module All_existify : sig
+  val all_existify : penv -> penv
+end = struct
+  let all_existify penv =
+    assert !all_exists_mode;
+    if !all_exists_mode then Map_penv.map_bicommand all_existify penv else penv
+end
+
+
+(* -------------------------------------------------------------------------- *)
 (* Driver                                                                     *)
 (* -------------------------------------------------------------------------- *)
 
@@ -1693,4 +1728,8 @@ let process ctbl penv =
 
   (* Add Main_Link module with side conditions of rMLink. *)
   let penv = Derive_linked_module.add_linked_module (ctbl, penv) in
+
+  (* Transform biprograms if in all_exists mode *)
+  let penv = All_existify.all_existify penv in
+
   penv

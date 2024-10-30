@@ -1167,7 +1167,8 @@ let rw_command = reassoc_command % simplify_command % rw_skip
 let rec eqv_command c c' = match c, c' with
   | Acommand ac, Acommand ac' -> ac = ac'
   | Vardecl (id, m, ty, c), Vardecl (id', m', ty', c') ->
-    id = id' && m = m' && ty = ty' && eqv_command c c'
+    eqv_command c c'
+    (* id = id' && m = m' && ty = ty' && eqv_command c c' *)
   | Vardecl (id, m, ty, c), c' -> eqv_command c c'
   | c, Vardecl (id, m, ty, c') -> eqv_command c c'
   | Seq (c1, c2), Seq (c1', c2') -> eqv_command c1 c1' && eqv_command c2 c2'
@@ -1292,15 +1293,15 @@ let rec projl (cc: bicommand) : command =
   | Biif (e, _, cc1, cc2) -> If (e, projl cc1, projl cc2)
   | Biif4 (e, _, {then_then; then_else; else_then; else_else}) ->
     let then1, else1 = projl then_then, projl else_then in
-    let then2, else2 = projl then_else, projl else_else in
-    assert (eqv_command (rw_command then1) (rw_command then2));
-    assert (eqv_command (rw_command else1) (rw_command else2));
+    (* let then2, else2 = projl then_else, projl else_else in *)
+    (* assert (eqv_command (rw_command then1) (rw_command then2)); *)
+    (* assert (eqv_command (rw_command else1) (rw_command else2)); *)
     If (e, then1, else1)
   | Biwhile (e, _, _, {biwinvariants; biwframe=(eff, _); biwvariant}, cc) ->
     let winvariants = map projl_rformula biwinvariants in
     While (e, {winvariants; wframe=eff; wvariant=None}, projl cc)
-  | Biassume rf -> Assume (projl_rformula rf)
-  | Biassert rf -> Assert (projl_rformula rf)
+  | Biassume rf -> (* Assume (projl_rformula rf) *) Acommand Skip
+  | Biassert rf -> (* Assert (projl_rformula rf) *) Acommand Skip
   | Biupdate _ -> Acommand Skip
 
 let rec projr (cc: bicommand) : command =
@@ -1314,15 +1315,15 @@ let rec projr (cc: bicommand) : command =
   | Biif (_, e, cc1, cc2) -> If (e, projr cc1, projr cc2)
   | Biif4 (_, e, {then_then; then_else; else_then; else_else}) ->
     let then1, else1 = projr then_then, projr then_else in
-    let then2, else2 = projr else_then, projr else_else in
-    assert (eqv_command (rw_command then1) (rw_command then2));
-    assert (eqv_command (rw_command else1) (rw_command else2));
+    (* let then2, else2 = projr else_then, projr else_else in *)
+    (* assert (eqv_command (rw_command then1) (rw_command then2)); *)
+    (* assert (eqv_command (rw_command else1) (rw_command else2)); *)
     If (e, then1, else1)
   | Biwhile (_, e, _, {biwinvariants; biwframe=(_,eff)}, cc) ->
     let winvariants = map projr_rformula biwinvariants in
     While (e, {winvariants; wframe=eff; wvariant=None}, projr cc)
-  | Biassume rf -> Assume (projr_rformula rf)
-  | Biassert rf -> Assert (projr_rformula rf)
+  | Biassume rf -> (* Assume (projr_rformula rf) *) Acommand Skip
+  | Biassert rf -> (* Assert (projr_rformula rf) *) Acommand Skip
   | Biupdate _ -> Acommand Skip
 
 let rec projr_bicommand (cc: bicommand) : bicommand =
@@ -1421,6 +1422,7 @@ let rec all_existify (b: bicommand) : bicommand =
           let v = vfresh -: vnt.ty, None, vnt.ty in
           let b = bfresh -: Tbool, None, Tbool in
           Bivardecl (None, Some v, Bivardecl (None, Some b, body)) in
+        let biwvariant = None in
         Biwhile (e, e', (lg, rg), {biwframe; biwinvariants; biwvariant}, cc')
     end
 
@@ -1452,6 +1454,7 @@ and unary_all_existify (c: command) : command =
         let vnt_dec_asrt = Assert (Fexp (vnt_dec -: Tbool)) in
         let c' = unary_all_existify c in
         let c' = mk_seq [c'; vnt_ge0_asrt; vnt_dec_asrt] in
+        let spec = {spec with wvariant = None} in
         While (e, spec, Vardecl(vfresh -: vnt.ty, None, vnt.ty, c'))
     end
 

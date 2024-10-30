@@ -15,7 +15,6 @@ open Build_operators
 
 let trans_debug = ref false
 let gen_frame_lemma = ref true
-let all_exists_mode = ref false
 
 (* -------------------------------------------------------------------------- *)
 (* Auxiliary functions on identifiers                                         *)
@@ -3020,6 +3019,7 @@ let rec compile_rformula bi_ctxt (rf: T.rformula) : Ptree.term =
     let bi_ctxt = {bi_ctxt with left_ctxt = lctxt'; right_ctxt = rctxt'} in
     let rfrm' = compile_rformula bi_ctxt rfrm in
     let inner = lants @ rants @ [rfrm'] in
+    assert (lbinds' @ rbinds' <> []);
     begin match q with
       | Forall -> mk_quant q' (lbinds' @ rbinds') (mk_implies inner)
       | Exists -> mk_quant q' (lbinds' @ rbinds') (mk_conjs inner)
@@ -3242,11 +3242,9 @@ let rec compile_bicommand bi_ctxt (cc: T.bicommand) : Ptree.expr =
   let { left_state = lstate; right_state = rstate } = bi_ctxt in
   match cc with
   | Bihavoc_right (x, rf) ->
-    (* TODO: Not supported in all-all mode *)
-    let xbind = T.{name = x; in_rgn = None; is_non_null = false} in
-    let check = T.Rquant (Exists, ([], [xbind]), rf) in
+    assert !all_exists_mode;    (* Ensured by type checker *)
     let modif = T.Bisplit (Acommand Skip, Acommand (Havoc x)) in
-    let bicom = T.mk_biseq @@ T.[Biassert check; modif; Biassume rf] in
+    let bicom = T.mk_biseq @@ T.[modif; Biassume rf] in
     compile_bicommand bi_ctxt bicom
   | Bisplit (c1, c2) ->
     let c1 = expr_of_command bi_ctxt.left_ctxt lstate c1 in
@@ -3433,14 +3431,11 @@ and compile_sided_biwhile bi_ctxt side guard biwspec cc =
   let glob_invs = mk_globals_ty_invariants bi_ctxt in
   let rinvs = glob_invs @ loc_invs @ eff_invs @ rinvs in
   let rbody = compile_bicommand bi_ctxt cc in
-  let rbody = if side then rbody else begin
-      match biwvariant with
-      | None -> rbody
-      | Some bexp -> expr_decreases_bivariant bi_ctxt bexp rbody
-    end in
   mk_expr (Ewhile (guard, rinvs, [], rbody))
 
 and expr_decreases_bivariant bi_ctxt variant body =
+  (* DEPRECATED! Handled by [Annot.all_existify] *)
+  let () = assert false in
   let vsnap = gen_ident2 bi_ctxt "vsnap" in
   let snapit ini e = mk_expr (Elet (vsnap, false, Expr.RKnone, ini, e)) in
   let e = expr_of_biexp bi_ctxt variant in
@@ -3508,7 +3503,7 @@ and mk_globals_ty_invariants bi_ctxt =
 *)
 and compile_biwhile bi_ctxt lg rg lf rf biwspec cc =
   let T.{biwinvariants; biwframe; biwvariant} = biwspec in
-  let ccl = T.projl cc and ccr = T.projr cc in
+  let ccl = T.projl_simplify cc and ccr = T.projr_simplify cc in
   let lg_term = term_of_exp bi_ctxt.left_ctxt bi_ctxt.left_state lg in
   let rg_term = term_of_exp bi_ctxt.right_ctxt bi_ctxt.right_state rg in
   let lg_exp = expr_of_exp bi_ctxt.left_ctxt bi_ctxt.left_state lg in
@@ -3542,11 +3537,6 @@ and compile_biwhile bi_ctxt lg rg lf rf biwspec cc =
   let bwhr_guard = explain_expr bwhr_guard "Right step" in
   let bwhl_body = expr_of_command bi_ctxt.left_ctxt bi_ctxt.left_state ccl in
   let bwhr_body = expr_of_command bi_ctxt.right_ctxt bi_ctxt.right_state ccr in
-  (* [2024-07-22] Right only steps must decrease the variant 
-     TODO: This should only be done in forall-exists mode *)
-  let bwhr_body = match biwvariant with
-    | None -> bwhr_body
-    | Some v -> expr_decreases_bivariant bi_ctxt v bwhr_body in
   let bwhtt_body = compile_bicommand bi_ctxt cc in
   let bwhr_if = mk_expr (Eif (bwhr_guard, bwhr_body, bwhtt_body)) in
   let bwhl_if = mk_expr (Eif (bwhl_guard, bwhl_body, bwhr_if)) in

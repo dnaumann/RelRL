@@ -222,7 +222,7 @@ let mk_boundary_elt loc desc =
 %token PRIVATE_INV_ANNOT        /* private */
 %token COUPLING_ANNOT           /* coupling */
 
-%token BIHAVOC                  /* Havoc */
+%token BIHAVOC                  /* HavocR */
 %token BIVAR                    /* Var */
 %token BIIF                     /* If */
 %token BIWHILE                  /* While */
