@@ -1,19 +1,16 @@
 WHY3=why3
 WHYREL=../../../bin/whyrel
 WHYREL_STDLIB=../../../stdlib
-FILES=havoc_test.rl
+FILES=havoc_test.rl examples.rl
 
-all: examples.rl havoc_test.mlw
+all: all_exists_tests.mlw
 
-examples.mlw: examples.rl
-	$(WHYREL) -debug -margin 168 -o $@ $^
+all_exists_tests.mlw: $(FILES)
+	$(WHYREL) -debug -all-exists -margin 80 -o $@ $^
 
-havoc_test.mlw: $(FILES)
-	$(WHYREL) -debug -margin 168 -o $@ $^
-
-ide: examples.mlw
+ide: all_exists_tests.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 
 .PHONY: clean
 clean:
-	rm -f havoc_test.mlw
+	rm -f all_exists_tests.mlw
