@@ -1453,7 +1453,7 @@ and unary_all_existify (c: command) : command =
         let vnt_ge0_asrt = Assert (Fexp (vnt_ge0 -: Tbool)) in
         let vnt_dec_asrt = Assert (Fexp (vnt_dec -: Tbool)) in
         let c' = unary_all_existify c in
-        let c' = mk_seq [c'; vnt_ge0_asrt; vnt_dec_asrt] in
+        let c' = mk_seq [vnt_snap; c'; vnt_ge0_asrt; vnt_dec_asrt] in
         let spec = {spec with wvariant = None} in
         While (e, spec, Vardecl(vfresh -: vnt.ty, None, vnt.ty, c'))
     end
