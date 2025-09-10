@@ -1446,14 +1446,15 @@ and unary_all_existify (c: command) : command =
       | None -> raise @@ Invalid_argument "unary_all_existify: expected variant"
       | Some vnt ->
         let vfresh = mk_fresh_id "vnt" in
-        let vnt_snap = Evar (vfresh -: vnt.ty) -: vnt.ty in
+        let vnt_snap = Evar (vfresh -: vnt.ty) -: vnt.ty in 
+        let vnt_snap_stmt = Acommand(Assign (vfresh -: vnt.ty, vnt)) in 
         let zero = Econst (Eint 0 -: Tint) -: Tint in
         let vnt_ge0 = Ebinop (Ast.Leq, zero, vnt_snap) in
         let vnt_dec = Ebinop (Ast.Lt, vnt, vnt_snap) in
         let vnt_ge0_asrt = Assert (Fexp (vnt_ge0 -: Tbool)) in
         let vnt_dec_asrt = Assert (Fexp (vnt_dec -: Tbool)) in
         let c' = unary_all_existify c in
-        let c' = mk_seq [vnt_snap; c'; vnt_ge0_asrt; vnt_dec_asrt] in
+        let c' = mk_seq [vnt_snap_stmt; c'; vnt_ge0_asrt; vnt_dec_asrt] in
         let spec = {spec with wvariant = None} in
         While (e, spec, Vardecl(vfresh -: vnt.ty, None, vnt.ty, c'))
     end
