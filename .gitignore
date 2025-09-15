@@ -21,3 +21,5 @@ _build/
 *.xml.bak
 .gitignore
 bin/whyrel
+
+*notes.md

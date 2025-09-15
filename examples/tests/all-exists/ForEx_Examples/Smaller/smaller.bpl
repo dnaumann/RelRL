@@ -35,7 +35,7 @@
 
 procedure example (time1: int, time2: int) returns (x1: int, x2: int)
     requires (time1 == time2);
-    ensures (x1 <= x2);
+    ensures (x2 <= x1);
 {
     var k1: int; var k2: int;
     var b1: bool; var b2: bool;
@@ -44,8 +44,8 @@ procedure example (time1: int, time2: int) returns (x1: int, x2: int)
 
     x1 := 0; x2 := 0;
 
-    while (time1 > 0 && time2 > 0)
-     invariant (x1 <= x2);
+    while (k1 > 0 && k2 > 0)
+     invariant (x2 <= x1);
     {
         k1 := k1 - 1;
         k2 := k2 - 1;
