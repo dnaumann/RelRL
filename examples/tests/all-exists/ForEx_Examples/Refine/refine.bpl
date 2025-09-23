@@ -52,12 +52,9 @@
 
 
 // Verifies.
-// We added loop invariants and a precondition.  
-// TODO should be valid without pre time1 >= 0 but doesn't verify
 
 procedure example (time1: int, time2: int) returns (c1: int, c2: int, x1: int, x2: int)
     requires (time1 == time2);
-    requires (time1 >= 0);  // added
     ensures (c1 == 0 ==> (c2 == 1 && x1 == x2));
 {
     var k1: int; var k2: int;
@@ -72,7 +69,8 @@ procedure example (time1: int, time2: int) returns (c1: int, c2: int, x1: int, x
         c1 := 0;
         while (k1 > 0)
            invariant (x1 + k1 == time1);
-           invariant 0 <= k1;
+           invariant (time1 <= 0 ==> x1 == 0);
+           invariant (time1 > 0 ==> k1 >= 0);
         {
             k1 := k1 - 1;
             x1 := x1 + 1;
@@ -82,12 +80,17 @@ procedure example (time1: int, time2: int) returns (c1: int, c2: int, x1: int, x
         x1 := 0;
         c1 := 1;
         while (k1 > 0)
+        invariant ((time1 <= 0 ==> x1 == 0));
+        invariant (time1 >= k1);
         {
             k1 := k1 - 1;
             havoc s1;
             x1 := x1 + s1;
+
         }
     }
+
+
     assert (exists v:bool :: v != b1); // added by chk
     havoc b2;
     assume (b2 != b1);
@@ -105,9 +108,11 @@ procedure example (time1: int, time2: int) returns (c1: int, c2: int, x1: int, x
     {
         x2 := 0;
         c2 := 1;
+
         while (k2 > 0)
            invariant (x2 + k2 == time2);
-           invariant 0 <= k2;
+           invariant (time2 <= 0 ==> x2 == 0);
+           invariant (time2 > 0 ==> k2 >= 0);
         {
             k2 := k2 - 1;
             assert (exists v:int :: v == 1); // added by chk 

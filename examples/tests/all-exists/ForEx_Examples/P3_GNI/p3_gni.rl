@@ -35,17 +35,10 @@ bimodule FREL (A | B) =
     Var x: bool | x: bool in
 
     (havoc x | skip);
-    If (x) | (false) then
-        (result := 1 | skip);
-    else
-        (result := 2 | skip);
-    end;
+
+    (if (x) then result := 1 else result := 2 end | skip);
 
     HavocR x { x =:=  x};
     
-    If (false) | (x) then
-        (skip | result := 1);
-    else
-        (skip | result := 2);
-    end;
+    (skip | if (x) then result := 1 else result := 2 end);
 end

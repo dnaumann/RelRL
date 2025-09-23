@@ -1,10 +1,10 @@
 interface I =
-  meth ForEx(n:int) : int
+  meth forEx(n:int) : int
     effects { rd n }
 end
 
 module A : I =
-  meth ForEx (n: int) : int
+  meth forEx (n: int) : int
   =
     var x: int in
     var b: bool in
@@ -23,7 +23,7 @@ module A : I =
 end
 
 module B : I =
-  meth ForEx (n: int) : int
+  meth forEx (n: int) : int
   =
     var x: int in
     var s0: int in  /* 0 suffix to avoid clash with compiler-gend variable s. */
@@ -40,7 +40,7 @@ module B : I =
 end
 
 bimodule FREL (A | B) =
-  meth ForEx (n: int | n: int) : (int | int)
+  meth forEx (n: int | n: int) : (int | int)
     requires { n =:= n }
     ensures  { result =:= result }                 
   = 
@@ -58,9 +58,7 @@ bimodule FREL (A | B) =
         |_ x := x - 1 _|; 
 
         (havoc b | skip);
-        (if (b) then
-            result := result + 1 ;
-        end | skip);
+        (if (b) then result := result + 1  end | skip); 
 
         HavocR s0 { [> s0 >] = [< result <] - [> result >]  };
 

@@ -1,0 +1,192 @@
+--------------------------- Local Context ---------------------------
+
+constant l_s3 : state
+
+constant r_s3 : state
+
+constant pi : t
+
+constant l_time : int
+
+constant r_time : int
+
+Requires1 : okRefperm l_s3 r_s3 pi
+
+Requires : l_time = r_time
+
+constant l_k1 : int
+
+Ensures32 : l_k1 = l_time
+
+constant r_k1 : int
+
+Ensures31 : r_k1 = r_time
+
+constant l_b : bool
+
+H16 : l_b = True
+
+constant l_x1 : int
+
+Ensures30 : l_x1 = 0
+
+constant l_c : int
+
+Ensures29 : l_c = 0
+
+constant l_x : int
+
+constant l_k : int
+
+LoopInvariant7 : hasCellType l_s3 null
+
+LoopInvariant6 : alloc_does_not_shrink l_s3 l_s3
+
+LoopInvariant5 : (l_x + l_k) = l_time
+
+LoopInvariant4 : l_time <= 0 -> l_x = 0
+
+LoopInvariant3 : l_time > 0 -> l_k >= 0
+
+H15 : not l_k > 0
+
+constant r_b1 : bool
+
+Assert : l_b = r_b1
+
+constant r_b : bool
+
+Assume : l_b = r_b
+
+constant o1 : bool
+
+H14 : o1 = False
+
+H13 : not o1 = True
+
+constant o : bool
+
+H12 : o = False
+
+H11 : not o = True
+
+H10 : True = r_b
+
+constant r_x1 : int
+
+Ensures28 : r_x1 = 0
+
+constant r_c : int
+
+Ensures27 : r_c = 0
+
+constant r_x : int
+
+constant r_k : int
+
+LoopInvariant2 : hasCellType l_s3 null
+
+LoopInvariant1 : hasCellType r_s3 null
+
+LoopInvariant : okRefperm l_s3 r_s3 pi
+
+H9 : not r_k > 0
+
+constant l_s2 : state
+
+Ensures26 :
+  forall p:reference.
+   mem p (l_s3.alloct.to_fmap) ->
+   mem p (l_s2.alloct.to_fmap) /\ (l_s3.alloct)[p] = (l_s2.alloct)[p]
+
+constant l_result : reference
+
+Ensures25 : not mem l_result (l_s3.alloct.to_fmap)
+
+Ensures24 : l_s2.alloct.to_fmap = add l_result Cell (l_s3.alloct.to_fmap)
+
+Ensures23 : not l_result = null
+
+Ensures22 : hasCellType l_s2 l_result
+
+Ensures21 : l_s2.c.to_fmap = add l_result 0 (l_s3.c.to_fmap)
+
+Ensures20 : l_s2.x.to_fmap = add l_result 0 (l_s3.x.to_fmap)
+
+constant r_s2 : state
+
+Ensures19 :
+  forall p:reference.
+   mem p (r_s3.alloct.to_fmap) ->
+   mem p (r_s2.alloct.to_fmap) /\ (r_s3.alloct)[p] = (r_s2.alloct)[p]
+
+constant r_result : reference
+
+Ensures18 : not mem r_result (r_s3.alloct.to_fmap)
+
+Ensures17 : r_s2.alloct.to_fmap = add r_result Cell (r_s3.alloct.to_fmap)
+
+Ensures16 : not r_result = null
+
+Ensures15 : hasCellType r_s2 r_result
+
+Ensures14 : r_s2.c.to_fmap = add r_result 0 (r_s3.c.to_fmap)
+
+Ensures13 : r_s2.x.to_fmap = add r_result 0 (r_s3.x.to_fmap)
+
+constant l_s1 : state
+
+H8 : l_s1.alloct = l_s2.alloct
+
+H7 : l_s1.c = l_s2.c
+
+Ensures12 : l_s1.x.to_fmap = add l_result l_x (l_s2.x.to_fmap)
+
+constant r_s1 : state
+
+H6 : r_s1.alloct = r_s2.alloct
+
+H5 : r_s1.c = r_s2.c
+
+Ensures11 : r_s1.x.to_fmap = add r_result r_x (r_s2.x.to_fmap)
+
+constant l_s : state
+
+H4 : l_s.alloct = l_s1.alloct
+
+H3 : l_s.x = l_s1.x
+
+Ensures10 : l_s.c.to_fmap = add l_result l_c (l_s1.c.to_fmap)
+
+constant r_s : state
+
+H2 : r_s.alloct = r_s1.alloct
+
+H1 : r_s.x = r_s1.x
+
+Ensures9 : r_s.c.to_fmap = add r_result r_c (r_s1.c.to_fmap)
+
+Ensures8 : hasCellType l_s l_result
+
+Ensures7 : hasCellType r_s r_result
+
+Ensures6 : alloc_does_not_shrink l_s3 l_s
+
+Ensures5 : wr_frame_c l_s3 l_s emptyRgn
+
+Ensures4 : wr_frame_x l_s3 l_s emptyRgn
+
+Ensures3 : alloc_does_not_shrink r_s3 r_s
+
+Ensures2 : wr_frame_c r_s3 r_s emptyRgn
+
+Ensures1 : wr_frame_x r_s3 r_s emptyRgn
+
+Ensures : okRefperm l_s r_s pi
+
+H : (l_s.c)[l_result] = 0
+
+------------------------------- Goal --------------------------------
+
+goal refine'vc : (r_s.c)[r_result] = 1
+

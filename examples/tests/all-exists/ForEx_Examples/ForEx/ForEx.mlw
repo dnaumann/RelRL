@@ -37,7 +37,7 @@ module I
   use prelude.Prelude
   use State
   
-  val ForEx (s: state) (n: int) : int
+  val forEx (s: state) (n: int) : int
 end
 
 module A
@@ -45,7 +45,7 @@ module A
   use State
   use I
   
-  let ForEx (s : state) (n : int) : int
+  let forEx (s : state) (n : int) : int
     diverges
   = label INIT in
       let result = ref 0 in
@@ -70,7 +70,7 @@ module B
   use State
   use I
   
-  let ForEx (s : state) (n : int) : int
+  let forEx (s : state) (n : int) : int
     diverges
   = label INIT in
       let result = ref 0 in
@@ -94,7 +94,7 @@ module FREL
   use A
   use B
   
-  let ForEx (l_s : state) (r_s : state) (pi : PreRefperm.t) (l_n : int) (r_n : int) : 
+  let forEx (l_s : state) (r_s : state) (pi : PreRefperm.t) (l_n : int) (r_n : int) : 
     (int, int)
     requires { okRefperm l_s r_s pi }
     requires { (l_n = r_n) }
@@ -142,7 +142,7 @@ module FREL_biinterface
   use A
   use B
   
-  val ForEx (l_s: state) (r_s: state) (pi: PreRefperm.t) (l_n: int) (r_n: int) : 
+  val forEx (l_s: state) (r_s: state) (pi: PreRefperm.t) (l_n: int) (r_n: int) : 
     (int, int)
     requires { okRefperm l_s r_s pi }
     requires { (l_n = r_n) }
