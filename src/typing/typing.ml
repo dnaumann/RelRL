@@ -1651,7 +1651,9 @@ let rec tc_rformula (env: bi_tenv) (rf: rformula node)
     let* bexp', bexp_ty = tc_biexp env bexp in
     let* () = expect_ty bexp.loc bexp_ty T.Tbool in
     ok (T.Rbiexp bexp')
-  | Rnot rf -> tc_rformula env rf
+  | Rnot rf -> 
+      let* rf' = tc_rformula env rf in
+      ok (T.Rnot rf')
   | Rconn (c, rf1, rf2) ->
     let* rf1' = tc_rformula env rf1 in
     let* rf2' = tc_rformula env rf2 in
