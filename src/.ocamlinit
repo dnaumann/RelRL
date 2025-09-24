@@ -19,3 +19,4 @@
 #mod_use "../_build/src/util/why3util.ml";;
 #mod_use "../_build/src/translate/why3constants.ml";;
 #mod_use "../_build/src/translate/translate.ml";;
+#mod_use "../_build/src/tools/main.ml";;

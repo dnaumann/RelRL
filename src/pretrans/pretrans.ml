@@ -1667,7 +1667,7 @@ module All_existify : sig
 end = struct
   let all_existify penv =
     assert !all_exists_mode;
-    if !all_exists_mode then Map_penv.map_bicommand all_existify penv else penv
+    if !all_exists_mode then Map_penv.map_bicommand Pretty2.all_existify penv else penv
 end
 
 

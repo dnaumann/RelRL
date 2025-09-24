@@ -57,13 +57,6 @@ let parse_file filename =
   let lexbuf = Lexing.from_string ~with_positions:true contents in
   lexbuf.lex_curr_p <- { lexbuf.lex_curr_p with pos_fname = filename };
   parse_with_error lexbuf
-
-let parse_and_type_check filename =
-  let program = parse_file filename in
-  match tc_program program with
-  | Ok _ -> ()
-  | Error msg -> Printf.fprintf stderr "%s\n" msg
-
 let parse_program files =
   let progs = concat_map parse_file files in
   let main_interface = no_loc the_main_interface in
@@ -84,6 +77,12 @@ let typecheck_program prog =
   match tc_program prog with
   | Ok (penv, ctbl) -> (penv, ctbl)
   | Error msg -> Printf.fprintf stderr "%s\n" msg; exit 1
+
+(* let print_ptree ptree =
+    match ptree with
+   | _ -> 
+      Format.printf ": %a\n"  Pretty.pp_ident mdl Pretty (eff_of_bnd bnd) *)
+
 
 let run () =
   let program = parse_program !program_files in

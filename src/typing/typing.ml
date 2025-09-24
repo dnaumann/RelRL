@@ -1752,6 +1752,11 @@ let rec tc_bicommand env cc : (T.bicommand, string) result =
   let { left_tenv = lenv; right_tenv = renv; _ } = env in
   match cc.elt with
   | Bihavoc_right (x, r) ->
+        Printf.fprintf stderr "<< tc_bicommand>>\n";
+    let fmt = Format.formatter_of_out_channel stderr in
+    Pretty2.pp_bicommand fmt cc.elt;
+    Format.pp_print_flush fmt ();
+    Printf.fprintf stderr "\n<<tc_bicommand END>>\n";
     if !all_exists_mode then
       let* () = wf_ident cc.loc x in
       let* x_ty = find_in_ctxt env.right_tenv x cc.loc in

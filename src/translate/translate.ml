@@ -4171,7 +4171,7 @@ let compile_penv ctxt penv =
     ) [] deps in
   if !trans_debug then begin
     Printf.fprintf stderr "Compilation sequence: ";
-    List.iter (Printf.fprintf stderr "%s " % string_of_ident % fst) modules;
+    List.iter (fun (name, _) -> Printf.fprintf stderr "%s " (string_of_ident name)) modules;
     Printf.fprintf stderr "\n";
   end;
   let loop name frag mlw_map bi_ctxt = match frag with
@@ -4182,6 +4182,7 @@ let compile_penv ctxt penv =
       let ctxt = {ctxt with current_mdl = Some name} in
       compile_module mlw_map ctxt m, bi_ctxt
     | Uncompiled (T.Relation_module m) ->
+      Pretty2.pp_bimodule_def (Format.formatter_of_out_channel stderr) m;
       let left_mdl, right_mdl = m.bimdl_left_impl, m.bimdl_right_impl in
       let current_bimdl = Some (left_mdl, right_mdl, m.bimdl_name) in
       let bi_ctxt = {bi_ctxt with current_bimdl} in
