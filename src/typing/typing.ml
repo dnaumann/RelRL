@@ -1651,7 +1651,9 @@ let rec tc_rformula (env: bi_tenv) (rf: rformula node)
     let* bexp', bexp_ty = tc_biexp env bexp in
     let* () = expect_ty bexp.loc bexp_ty T.Tbool in
     ok (T.Rbiexp bexp')
-  | Rnot rf -> tc_rformula env rf
+  | Rnot rf -> 
+    let* rf' = tc_rformula env rf in
+    ok (T.Rnot rf')
   | Rconn (c, rf1, rf2) ->
     let* rf1' = tc_rformula env rf1 in
     let* rf2' = tc_rformula env rf2 in
@@ -1752,11 +1754,6 @@ let rec tc_bicommand env cc : (T.bicommand, string) result =
   let { left_tenv = lenv; right_tenv = renv; _ } = env in
   match cc.elt with
   | Bihavoc_right (x, r) ->
-        Printf.fprintf stderr "<< tc_bicommand>>\n";
-    let fmt = Format.formatter_of_out_channel stderr in
-    Pretty2.pp_bicommand fmt cc.elt;
-    Format.pp_print_flush fmt ();
-    Printf.fprintf stderr "\n<<tc_bicommand END>>\n";
     if !all_exists_mode then
       let* () = wf_ident cc.loc x in
       let* x_ty = find_in_ctxt env.right_tenv x cc.loc in
