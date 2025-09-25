@@ -146,10 +146,25 @@ module A
     ensures { alloc_does_not_shrink (old s) s }
 end
 
+module B
+  use prelude.Prelude
+  use State
+  use REFINE
+  
+  val refine (s: state) (time: int) : reference
+    writes { s.alloct }
+    ensures { (result <> null) }
+    
+    ensures { hasCellType s result }
+    
+    ensures { alloc_does_not_shrink (old s) s }
+end
+
 module Birefine
   use prelude.Prelude
   use State
   use A
+  use B
   
   let refine (l_s : state) (r_s : state) (pi : PreRefperm.t) (l_time : int) (r_time : int) : 
     (reference, reference)
@@ -268,6 +283,7 @@ module Birefine
                 (true /\ true) };
             (r_k := ([@expl:k := k - 1] ((! r_k) - 1)));
             (r_x := ([@expl:x := x + 1] ((! r_x) + 1)));
+            (r_x := ([@expl:x := x + 1] ((! r_x) + 1)));
             assert { (! r_q__b8) -> (0 <= (! r_q__vnt7)) };
             assert { (! r_q__b8) -> ((! r_k) < (! r_q__vnt7)) }
           done)
@@ -300,10 +316,10 @@ module Birefine
                    /\
                    (true /\ true) };
                (r_k := ([@expl:k := k - 1] ((! r_k) - 1)));
-               assert { exists r_s0 : int. r_s0 = 1 };
+               assert { exists r_s0 : int. r_s0 = 0 };
                (r_s0 := ([@expl:havoc s0] (any int)));
-               assume { (! r_s0) = 1 };
-               (r_x := ([@expl:x := x + s0] ((! r_x) + (! r_s0))));
+               assume { (! r_s0) = 0 };
+               (r_x := ([@expl:x := x + s0 + 1] (((! r_x) + (! r_s0)) + 1)));
                assert { (! r_q__b6) -> (0 <= (! r_q__vnt5)) };
                assert { (! r_q__b6) -> ((! r_k) < (! r_q__vnt5)) }
              done)
@@ -333,6 +349,7 @@ module Birefine
                       /\
                       (true /\ true) };
                   (r_k := ([@expl:k := k - 1] ((! r_k) - 1)));
+                  (r_x := ([@expl:x := x + 1] ((! r_x) + 1)));
                   (r_x := ([@expl:x := x + 1] ((! r_x) + 1)));
                   assert { (! r_q__b4) -> (0 <= (! r_q__vnt3)) };
                   assert { (! r_q__b4) -> ((! r_k) < (! r_q__vnt3)) }
@@ -365,10 +382,10 @@ module Birefine
                       /\
                       (true /\ true) };
                   (r_k := ([@expl:k := k - 1] ((! r_k) - 1)));
-                  assert { exists r_s0 : int. r_s0 = 1 };
+                  assert { exists r_s0 : int. r_s0 = 0 };
                   (r_s0 := ([@expl:havoc s0] (any int)));
-                  assume { (! r_s0) = 1 };
-                  (r_x := ([@expl:x := x + s0] ((! r_x) + (! r_s0))));
+                  assume { (! r_s0) = 0 };
+                  (r_x := ([@expl:x := x + s0 + 1] (((! r_x) + (! r_s0)) + 1)));
                   assert { (! r_q__b2) -> (0 <= (! r_q__vnt1)) };
                   assert { (! r_q__b2) -> ((! r_k) < (! r_q__vnt1)) }
                 done))));
@@ -385,6 +402,7 @@ module Birefine_biinterface
   use prelude.Prelude
   use State
   use A
+  use B
   
   val refine (l_s: state) (r_s: state) (pi: PreRefperm.t) (l_time: int) (r_time: int) : 
     (reference, reference)

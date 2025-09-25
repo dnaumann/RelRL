@@ -3,7 +3,7 @@ interface I =
   class Cell {sum: int; b: int; }
   
   meth itzhaky (a: int array, n: int) : Cell
-    effects { rd a; rd n; rw alloc; rw {alloc}`any }
+    effects { rd a; rd n; rw alloc }
 end
 
 module A : I =
@@ -16,58 +16,61 @@ end
 
 bimodule FREL (A | A) =
   meth itzhaky  (a: int array, n: int | a: int array, n: int) : (Cell | Cell)
-    requires { a =:= a}
-    requires { n =:= n }
-    ensures  {[> result.b < 0 |>}
-    ensures  {let sum | sum = result.sum | result.sum in sum =:= sum}            
+    requires { a =:= a /\ n =:= n }
+    ensures  {[> let x = result.b in x <  0 |> /\ let sum | sum = result.sum | result.sum in sum =:= sum}            
   = 
     Var i: int | i: int in
     Var y: int | y: int in
     Var b: int | b: int in 
     Var sum: int | sum : int in
+    Var temp: int | temp: int in
 
     |_ sum := 0 _|;
     (havoc b | skip);
-    havocR b { <| b < 0 <] };
+    HavocR b { <| b < 0 <] };
 
     If4 (b > 0) | (b > 0) 
-    thenTHen
+    thenThen
+      |_ i := 0 _|;
+
       WhileL (i < n - 1) do variant { [< i <] }
-         (havoc y | skip);
-         (sum := sum + a[i] | skip);
+         (temp := get(a, i) | skip);
+         (sum := sum + temp | skip);
          (i := i + 1 | skip);
       done;
       WhileR (i < n - 1) do variant { [> i >] }
-         (skip | havoc y);
-         (skip | sum := sum + a[i] | skip);
-         (skip | i := i + 1 | skip);
+         (skip | temp := get(a, i));
+         (skip | sum := sum + temp);
+         (skip | i := i + 1);
       done;
     thenElse
-      |_ i := 0 _|;
+      (i := 0 | i := 1);
+
       While (i < n - 1) | (i < n)  . <| false <] | [> false |> do
         invariant { <| i < n - 1 <] <-> [> i < n |>} 
         invariant {i + 1 =:= i}
         invariant {sum =:= sum} 
-
-        (sum := sum + a[i] | skip);
-        (i := i + 1 | skip)
-
-        HavocR y { [> y |> = [> -a[i]  - sum |> + <| sum <] };
-        (skip | sum := sum + a[i] + y);
+        (temp := get(a, i) | skip);
+        (sum := sum + temp | skip);
+        (i := i + 1 | skip);
+        (skip | temp := get(a, i) );
+        HavocR y { [> y >] = [> -temp  - sum >] + [< sum <] };
+        (skip | temp := get(a, i) );
+        (skip | sum := sum + temp + y);
         (skip | i := i + 1);
       done;
     
     elseThen
-      (i := 1 | skip);
-      whileL (i < n) do variant { [< i <] }
+      (i := 1 | i := 0);
+      WhileL (i < n) do 
         (havoc y | skip);
-        (sum := sum + a[i] + y | skip);
+        (temp := get(a, i) | skip);
+        (sum := sum + temp + y | skip);
         (i := i + 1 | skip);
       done;
-      (skip | i := 0);
-      whileR (i < n - 1) do variant { [> i >] }
-        (skip | havoc y);
-        (skip | sum := sum + a[i] + y);
+      WhileR (i < n - 1) do variant { [> i >] }
+        (skip | temp := get(a, i));
+        (skip | sum := sum + temp);
         (skip | i := i + 1);
       done;
     
@@ -80,12 +83,14 @@ bimodule FREL (A | A) =
         invariant {sum =:= sum} 
 
         (havoc y | skip);
-        (sum := sum + a[i] + y | skip);
+        (temp := get(a, i) | skip);
+        (sum := sum + temp + y | skip);
 
         (i := i + 1 | skip);
-
-        HavocR y { [> y |> = [> -a[i]  - sum |> + <| sum <] };
-        (skip | sum := sum + a[i] + y);
+          (skip | temp := get(a, i) );
+        HavocR y { [> y >] = [> -temp  - sum >] + [< sum <] };
+        (skip | temp := get(a, i));
+        (skip | sum := sum + temp + y);
         (skip | i := i + 1);
       done;
     end;

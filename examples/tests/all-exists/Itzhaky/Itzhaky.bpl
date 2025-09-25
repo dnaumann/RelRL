@@ -39,7 +39,7 @@ procedure p (A1: [int] int, A2: [int] int, n1: int, n2: int)
     while (i1 < n1 - 1)
     { sum1 := sum1 + A1[i1]; i1 := i1 + 1; }
     i2 := 0;
-    while (i2 < n2 - 2)
+    while (i2 < n2 - 1)
     { sum2 := sum2 + A2[i2]; i2 := i2 + 1; }
   } else {
   if (b1 > 0 && b2 <= 0) { 
@@ -64,7 +64,7 @@ procedure p (A1: [int] int, A2: [int] int, n1: int, n2: int)
     while (i1 < n1)
     { havoc y1; sum1 := sum1 + A1[i1] + y1; i1 := i1 + 1; } 
     i2 := 0;
-    while (i2 < n2 - 2)
+    while (i2 < n2 - 1)
     { sum2 := sum2 + A2[i2]; i2 := i2 + 1; }
   } else { // (b1 <= 0 && b2 < 0) 
     i1 := 1; i2 := 1;
