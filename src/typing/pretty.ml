@@ -1,5 +1,3 @@
- (** pretty.ml -- pretty printer for annotated syntax trees *)
-
 open Annot
 open Format
 
@@ -140,13 +138,6 @@ let pp_qbinders outf qbinds =
     | None -> fprintf out "@[%a:%a@]" pp_ident x pp_t t
     | Some e -> fprintf outf "@[%a:%a@ in@ %a@]" pp_ident x pp_t t pp_exp e in
   pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@,") pp_qbind outf qbinds
-
-  (* let pp_qbind out (x, eopt) =
-   *   let (x, t) = x.node, x.ty in
-   *   match eopt with
-   *   | None -> fprintf out "@[%a:%a@]" pp_ident x pp_ity t
-   *   | Some e -> fprintf out "@[%a:%a@ in@ %a@]" pp_ident x pp_ity t pp_exp e in
-   * pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@,") pp_qbind outf qbinds *)
 
 let rec pp_formula' k outf f =
   match f with
@@ -368,3 +359,227 @@ and pp_command outf c =
   fprintf outf "@[<v 2>%a@]" pp_command' c;
   set_margin old_margin; set_max_indent old_indent
 
+let pp_meth_param_info outf {param_name; param_modifier; param_ty; is_non_null} =
+  fprintf outf "@[%a@ %a:@ %a@]"
+    pp_modifier_opt param_modifier
+    pp_ident param_name.node
+    (pp_ity_non_null is_non_null) param_ty  
+
+let pp_spec outf spec =
+  List.iter (function
+      | Precond f ->
+        fprintf outf "@[requires@ {@[<h 2>@ %a@ @]}@\n@]" pp_formula f
+      | Postcond f ->
+        fprintf outf "@[ensures@ {@[<h 2>@ %a@ @]}@\n@]" pp_formula f
+      | Effects eff ->
+        fprintf outf "@[effects@ {@[<hFormat 2>@ %a@ @]}@\n@]" pp_effect eff
+    ) spec
+
+
+let pp_meth_decl outf {meth_name; params; result_ty; result_is_non_null;
+                        meth_spec; can_diverge} =
+  fprintf outf "@[<v 2>method@ %a(@[%a@])@ :@ %a@"
+    pp_ident meth_name.node
+    (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@ ") pp_meth_param_info) params
+    (pp_ity_non_null (result_is_non_null)) result_ty;
+  if can_diverge then fprintf outf " @<1>| diverges";
+  fprintf outf "@.@[<v 2>%a@]@ end@]" pp_spec meth_spec 
+
+let pp_field_decl outf {field_name; field_ty; attribute} =
+  fprintf outf "@[%a@ %a:@ %a@]"
+    pp_modifier attribute
+    pp_ident field_name.node
+    pp_ity field_ty
+
+let pp_class_decl outf {class_name; fields} =
+  fprintf outf "@[class@ %a@.@[<v 2>%a@.@]end@]"
+    pp_ident class_name
+    (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ";@ ") pp_field_decl) fields
+
+let pp_class_def outf (Class c) = pp_class_decl outf c
+let pp_meth_def outf (Method (m, body)) =
+  fprintf outf "@[<v 2>%a@." pp_meth_decl m;
+  match body with
+  | Some c -> fprintf outf "@[<v 2>begin@ %a@ end@]@]" pp_command c
+  | None -> fprintf outf "extern;@]"
+
+let pp_named_formula outf {kind; annotation; formula_name; params; body} =
+  let kind_str = match kind with
+    | `Axiom -> "axiom"
+    | `Lemma -> "lemma"
+    | `Predicate -> "predicate"
+  in
+  fprintf outf "@[%s@ %a(@[%a@])@ =@.@[%a@]@ end@]"
+    kind_str
+    pp_ident formula_name.node
+     pp_idents (List.map (fun e -> e.node) params)
+    pp_formula body 
+
+let pp_inductive_predicate outf {ind_name; ind_params; ind_cases} =
+  fprintf outf "@[inductive@ %a(@[%a@])@ =@.@[<v 2>%a@]@ end@]"
+    pp_ident ind_name.node
+     pp_idents (List.map (fun e -> e.node) ind_params)
+    (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf "@ |@ ")
+       (fun outf (case_name, case_body) ->
+          fprintf outf "@[%a:@ %a@]" pp_ident case_name pp_formula case_body))
+    ind_cases
+
+let pp_import_kind outf = function
+  | Ast.Iregular -> fprintf outf "import"
+  | Ast.Itheory -> fprintf outf "import_theory"
+
+let pp_import_directive outf {import_kind; import_name; import_as; related_by} =
+  fprintf outf "@[%a@ %a%s%s@;@]"
+    pp_import_kind import_kind
+    pp_ident import_name
+    (match import_as with
+     | Some id -> " as " ^ Astutil.string_of_ident id
+     | None -> "")
+    (match related_by with
+     | Some id -> " related_by " ^ Astutil.string_of_ident id
+     | None -> "")  
+
+let pp_extern_decl outf = function
+  | Extern_type (name, as_name) ->
+    fprintf outf "@[extern type@ ";
+    pp_ident outf name;
+    fprintf outf "@ as@ ";
+    pp_ident outf as_name;
+  | Extern_const (name, ty) ->
+    fprintf outf "@[extern const@ ";
+    pp_ident outf name;
+    fprintf outf "@ :@ %a;@]" pp_ity ty
+  | Extern_axiom name ->
+    fprintf outf "@[extern axiom@ ";
+    pp_ident outf name;
+    fprintf outf "@]" 
+  | Extern_lemma name ->
+    fprintf outf "@[extern lemma@ ";
+    pp_ident outf name;
+    fprintf outf "@]"
+  | Extern_predicate {name; params} ->
+    fprintf outf "@[extern predicate@ ";
+    pp_ident outf name;
+    fprintf outf "@[%a@];@]" (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@ ") pp_ity) params
+  | Extern_function {name; params; ret} ->
+    fprintf outf "@[extern function@ ";
+    pp_ident outf name;
+    fprintf outf "@[%a@]:@ %a;@]"
+      (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@ ") pp_ity) params
+      pp_ity ret
+  | Extern_bipredicate {name; lparams; rparams} ->
+    fprintf outf "@[extern bipredicate@ ";
+    pp_ident outf name;
+    fprintf outf "@[%a@]|@[%a@];@]" (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@ ") pp_ity) lparams
+      (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@ ") pp_ity) rparams
+
+let pp_interface_def outf _ =
+  fprintf outf "@[<v 2>interface@ (placeholder)@.@]"
+
+(* Module printing stubbed out for now *)
+let pp_module_elt outf _ = fprintf outf "(module_elt)"    
+
+let pp_module_def outf _ = fprintf outf "(module_def)" 
+
+let pp_value_in_state outf = function
+  | Left e -> fprintf outf "@[[<%a<]@]" pp_exp e
+  | Right e -> fprintf outf "@[[<%a<]@]"pp_exp e
+
+let pp_varbind outf (id, modif, ty) =
+  fprintf outf "@[%a@ %a:@ %a@]"
+    pp_modifier_opt modif
+    pp_ident id.node
+    pp_ity ty
+
+let pp_bicommand outf c =
+  let old_margin = get_margin () and old_indent = get_max_indent () in
+  set_margin 10; set_max_indent 6;
+  let rec pp_bicommand' outf c = match c with
+    | Bihavoc_right (x, f) -> 
+      fprintf outf "@[Havocr@ %a@;on@ right@;@[%a@]@]" pp_ident x.node pp_rformula f
+    | Bisplit (c1, c2) ->
+      fprintf outf "@[Bisplit@;(@[%a@]@,@[%a@])@]" pp_command c1 pp_command c2
+    | Bisync ac ->
+      fprintf outf "@[Bisync@;@[%a@]@]" pp_atomic_command_special ac
+    | Bivardecl (x, y, c) ->
+      let pp_var_opt outf = function
+        | Some v -> pp_varbind outf v
+        | None -> fprintf outf "_"
+      in
+      fprintf outf "@[var@ %a@ |@ %a@ in@.%a@]"
+        pp_var_opt x pp_var_opt y pp_bicommand' c
+    | Biseq (c1, c2) -> fprintf outf "@[%a;@.%a@]" pp_bicommand' c1 pp_bicommand' c2 
+    | Biif (e1, e2, c1, c2) ->
+      fprintf outf "@[if@ %a@ |@ %a@;then@ %a@.else@ @[<hv 1>%a@]@ end@]"
+        pp_exp e1 pp_exp e2 pp_bicommand' c1 pp_bicommand' c2
+    | Biif4 (e1, e2, {then_then; then_else; else_then; else_else}) ->
+      fprintf outf "@[if@ %a@ |@ %a@;then@ %a@.else@ %a@;@\n\
+                    else@ %a@.else@ @[<hv 1>%a@]@ end@]"
+        pp_exp e1 pp_exp e2 pp_bicommand' then_then pp_bicommand' then_else
+        pp_bicommand' else_then pp_bicommand' else_else 
+    | Biwhile (e1, e2, (ag1, ag2), spec, c) ->
+      fprintf outf
+        "@[while@ %a@ |@ %a@ do@.@[<b 2>%a@]@.done@]"
+        pp_exp e1 pp_exp e2 pp_bicommand' c
+    | Biassume f -> fprintf outf "@[assume@ {%a}@]" pp_rformula f
+    | Biassert f -> fprintf outf "@[assert@ {%a}@]" pp_rformula f
+    | Biupdate (x, y) ->
+      fprintf outf "@[update_refperm@ %a@ |@ %a@]" pp_ident x.node pp_ident y.node
+  in
+  fprintf outf "@[<v 2>%a@]" pp_bicommand' c;
+  set_margin old_margin; set_max_indent old_indent
+
+let pp_bimeth_decl outf {bimeth_name; bimeth_left_params; bimeth_right_params;
+                          result_ty; result_is_non_null; bimeth_spec; bimeth_can_diverge} =
+  fprintf outf "@[<v 2>bimethod@ %a(@[%a@]|@[%a@])@ :@ %a@"
+    pp_ident bimeth_name
+    (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@ ") pp_meth_param_info) bimeth_left_params
+    (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@ ") pp_meth_param_info) bimeth_right_params       
+    (pp_ity_non_null (fst result_is_non_null)) (fst result_ty);
+  if bimeth_can_diverge then fprintf outf " @<1>| diverges";
+  fprintf outf "@.@[<v 2>%a@]@ end@]" pp_bispec bimeth_spec
+let pp_bimeth_def outf (Bimethod (m, body)) =
+  fprintf outf "@[<v 2>%a@." pp_bimeth_decl m;
+  match body with
+  | Some c -> fprintf outf "@[<v 2>begin@ %a@ end@]@]" pp_bicommand c
+  | None -> fprintf outf "extern;@]"
+
+let pp_named_rformula outf {kind; biformula_name; biparams; body; is_coupling} =
+  let kind_str = match kind with
+    | `Axiom -> "axiom"
+    | `Lemma -> "lemma"
+    | `Predicate -> "predicate"
+  in
+  let (lparams, rparams) = biparams in
+  let pp_biparam outf (id, ty) = 
+    fprintf outf "@[%a:@ %a@]" pp_ident id.node pp_ity ty
+  in
+  let pp_biparams outf (lparams, rparams) =
+    fprintf outf "@[%a@]@ |@ @[%a@]"
+      (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@ ") pp_biparam) lparams
+      (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ",@ ") pp_biparam) rparams
+  in
+  fprintf outf "@[%s@ %a(@[%a@])@ =@.@[%a@]@ end@]"
+    kind_str
+    pp_ident biformula_name
+    pp_biparams biparams
+    pp_rformula body
+
+let pp_bimodule_elt outf = function
+  | Bimdl_formula f -> pp_named_rformula outf f
+  | Bimdl_mdef m -> pp_bimeth_def outf m
+  | Bimdl_extern ed -> pp_extern_decl outf ed
+  | Bimdl_import imp -> pp_import_directive outf imp
+
+let pp_bimodule_def outf {bimdl_name; bimdl_left_impl; bimdl_right_impl; bimdl_elts} =
+  fprintf outf "@[<v 2>bimodule@ %a@ implements@ %a@ |@ %a@.@[<v 2>%a@]@.end@]"
+    pp_ident bimdl_name
+    pp_ident bimdl_left_impl
+    pp_ident bimdl_right_impl
+    (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf "@.") pp_bimodule_elt) bimdl_elts
+
+let pp_program outf _ =
+  fprintf outf "@[<program_stub>@]"
+
+
+  
