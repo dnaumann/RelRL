@@ -17,7 +17,9 @@ end
 bimodule FREL (A | A) =
   meth itzhaky  (a: int array, n: int | a: int array, n: int) : (Cell | Cell)
     requires { a =:= a /\ n =:= n }
-    ensures  {[> let x = result.b in x <  0 |> /\ let sum | sum = result.sum | result.sum in sum =:= sum}            
+    requires { Both (n  < length(a)) }
+    ensures  {[> let x = result.b in x <  0 |> /\ let sum | sum = result.sum | result.sum in sum =:= sum}  
+    effects {rw alloc | rw alloc}          
   = 
     Var i: int | i: int in
     Var y: int | y: int in
@@ -27,7 +29,7 @@ bimodule FREL (A | A) =
 
     |_ sum := 0 _|;
     (havoc b | skip);
-    HavocR b { <| b < 0 <] };
+    HavocR b { [> b < 0 |> };
 
     If4 (b > 0) | (b > 0) 
     thenThen
@@ -49,6 +51,7 @@ bimodule FREL (A | A) =
       While (i < n - 1) | (i < n)  . <| false <] | [> false |> do
         invariant { <| i < n - 1 <] <-> [> i < n |>} 
         invariant {i + 1 =:= i}
+        invariant {Both (0 <= i) }
         invariant {sum =:= sum} 
         (temp := get(a, i) | skip);
         (sum := sum + temp | skip);
@@ -63,12 +66,14 @@ bimodule FREL (A | A) =
     elseThen
       (i := 1 | i := 0);
       WhileL (i < n) do 
+        invariant { <| (0 <= i) <]  }
         (havoc y | skip);
         (temp := get(a, i) | skip);
         (sum := sum + temp + y | skip);
         (i := i + 1 | skip);
       done;
       WhileR (i < n - 1) do variant { [> i >] }
+          invariant { [> (0 <= i) |>  }
         (skip | temp := get(a, i));
         (skip | sum := sum + temp);
         (skip | i := i + 1);
@@ -81,6 +86,7 @@ bimodule FREL (A | A) =
         invariant { <| i < n <] <-> [> i < n |>} 
         invariant {i =:= i}
         invariant {sum =:= sum} 
+        invariant { Both ( 0 <= i ) }
 
         (havoc y | skip);
         (temp := get(a, i) | skip);

@@ -155,8 +155,9 @@ module FREL
     A.array
       int) (l_n : int) (r_a : A.array int) (r_n : int) : (reference, reference)
     requires { okRefperm l_s r_s pi }
+    requires { ((l_n < (l_a.A.length)) /\ (r_n < (r_a.A.length))) }
     requires { (l_a = r_a) /\ (l_n = r_n) }
-    writes { l_s.b, l_s.sum, r_s.b, r_s.sum }
+    writes { l_s.alloct, l_s.b, l_s.sum, r_s.alloct, r_s.b, r_s.sum }
     ensures { match result with
               | (l_result, _) -> hasCellType l_s l_result
               end }
@@ -165,9 +166,13 @@ module FREL
               | (_, r_result) -> hasCellType r_s r_result
               end }
     
+    ensures { alloc_does_not_shrink (old l_s) l_s }
+    
     ensures { [@expl:wr {}`sum] (wr_frame_sum (old l_s) l_s emptyRgn) }
     
     ensures { [@expl:wr {}`b] (wr_frame_b (old l_s) l_s emptyRgn) }
+    
+    ensures { alloc_does_not_shrink (old r_s) r_s }
     
     ensures { [@expl:wr {}`sum] (wr_frame_sum (old r_s) r_s emptyRgn) }
     
@@ -212,9 +217,9 @@ module FREL
       (l_sum := ([@expl:sum := 0] 0));
       (r_sum := ([@expl:sum := 0] 0));
       (l_b := ([@expl:havoc b] (any int)));
-      assert { exists r_b : int. (! l_b) < 0 };
+      assert { exists r_b : int. r_b < 0 };
       (r_b := ([@expl:havoc b] (any int)));
-      assume { (! l_b) < 0 };
+      assume { (! r_b) < 0 };
       (if (((! l_b) > 0)  && ((! r_b) > 0)) then
          ((l_i := ([@expl:i := 0] 0));
           (r_i := ([@expl:i := 0] 0));
@@ -269,6 +274,7 @@ module FREL
                invariant { okRefperm l_s r_s pi }
                invariant { ((! l_i) < (! l_n) - 1) <-> ((! r_i) < (! r_n)) }
                invariant { (((! l_i) + 1) = (! r_i)) }
+               invariant { ((0 <= (! l_i)) /\ (0 <= (! r_i))) }
                invariant { ((! l_sum) = (! r_sum)) }
                invariant {
                  [@expl:lockstep]
@@ -304,8 +310,10 @@ module FREL
                     [@expl:locals type invariant right]
                     (hasCellType r_s (! r_result)) }
                   invariant { okRefperm l_s r_s pi }
+                  invariant { 0 <= (! l_i) }
                   (l_y := ([@expl:havoc y] (any int)));
                   (l_temp := ([@expl:temp := get(a,i)] (A.get (! l_a) (! l_i))));
+              
                   (l_sum
                      := ([@expl:sum := sum + temp + y]
                          (((! l_sum) + (! l_temp)) + (! l_y))));
@@ -319,6 +327,7 @@ module FREL
                     [@expl:locals type invariant right]
                     (hasCellType r_s (! r_result)) }
                   invariant { okRefperm l_s r_s pi }
+                  invariant { 0 <= (! r_i) }
                   let r_q__vnt1 = ref 0 in
                   let r_q__b2 = ref false in
                   (r_q__vnt1 := ([@expl:havoc q__vnt1] (any int)));
@@ -353,6 +362,7 @@ module FREL
                   invariant { ((! l_i) < (! l_n)) <-> ((! r_i) < (! r_n)) }
                   invariant { ((! l_i) = (! r_i)) }
                   invariant { ((! l_sum) = (! r_sum)) }
+                  invariant { ((0 <= (! l_i)) /\ (0 <= (! r_i))) }
                   invariant {
                     [@expl:lockstep]
                     (((! l_i) < (! l_n)) = ((! r_i) < (! r_n))) }
@@ -401,7 +411,9 @@ module FREL_biinterface
     A.array
       int) (r_n: int) : (reference, reference)
     requires { okRefperm l_s r_s pi }
+    requires { ((l_n < (l_a.A.length)) /\ (r_n < (r_a.A.length))) }
     requires { (l_a = r_a) /\ (l_n = r_n) }
+    writes { l_s.alloct, r_s.alloct }
     ensures { match result with
               | (l_result, _) -> hasCellType l_s l_result
               end }
@@ -409,6 +421,10 @@ module FREL_biinterface
     ensures { match result with
               | (_, r_result) -> hasCellType r_s r_result
               end }
+    
+    ensures { alloc_does_not_shrink (old l_s) l_s }
+    
+    ensures { alloc_does_not_shrink (old r_s) r_s }
     
     ensures { okRefperm l_s r_s pi }
     
