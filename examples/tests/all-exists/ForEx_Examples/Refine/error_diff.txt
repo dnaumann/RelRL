@@ -1,0 +1,267 @@
+--- refine_control.mlw	2025-09-26 16:08:15.998069462 -0400
++++ refine_error.mlw	2025-09-26 15:02:33.553304474 -0400
+@@ -207,70 +207,68 @@
+       let r_b = ref false in
+       let l_temp1 = ref 0 in
+       let r_temp1 = ref 0 in
+-      let l_temp2 = ref null in
+-      let r_temp2 = ref null in
+-      (l_temp2 := ([@expl:temp2 := new Cell] (l_s.mk_Cell)));
+-      (r_temp2 := ([@expl:temp2 := new Cell] (r_s.mk_Cell)));
++      (l_result := ([@expl:result := new Cell] (l_s.mk_Cell)));
++      (r_result := ([@expl:result := new Cell] (r_s.mk_Cell)));
+       (l_k := ([@expl:k := time] (! l_time)));
+       (r_k := ([@expl:k := time] (! r_time)));
+       (l_b := ([@expl:havoc b] (any bool)));
+       (if (! l_b) then
+-         (([@expl:temp2.x := 0] (set_x l_s (! l_temp2) 0));
+-          ([@expl:temp2.c := 0] (set_c l_s (! l_temp2) 0));
++         (([@expl:result.x := 0] (set_x l_s (! l_result) 0));
++          ([@expl:result.c := 0] (set_c l_s (! l_result) 0));
+           while ((! l_k) > 0) do
+             invariant {
+-              [@expl:locals type invariant]
+-              ((hasCellType l_s (! l_result)) /\ (hasCellType l_s (! l_temp2))) }
++              [@expl:locals type invariant] (hasCellType l_s (! l_result)) }
+             invariant { alloc_does_not_shrink (old l_s) l_s }
+             invariant {
+-              [@expl:wr {temp2}`x]
+-              (wr_frame_x (old l_s) l_s ((! l_temp2).singleton)) }
+-            invariant { let v = l_s.x[! l_temp2] in
++              [@expl:wr {result}`x]
++              (wr_frame_x (old l_s) l_s ((! l_result).singleton)) }
++            invariant { let v = l_s.x[! l_result] in
+                         (v + (! l_k))
+                         =
+                         (! l_time) }
+-            invariant { ((! l_time) <= 0) -> ((l_s.x[! l_temp2]) = 0) }
++            invariant { ((! l_time) <= 0) -> ((l_s.x[! l_result]) = 0) }
+             invariant { ((! l_time) > 0) -> ((! l_k) >= 0) }
+             (l_k := ([@expl:k := k - 1] ((! l_k) - 1)));
+-            (l_temp1 := ([@expl:temp1 := temp2.x] (l_s.x[! l_temp2])));
+-            ([@expl:temp2.x := temp1 + 1]
+-             (set_x l_s (! l_temp2) ((! l_temp1) + 1)))
++            (l_temp1 := ([@expl:temp1 := result.x] (l_s.x[! l_result])));
++            ([@expl:result.x := temp1 + 1]
++             (set_x l_s (! l_result) ((! l_temp1) + 1)))
+           done)
+        else
+-         (([@expl:temp2.x := 0] (set_x l_s (! l_temp2) 0));
+-          ([@expl:temp2.c := 1] (set_c l_s (! l_temp2) 1));
++         (([@expl:result.x := 0] (set_x l_s (! l_result) 0));
++          ([@expl:result.c := 1] (set_c l_s (! l_result) 1));
+           while ((! l_k) > 0) do
+             invariant {
+-              [@expl:locals type invariant]
+-              ((hasCellType l_s (! l_result)) /\ (hasCellType l_s (! l_temp2))) }
++              [@expl:locals type invariant] (hasCellType l_s (! l_result)) }
+             invariant { alloc_does_not_shrink (old l_s) l_s }
+             invariant {
+-              [@expl:wr {temp2}`x]
+-              (wr_frame_x (old l_s) l_s ((! l_temp2).singleton)) }
+-            invariant { ((! l_time) <= 0) -> ((l_s.x[! l_temp2]) = 0) }
++              [@expl:wr {result}`x]
++              (wr_frame_x (old l_s) l_s ((! l_result).singleton)) }
++            invariant { ((! l_time) <= 0) -> ((l_s.x[! l_result]) = 0) }
+             invariant { (! l_time) >= (! l_k) }
+             (l_k := ([@expl:k := k - 1] ((! l_k) - 1)));
+             (l_s0 := ([@expl:havoc s0] (any int)));
+-            (l_temp1 := ([@expl:temp1 := temp2.x] (l_s.x[! l_temp2])));
+-            ([@expl:temp2.x := temp1 + s0]
+-             (set_x l_s (! l_temp2) ((! l_temp1) + (! l_s0))))
++            (l_temp1 := ([@expl:temp1 := result.x] (l_s.x[! l_result])));
++            ([@expl:result.x := temp1 + s0]
++             (set_x l_s (! l_result) ((! l_temp1) + (! l_s0))))
+           done));
+       assert { exists r_b : bool. not ((! l_b) = r_b) };
+       (r_b := ([@expl:havoc b] (any bool)));
+       assume { not ((! l_b) = (! r_b)) };
+       (if (false  && (! r_b)) then
+-         (([@expl:temp2.x := 0] (set_x r_s (! r_temp2) 0));
+-          ([@expl:temp2.c := 0] (set_c r_s (! r_temp2) 0));
++         (([@expl:result.x := 0] (set_x r_s (! r_result) 0));
++          ([@expl:result.c := 0] (set_c r_s (! r_result) 0));
+           while ((! r_k) > 0) do
+             invariant {
+-              [@expl:locals type invariant left]
+-              ((hasCellType l_s (! l_result)) /\ (hasCellType l_s (! l_temp2))) }
++              [@expl:locals type invariant left] (hasCellType l_s (! l_result)) }
+             invariant {
+               [@expl:locals type invariant right]
+-              ((hasCellType r_s (! r_result)) /\ (hasCellType r_s (! r_temp2))) }
++              (hasCellType r_s (! r_result)) }
+             invariant {
+-              [@expl:wr {temp2}`x]
+-              (wr_frame_x (old r_s) r_s ((! r_temp2).singleton)) }
++              match result with
++              | (_, r_result) ->
++                  [@expl:wr {result}`x]
++                  (wr_frame_x (old r_s) r_s ((! r_result).singleton))
++              end }
+             invariant { okRefperm l_s r_s pi }
+             let r_q__vnt7 = ref 0 in
+             let r_q__b8 = ref false in
+@@ -286,37 +284,36 @@
+                 /\
+                 (true /\ true) };
+             (r_k := ([@expl:k := k - 1] ((! r_k) - 1)));
+-            (r_temp1 := ([@expl:temp1 := temp2.x] (r_s.x[! r_temp2])));
+-            ([@expl:temp2.x := temp1 + 1]
+-             (set_x r_s (! r_temp2) ((! r_temp1) + 1)));
++            (r_temp1 := ([@expl:temp1 := result.x] (r_s.x[! r_result])));
++            ([@expl:result.x := temp1 + 1]
++             (set_x r_s (! r_result) ((! r_temp1) + 1)));
+             assert { (! r_q__b8) -> (0 <= (! r_q__vnt7)) };
+             assert { (! r_q__b8) -> ((! r_k) < (! r_q__vnt7)) }
+           done)
+        else
+          (if (false  && (not (! r_b))) then
+-            (([@expl:temp2.x := 0] (set_x r_s (! r_temp2) 0));
+-             ([@expl:temp2.c := 1] (set_c r_s (! r_temp2) 1));
++            (([@expl:result.x := 0] (set_x r_s (! r_result) 0));
++             ([@expl:result.c := 1] (set_c r_s (! r_result) 1));
+              while ((! r_k) > 0) do
+                invariant {
+                  [@expl:locals type invariant left]
+-                 ((hasCellType l_s (! l_result))
+-                    /\
+-                    (hasCellType l_s (! l_temp2))) }
++                 (hasCellType l_s (! l_result)) }
+                invariant {
+                  [@expl:locals type invariant right]
+-                 ((hasCellType r_s (! r_result))
+-                    /\
+-                    (hasCellType r_s (! r_temp2))) }
++                 (hasCellType r_s (! r_result)) }
+                invariant {
+-                 [@expl:wr {temp2}`x]
+-                 (wr_frame_x (old r_s) r_s ((! r_temp2).singleton)) }
++                 match result with
++                 | (_, r_result) ->
++                     [@expl:wr {result}`x]
++                     (wr_frame_x (old r_s) r_s ((! r_result).singleton))
++                 end }
+                invariant { okRefperm l_s r_s pi }
+                invariant {
+-                 let v = r_s.x[! r_temp2] in
++                 let v = r_s.x[! r_result] in
+                  (v + (! r_k))
+                  =
+                  (! r_time) }
+-               invariant { ((! r_time) <= 0) -> ((r_s.x[! r_temp2]) = 0) }
++               invariant { ((! r_time) <= 0) -> ((r_s.x[! r_result]) = 0) }
+                invariant { ((! r_time) > 0) -> ((! r_k) >= 0) }
+                let r_q__vnt5 = ref 0 in
+                let r_q__b6 = ref false in
+@@ -335,30 +332,29 @@
+                assert { exists r_s0 : int. r_s0 = 1 };
+                (r_s0 := ([@expl:havoc s0] (any int)));
+                assume { (! r_s0) = 1 };
+-               (r_temp1 := ([@expl:temp1 := temp2.x] (r_s.x[! r_temp2])));
+-               ([@expl:temp2.x := temp1 + s0]
+-                (set_x r_s (! r_temp2) ((! r_temp1) + (! r_s0))));
++               (r_temp1 := ([@expl:temp1 := result.x] (r_s.x[! r_result])));
++               ([@expl:result.x := temp1 + s0]
++                (set_x r_s (! r_result) ((! r_temp1) + (! r_s0))));
+                assert { (! r_q__b6) -> (0 <= (! r_q__vnt5)) };
+                assert { (! r_q__b6) -> ((! r_k) < (! r_q__vnt5)) }
+              done)
+           else
+             (if ((not false)  && (! r_b)) then
+-               (([@expl:temp2.x := 0] (set_x r_s (! r_temp2) 0));
+-                ([@expl:temp2.c := 0] (set_c r_s (! r_temp2) 0));
++               (([@expl:result.x := 0] (set_x r_s (! r_result) 0));
++                ([@expl:result.c := 0] (set_c r_s (! r_result) 0));
+                 while ((! r_k) > 0) do
+                   invariant {
+                     [@expl:locals type invariant left]
+-                    ((hasCellType l_s (! l_result))
+-                       /\
+-                       (hasCellType l_s (! l_temp2))) }
++                    (hasCellType l_s (! l_result)) }
+                   invariant {
+                     [@expl:locals type invariant right]
+-                    ((hasCellType r_s (! r_result))
+-                       /\
+-                       (hasCellType r_s (! r_temp2))) }
++                    (hasCellType r_s (! r_result)) }
+                   invariant {
+-                    [@expl:wr {temp2}`x]
+-                    (wr_frame_x (old r_s) r_s ((! r_temp2).singleton)) }
++                    match result with
++                    | (_, r_result) ->
++                        [@expl:wr {result}`x]
++                        (wr_frame_x (old r_s) r_s ((! r_result).singleton))
++                    end }
+                   invariant { okRefperm l_s r_s pi }
+                   let r_q__vnt3 = ref 0 in
+                   let r_q__b4 = ref false in
+@@ -374,36 +370,35 @@
+                       /\
+                       (true /\ true) };
+                   (r_k := ([@expl:k := k - 1] ((! r_k) - 1)));
+-                  (r_temp1 := ([@expl:temp1 := temp2.x] (r_s.x[! r_temp2])));
+-                  ([@expl:temp2.x := temp1 + 1]
+-                   (set_x r_s (! r_temp2) ((! r_temp1) + 1)));
++                  (r_temp1 := ([@expl:temp1 := result.x] (r_s.x[! r_result])));
++                  ([@expl:result.x := temp1 + 1]
++                   (set_x r_s (! r_result) ((! r_temp1) + 1)));
+                   assert { (! r_q__b4) -> (0 <= (! r_q__vnt3)) };
+                   assert { (! r_q__b4) -> ((! r_k) < (! r_q__vnt3)) }
+                 done)
+              else
+-               (([@expl:temp2.x := 0] (set_x r_s (! r_temp2) 0));
+-                ([@expl:temp2.c := 1] (set_c r_s (! r_temp2) 1));
++               (([@expl:result.x := 0] (set_x r_s (! r_result) 0));
++                ([@expl:result.c := 1] (set_c r_s (! r_result) 1));
+                 while ((! r_k) > 0) do
+                   invariant {
+                     [@expl:locals type invariant left]
+-                    ((hasCellType l_s (! l_result))
+-                       /\
+-                       (hasCellType l_s (! l_temp2))) }
++                    (hasCellType l_s (! l_result)) }
+                   invariant {
+                     [@expl:locals type invariant right]
+-                    ((hasCellType r_s (! r_result))
+-                       /\
+-                       (hasCellType r_s (! r_temp2))) }
++                    (hasCellType r_s (! r_result)) }
+                   invariant {
+-                    [@expl:wr {temp2}`x]
+-                    (wr_frame_x (old r_s) r_s ((! r_temp2).singleton)) }
++                    match result with
++                    | (_, r_result) ->
++                        [@expl:wr {result}`x]
++                        (wr_frame_x (old r_s) r_s ((! r_result).singleton))
++                    end }
+                   invariant { okRefperm l_s r_s pi }
+                   invariant {
+-                    let v = r_s.x[! r_temp2] in
++                    let v = r_s.x[! r_result] in
+                     (v + (! r_k))
+                     =
+                     (! r_time) }
+-                  invariant { ((! r_time) <= 0) -> ((r_s.x[! r_temp2]) = 0) }
++                  invariant { ((! r_time) <= 0) -> ((r_s.x[! r_result]) = 0) }
+                   invariant { ((! r_time) > 0) -> ((! r_k) >= 0) }
+                   let r_q__vnt1 = ref 0 in
+                   let r_q__b2 = ref false in
+@@ -422,14 +417,12 @@
+                   assert { exists r_s0 : int. r_s0 = 1 };
+                   (r_s0 := ([@expl:havoc s0] (any int)));
+                   assume { (! r_s0) = 1 };
+-                  (r_temp1 := ([@expl:temp1 := temp2.x] (r_s.x[! r_temp2])));
+-                  ([@expl:temp2.x := temp1 + s0]
+-                   (set_x r_s (! r_temp2) ((! r_temp1) + (! r_s0))));
++                  (r_temp1 := ([@expl:temp1 := result.x] (r_s.x[! r_result])));
++                  ([@expl:result.x := temp1 + s0]
++                   (set_x r_s (! r_result) ((! r_temp1) + (! r_s0))));
+                   assert { (! r_q__b2) -> (0 <= (! r_q__vnt1)) };
+                   assert { (! r_q__b2) -> ((! r_k) < (! r_q__vnt1)) }
+                 done))));
+-      (l_result := ([@expl:result := temp2] (! l_temp2)));
+-      (r_result := ([@expl:result := temp2] (! r_temp2)));
+       ((! l_result), (! r_result))
+ end
+ 

@@ -264,8 +264,11 @@ module Birefine
               [@expl:locals type invariant right]
               (hasCellType r_s (! r_result)) }
             invariant {
-              [@expl:wr {result}`x]
-              (wr_frame_x (old r_s) r_s ((! r_result).singleton)) }
+              match result with
+              | (_, r_result) ->
+                  [@expl:wr {result}`x]
+                  (wr_frame_x (old r_s) r_s ((! r_result).singleton))
+              end }
             invariant { okRefperm l_s r_s pi }
             let r_q__vnt7 = ref 0 in
             let r_q__b8 = ref false in
@@ -299,8 +302,11 @@ module Birefine
                  [@expl:locals type invariant right]
                  (hasCellType r_s (! r_result)) }
                invariant {
-                 [@expl:wr {result}`x]
-                 (wr_frame_x (old r_s) r_s ((! r_result).singleton)) }
+                 match result with
+                 | (_, r_result) ->
+                     [@expl:wr {result}`x]
+                     (wr_frame_x (old r_s) r_s ((! r_result).singleton))
+                 end }
                invariant { okRefperm l_s r_s pi }
                invariant {
                  let v = r_s.x[! r_result] in
@@ -344,8 +350,11 @@ module Birefine
                     [@expl:locals type invariant right]
                     (hasCellType r_s (! r_result)) }
                   invariant {
-                    [@expl:wr {result}`x]
-                    (wr_frame_x (old r_s) r_s ((! r_result).singleton)) }
+                    match result with
+                    | (_, r_result) ->
+                        [@expl:wr {result}`x]
+                        (wr_frame_x (old r_s) r_s ((! r_result).singleton))
+                    end }
                   invariant { okRefperm l_s r_s pi }
                   let r_q__vnt3 = ref 0 in
                   let r_q__b4 = ref false in
@@ -378,8 +387,11 @@ module Birefine
                     [@expl:locals type invariant right]
                     (hasCellType r_s (! r_result)) }
                   invariant {
-                    [@expl:wr {result}`x]
-                    (wr_frame_x (old r_s) r_s ((! r_result).singleton)) }
+                    match result with
+                    | (_, r_result) ->
+                        [@expl:wr {result}`x]
+                        (wr_frame_x (old r_s) r_s ((! r_result).singleton))
+                    end }
                   invariant { okRefperm l_s r_s pi }
                   invariant {
                     let v = r_s.x[! r_result] in

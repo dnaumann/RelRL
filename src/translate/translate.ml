@@ -3219,20 +3219,7 @@ and mk_biwr_frame_condition ctxt state ?(alloc_cond=false) effects side
   let alloc_cond =
     if not (exists wr_to_alloc writes) && not alloc_cond then []
     else [alloc_does_not_shrink state] in
-  let mk_frame_cond eff =
-    let result = Id "result" in
-    if IdS.mem result (free_vars_effect_elt eff) then
-      let l_result = mk_ident (id_name (left_var result)) in
-      let r_result = mk_ident (id_name (right_var result)) in
-      let l_respat, r_respat = map_pair pat_var (l_result, r_result) in
-      let respat = match side with
-        | Biwr_left -> mk_pat (Ptuple [l_respat; pat_wild])
-        | Biwr_right -> mk_pat (Ptuple [pat_wild; r_respat])
-        | Biwr_both -> mk_pat (Ptuple [l_respat; r_respat]) in
-      let inner = mk_wr_frame_condition ctxt state [eff] in
-      assert (length inner = 1);
-      [mk_term (Tcase (~*(~.(id_name result)), [respat, hd inner]))]
-    else mk_wr_frame_condition ctxt state [eff] in
+  let mk_frame_cond eff = mk_wr_frame_condition ctxt state [eff] in
   (* [Oct-5-2022] mk_wr_frame_condition already generates alloc_cond?? *)
   ignore alloc_cond;
   (* alloc_cond @ *) concat_map mk_frame_cond writes
@@ -3820,89 +3807,6 @@ let rec compile_bimethod bi_ctxt bimethod : bi_ctxt * Ptree.decl =
     let bi_ctxt = {bi_ctxt with bimethods} in
 
     bi_ctxt, Dlet (meth_name, false, Expr.RKnone, fundef)
-
-(* [2024-03-31] DEPRECATED -- to be removed *)
-and fields_written_bimethod bi_ctxt com : QualidS.t =
-  let open QualidS in
-  let ignore_fns = [
-    get_ref_fn; set_ref_fn; map_mem_fn; map_find_fn;
-    array_get_fn; array_set_fn; array_make_fn; array_len_fn;
-    union_fn; singleton_fn; inter_fn; subset_fn; disjoint_fn;
-    rgnsubK_fn; mem_fn; diff_fn; empty_rgn;
-    list_mem_fn; list_cons_fn; list_nil; typeof_rgn_fn;
-    update_refperm; invert_refperm; identity_refperm; extends_refperm] in
-  match com.Ptree.expr_desc with
-  | Eassign [{expr_desc = Eident f; _}, None, _] -> singleton f
-  | Esequence (e1,e2) | Eif (_,e1,e2) ->
-    let e1wrs = fields_written_bimethod bi_ctxt e1 in
-    let e2wrs = fields_written_bimethod bi_ctxt e2 in
-    union e1wrs e2wrs
-  | Elet (_,_,_,_,e)
-  | Ewhile (_,_,_,e) -> fields_written_bimethod bi_ctxt e
-  | Eattr (_,e) | Elabel (_,e) -> fields_written_bimethod bi_ctxt e
-  | Eidapp (fn_name, _) when fn_name = update_refperm ->
-    singleton bi_ctxt.refperm
-  | Eidapp (fn_name, _) ->
-    let bindings = M.bindings bi_ctxt.bimethods in
-    let bimeth_wrs = List.map snd bindings in
-    begin
-      try
-        let accessfield side f =
-          let lst, rst = bi_ctxt.left_state, bi_ctxt.right_state in
-          let lst, rst = map_pair string_list_of_qualid (lst, rst) in
-          let f' = if side then lst else rst @ string_list_of_qualid f in
-          mk_qualid f' in
-        let _,lwrs,rwrs = List.find (fun (n,_,_) -> fn_name = n) bimeth_wrs in
-        let lwrs = QualidS.map (accessfield true) lwrs in
-        let rwrs = QualidS.map (accessfield false) rwrs in
-        union lwrs rwrs
-      with Not_found ->
-        (* FIXME: fields_written should not return qualids that contain the
-           state param.  The state params name may change.  Below, we handle the
-           case where the unary state param is "s" but the biprog state params
-           are "l_s" and "r_s". *)
-
-        (* WORKING HERE: Fix bug in this part.  We shouldn't be unioning lwrs
-           and rwrs.  The writes depend on whether fn_name is operating on the
-           left state or the right state.  It could also operate on neither if
-           fn_name is extern.  Alternatively, do all this analysis at the
-           WhyRel level.  *)
-
-        if List.mem fn_name ignore_fns then QualidS.empty else begin
-          begin
-            if !trans_debug then
-              let print_keys () =
-                M.iter (fun _ (k,_,_) ->
-                    let k' = String.concat "." (string_list_of_qualid k) in
-                    Printf.fprintf stderr "%s, " k')
-                  bi_ctxt.bimethods in
-              Printf.fprintf stderr
-                "[~ WARNING ~] Unable to find writes emitted for %s in { "
-                (String.concat "." (string_list_of_qualid (fn_name)));
-              print_keys ();
-              Printf.fprintf stderr "}\n"
-          end;
-
-        let lstate = (ident_of_qualid bi_ctxt.left_state).id_str in
-        let rstate = (ident_of_qualid bi_ctxt.right_state).id_str in
-        ignore (lstate, rstate);
-        let lwrs = fields_written bi_ctxt.left_state bi_ctxt.left_ctxt com in
-        let rwrs = fields_written bi_ctxt.right_state bi_ctxt.right_ctxt com in
-        union lwrs rwrs
-        end
-    end
-  | Ematch (scrutinee, pat_list, _) ->
-    let exprs = List.map snd pat_list in
-    let expr_wrs = List.map (fields_written_bimethod bi_ctxt) exprs in
-    let s_wrs = fields_written_bimethod bi_ctxt scrutinee in
-    foldr union s_wrs expr_wrs
-  | _ ->
-    let lstate = (ident_of_qualid bi_ctxt.left_state).id_str in
-    let rstate = (ident_of_qualid bi_ctxt.right_state).id_str in
-    ignore (lstate, rstate);
-    let lwrs = fields_written bi_ctxt.left_state bi_ctxt.left_ctxt com in
-    let rwrs = fields_written bi_ctxt.right_state bi_ctxt.right_ctxt com in
-    union lwrs rwrs
 
 and build_bimethod_ctx bi_ctxt (lparams, rparams) cc =
   let open T in

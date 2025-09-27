@@ -15,40 +15,34 @@ module A : REFINE =
     var k: int in
     var s0: int in
     var b: bool in
+    var temp1 : int in
 
-    var c: int in
-    var x: int in
-    
+    result := new Cell; 
     k := time; 
 
     havoc b;
     if (b)
     then
-        x := 0;
-        c := 0;
-        
+        result.c := 0;
+        result.x := 0;
         while (k > 0)
         do
             k := k - 1;
-            x := x + 1;
+            temp1 := result.x;
+            result.x := temp1 + 1;
         done;
     else
-        x := 0;
-        c := 1;
+        result.x := 0;
+        result.c := 1;
         
         while (k > 0) 
         do
             k := k - 1;
             havoc s0;
-            x := x + s0;
+            temp1 := result.x;
+            result.x := temp1 + s0;
         done;
-    end; 
-
-    result := new Cell;
-    result.c = c;
-    result.x = x;
-*/
-
+    end; */
 end
 
 
@@ -63,8 +57,8 @@ bimodule Birefine ( A | A ) =
     Var s0: int | s0: int in
     Var b: bool | b: bool in
     Var temp1: int | temp1: int in
-    Var x: int | x: int in
-    Var c: int | c: int in
+
+    |_ result := new Cell _|;   
     
     |_ k := time _|;
 
@@ -72,24 +66,28 @@ bimodule Birefine ( A | A ) =
     
     (if (b)
     then
-        (x := 0 );
-        (c := 0 );
+        (result.x := 0 );
+        (result.c := 0 );
         while (k > 0) do
-        invariant {x + k = time } 
-        invariant {time <= 0 -> x = 0}
+         effects { rw {result}`any  }
+        invariant {let v = result.x in v + k = time } 
+        invariant {time <= 0 -> result.x = 0}
         invariant {time > 0 -> k >= 0 }
           k := k - 1;
-          x := (x + 1);
+          temp1 := result.x;
+          result.x := (temp1 + 1);
         done;
     else
-        x := 0;
-        c := 1;
+        result.x := 0;
+        result.c := 1;
         while (k > 0) do
-        invariant {time <= 0 -> x = 0}
+             effects { rw {result}`any  }
+        invariant {time <= 0 -> result.x = 0}
         invariant {time >= k }
             k := k - 1;
             havoc s0 ;
-            x := (x + s0);
+            temp1 := result.x;
+            result.x := (temp1 + s0);
         done;
     end | skip);
 
@@ -97,53 +95,56 @@ bimodule Birefine ( A | A ) =
     
     If4 (false) | (b) 
     thenThen
-        (skip | x := 0);
-        (skip | c := 0);
+        (skip | result.x := 0);
+        (skip | result.c := 0);
         
         WhileR (k > 0) do variant { [> k >]}
+          effects { | rw {result}`any }
           (skip | k := k - 1);
-          (skip | x := (x + 1));
+          (skip | temp1 := result.x);
+          (skip | result.x := (temp1 + 1));
         done;
     thenElse
-        (skip | x := 0);
-        (skip | c := 1);
+(skip | result.x := 0);
+        (skip | result.c := 1);
 
         WhileR (k > 0) do  variant { [> k >]}
-        invariant { [> x + k = time |> }
-        invariant { [> time <= 0 -> x = 0 |> } 
+             effects { | rw {result}`any }
+        invariant { [> let v = result.x in v + k = time |> }
+        invariant { [> time <= 0 -> result.x = 0 |> } 
         invariant { [> time > 0 -> k >= 0 |> }
           (skip | k := k - 1);
             
           HavocR s0 { [> s0 = 1 |>};
-          (skip | x := (x + s0));
+          (skip | temp1 := result.x);
+          (skip | result.x := (temp1 + s0));
         done;
     elseThen
-        (skip | x := 0);
-        (skip | c := 0);
+        (skip | result.x := 0);
+        (skip | result.c := 0);
         
         WhileR (k > 0) do variant { [> k >]}
+             effects { | rw {result}`any }
           (skip | k := k - 1);
-          (skip | x := (x + 1));
+          (skip | temp1 := result.x);
+          (skip | result.x := (temp1 + 1));
         done;
     elseElse
-        (skip | x := 0);
-        (skip | c := 1);
+        (skip | result.x := 0);
+        (skip | result.c := 1);
 
         WhileR (k > 0) do variant { [> k >]}
-        invariant { [> x + k = time |> }
-        invariant { [> time <= 0 -> x = 0 |> } 
+             effects { | rw {result}`any }
+        invariant { [> let v = result.x in v + k = time |> }
+        invariant { [> time <= 0 -> result.x = 0 |> } 
         invariant { [> time > 0 -> k >= 0 |> }
           (skip | k := k - 1);
             
           HavocR s0 { [> s0 = 1 |>};
-          (skip | x := (x + s0));
+          (skip | temp1 := result.x);
+          (skip | result.x := (temp1 + s0));
         done;
     end;
-
-    |_ result := new Cell _|;
-    |_ result.x := x _|;
-    |_ result.c := c _|;
-
 end
 
 
