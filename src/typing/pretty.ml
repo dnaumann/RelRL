@@ -231,7 +231,7 @@ let pp_effect_elt outf {effect_kind; effect_desc=desc} =
 
 let pp_effect' outf eff =
   (* pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ";@;") pp_effect_elt outf eff *)
-  let semi ppf () = Format.fprintf ppf " ;@ " in
+  let semi ppf () = Format.fprintf ppf " ;@; " in
   pp_print_list ~pp_sep:semi pp_effect_elt outf eff
 
 let pp_effect outf eff = fprintf outf "@[%a@]" pp_effect' eff
