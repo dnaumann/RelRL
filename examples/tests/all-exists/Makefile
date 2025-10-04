@@ -1,7 +1,7 @@
 WHY3=why3
 WHYREL=../../../bin/whyrel
 WHYREL_STDLIB=../../../stdlib
-FILES=havoc_test.rl examples.rl
+FILES=havoc_test.rl conditional_loop.rl
 
 all: all_exists_tests.mlw
 
