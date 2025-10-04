@@ -1,0 +1,88 @@
+interface EMPTY =
+end
+
+module U : EMPTY =
+  /* Example from Unno'21: Constraint-based relational verification */
+  meth noninterference (high: int, low: int) : int
+    effects { rd high, low }
+  = var x: int in
+    var b: int in
+    if high <> 0 then
+      havoc x;
+      if x >= low then
+        skip
+      else
+        while true do skip done;
+      end;
+    else
+      x := low;
+      havoc b;
+      while b <> 0 do
+        x := x+1;
+        havoc b;
+      done;
+    end;
+    result := x;
+end
+
+bimodule UREL (U | U) =
+
+  meth noninterference (high: int, low: int | high: int, low: int) : (int | int)
+    requires { Agree low }
+    ensures  { Agree result }
+    effects  { rd high, low | rd high, low }
+  = Var x: int | x: int in
+    Var b: int | b: int in
+
+    If4 high <> 0 | high <> 0
+    thenThen
+      ( havoc x | skip ); HavocR x { Agree x };
+      If (x >= low) | (x >= low) then
+        |_ skip _|
+      else
+        ( while true do skip done | skip );
+        Assert { Both false };
+        ( skip | while true do variant { 0 } skip done );
+      end;
+
+    thenElse
+      ( havoc x | skip );
+      ( if x >= low then skip else while true do skip done end;
+      | skip );
+      Assert { <| x >= low <] };
+      ( skip | x := low );
+      HavocR b { [> b >] = [< x <] - [> x >] };
+      WhileR b <> 0 do
+        invariant { [> b >= 0 |> }
+        invariant { [< x <] >= [> x >] }
+        invariant { [> b >] = [< x <] - [> x >] }
+        variant { [> b >] }
+        ( skip | x := x+1 );
+        HavocR b { [> b >] = [< x <] - [> x >] }
+      done;
+
+    elseThen
+      ( x := low; havoc b | skip );
+      WhileL b <> 0 do
+        invariant { <| x >= low <] }
+        ( x := x+1; havoc b | skip );
+      done;
+      HavocR x { Agree x };
+      ( skip
+      | if x >= low then skip
+        else assert { false }; while true do variant { 0 } skip done
+        end; )
+
+    elseElse
+      |_ x := low _|;
+      ( havoc b | skip ); HavocR b { Agree b };
+      While b <> 0 | b <> 0 . do
+        invariant { Agree b /\ Agree x }
+        |_ x := x+1 _|;
+        ( havoc b | skip ); HavocR b { Agree b };
+      done;
+    end;
+
+    |_ result := x _|;
+
+end

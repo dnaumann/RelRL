@@ -313,7 +313,6 @@ module FREL
                   invariant { 0 <= (! l_i) }
                   (l_y := ([@expl:havoc y] (any int)));
                   (l_temp := ([@expl:temp := get(a,i)] (A.get (! l_a) (! l_i))));
-              
                   (l_sum
                      := ([@expl:sum := sum + temp + y]
                          (((! l_sum) + (! l_temp)) + (! l_y))));
