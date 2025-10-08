@@ -1,6 +1,6 @@
 WHY3=why3
-WHYREL=../../../../../bin/whyrel
-WHYREL_STDLIB=../../../../../stdlib
+WHYREL=whyrel
+WHYREL_STDLIB=${HOME}/RelRL/stdlib
 PROG = counter_diff
 
 all: $(PROG).mlw

@@ -1,7 +1,7 @@
 WHY3=why3
-WHYREL=../../../../bin/whyrel
-WHYREL_STDLIB=../../../../stdlib
-PROG = condtional_loop
+WHYREL=whyrel
+WHYREL_STDLIB=${HOME}/RelRL/stdlib
+PROG = conditional_loop
 
 all: $(PROG).mlw
 
