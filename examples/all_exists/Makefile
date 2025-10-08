@@ -1,16 +1,19 @@
 # This makefile will run the makefile in all the examples in this directory
-# including subdirectories. Each example should have its own makefile that can
-# be run independently.
+# including examples in all descendant subdirectories. Each example should have
+# its own makefile that can be run independently.
 
+EXAMPLES := $(shell find . -name Makefile) 
 
-EXAMPLES := $(wildcard */Makefile)
+# remove the current directory's makefile from the list
+EXAMPLES := $(filter-out ./Makefile, $(EXAMPLES))
 
 all: $(EXAMPLES)
-	@for example in $(EXAMPLES); do \
-		$(MAKE) -C $$(dirname $$example); \
+	for dir in $(dir $(EXAMPLES)); do \
+		$(MAKE) -C $$dir; \
 	done
 
-clean: $(EXAMPLES)
-	@for example in $(EXAMPLES); do \
-		$(MAKE) -C $$(dirname $$example) clean; \
+.PHONY: all $(EXAMPLES)
+clean:
+	for dir in $(dir $(EXAMPLES)); do \
+		$(MAKE) -C $$dir clean; \
 	done	
