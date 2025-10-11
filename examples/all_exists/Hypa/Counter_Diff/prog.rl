@@ -19,24 +19,8 @@ module A : I =
   done;
 end
 
-module B : I =
-  meth counter_diff (t: int) : int
-  =
-  var k: int in 
-  var x: int in
-  
-  k := t; 
-  result := 0; 
-  
-  havoc x;
-  while(k > 0) do
-      k := k - 1;
-      result := result + x;
-  done;
-end
 
-
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth counter_diff (t: int | t: int) : (int | int)
     requires { t =:= t }
     ensures  { [< result <] = [> -result >] }                 

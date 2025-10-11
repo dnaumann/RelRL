@@ -1,10 +1,10 @@
 interface I =
-  meth forEx(n:int) : int
+  meth compiler_opt(n:int) : int
     effects { rd n }
 end
 
 module A : I =
-  meth forEx (n: int) : int
+  meth compiler_opt (n: int) : int
   =
     var x: int in
     var b: bool in
@@ -23,7 +23,7 @@ module A : I =
 end
 
 module B : I =
-  meth forEx (n: int) : int
+  meth compiler_opt (n: int) : int
   =
     var x: int in
     var s0: int in  /* 0 suffix to avoid clash with compiler-gend variable s. */
@@ -40,7 +40,7 @@ module B : I =
 end
 
 bimodule FREL (A | B) =
-  meth forEx (n: int | n: int) : (int | int)
+  meth compiler_opt (n: int | n: int) : (int | int)
     requires { n =:= n }
     ensures  { result =:= result }                 
   = 

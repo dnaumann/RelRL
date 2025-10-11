@@ -1,7 +1,7 @@
 WHY3=why3
 WHYREL=whyrel
 WHYREL_STDLIB=${HOME}/RelRL/stdlib
-PROG = paper_example_fig3
+PROG = prog
 
 all: $(PROG).mlw
 

@@ -1,7 +1,7 @@
 WHY3=why3
 WHYREL=whyrel
 WHYREL_STDLIB=${HOME}/RelRL/stdlib
-PROG = havoc_test
+PROG = prog
 
 all: $(PROG).mlw
 

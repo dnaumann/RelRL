@@ -15,20 +15,7 @@ module A : I =
     end;
 end
 
-module B : I =
-  meth p3_gni () : int
-  =
-    var x: bool in
-
-    havoc x;
-    if (x) then
-        result := 1;
-    else
-        result := 2;
-    end;
-end
-
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth p3_gni (|) : (int | int)
     ensures  { result =:= result }                 
   = 

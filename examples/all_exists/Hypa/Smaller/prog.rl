@@ -5,7 +5,7 @@ end
 
 module A : I =
   meth smaller (time: int) : int
-  =
+ =
     var k: int in 
     var b: bool in
 
@@ -25,29 +25,8 @@ module A : I =
     done;
 end
 
-module B : I =
-  meth smaller (time: int) : int
-  =
-    var k: int in 
-    var b: bool in
 
-    k := time;
-    result := 0;
-
-    while (k > 0) do
-        k := k - 1;
-        
-        havoc b;
-
-        if (b) then
-            result := result + 1;
-        else
-            result := result + 3;
-        end;
-    done;
-end
-
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth smaller (time : int | time : int) : (int | int)
     requires { time =:= time }
     ensures  { [> result >] <= [< result <]  }                 
@@ -66,19 +45,19 @@ bimodule FREL (A | B) =
         
         (havoc b | skip);
 
-        If (b) | false then
-            (result := result + 1 | skip);
+        (if (b) then
+            result := result + 1;
         else
-            (result := result + 3 | skip);
-        end;
+            result := result + 3;
+        end | skip);
 
         HavocR b { b =:= b };
 
-        If false | (b) then
-            (skip | result := result + 1 );
+        (skip | if (b) then
+            result := result + 1;
         else
-            (skip | result := result + 3);
-        end;
+            result := result + 3;
+        end);
 
     done;
 end

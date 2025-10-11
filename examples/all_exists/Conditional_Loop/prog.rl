@@ -25,11 +25,15 @@ bimodule ConditionalLoopAlignmentExample (Impl | Impl) =
       invariant { Both (0 <= w /\ w < n) }
       invariant { z =:= z }
       variant { [> (n - w) mod n >] }
+      
       If (w = 0) | (w = 0) then
-         ( havoc z | skip ); HavocR z { z =:= z };
+         ( havoc z | skip ); 
+         HavocR z { z =:= z };
          |_ y := y - 1 _|;
       end;
+    
       |_ w := (w + 1) mod n _|;
+    
     done;
     |_ result := z _|;
 end
