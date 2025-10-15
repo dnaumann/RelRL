@@ -54,25 +54,26 @@ bimodule FREL (A | B) =
     
     (if (result >= l)
     then
-        call skip();?
+        /* call skip();? */
+        skip;
     else
         while (true) do 
-           call skip(); procedures?
+          /* call skip(); */
+          skip;
         done;
     end | skip);
     
     HavocR result { result =:= result };
-
+    
     (skip | if (result >= l)
             then
-              call skip();?
+              /*call skip(); */
+              skip;
             else
         while (true) do 
-           call skip(); procedures?
+           /* call skip(); procedures needed */
+           skip;
         done;
             end);
-
-
-    
 
 end
