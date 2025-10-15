@@ -38,8 +38,9 @@ bimodule FREL (A | A) =
 
     |_ result := 0 _|; 
 
-    While (k > 0) | (k > 0) .  [> false |> | [> false |> do
+    While (k > 0) | (k > 0) .  <| false <] | [> false |> do
      invariant { [> result >] <= [< result <] }
+     invariant { k =:= k }
     
         |_ k := k - 1 _|;
         
