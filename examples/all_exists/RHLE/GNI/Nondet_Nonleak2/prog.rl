@@ -51,7 +51,7 @@ fun run(high, low) {
 */
 end
 
-/*  should not and does not verify  */
+/*  */
 bimodule FREL (A | B) =
   meth prog (|) : (int |int )
   requires { low  =:= low }
@@ -79,9 +79,10 @@ bimodule FREL (A | B) =
 
 
   /* right program calls with existential spec with choicevar */
-  /* syntax error at line 84 col 74.
+  /// Translates to (low =:= low -> flipcoin_ret =:= flipcoin_ret) /\
+        [< low <]  <> [> low >] -> (let x | x = flipcoin_ret | 1 - flipcoin_ret in x =:= x)
   HavocR flipcoin_ret {(low =:= low -> flipcoin_ret =:= flipcoin_ret) /\
-                       ([< low <]  <> [> low >] -> ([> flipcoin_ret >] = ([< 1 - flipcoin_ret <]) ))};
+                       ((([< low <]  <> [> low >]) -> (let x | x = flipcoin_ret | 1 - flipcoin_ret in x =:= x)))};
   
 
   (if (flipcoin_ret = 0) 

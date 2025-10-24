@@ -4018,6 +4018,7 @@ and compile_bimodule_elt mlw_map bi_ctxt elt
     bi_ctxt, Some decl, mlw_map
   | Bimdl_mdef mdef ->
     let Bimethod (bimdecl, _) = mdef in
+    
     if !trans_debug then begin
       Printf.fprintf stderr "> Translating bimethod %s\n" @@
       string_of_ident bimdecl.bimeth_name
@@ -4089,6 +4090,9 @@ let compile_penv ctxt penv =
       let left_mdl, right_mdl = m.bimdl_left_impl, m.bimdl_right_impl in
       let current_bimdl = Some (left_mdl, right_mdl, m.bimdl_name) in
       let bi_ctxt = {bi_ctxt with current_bimdl} in
+      (* Pretty print the bimodule definition *)
+      (* pp_bimodule_def Format.std_formatter m;  *)
+ 
       compile_bimodule mlw_map bi_ctxt m, bi_ctxt
     | _ -> assert false in
   let mlw_map, prog, _ = foldl (fun name (mlw_map, mlw_files, bi_ctxt) ->

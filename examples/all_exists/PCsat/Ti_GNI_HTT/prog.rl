@@ -13,18 +13,6 @@ int x;
 
 x = *;
 x = if (x <= l) then l else x;
-*/
-end
-
-module B : I =
-  meth prog (n: int) : int
-/*  =
-int l;
-int h;
-int x;
-
-x = *;
-x = if (x <= l) then l else x;
 
 [pre]
 l_0 == l_1
@@ -35,7 +23,8 @@ x_0 == x_1
 end
 
 
-bimodule FREL (A | B) =
+
+bimodule FREL (A | A) =
   meth prog (l: int |  l: int) : (int | int)
   requires { l =:= l }
   ensures { result =:= result }

@@ -496,7 +496,7 @@ let pp_bicommand outf c =
   set_margin 10; set_max_indent 6;
   let rec pp_bicommand' outf c = match c with
     | Bihavoc_right (x, f) -> 
-      fprintf outf "@[Havocr@ %a@;on@ right@;@[%a@]@]" pp_ident x.node pp_rformula f
+      fprintf outf "@[Havocr@ %a@; @[%a@]@]" pp_ident x.node pp_rformula f
     | Bisplit (c1, c2) ->
       fprintf outf "@[Bisplit@;(@[%a@]@,@[%a@])@]" pp_command c1 pp_command c2
     | Bisync ac ->

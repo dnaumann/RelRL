@@ -1,0 +1,1606 @@
+(Modules
+ ((((id_str I) (id_ats ()) (id_loc ("" 323 0 323 0)))
+   ((Duseimport ("" 73 0 73 0) false
+     (((Qdot (Qident ((id_str prelude) (id_ats ()) (id_loc ("" 72 0 72 0))))
+        ((id_str Prelude) (id_ats ()) (id_loc ("" 71 0 71 0))))
+       ())))
+    (Duseimport ("" 204 0 204 0) false
+     (((Qident ((id_str State) (id_ats ()) (id_loc ("" 203 0 203 0)))) ())))
+    (Dlet ((id_str prog) (id_ats ()) (id_loc ("" 297 0 297 0))) false RKnone
+     ((expr_desc
+       (Eany
+        ((("" 0 0 0 0) (((id_str s) (id_ats ()) (id_loc ("" 300 0 300 0))))
+          false
+          (PTtyapp
+           (Qident ((id_str state) (id_ats ()) (id_loc ("" 82 0 82 0)))) ())))
+        RKnone
+        ((PTtyapp (Qident ((id_str int) (id_ats ()) (id_loc ("" 3 0 3 0))))
+          ()))
+        ((pat_desc Pwild) (pat_loc ("" 314 0 314 0))) MaskVisible
+        ((sp_pre ()) (sp_post ()) (sp_xpost ()) (sp_reads ())
+         (sp_writes
+          (((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str s) (id_ats ()) (id_loc ("" 301 0 301 0))))
+               ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+            (term_loc ("" 303 0 303 0)))
+           ((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str s) (id_ats ()) (id_loc ("" 301 0 301 0))))
+               ((id_str high) (id_ats ()) (id_loc ("" 206 0 206 0))))))
+            (term_loc ("" 302 0 302 0)))))
+         (sp_alias ()) (sp_variant ()) (sp_checkrw false) (sp_diverge false)
+         (sp_partial false))))
+      (expr_loc ("" 315 0 315 0))))))))
+(Modules
+ ((((id_str A) (id_ats ()) (id_loc ("" 359 0 359 0)))
+   ((Duseimport ("" 73 0 73 0) false
+     (((Qdot (Qident ((id_str prelude) (id_ats ()) (id_loc ("" 72 0 72 0))))
+        ((id_str Prelude) (id_ats ()) (id_loc ("" 71 0 71 0))))
+       ())))
+    (Duseimport ("" 204 0 204 0) false
+     (((Qident ((id_str State) (id_ats ()) (id_loc ("" 203 0 203 0)))) ())))
+    (Duseimport ("" 358 0 358 0) false
+     (((Qident ((id_str I) (id_ats ()) (id_loc ("" 357 0 357 0)))) ())))
+    (Dlet ((id_str prog) (id_ats ()) (id_loc ("" 331 0 331 0))) false RKnone
+     ((expr_desc
+       (Eany
+        ((("" 0 0 0 0) (((id_str s) (id_ats ()) (id_loc ("" 334 0 334 0))))
+          false
+          (PTtyapp
+           (Qident ((id_str state) (id_ats ()) (id_loc ("" 82 0 82 0)))) ())))
+        RKnone
+        ((PTtyapp (Qident ((id_str int) (id_ats ()) (id_loc ("" 3 0 3 0))))
+          ()))
+        ((pat_desc Pwild) (pat_loc ("" 348 0 348 0))) MaskVisible
+        ((sp_pre ()) (sp_post ()) (sp_xpost ()) (sp_reads ())
+         (sp_writes
+          (((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str s) (id_ats ()) (id_loc ("" 335 0 335 0))))
+               ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+            (term_loc ("" 337 0 337 0)))
+           ((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str s) (id_ats ()) (id_loc ("" 335 0 335 0))))
+               ((id_str high) (id_ats ()) (id_loc ("" 206 0 206 0))))))
+            (term_loc ("" 336 0 336 0)))))
+         (sp_alias ()) (sp_variant ()) (sp_checkrw false) (sp_diverge false)
+         (sp_partial false))))
+      (expr_loc ("" 349 0 349 0))))))))
+(Modules
+ ((((id_str B) (id_ats ()) (id_loc ("" 395 0 395 0)))
+   ((Duseimport ("" 73 0 73 0) false
+     (((Qdot (Qident ((id_str prelude) (id_ats ()) (id_loc ("" 72 0 72 0))))
+        ((id_str Prelude) (id_ats ()) (id_loc ("" 71 0 71 0))))
+       ())))
+    (Duseimport ("" 204 0 204 0) false
+     (((Qident ((id_str State) (id_ats ()) (id_loc ("" 203 0 203 0)))) ())))
+    (Duseimport ("" 394 0 394 0) false
+     (((Qident ((id_str I) (id_ats ()) (id_loc ("" 393 0 393 0)))) ())))
+    (Dlet ((id_str prog) (id_ats ()) (id_loc ("" 367 0 367 0))) false RKnone
+     ((expr_desc
+       (Eany
+        ((("" 0 0 0 0) (((id_str s) (id_ats ()) (id_loc ("" 370 0 370 0))))
+          false
+          (PTtyapp
+           (Qident ((id_str state) (id_ats ()) (id_loc ("" 82 0 82 0)))) ())))
+        RKnone
+        ((PTtyapp (Qident ((id_str int) (id_ats ()) (id_loc ("" 3 0 3 0))))
+          ()))
+        ((pat_desc Pwild) (pat_loc ("" 384 0 384 0))) MaskVisible
+        ((sp_pre ()) (sp_post ()) (sp_xpost ()) (sp_reads ())
+         (sp_writes
+          (((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str s) (id_ats ()) (id_loc ("" 371 0 371 0))))
+               ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+            (term_loc ("" 373 0 373 0)))
+           ((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str s) (id_ats ()) (id_loc ("" 371 0 371 0))))
+               ((id_str high) (id_ats ()) (id_loc ("" 206 0 206 0))))))
+            (term_loc ("" 372 0 372 0)))))
+         (sp_alias ()) (sp_variant ()) (sp_checkrw false) (sp_diverge false)
+         (sp_partial false))))
+      (expr_loc ("" 385 0 385 0))))))))
+(Modules
+ ((((id_str FREL) (id_ats ()) (id_loc ("" 857 0 857 0)))
+   ((Duseimport ("" 73 0 73 0) false
+     (((Qdot (Qident ((id_str prelude) (id_ats ()) (id_loc ("" 72 0 72 0))))
+        ((id_str Prelude) (id_ats ()) (id_loc ("" 71 0 71 0))))
+       ())))
+    (Duseimport ("" 204 0 204 0) false
+     (((Qident ((id_str State) (id_ats ()) (id_loc ("" 203 0 203 0)))) ())))
+    (Duseimport ("" 856 0 856 0) false
+     (((Qident ((id_str A) (id_ats ()) (id_loc ("" 855 0 855 0)))) ())))
+    (Duseimport ("" 854 0 854 0) false
+     (((Qident ((id_str B) (id_ats ()) (id_loc ("" 853 0 853 0)))) ())))
+    (Dlet ((id_str prog) (id_ats ()) (id_loc ("" 414 0 414 0))) false RKnone
+     ((expr_desc
+       (Efun
+        ((("" 453 0 453 0)
+          (((id_str l_s) (id_ats ()) (id_loc ("" 424 0 424 0)))) false
+          ((PTtyapp
+            (Qident ((id_str state) (id_ats ()) (id_loc ("" 82 0 82 0)))) ())))
+         (("" 454 0 454 0)
+          (((id_str r_s) (id_ats ()) (id_loc ("" 426 0 426 0)))) false
+          ((PTtyapp
+            (Qident ((id_str state) (id_ats ()) (id_loc ("" 82 0 82 0)))) ())))
+         (("" 455 0 455 0)
+          (((id_str pi) (id_ats ()) (id_loc ("" 431 0 431 0)))) false
+          ((PTtyapp
+            (Qdot
+             (Qident
+              ((id_str PreRefperm) (id_ats ()) (id_loc ("" 84 0 84 0))))
+             ((id_str t) (id_ats ()) (id_loc ("" 83 0 83 0))))
+            ()))))
+        ((PTtuple
+          ((PTtyapp (Qident ((id_str int) (id_ats ()) (id_loc ("" 3 0 3 0))))
+            ())
+           (PTtyapp (Qident ((id_str int) (id_ats ()) (id_loc ("" 3 0 3 0))))
+            ()))))
+        ((pat_desc Pwild) (pat_loc ("" 848 0 848 0))) MaskVisible
+        ((sp_pre
+          (((term_desc
+             (Tidapp
+              (Qident
+               ((id_str okRefperm) (id_ats ()) (id_loc ("" 146 0 146 0))))
+              (((term_desc
+                 (Tident
+                  (Qident
+                   ((id_str l_s) (id_ats ()) (id_loc ("" 428 0 428 0))))))
+                (term_loc ("" 469 0 469 0)))
+               ((term_desc
+                 (Tident
+                  (Qident
+                   ((id_str r_s) (id_ats ()) (id_loc ("" 427 0 427 0))))))
+                (term_loc ("" 468 0 468 0)))
+               ((term_desc
+                 (Tident
+                  (Qident
+                   ((id_str pi) (id_ats ()) (id_loc ("" 432 0 432 0))))))
+                (term_loc ("" 467 0 467 0))))))
+            (term_loc ("" 470 0 470 0)))
+           ((term_desc
+             (Tinnfix
+              ((term_desc
+                (Tident
+                 (Qdot
+                  (Qident
+                   ((id_str l_s) (id_ats ()) (id_loc ("" 428 0 428 0))))
+                  ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+               (term_loc ("" 456 0 456 0)))
+              ((id_str "infix =") (id_ats ()) (id_loc ("" 458 0 458 0)))
+              ((term_desc
+                (Tident
+                 (Qdot
+                  (Qident
+                   ((id_str r_s) (id_ats ()) (id_loc ("" 427 0 427 0))))
+                  ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+               (term_loc ("" 457 0 457 0)))))
+            (term_loc ("" 459 0 459 0)))))
+         (sp_post
+          ((("" 473 0 473 0)
+            ((((pat_desc
+                (Pvar
+                 ((id_str result) (id_ats ()) (id_loc ("" 471 0 471 0)))))
+               (pat_loc ("" 472 0 472 0)))
+              ((term_desc
+                (Tidapp
+                 (Qident
+                  ((id_str okRefperm) (id_ats ()) (id_loc ("" 146 0 146 0))))
+                 (((term_desc
+                    (Tident
+                     (Qident
+                      ((id_str l_s) (id_ats ()) (id_loc ("" 428 0 428 0))))))
+                   (term_loc ("" 469 0 469 0)))
+                  ((term_desc
+                    (Tident
+                     (Qident
+                      ((id_str r_s) (id_ats ()) (id_loc ("" 427 0 427 0))))))
+                   (term_loc ("" 468 0 468 0)))
+                  ((term_desc
+                    (Tident
+                     (Qident
+                      ((id_str pi) (id_ats ()) (id_loc ("" 432 0 432 0))))))
+                   (term_loc ("" 467 0 467 0))))))
+               (term_loc ("" 470 0 470 0))))))
+           (("" 466 0 466 0)
+            ((((pat_desc
+                (Pvar
+                 ((id_str result) (id_ats ()) (id_loc ("" 464 0 464 0)))))
+               (pat_loc ("" 465 0 465 0)))
+              ((term_desc
+                (Tinnfix
+                 ((term_desc
+                   (Tident
+                    (Qdot
+                     (Qident
+                      ((id_str l_s) (id_ats ()) (id_loc ("" 428 0 428 0))))
+                     ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+                  (term_loc ("" 460 0 460 0)))
+                 ((id_str "infix =") (id_ats ()) (id_loc ("" 462 0 462 0)))
+                 ((term_desc
+                   (Tident
+                    (Qdot
+                     (Qident
+                      ((id_str r_s) (id_ats ()) (id_loc ("" 427 0 427 0))))
+                     ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+                  (term_loc ("" 461 0 461 0)))))
+               (term_loc ("" 463 0 463 0))))))))
+         (sp_xpost ()) (sp_reads ())
+         (sp_writes
+          (((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str l_s) (id_ats ()) (id_loc ("" 428 0 428 0))))
+               ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+            (term_loc ("" 846 0 846 0)))
+           ((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str r_s) (id_ats ()) (id_loc ("" 427 0 427 0))))
+               ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+            (term_loc ("" 847 0 847 0)))))
+         (sp_alias ()) (sp_variant ()) (sp_checkrw false) (sp_diverge false)
+         (sp_partial false))
+        ((expr_desc
+          (Elabel ((id_str INIT) (id_ats ()) (id_loc ("" 77 0 77 0)))
+           ((expr_desc
+             (Elet ((id_str r_result) (id_ats ()) (id_loc ("" 420 0 420 0)))
+              false RKnone
+              ((expr_desc
+                (Eapply ((expr_desc Eref) (expr_loc ("" 693 0 693 0)))
+                 ((expr_desc
+                   (Econst (ConstInt ((il_kind ILitDec) (il_int 0)))))
+                  (expr_loc ("" 690 0 690 0)))))
+               (expr_loc ("" 694 0 694 0)))
+              ((expr_desc
+                (Elet
+                 ((id_str l_result) (id_ats ()) (id_loc ("" 417 0 417 0)))
+                 false RKnone
+                 ((expr_desc
+                   (Eapply ((expr_desc Eref) (expr_loc ("" 691 0 691 0)))
+                    ((expr_desc
+                      (Econst (ConstInt ((il_kind ILitDec) (il_int 0)))))
+                     (expr_loc ("" 689 0 689 0)))))
+                  (expr_loc ("" 692 0 692 0)))
+                 ((expr_desc
+                   (Elet
+                    ((id_str l_flipcoin_ret) (id_ats ())
+                     (id_loc ("" 675 0 675 0)))
+                    false RKnone
+                    ((expr_desc
+                      (Eapply ((expr_desc Eref) (expr_loc ("" 484 0 484 0)))
+                       ((expr_desc
+                         (Econst (ConstInt ((il_kind ILitDec) (il_int 0)))))
+                        (expr_loc ("" 483 0 483 0)))))
+                     (expr_loc ("" 485 0 485 0)))
+                    ((expr_desc
+                      (Elet
+                       ((id_str r_flipcoin_ret) (id_ats ())
+                        (id_loc ("" 674 0 674 0)))
+                       false RKnone
+                       ((expr_desc
+                         (Eapply
+                          ((expr_desc Eref) (expr_loc ("" 487 0 487 0)))
+                          ((expr_desc
+                            (Econst
+                             (ConstInt ((il_kind ILitDec) (il_int 0)))))
+                           (expr_loc ("" 486 0 486 0)))))
+                        (expr_loc ("" 488 0 488 0)))
+                       ((expr_desc
+                         (Elet
+                          ((id_str r_choice_var) (id_ats ())
+                           (id_loc ("" 672 0 672 0)))
+                          false RKnone
+                          ((expr_desc
+                            (Eapply
+                             ((expr_desc Eref) (expr_loc ("" 492 0 492 0)))
+                             ((expr_desc
+                               (Econst
+                                (ConstInt ((il_kind ILitDec) (il_int 0)))))
+                              (expr_loc ("" 491 0 491 0)))))
+                           (expr_loc ("" 493 0 493 0)))
+                          ((expr_desc
+                            (Esequence
+                             ((expr_desc
+                               (Eif
+                                ((expr_desc
+                                  (Einnfix
+                                   ((expr_desc
+                                     (Eident
+                                      (Qdot
+                                       (Qident
+                                        ((id_str l_s) (id_ats ())
+                                         (id_loc ("" 428 0 428 0))))
+                                       ((id_str low) (id_ats ())
+                                        (id_loc ("" 205 0 205 0))))))
+                                    (expr_loc ("" 495 0 495 0)))
+                                   ((id_str "infix <") (id_ats ())
+                                    (id_loc ("" 497 0 497 0)))
+                                   ((expr_desc
+                                     (Eident
+                                      (Qdot
+                                       (Qident
+                                        ((id_str l_s) (id_ats ())
+                                         (id_loc ("" 428 0 428 0))))
+                                       ((id_str high) (id_ats ())
+                                        (id_loc ("" 206 0 206 0))))))
+                                    (expr_loc ("" 496 0 496 0)))))
+                                 (expr_loc ("" 498 0 498 0)))
+                                ((expr_desc
+                                  (Eidapp
+                                   (Qident
+                                    ((id_str set_low) (id_ats ())
+                                     (id_loc ("" 502 0 502 0))))
+                                   (((expr_desc
+                                      (Eident
+                                       (Qident
+                                        ((id_str l_s) (id_ats ())
+                                         (id_loc ("" 428 0 428 0))))))
+                                     (expr_loc ("" 501 0 501 0)))
+                                    ((expr_desc
+                                      (Eattr (ATstr "expl:low := 0")
+                                       ((expr_desc
+                                         (Econst
+                                          (ConstInt
+                                           ((il_kind ILitDec) (il_int 0)))))
+                                        (expr_loc ("" 499 0 499 0)))))
+                                     (expr_loc ("" 500 0 500 0))))))
+                                 (expr_loc ("" 503 0 503 0)))
+                                ((expr_desc
+                                  (Eidapp
+                                   (Qident
+                                    ((id_str set_low) (id_ats ())
+                                     (id_loc ("" 507 0 507 0))))
+                                   (((expr_desc
+                                      (Eident
+                                       (Qident
+                                        ((id_str l_s) (id_ats ())
+                                         (id_loc ("" 428 0 428 0))))))
+                                     (expr_loc ("" 506 0 506 0)))
+                                    ((expr_desc
+                                      (Eattr (ATstr "expl:low := 1")
+                                       ((expr_desc
+                                         (Econst
+                                          (ConstInt
+                                           ((il_kind ILitDec) (il_int 1)))))
+                                        (expr_loc ("" 504 0 504 0)))))
+                                     (expr_loc ("" 505 0 505 0))))))
+                                 (expr_loc ("" 508 0 508 0)))))
+                              (expr_loc ("" 820 0 820 0)))
+                             ((expr_desc
+                               (Esequence
+                                ((expr_desc
+                                  (Eif
+                                   ((expr_desc
+                                     (Einnfix
+                                      ((expr_desc
+                                        (Eident
+                                         (Qdot
+                                          (Qident
+                                           ((id_str r_s) (id_ats ())
+                                            (id_loc ("" 427 0 427 0))))
+                                          ((id_str low) (id_ats ())
+                                           (id_loc ("" 205 0 205 0))))))
+                                       (expr_loc ("" 513 0 513 0)))
+                                      ((id_str "infix <") (id_ats ())
+                                       (id_loc ("" 515 0 515 0)))
+                                      ((expr_desc
+                                        (Eident
+                                         (Qdot
+                                          (Qident
+                                           ((id_str r_s) (id_ats ())
+                                            (id_loc ("" 427 0 427 0))))
+                                          ((id_str high) (id_ats ())
+                                           (id_loc ("" 206 0 206 0))))))
+                                       (expr_loc ("" 514 0 514 0)))))
+                                    (expr_loc ("" 516 0 516 0)))
+                                   ((expr_desc
+                                     (Eidapp
+                                      (Qident
+                                       ((id_str set_low) (id_ats ())
+                                        (id_loc ("" 520 0 520 0))))
+                                      (((expr_desc
+                                         (Eident
+                                          (Qident
+                                           ((id_str r_s) (id_ats ())
+                                            (id_loc ("" 427 0 427 0))))))
+                                        (expr_loc ("" 519 0 519 0)))
+                                       ((expr_desc
+                                         (Eattr (ATstr "expl:low := 0")
+                                          ((expr_desc
+                                            (Econst
+                                             (ConstInt
+                                              ((il_kind ILitDec) (il_int 0)))))
+                                           (expr_loc ("" 517 0 517 0)))))
+                                        (expr_loc ("" 518 0 518 0))))))
+                                    (expr_loc ("" 521 0 521 0)))
+                                   ((expr_desc
+                                     (Eidapp
+                                      (Qident
+                                       ((id_str set_low) (id_ats ())
+                                        (id_loc ("" 525 0 525 0))))
+                                      (((expr_desc
+                                         (Eident
+                                          (Qident
+                                           ((id_str r_s) (id_ats ())
+                                            (id_loc ("" 427 0 427 0))))))
+                                        (expr_loc ("" 524 0 524 0)))
+                                       ((expr_desc
+                                         (Eattr (ATstr "expl:low := 1")
+                                          ((expr_desc
+                                            (Econst
+                                             (ConstInt
+                                              ((il_kind ILitDec) (il_int 1)))))
+                                           (expr_loc ("" 522 0 522 0)))))
+                                        (expr_loc ("" 523 0 523 0))))))
+                                    (expr_loc ("" 526 0 526 0)))))
+                                 (expr_loc ("" 821 0 821 0)))
+                                ((expr_desc
+                                  (Esequence
+                                   ((expr_desc
+                                     (Eidapp
+                                      (Qident
+                                       ((id_str "infix :=") (id_ats ())
+                                        (id_loc ("" 12 0 12 0))))
+                                      (((expr_desc
+                                         (Eident
+                                          (Qident
+                                           ((id_str l_flipcoin_ret)
+                                            (id_ats ())
+                                            (id_loc ("" 489 0 489 0))))))
+                                        (expr_loc ("" 532 0 532 0)))
+                                       ((expr_desc
+                                         (Eattr
+                                          (ATstr "expl:havoc flipcoin_ret")
+                                          ((expr_desc
+                                            (Eany () RKnone
+                                             ((PTtyapp
+                                               (Qident
+                                                ((id_str int) (id_ats ())
+                                                 (id_loc ("" 3 0 3 0))))
+                                               ()))
+                                             ((pat_desc Pwild)
+                                              (pat_loc ("" 529 0 529 0)))
+                                             MaskVisible
+                                             ((sp_pre ()) (sp_post ())
+                                              (sp_xpost ()) (sp_reads ())
+                                              (sp_writes ()) (sp_alias ())
+                                              (sp_variant ())
+                                              (sp_checkrw false)
+                                              (sp_diverge false)
+                                              (sp_partial false))))
+                                           (expr_loc ("" 530 0 530 0)))))
+                                        (expr_loc ("" 531 0 531 0))))))
+                                    (expr_loc ("" 533 0 533 0)))
+                                   ((expr_desc
+                                     (Esequence
+                                      ((expr_desc
+                                        (Eassert Assume
+                                         ((term_desc
+                                           (Tbinop
+                                            ((term_desc
+                                              (Tinfix
+                                               ((term_desc
+                                                 (Tconst
+                                                  (ConstInt
+                                                   ((il_kind ILitDec)
+                                                    (il_int 0)))))
+                                                (term_loc ("" 536 0 536 0)))
+                                               ((id_str "infix =")
+                                                (id_ats ())
+                                                (id_loc ("" 539 0 539 0)))
+                                               ((term_desc
+                                                 (Tidapp
+                                                  (Qident
+                                                   ((id_str "prefix !")
+                                                    (id_ats ())
+                                                    (id_loc ("" 11 0 11 0))))
+                                                  (((term_desc
+                                                     (Tident
+                                                      (Qident
+                                                       ((id_str
+                                                         l_flipcoin_ret)
+                                                        (id_ats ())
+                                                        (id_loc
+                                                         ("" 489 0 489 0))))))
+                                                    (term_loc
+                                                     ("" 537 0 537 0))))))
+                                                (term_loc ("" 538 0 538 0)))))
+                                             (term_loc ("" 540 0 540 0)))
+                                            DTor
+                                            ((term_desc
+                                              (Tinfix
+                                               ((term_desc
+                                                 (Tidapp
+                                                  (Qident
+                                                   ((id_str "prefix !")
+                                                    (id_ats ())
+                                                    (id_loc ("" 11 0 11 0))))
+                                                  (((term_desc
+                                                     (Tident
+                                                      (Qident
+                                                       ((id_str
+                                                         l_flipcoin_ret)
+                                                        (id_ats ())
+                                                        (id_loc
+                                                         ("" 489 0 489 0))))))
+                                                    (term_loc
+                                                     ("" 541 0 541 0))))))
+                                                (term_loc ("" 542 0 542 0)))
+                                               ((id_str "infix =")
+                                                (id_ats ())
+                                                (id_loc ("" 544 0 544 0)))
+                                               ((term_desc
+                                                 (Tconst
+                                                  (ConstInt
+                                                   ((il_kind ILitDec)
+                                                    (il_int 1)))))
+                                                (term_loc ("" 543 0 543 0)))))
+                                             (term_loc ("" 545 0 545 0)))))
+                                          (term_loc ("" 547 0 547 0)))))
+                                       (expr_loc ("" 548 0 548 0)))
+                                      ((expr_desc
+                                        (Esequence
+                                         ((expr_desc
+                                           (Eassert Assert
+                                            ((term_desc
+                                              (Tquant DTexists
+                                               ((("" 553 0 553 0)
+                                                 (((id_str r_flipcoin_ret)
+                                                   (id_ats ())
+                                                   (id_loc ("" 551 0 551 0))))
+                                                 false
+                                                 ((PTtyapp
+                                                   (Qident
+                                                    ((id_str int) (id_ats ())
+                                                     (id_loc ("" 3 0 3 0))))
+                                                   ()))))
+                                               ()
+                                               ((term_desc
+                                                 (Tbinop
+                                                  ((term_desc
+                                                    (Tbinop
+                                                     ((term_desc
+                                                       (Tinnfix
+                                                        ((term_desc
+                                                          (Tident
+                                                           (Qdot
+                                                            (Qident
+                                                             ((id_str l_s)
+                                                              (id_ats ())
+                                                              (id_loc
+                                                               ("" 428 0 428
+                                                                0))))
+                                                            ((id_str low)
+                                                             (id_ats ())
+                                                             (id_loc
+                                                              ("" 205 0 205
+                                                               0))))))
+                                                         (term_loc
+                                                          ("" 554 0 554 0)))
+                                                        ((id_str "infix =")
+                                                         (id_ats ())
+                                                         (id_loc
+                                                          ("" 556 0 556 0)))
+                                                        ((term_desc
+                                                          (Tident
+                                                           (Qdot
+                                                            (Qident
+                                                             ((id_str r_s)
+                                                              (id_ats ())
+                                                              (id_loc
+                                                               ("" 427 0 427
+                                                                0))))
+                                                            ((id_str low)
+                                                             (id_ats ())
+                                                             (id_loc
+                                                              ("" 205 0 205
+                                                               0))))))
+                                                         (term_loc
+                                                          ("" 555 0 555 0)))))
+                                                      (term_loc
+                                                       ("" 557 0 557 0)))
+                                                     DTimplies
+                                                     ((term_desc
+                                                       (Tinnfix
+                                                        ((term_desc
+                                                          (Tidapp
+                                                           (Qident
+                                                            ((id_str
+                                                              "prefix !")
+                                                             (id_ats ())
+                                                             (id_loc
+                                                              ("" 11 0 11 0))))
+                                                           (((term_desc
+                                                              (Tident
+                                                               (Qident
+                                                                ((id_str
+                                                                  l_flipcoin_ret)
+                                                                 (id_ats ())
+                                                                 (id_loc
+                                                                  ("" 489 0
+                                                                   489 0))))))
+                                                             (term_loc
+                                                              ("" 558 0 558
+                                                               0))))))
+                                                         (term_loc
+                                                          ("" 559 0 559 0)))
+                                                        ((id_str "infix =")
+                                                         (id_ats ())
+                                                         (id_loc
+                                                          ("" 561 0 561 0)))
+                                                        ((term_desc
+                                                          (Tident
+                                                           (Qident
+                                                            ((id_str
+                                                              r_flipcoin_ret)
+                                                             (id_ats ())
+                                                             (id_loc
+                                                              ("" 552 0 552
+                                                               0))))))
+                                                         (term_loc
+                                                          ("" 560 0 560 0)))))
+                                                      (term_loc
+                                                       ("" 562 0 562 0)))))
+                                                   (term_loc
+                                                    ("" 563 0 563 0)))
+                                                  DTand
+                                                  ((term_desc
+                                                    (Tbinop
+                                                     ((term_desc
+                                                       (Tinfix
+                                                        ((term_desc
+                                                          (Tident
+                                                           (Qdot
+                                                            (Qident
+                                                             ((id_str l_s)
+                                                              (id_ats ())
+                                                              (id_loc
+                                                               ("" 428 0 428
+                                                                0))))
+                                                            ((id_str low)
+                                                             (id_ats ())
+                                                             (id_loc
+                                                              ("" 205 0 205
+                                                               0))))))
+                                                         (term_loc
+                                                          ("" 564 0 564 0)))
+                                                        ((id_str "infix <>")
+                                                         (id_ats ())
+                                                         (id_loc
+                                                          ("" 566 0 566 0)))
+                                                        ((term_desc
+                                                          (Tident
+                                                           (Qdot
+                                                            (Qident
+                                                             ((id_str r_s)
+                                                              (id_ats ())
+                                                              (id_loc
+                                                               ("" 427 0 427
+                                                                0))))
+                                                            ((id_str low)
+                                                             (id_ats ())
+                                                             (id_loc
+                                                              ("" 205 0 205
+                                                               0))))))
+                                                         (term_loc
+                                                          ("" 565 0 565 0)))))
+                                                      (term_loc
+                                                       ("" 567 0 567 0)))
+                                                     DTimplies
+                                                     ((term_desc
+                                                       (Tlet
+                                                        ((id_str l_x)
+                                                         (id_ats ())
+                                                         (id_loc
+                                                          ("" 582 0 582 0)))
+                                                        ((term_desc
+                                                          (Tidapp
+                                                           (Qident
+                                                            ((id_str
+                                                              "prefix !")
+                                                             (id_ats ())
+                                                             (id_loc
+                                                              ("" 11 0 11 0))))
+                                                           (((term_desc
+                                                              (Tident
+                                                               (Qident
+                                                                ((id_str
+                                                                  l_flipcoin_ret)
+                                                                 (id_ats ())
+                                                                 (id_loc
+                                                                  ("" 489 0
+                                                                   489 0))))))
+                                                             (term_loc
+                                                              ("" 568 0 568
+                                                               0))))))
+                                                         (term_loc
+                                                          ("" 569 0 569 0)))
+                                                        ((term_desc
+                                                          (Tlet
+                                                           ((id_str r_x)
+                                                            (id_ats ())
+                                                            (id_loc
+                                                             ("" 580 0 580 0)))
+                                                           ((term_desc
+                                                             (Tinfix
+                                                              ((term_desc
+                                                                (Tconst
+                                                                 (ConstInt
+                                                                  ((il_kind
+                                                                    ILitDec)
+                                                                   (il_int 1)))))
+                                                               (term_loc
+                                                                ("" 570 0 570
+                                                                 0)))
+                                                              ((id_str
+                                                                "infix -")
+                                                               (id_ats ())
+                                                               (id_loc
+                                                                ("" 572 0 572
+                                                                 0)))
+                                                              ((term_desc
+                                                                (Tident
+                                                                 (Qident
+                                                                  ((id_str
+                                                                    r_flipcoin_ret)
+                                                                   (id_ats
+                                                                    ())
+                                                                   (id_loc
+                                                                    ("" 552 0
+                                                                    552 0))))))
+                                                               (term_loc
+                                                                ("" 571 0 571
+                                                                 0)))))
+                                                            (term_loc
+                                                             ("" 573 0 573 0)))
+                                                           ((term_desc
+                                                             (Tinnfix
+                                                              ((term_desc
+                                                                (Tident
+                                                                 (Qident
+                                                                  ((id_str
+                                                                    l_x)
+                                                                   (id_ats
+                                                                    ())
+                                                                   (id_loc
+                                                                    ("" 574 0
+                                                                    574 0))))))
+                                                               (term_loc
+                                                                ("" 576 0 576
+                                                                 0)))
+                                                              ((id_str
+                                                                "infix =")
+                                                               (id_ats ())
+                                                               (id_loc
+                                                                ("" 578 0 578
+                                                                 0)))
+                                                              ((term_desc
+                                                                (Tident
+                                                                 (Qident
+                                                                  ((id_str
+                                                                    r_x)
+                                                                   (id_ats
+                                                                    ())
+                                                                   (id_loc
+                                                                    ("" 575 0
+                                                                    575 0))))))
+                                                               (term_loc
+                                                                ("" 577 0 577
+                                                                 0)))))
+                                                            (term_loc
+                                                             ("" 579 0 579 0)))))
+                                                         (term_loc
+                                                          ("" 581 0 581 0)))))
+                                                      (term_loc
+                                                       ("" 583 0 583 0)))))
+                                                   (term_loc
+                                                    ("" 584 0 584 0)))))
+                                                (term_loc ("" 585 0 585 0)))))
+                                             (term_loc ("" 586 0 586 0)))))
+                                          (expr_loc ("" 587 0 587 0)))
+                                         ((expr_desc
+                                           (Esequence
+                                            ((expr_desc
+                                              (Eidapp
+                                               (Qident
+                                                ((id_str "infix :=")
+                                                 (id_ats ())
+                                                 (id_loc ("" 12 0 12 0))))
+                                               (((expr_desc
+                                                  (Eident
+                                                   (Qident
+                                                    ((id_str r_flipcoin_ret)
+                                                     (id_ats ())
+                                                     (id_loc
+                                                      ("" 490 0 490 0))))))
+                                                 (expr_loc ("" 592 0 592 0)))
+                                                ((expr_desc
+                                                  (Eattr
+                                                   (ATstr
+                                                    "expl:havoc flipcoin_ret")
+                                                   ((expr_desc
+                                                     (Eany () RKnone
+                                                      ((PTtyapp
+                                                        (Qident
+                                                         ((id_str int)
+                                                          (id_ats ())
+                                                          (id_loc
+                                                           ("" 3 0 3 0))))
+                                                        ()))
+                                                      ((pat_desc Pwild)
+                                                       (pat_loc
+                                                        ("" 589 0 589 0)))
+                                                      MaskVisible
+                                                      ((sp_pre ())
+                                                       (sp_post ())
+                                                       (sp_xpost ())
+                                                       (sp_reads ())
+                                                       (sp_writes ())
+                                                       (sp_alias ())
+                                                       (sp_variant ())
+                                                       (sp_checkrw false)
+                                                       (sp_diverge false)
+                                                       (sp_partial false))))
+                                                    (expr_loc
+                                                     ("" 590 0 590 0)))))
+                                                 (expr_loc ("" 591 0 591 0))))))
+                                             (expr_loc ("" 593 0 593 0)))
+                                            ((expr_desc
+                                              (Esequence
+                                               ((expr_desc
+                                                 (Eassert Assume
+                                                  ((term_desc
+                                                    (Tbinop
+                                                     ((term_desc
+                                                       (Tbinop
+                                                        ((term_desc
+                                                          (Tinnfix
+                                                           ((term_desc
+                                                             (Tident
+                                                              (Qdot
+                                                               (Qident
+                                                                ((id_str l_s)
+                                                                 (id_ats ())
+                                                                 (id_loc
+                                                                  ("" 428 0
+                                                                   428 0))))
+                                                               ((id_str low)
+                                                                (id_ats ())
+                                                                (id_loc
+                                                                 ("" 205 0
+                                                                  205 0))))))
+                                                            (term_loc
+                                                             ("" 595 0 595 0)))
+                                                           ((id_str
+                                                             "infix =")
+                                                            (id_ats ())
+                                                            (id_loc
+                                                             ("" 597 0 597 0)))
+                                                           ((term_desc
+                                                             (Tident
+                                                              (Qdot
+                                                               (Qident
+                                                                ((id_str r_s)
+                                                                 (id_ats ())
+                                                                 (id_loc
+                                                                  ("" 427 0
+                                                                   427 0))))
+                                                               ((id_str low)
+                                                                (id_ats ())
+                                                                (id_loc
+                                                                 ("" 205 0
+                                                                  205 0))))))
+                                                            (term_loc
+                                                             ("" 596 0 596 0)))))
+                                                         (term_loc
+                                                          ("" 598 0 598 0)))
+                                                        DTimplies
+                                                        ((term_desc
+                                                          (Tinnfix
+                                                           ((term_desc
+                                                             (Tidapp
+                                                              (Qident
+                                                               ((id_str
+                                                                 "prefix !")
+                                                                (id_ats ())
+                                                                (id_loc
+                                                                 ("" 11 0 11
+                                                                  0))))
+                                                              (((term_desc
+                                                                 (Tident
+                                                                  (Qident
+                                                                   ((id_str
+                                                                    l_flipcoin_ret)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 489 0
+                                                                    489 0))))))
+                                                                (term_loc
+                                                                 ("" 599 0
+                                                                  599 0))))))
+                                                            (term_loc
+                                                             ("" 600 0 600 0)))
+                                                           ((id_str
+                                                             "infix =")
+                                                            (id_ats ())
+                                                            (id_loc
+                                                             ("" 603 0 603 0)))
+                                                           ((term_desc
+                                                             (Tidapp
+                                                              (Qident
+                                                               ((id_str
+                                                                 "prefix !")
+                                                                (id_ats ())
+                                                                (id_loc
+                                                                 ("" 11 0 11
+                                                                  0))))
+                                                              (((term_desc
+                                                                 (Tident
+                                                                  (Qident
+                                                                   ((id_str
+                                                                    r_flipcoin_ret)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 490 0
+                                                                    490 0))))))
+                                                                (term_loc
+                                                                 ("" 601 0
+                                                                  601 0))))))
+                                                            (term_loc
+                                                             ("" 602 0 602 0)))))
+                                                         (term_loc
+                                                          ("" 604 0 604 0)))))
+                                                      (term_loc
+                                                       ("" 605 0 605 0)))
+                                                     DTand
+                                                     ((term_desc
+                                                       (Tbinop
+                                                        ((term_desc
+                                                          (Tinfix
+                                                           ((term_desc
+                                                             (Tident
+                                                              (Qdot
+                                                               (Qident
+                                                                ((id_str l_s)
+                                                                 (id_ats ())
+                                                                 (id_loc
+                                                                  ("" 428 0
+                                                                   428 0))))
+                                                               ((id_str low)
+                                                                (id_ats ())
+                                                                (id_loc
+                                                                 ("" 205 0
+                                                                  205 0))))))
+                                                            (term_loc
+                                                             ("" 606 0 606 0)))
+                                                           ((id_str
+                                                             "infix <>")
+                                                            (id_ats ())
+                                                            (id_loc
+                                                             ("" 608 0 608 0)))
+                                                           ((term_desc
+                                                             (Tident
+                                                              (Qdot
+                                                               (Qident
+                                                                ((id_str r_s)
+                                                                 (id_ats ())
+                                                                 (id_loc
+                                                                  ("" 427 0
+                                                                   427 0))))
+                                                               ((id_str low)
+                                                                (id_ats ())
+                                                                (id_loc
+                                                                 ("" 205 0
+                                                                  205 0))))))
+                                                            (term_loc
+                                                             ("" 607 0 607 0)))))
+                                                         (term_loc
+                                                          ("" 609 0 609 0)))
+                                                        DTimplies
+                                                        ((term_desc
+                                                          (Tlet
+                                                           ((id_str l_x)
+                                                            (id_ats ())
+                                                            (id_loc
+                                                             ("" 625 0 625 0)))
+                                                           ((term_desc
+                                                             (Tidapp
+                                                              (Qident
+                                                               ((id_str
+                                                                 "prefix !")
+                                                                (id_ats ())
+                                                                (id_loc
+                                                                 ("" 11 0 11
+                                                                  0))))
+                                                              (((term_desc
+                                                                 (Tident
+                                                                  (Qident
+                                                                   ((id_str
+                                                                    l_flipcoin_ret)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 489 0
+                                                                    489 0))))))
+                                                                (term_loc
+                                                                 ("" 610 0
+                                                                  610 0))))))
+                                                            (term_loc
+                                                             ("" 611 0 611 0)))
+                                                           ((term_desc
+                                                             (Tlet
+                                                              ((id_str r_x)
+                                                               (id_ats ())
+                                                               (id_loc
+                                                                ("" 623 0 623
+                                                                 0)))
+                                                              ((term_desc
+                                                                (Tinfix
+                                                                 ((term_desc
+                                                                   (Tconst
+                                                                    (ConstInt
+                                                                    ((il_kind
+                                                                    ILitDec)
+                                                                    (il_int
+                                                                    1)))))
+                                                                  (term_loc
+                                                                   ("" 612 0
+                                                                    612 0)))
+                                                                 ((id_str
+                                                                   "infix -")
+                                                                  (id_ats ())
+                                                                  (id_loc
+                                                                   ("" 615 0
+                                                                    615 0)))
+                                                                 ((term_desc
+                                                                   (Tidapp
+                                                                    (Qident
+                                                                    ((id_str
+                                                                    "prefix !")
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 11 0
+                                                                    11 0))))
+                                                                    (((term_desc
+                                                                    (Tident
+                                                                    (Qident
+                                                                    ((id_str
+                                                                    r_flipcoin_ret)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 490 0
+                                                                    490 0))))))
+                                                                    (term_loc
+                                                                    ("" 613 0
+                                                                    613 0))))))
+                                                                  (term_loc
+                                                                   ("" 614 0
+                                                                    614 0)))))
+                                                               (term_loc
+                                                                ("" 616 0 616
+                                                                 0)))
+                                                              ((term_desc
+                                                                (Tinnfix
+                                                                 ((term_desc
+                                                                   (Tident
+                                                                    (Qident
+                                                                    ((id_str
+                                                                    l_x)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 617 0
+                                                                    617 0))))))
+                                                                  (term_loc
+                                                                   ("" 619 0
+                                                                    619 0)))
+                                                                 ((id_str
+                                                                   "infix =")
+                                                                  (id_ats ())
+                                                                  (id_loc
+                                                                   ("" 621 0
+                                                                    621 0)))
+                                                                 ((term_desc
+                                                                   (Tident
+                                                                    (Qident
+                                                                    ((id_str
+                                                                    r_x)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 618 0
+                                                                    618 0))))))
+                                                                  (term_loc
+                                                                   ("" 620 0
+                                                                    620 0)))))
+                                                               (term_loc
+                                                                ("" 622 0 622
+                                                                 0)))))
+                                                            (term_loc
+                                                             ("" 624 0 624 0)))))
+                                                         (term_loc
+                                                          ("" 626 0 626 0)))))
+                                                      (term_loc
+                                                       ("" 627 0 627 0)))))
+                                                   (term_loc
+                                                    ("" 628 0 628 0)))))
+                                                (expr_loc ("" 629 0 629 0)))
+                                               ((expr_desc
+                                                 (Esequence
+                                                  ((expr_desc
+                                                    (Eif
+                                                     ((expr_desc
+                                                       (Einnfix
+                                                        ((expr_desc
+                                                          (Eidapp
+                                                           (Qident
+                                                            ((id_str
+                                                              "prefix !")
+                                                             (id_ats ())
+                                                             (id_loc
+                                                              ("" 11 0 11 0))))
+                                                           (((expr_desc
+                                                              (Eident
+                                                               (Qident
+                                                                ((id_str
+                                                                  l_flipcoin_ret)
+                                                                 (id_ats ())
+                                                                 (id_loc
+                                                                  ("" 489 0
+                                                                   489 0))))))
+                                                             (expr_loc
+                                                              ("" 632 0 632
+                                                               0))))))
+                                                         (expr_loc
+                                                          ("" 633 0 633 0)))
+                                                        ((id_str "infix =")
+                                                         (id_ats ())
+                                                         (id_loc
+                                                          ("" 635 0 635 0)))
+                                                        ((expr_desc
+                                                          (Econst
+                                                           (ConstInt
+                                                            ((il_kind
+                                                              ILitDec)
+                                                             (il_int 0)))))
+                                                         (expr_loc
+                                                          ("" 634 0 634 0)))))
+                                                      (expr_loc
+                                                       ("" 636 0 636 0)))
+                                                     ((expr_desc
+                                                       (Eidapp
+                                                        (Qident
+                                                         ((id_str set_low)
+                                                          (id_ats ())
+                                                          (id_loc
+                                                           ("" 643 0 643 0))))
+                                                        (((expr_desc
+                                                           (Eident
+                                                            (Qident
+                                                             ((id_str l_s)
+                                                              (id_ats ())
+                                                              (id_loc
+                                                               ("" 428 0 428
+                                                                0))))))
+                                                          (expr_loc
+                                                           ("" 642 0 642 0)))
+                                                         ((expr_desc
+                                                           (Eattr
+                                                            (ATstr
+                                                             "expl:low := 1 - low")
+                                                            ((expr_desc
+                                                              (Einnfix
+                                                               ((expr_desc
+                                                                 (Econst
+                                                                  (ConstInt
+                                                                   ((il_kind
+                                                                    ILitDec)
+                                                                    (il_int
+                                                                    1)))))
+                                                                (expr_loc
+                                                                 ("" 637 0
+                                                                  637 0)))
+                                                               ((id_str
+                                                                 "infix -")
+                                                                (id_ats ())
+                                                                (id_loc
+                                                                 ("" 639 0
+                                                                  639 0)))
+                                                               ((expr_desc
+                                                                 (Eident
+                                                                  (Qdot
+                                                                   (Qident
+                                                                    ((id_str
+                                                                    l_s)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 428 0
+                                                                    428 0))))
+                                                                   ((id_str
+                                                                    low)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 205 0
+                                                                    205 0))))))
+                                                                (expr_loc
+                                                                 ("" 638 0
+                                                                  638 0)))))
+                                                             (expr_loc
+                                                              ("" 640 0 640
+                                                               0)))))
+                                                          (expr_loc
+                                                           ("" 641 0 641 0))))))
+                                                      (expr_loc
+                                                       ("" 644 0 644 0)))
+                                                     ((expr_desc (Etuple ()))
+                                                      (expr_loc
+                                                       ("" 645 0 645 0)))))
+                                                   (expr_loc
+                                                    ("" 822 0 822 0)))
+                                                  ((expr_desc
+                                                    (Esequence
+                                                     ((expr_desc
+                                                       (Eif
+                                                        ((expr_desc
+                                                          (Einnfix
+                                                           ((expr_desc
+                                                             (Eidapp
+                                                              (Qident
+                                                               ((id_str
+                                                                 "prefix !")
+                                                                (id_ats ())
+                                                                (id_loc
+                                                                 ("" 11 0 11
+                                                                  0))))
+                                                              (((expr_desc
+                                                                 (Eident
+                                                                  (Qident
+                                                                   ((id_str
+                                                                    r_flipcoin_ret)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 490 0
+                                                                    490 0))))))
+                                                                (expr_loc
+                                                                 ("" 650 0
+                                                                  650 0))))))
+                                                            (expr_loc
+                                                             ("" 651 0 651 0)))
+                                                           ((id_str
+                                                             "infix =")
+                                                            (id_ats ())
+                                                            (id_loc
+                                                             ("" 653 0 653 0)))
+                                                           ((expr_desc
+                                                             (Econst
+                                                              (ConstInt
+                                                               ((il_kind
+                                                                 ILitDec)
+                                                                (il_int 0)))))
+                                                            (expr_loc
+                                                             ("" 652 0 652 0)))))
+                                                         (expr_loc
+                                                          ("" 654 0 654 0)))
+                                                        ((expr_desc
+                                                          (Eidapp
+                                                           (Qident
+                                                            ((id_str set_low)
+                                                             (id_ats ())
+                                                             (id_loc
+                                                              ("" 661 0 661
+                                                               0))))
+                                                           (((expr_desc
+                                                              (Eident
+                                                               (Qident
+                                                                ((id_str r_s)
+                                                                 (id_ats ())
+                                                                 (id_loc
+                                                                  ("" 427 0
+                                                                   427 0))))))
+                                                             (expr_loc
+                                                              ("" 660 0 660
+                                                               0)))
+                                                            ((expr_desc
+                                                              (Eattr
+                                                               (ATstr
+                                                                "expl:low := 1 - low")
+                                                               ((expr_desc
+                                                                 (Einnfix
+                                                                  ((expr_desc
+                                                                    (Econst
+                                                                    (ConstInt
+                                                                    ((il_kind
+                                                                    ILitDec)
+                                                                    (il_int
+                                                                    1)))))
+                                                                   (expr_loc
+                                                                    ("" 655 0
+                                                                    655 0)))
+                                                                  ((id_str
+                                                                    "infix -")
+                                                                   (id_ats
+                                                                    ())
+                                                                   (id_loc
+                                                                    ("" 657 0
+                                                                    657 0)))
+                                                                  ((expr_desc
+                                                                    (Eident
+                                                                    (Qdot
+                                                                    (Qident
+                                                                    ((id_str
+                                                                    r_s)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 427 0
+                                                                    427 0))))
+                                                                    ((id_str
+                                                                    low)
+                                                                    (id_ats
+                                                                    ())
+                                                                    (id_loc
+                                                                    ("" 205 0
+                                                                    205 0))))))
+                                                                   (expr_loc
+                                                                    ("" 656 0
+                                                                    656 0)))))
+                                                                (expr_loc
+                                                                 ("" 658 0
+                                                                  658 0)))))
+                                                             (expr_loc
+                                                              ("" 659 0 659
+                                                               0))))))
+                                                         (expr_loc
+                                                          ("" 662 0 662 0)))
+                                                        ((expr_desc
+                                                          (Etuple ()))
+                                                         (expr_loc
+                                                          ("" 663 0 663 0)))))
+                                                      (expr_loc
+                                                       ("" 823 0 823 0)))
+                                                     ((expr_desc
+                                                       (Etuple
+                                                        (((expr_desc
+                                                           (Eidapp
+                                                            (Qident
+                                                             ((id_str
+                                                               "prefix !")
+                                                              (id_ats ())
+                                                              (id_loc
+                                                               ("" 11 0 11 0))))
+                                                            (((expr_desc
+                                                               (Eident
+                                                                (Qident
+                                                                 ((id_str
+                                                                   l_result)
+                                                                  (id_ats ())
+                                                                  (id_loc
+                                                                   ("" 476 0
+                                                                    476 0))))))
+                                                              (expr_loc
+                                                               ("" 478 0 478
+                                                                0))))))
+                                                          (expr_loc
+                                                           ("" 479 0 479 0)))
+                                                         ((expr_desc
+                                                           (Eidapp
+                                                            (Qident
+                                                             ((id_str
+                                                               "prefix !")
+                                                              (id_ats ())
+                                                              (id_loc
+                                                               ("" 11 0 11 0))))
+                                                            (((expr_desc
+                                                               (Eident
+                                                                (Qident
+                                                                 ((id_str
+                                                                   r_result)
+                                                                  (id_ats ())
+                                                                  (id_loc
+                                                                   ("" 477 0
+                                                                    477 0))))))
+                                                              (expr_loc
+                                                               ("" 480 0 480
+                                                                0))))))
+                                                          (expr_loc
+                                                           ("" 481 0 481 0))))))
+                                                      (expr_loc
+                                                       ("" 482 0 482 0)))))
+                                                   (expr_loc
+                                                    ("" 826 0 826 0)))))
+                                                (expr_loc ("" 827 0 827 0)))))
+                                             (expr_loc ("" 828 0 828 0)))))
+                                          (expr_loc ("" 830 0 830 0)))))
+                                       (expr_loc ("" 832 0 832 0)))))
+                                    (expr_loc ("" 834 0 834 0)))))
+                                 (expr_loc ("" 835 0 835 0)))))
+                              (expr_loc ("" 838 0 838 0)))))
+                           (expr_loc ("" 839 0 839 0)))))
+                        (expr_loc ("" 840 0 840 0)))))
+                     (expr_loc ("" 841 0 841 0)))))
+                  (expr_loc ("" 842 0 842 0)))))
+               (expr_loc ("" 843 0 843 0)))))
+            (expr_loc ("" 844 0 844 0)))))
+         (expr_loc ("" 845 0 845 0)))))
+      (expr_loc ("" 849 0 849 0))))))))
+(Modules
+ ((((id_str FREL_biinterface) (id_ats ()) (id_loc ("" 951 0 951 0)))
+   ((Duseimport ("" 73 0 73 0) false
+     (((Qdot (Qident ((id_str prelude) (id_ats ()) (id_loc ("" 72 0 72 0))))
+        ((id_str Prelude) (id_ats ()) (id_loc ("" 71 0 71 0))))
+       ())))
+    (Duseimport ("" 204 0 204 0) false
+     (((Qident ((id_str State) (id_ats ()) (id_loc ("" 203 0 203 0)))) ())))
+    (Duseimport ("" 950 0 950 0) false
+     (((Qident ((id_str A) (id_ats ()) (id_loc ("" 949 0 949 0)))) ())))
+    (Duseimport ("" 948 0 948 0) false
+     (((Qident ((id_str B) (id_ats ()) (id_loc ("" 947 0 947 0)))) ())))
+    (Dlet ((id_str prog) (id_ats ()) (id_loc ("" 876 0 876 0))) false RKnone
+     ((expr_desc
+       (Eany
+        ((("" 915 0 915 0)
+          (((id_str l_s) (id_ats ()) (id_loc ("" 886 0 886 0)))) false
+          (PTtyapp
+           (Qident ((id_str state) (id_ats ()) (id_loc ("" 82 0 82 0)))) ()))
+         (("" 916 0 916 0)
+          (((id_str r_s) (id_ats ()) (id_loc ("" 888 0 888 0)))) false
+          (PTtyapp
+           (Qident ((id_str state) (id_ats ()) (id_loc ("" 82 0 82 0)))) ()))
+         (("" 917 0 917 0)
+          (((id_str pi) (id_ats ()) (id_loc ("" 893 0 893 0)))) false
+          (PTtyapp
+           (Qdot
+            (Qident
+             ((id_str PreRefperm) (id_ats ()) (id_loc ("" 84 0 84 0))))
+            ((id_str t) (id_ats ()) (id_loc ("" 83 0 83 0))))
+           ())))
+        RKnone
+        ((PTtuple
+          ((PTtyapp (Qident ((id_str int) (id_ats ()) (id_loc ("" 3 0 3 0))))
+            ())
+           (PTtyapp (Qident ((id_str int) (id_ats ()) (id_loc ("" 3 0 3 0))))
+            ()))))
+        ((pat_desc Pwild) (pat_loc ("" 940 0 940 0))) MaskVisible
+        ((sp_pre
+          (((term_desc
+             (Tidapp
+              (Qident
+               ((id_str okRefperm) (id_ats ()) (id_loc ("" 146 0 146 0))))
+              (((term_desc
+                 (Tident
+                  (Qident
+                   ((id_str l_s) (id_ats ()) (id_loc ("" 890 0 890 0))))))
+                (term_loc ("" 931 0 931 0)))
+               ((term_desc
+                 (Tident
+                  (Qident
+                   ((id_str r_s) (id_ats ()) (id_loc ("" 889 0 889 0))))))
+                (term_loc ("" 930 0 930 0)))
+               ((term_desc
+                 (Tident
+                  (Qident
+                   ((id_str pi) (id_ats ()) (id_loc ("" 894 0 894 0))))))
+                (term_loc ("" 929 0 929 0))))))
+            (term_loc ("" 932 0 932 0)))
+           ((term_desc
+             (Tinnfix
+              ((term_desc
+                (Tident
+                 (Qdot
+                  (Qident
+                   ((id_str l_s) (id_ats ()) (id_loc ("" 890 0 890 0))))
+                  ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+               (term_loc ("" 918 0 918 0)))
+              ((id_str "infix =") (id_ats ()) (id_loc ("" 920 0 920 0)))
+              ((term_desc
+                (Tident
+                 (Qdot
+                  (Qident
+                   ((id_str r_s) (id_ats ()) (id_loc ("" 889 0 889 0))))
+                  ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+               (term_loc ("" 919 0 919 0)))))
+            (term_loc ("" 921 0 921 0)))))
+         (sp_post
+          ((("" 935 0 935 0)
+            ((((pat_desc
+                (Pvar
+                 ((id_str result) (id_ats ()) (id_loc ("" 933 0 933 0)))))
+               (pat_loc ("" 934 0 934 0)))
+              ((term_desc
+                (Tidapp
+                 (Qident
+                  ((id_str okRefperm) (id_ats ()) (id_loc ("" 146 0 146 0))))
+                 (((term_desc
+                    (Tident
+                     (Qident
+                      ((id_str l_s) (id_ats ()) (id_loc ("" 890 0 890 0))))))
+                   (term_loc ("" 931 0 931 0)))
+                  ((term_desc
+                    (Tident
+                     (Qident
+                      ((id_str r_s) (id_ats ()) (id_loc ("" 889 0 889 0))))))
+                   (term_loc ("" 930 0 930 0)))
+                  ((term_desc
+                    (Tident
+                     (Qident
+                      ((id_str pi) (id_ats ()) (id_loc ("" 894 0 894 0))))))
+                   (term_loc ("" 929 0 929 0))))))
+               (term_loc ("" 932 0 932 0))))))
+           (("" 928 0 928 0)
+            ((((pat_desc
+                (Pvar
+                 ((id_str result) (id_ats ()) (id_loc ("" 926 0 926 0)))))
+               (pat_loc ("" 927 0 927 0)))
+              ((term_desc
+                (Tinnfix
+                 ((term_desc
+                   (Tident
+                    (Qdot
+                     (Qident
+                      ((id_str l_s) (id_ats ()) (id_loc ("" 890 0 890 0))))
+                     ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+                  (term_loc ("" 922 0 922 0)))
+                 ((id_str "infix =") (id_ats ()) (id_loc ("" 924 0 924 0)))
+                 ((term_desc
+                   (Tident
+                    (Qdot
+                     (Qident
+                      ((id_str r_s) (id_ats ()) (id_loc ("" 889 0 889 0))))
+                     ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+                  (term_loc ("" 923 0 923 0)))))
+               (term_loc ("" 925 0 925 0))))))))
+         (sp_xpost ()) (sp_reads ())
+         (sp_writes
+          (((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str l_s) (id_ats ()) (id_loc ("" 890 0 890 0))))
+               ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+            (term_loc ("" 937 0 937 0)))
+           ((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str l_s) (id_ats ()) (id_loc ("" 890 0 890 0))))
+               ((id_str high) (id_ats ()) (id_loc ("" 206 0 206 0))))))
+            (term_loc ("" 936 0 936 0)))
+           ((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str r_s) (id_ats ()) (id_loc ("" 889 0 889 0))))
+               ((id_str low) (id_ats ()) (id_loc ("" 205 0 205 0))))))
+            (term_loc ("" 939 0 939 0)))
+           ((term_desc
+             (Tident
+              (Qdot
+               (Qident ((id_str r_s) (id_ats ()) (id_loc ("" 889 0 889 0))))
+               ((id_str high) (id_ats ()) (id_loc ("" 206 0 206 0))))))
+            (term_loc ("" 938 0 938 0)))))
+         (sp_alias ()) (sp_variant ()) (sp_checkrw false) (sp_diverge false)
+         (sp_partial false))))
+      (expr_loc ("" 941 0 941 0))))))))
+(Modules
+ ((((id_str MAIN) (id_ats ()) (id_loc ("" 952 0 952 0)))
+   ((Duseimport ("" 73 0 73 0) false
+     (((Qdot (Qident ((id_str prelude) (id_ats ()) (id_loc ("" 72 0 72 0))))
+        ((id_str Prelude) (id_ats ()) (id_loc ("" 71 0 71 0))))
+       ())))
+    (Duseimport ("" 204 0 204 0) false
+     (((Qident ((id_str State) (id_ats ()) (id_loc ("" 203 0 203 0)))) ())))))))

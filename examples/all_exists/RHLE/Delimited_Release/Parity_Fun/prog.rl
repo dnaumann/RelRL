@@ -68,7 +68,7 @@ bimodule FREL (A | B) =
   (assume { h mod 2 = p } | skip);
 
   /* right prog calls with existential spec */
-  HavocR p { [> h mod 2 = p |> /\ [< p <] = [> p >]}; 
+  HavocR p { [> h mod 2 = p |> /\  p  =:=  p }; 
 
   (if (p = 1) then
     l := 1;

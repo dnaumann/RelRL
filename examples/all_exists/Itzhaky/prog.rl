@@ -11,6 +11,27 @@ module A : I =
   class Cell {sum: int; b: int; }
 
   meth itzhaky (a: int array, n: int) : Cell
+  /*
+  Fig 5 in Itzhaky et al
+
+Original code (in boogie syntax)
+
+  sum1 := 0;
+  havoc b1;
+  if (b1 > 0)
+  { i1 := 0;
+    while (i1 < n1 - 1)
+    { sum1 := sum1 + A1[i1]; i1 := i1 + 1; }
+  } else {
+    i1 := 1;
+    while (i1 < n1)
+    { havoc y1; sum1 := sum1 + A1[i1] + y1; i1 := i1 + 1; } 
+  }
+
+Their spec is in OHyperLTL and asserts alignment of iterations.
+We use postcondition that describes after last iteration, see below.
+
+  */
  
 end
 

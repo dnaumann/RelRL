@@ -1,6 +1,6 @@
 interface I =
   meth compiler_opt(n:int) : int
-    effects { rd n }
+  
 end
 
 module A : I =

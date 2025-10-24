@@ -51,7 +51,7 @@ bimodule FREL (A | B) =
   (assume { 0 <= z /\ z < 20 /\ z mod 2 = 1 } | skip);
 
 
-  HavocR z { [> 0 <= z /\   z  < 20 |> /\ [< z <] = [> z >]}; 
+  HavocR z { [> 0 <= z /\   z  < 20 |> /\  z  =:= z }; 
 
   |_ result := z _|;
 end

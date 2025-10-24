@@ -19,30 +19,10 @@ if (x >= l) {
         skip;
     }
 }
-
 */
 end
 
-module B : I =
-  meth prog (n: int) : int
-/*  =
-int l;
-int h;
-int x;
-
-x = *;
-if (x >= l) {
-    skip;
-} else {
-    while (true) {
-        skip;
-    }
-}
-*/
-end
-
-
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (l: int |  l: int) : (int | int)
   requires { l =:= l }
   ensures { result =:= result }
