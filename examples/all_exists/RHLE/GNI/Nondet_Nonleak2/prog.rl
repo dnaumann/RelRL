@@ -79,8 +79,8 @@ bimodule FREL (A | B) =
 
 
   /* right program calls with existential spec with choicevar */
-  /// Translates to (low =:= low -> flipcoin_ret =:= flipcoin_ret) /\
-        [< low <]  <> [> low >] -> (let x | x = flipcoin_ret | 1 - flipcoin_ret in x =:= x)
+  /* Translates to (low =:= low -> flipcoin_ret =:= flipcoin_ret) /\
+        [< low <]  <> [> low >] -> (let x | x = flipcoin_ret | 1 - flipcoin_ret in x =:= x) */
   HavocR flipcoin_ret {(low =:= low -> flipcoin_ret =:= flipcoin_ret) /\
                        ((([< low <]  <> [> low >]) -> (let x | x = flipcoin_ret | 1 - flipcoin_ret in x =:= x)))};
   
