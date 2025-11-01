@@ -1,0 +1,28 @@
+
+(Modules
+ ((((id_str FREL) (id_ats ()) (id_loc ("" 387 0 387 0)))
+   (
+    (Dlet ((id_str prog) (id_ats ()) (id_loc ("" 256 0 256 0))) false RKnone
+     (                                ((expr_desc
+                                  (Eassert Assume
+                                   ((term_desc
+                                     (Tbinop
+                                      ((term_desc
+                                        (Tbinop
+                                         ((term_desc Ttrue)
+                                          (term_loc ("" 331 0 331 0)))
+                                         DTimplies
+                                         ((term_desc Ttrue)
+                                          (term_loc ("" 332 0 332 0)))))
+                                       (term_loc ("" 333 0 333 0)))
+                                      DTand
+                                      ((term_desc
+                                        (Tbinop
+                                         ((term_desc Ttrue)
+                                          (term_loc ("" 334 0 334 0)))
+                                         DTimplies
+                                         ((term_desc Ttrue)
+                                          (term_loc ("" 335 0 335 0)))))
+                                       (term_loc ("" 336 0 336 0)))))
+                                    (term_loc ("" 337 0 337 0)))))
+                                 (expr_loc ("" 338 0 338 0)))))))))

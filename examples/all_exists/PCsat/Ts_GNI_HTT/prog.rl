@@ -50,7 +50,7 @@ bimodule FREL (A | A) =
               /*call skip(); */
               skip;
             else
-        while (true) do 
+        while (true) do variant { 42 }
            /* call skip(); procedures needed */
            skip;
         done;

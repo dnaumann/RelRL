@@ -756,9 +756,13 @@ Existing Instance state_WhyType.
 
 Parameter alloct: state -> t1 reftype.
 
-Parameter high: state -> Numbers.BinNums.Z.
+Parameter sum_h: state -> Numbers.BinNums.Z.
 
-Parameter low: state -> Numbers.BinNums.Z.
+Parameter f_l: state -> Numbers.BinNums.Z.
+
+Parameter e_l: state -> Numbers.BinNums.Z.
+
+Parameter i_l: state -> Numbers.BinNums.Z.
 
 Axiom state'invariant :
   forall (self:state), ~ mem nullConst (to_fmap1 (alloct self)).
@@ -809,63 +813,230 @@ Parameter pi_rol: t1 reference.
 
 Parameter pi_lor: t1 reference.
 
+Parameter l_x_h: Numbers.BinNums.Z.
+
+Parameter r_x_h: Numbers.BinNums.Z.
+
 Axiom H : (pi_rol = (rol pi)) /\ (pi_lor = (lor pi)).
 
 Axiom Requires : okRefperm l_s r_s pi.
 
-Axiom Requires1 : ((low l_s) = (low r_s)).
+Axiom H1 : ((i_l l_s) = (i_l r_s)).
 
-Axiom H1 : ~ ((low l_s) < (high l_s))%Z.
+Axiom H2 : ((e_l l_s) = (e_l r_s)).
+
+Parameter l_max_sum: Numbers.BinNums.Z.
+
+Axiom Ensures : (l_max_sum = 100%Z).
+
+Parameter r_max_sum: Numbers.BinNums.Z.
+
+Axiom Ensures1 : (r_max_sum = 100%Z).
+
+Parameter l_oob_error: Numbers.BinNums.Z.
+
+Axiom Ensures2 : (l_oob_error = 0%Z).
+
+Parameter r_oob_error: Numbers.BinNums.Z.
+
+Axiom Ensures3 : (r_oob_error = 0%Z).
 
 Parameter l_s1: state.
 
-Axiom H2 : ((alloct l_s1) = (alloct l_s)).
+Axiom H3 : ((alloct l_s1) = (alloct l_s)).
 
-Axiom H3 : ((high l_s1) = (high l_s)).
+Axiom H4 : ((f_l l_s1) = (f_l l_s)).
 
-Axiom Ensures : ((low l_s1) = 1%Z).
+Axiom H5 : ((e_l l_s1) = (e_l l_s)).
 
-Axiom H4 : ~ ((low r_s) < (high r_s))%Z.
+Axiom H6 : ((i_l l_s1) = (i_l l_s)).
+
+Axiom Ensures4 : ((sum_h l_s1) = 0%Z).
 
 Parameter r_s1: state.
 
-Axiom H5 : ((alloct r_s1) = (alloct r_s)).
+Axiom H7 : ((alloct r_s1) = (alloct r_s)).
 
-Axiom H6 : ((high r_s1) = (high r_s)).
+Axiom H8 : ((f_l r_s1) = (f_l r_s)).
 
-Axiom Ensures1 : ((low r_s1) = 1%Z).
+Axiom H9 : ((e_l r_s1) = (e_l r_s)).
 
-Parameter l_flipcoin_ret: Numbers.BinNums.Z.
+Axiom H10 : ((i_l r_s1) = (i_l r_s)).
 
-Axiom Assume : (0%Z = l_flipcoin_ret) \/ (l_flipcoin_ret = 1%Z).
-
-Axiom Assert :
-  exists r_flipcoin_ret:Numbers.BinNums.Z,
-  (((low l_s1) = (low r_s1)) -> (l_flipcoin_ret = r_flipcoin_ret)) /\
-  ~ ((low l_s1) = (low r_s1)) -> (l_flipcoin_ret = (1%Z - r_flipcoin_ret)%Z).
-
-Parameter r_flipcoin_ret: Numbers.BinNums.Z.
-
-Axiom Assume1 :
-  (((low l_s1) = (low r_s1)) -> (l_flipcoin_ret = r_flipcoin_ret)) /\
-  ~ ((low l_s1) = (low r_s1)) -> (l_flipcoin_ret = (1%Z - r_flipcoin_ret)%Z).
-
-Axiom H7 : (l_flipcoin_ret = 0%Z).
+Axiom Ensures5 : ((sum_h r_s1) = 0%Z).
 
 Parameter l_s2: state.
 
-Axiom H8 : ((alloct l_s2) = (alloct l_s1)).
+Axiom H11 : ((alloct l_s2) = (alloct l_s1)).
 
-Axiom H9 : ((high l_s2) = (high l_s1)).
+Axiom H12 : ((sum_h l_s2) = (sum_h l_s1)).
 
-Axiom Ensures2 : ((low l_s2) = (1%Z - (low l_s1))%Z).
+Axiom H13 : ((f_l l_s2) = (f_l l_s1)).
 
-Axiom H10 : ~ (r_flipcoin_ret = 0%Z).
+Axiom H14 : ((e_l l_s2) = (e_l l_s1)).
 
-Axiom Ensures3 : okRefperm l_s2 r_s1 pi.
+Axiom Ensures6 : ((i_l l_s2) = 0%Z).
+
+Parameter r_s2: state.
+
+Axiom H15 : ((alloct r_s2) = (alloct r_s1)).
+
+Axiom H16 : ((sum_h r_s2) = (sum_h r_s1)).
+
+Axiom H17 : ((f_l r_s2) = (f_l r_s1)).
+
+Axiom H18 : ((e_l r_s2) = (e_l r_s1)).
+
+Axiom Ensures7 : ((i_l r_s2) = 0%Z).
+
+Parameter l_s3: state.
+
+Axiom H19 : ((alloct l_s3) = (alloct l_s2)).
+
+Axiom H20 : ((sum_h l_s3) = (sum_h l_s2)).
+
+Axiom H21 : ((f_l l_s3) = (f_l l_s2)).
+
+Axiom H22 : ((i_l l_s3) = (i_l l_s2)).
+
+Axiom Ensures8 : ((e_l l_s3) = 1%Z).
+
+Parameter r_s3: state.
+
+Axiom H23 : ((alloct r_s3) = (alloct r_s2)).
+
+Axiom H24 : ((sum_h r_s3) = (sum_h r_s2)).
+
+Axiom H25 : ((f_l r_s3) = (f_l r_s2)).
+
+Axiom H26 : ((i_l r_s3) = (i_l r_s2)).
+
+Axiom Ensures9 : ((e_l r_s3) = 1%Z).
+
+Parameter r_oob_error1: Numbers.BinNums.Z.
+
+Parameter l_oob_error1: Numbers.BinNums.Z.
+
+Parameter r_s4: state.
+
+Parameter l_s4: state.
+
+Axiom H27 : ((alloct r_s4) = (alloct r_s3)).
+
+Axiom H28 : ((e_l r_s4) = (e_l r_s3)).
+
+Axiom H29 : ((alloct l_s4) = (alloct l_s3)).
+
+Axiom H30 : ((e_l l_s4) = (e_l l_s3)).
+
+Axiom LoopInvariant : okRefperm l_s4 r_s4 pi.
+
+Axiom H31 : ((i_l l_s4) = (i_l r_s4)).
+
+Axiom H32 : ((e_l l_s4) = (e_l r_s4)).
+
+Axiom LoopInvariant1 :
+  ((e_l l_s4) = 1%Z) /\ (l_oob_error1 = 0%Z) <->
+  ((e_l r_s4) = 1%Z) /\ (r_oob_error1 = 0%Z).
+
+Axiom LoopInvariant2 :
+  ((e_l l_s4) = 1%Z) /\ (l_oob_error1 = 0%Z) <->
+  ((e_l r_s4) = 1%Z) /\ (r_oob_error1 = 0%Z).
+
+Axiom H33 :
+  (((e_l l_s4) = 1%Z) -> ~ (l_oob_error1 = 0%Z) ->
+   (Init.Datatypes.true = Init.Datatypes.false)) /\
+  (~ ((e_l l_s4) = 1%Z) -> (Init.Datatypes.true = Init.Datatypes.false)).
+
+Parameter l_s5: state.
+
+Axiom H34 : ((alloct l_s5) = (alloct l_s4)).
+
+Axiom H35 : ((f_l l_s5) = (f_l l_s4)).
+
+Axiom H36 : ((e_l l_s5) = (e_l l_s4)).
+
+Axiom H37 : ((i_l l_s5) = (i_l l_s4)).
+
+Axiom Ensures10 : ((sum_h l_s5) = ((sum_h l_s4) + l_x_h)%Z).
+
+Parameter r_s5: state.
+
+Axiom H38 : ((alloct r_s5) = (alloct r_s4)).
+
+Axiom H39 : ((f_l r_s5) = (f_l r_s4)).
+
+Axiom H40 : ((e_l r_s5) = (e_l r_s4)).
+
+Axiom H41 : ((i_l r_s5) = (i_l r_s4)).
+
+Axiom Ensures11 : ((sum_h r_s5) = ((sum_h r_s4) + r_x_h)%Z).
+
+Parameter l_s6: state.
+
+Axiom H42 : ((alloct l_s6) = (alloct l_s5)).
+
+Axiom H43 : ((sum_h l_s6) = (sum_h l_s5)).
+
+Axiom H44 : ((f_l l_s6) = (f_l l_s5)).
+
+Axiom H45 : ((e_l l_s6) = (e_l l_s5)).
+
+Axiom Ensures12 : ((i_l l_s6) = ((i_l l_s5) + 1%Z)%Z).
+
+Parameter r_s6: state.
+
+Axiom H46 : ((alloct r_s6) = (alloct r_s5)).
+
+Axiom H47 : ((sum_h r_s6) = (sum_h r_s5)).
+
+Axiom H48 : ((f_l r_s6) = (f_l r_s5)).
+
+Axiom H49 : ((e_l r_s6) = (e_l r_s5)).
+
+Axiom Ensures13 : ((i_l r_s6) = ((i_l r_s5) + 1%Z)%Z).
+
+Parameter l_s7: state.
+
+Axiom H50 : ((alloct l_s7) = (alloct l_s6)).
+
+Axiom H51 : ((sum_h l_s7) = (sum_h l_s6)).
+
+Axiom H52 : ((e_l l_s7) = (e_l l_s6)).
+
+Axiom H53 : ((i_l l_s7) = (i_l l_s6)).
+
+Axiom Ensures14 : ((f_l l_s7) = (i_l l_s6)).
+
+Parameter r_s7: state.
+
+Axiom H54 : ((alloct r_s7) = (alloct r_s6)).
+
+Axiom H55 : ((sum_h r_s7) = (sum_h r_s6)).
+
+Axiom H56 : ((e_l r_s7) = (e_l r_s6)).
+
+Axiom H57 : ((i_l r_s7) = (i_l r_s6)).
+
+Axiom Ensures15 : ((f_l r_s7) = (i_l r_s6)).
+
+Axiom H58 : (l_max_sum < (sum_h l_s7))%Z.
+
+Parameter l_oob_error2: Numbers.BinNums.Z.
+
+Axiom Ensures16 : (l_oob_error2 = 1%Z).
+
+Axiom H59 : ~ (r_max_sum < (sum_h r_s7))%Z.
+
+Axiom LoopInvariant3 : okRefperm l_s7 r_s7 pi.
+
+Axiom LoopInvariant4 :
+  ((i_l l_s7) = (i_l r_s7)) /\ ((e_l l_s7) = (e_l r_s7)).
 
 (* Why3 goal *)
-Theorem prog'vc : ((low l_s2) = (low r_s1)).
+Theorem prog'vc :
+  ((e_l l_s7) = 1%Z) /\ (l_oob_error2 = 0%Z) <->
+  ((e_l r_s7) = 1%Z) /\ (r_oob_error1 = 0%Z).
 Proof.
 
 

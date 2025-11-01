@@ -10,14 +10,14 @@ interface I =
 end
 
 module A : I =
-  meth prog () : int
+  meth prog (x_h: int) : int
 /*
 
 */
 end
 
 module B : I =
-  meth prog () : int
+  meth prog (x_h: int) : int
 /*  =
 
 fun denning(i_L, e_L, f_L, x_H, sum_H) {
@@ -76,10 +76,9 @@ bimodule FREL (A | B) =
   |_ i_l := 0 _|; 
   |_ e_l := 1 _|;
 
-  /* syntax error at col 21 */
-  While ((e_l = 1) /\ (oob_error = 0)) | (e_l = 1 /\ oob_error = 0) .  <| false <] | [> false |> do  
+  While ((e_l = 1) and (oob_error = 0)) | (e_l = 1 and oob_error = 0) .  <| false <] | [> false |> do  
     invariant { i_l =:= i_l /\ e_l =:= e_l }
-   /* invariant { (e_l = 1 /\  oob_error_1 = 0) <==> (e_l = 1 /\ (oob_error = 0))} */
+    invariant { <| e_l = 1 /\  oob_error = 0 <] <-> [> e_l = 1 /\ (oob_error = 0) |>}
 
       |_ sum_h := sum_h + x_h _|; 
 
@@ -89,12 +88,12 @@ bimodule FREL (A | B) =
 
       (if (sum_h > max_sum)
        then
-        oob_error_1 := 1;
+        oob_error := 1;
        end | skip );
 
       (skip | if (sum_h > max_sum)
        then
-        oob_error_1 := 1;
+        oob_error := 1;
        end );
   done; 
 end

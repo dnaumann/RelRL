@@ -1,0 +1,282 @@
+
+(Modules
+ ((((id_str FREL) (id_ats ()) (id_loc ("" 387 0 387 0)))
+   ((Duseimport ("" 73 0 73 0) false
+     (((Qdot (Qident ((id_str prelude) (id_ats ()) (id_loc ("" 72 0 72 0))))
+        ((id_str Prelude) (id_ats ()) (id_loc ("" 71 0 71 0))))
+       ())))
+    (Duseimport ("" 204 0 204 0) false
+     (((Qident ((id_str State) (id_ats ()) (id_loc ("" 203 0 203 0)))) ())))
+    (Duseimport ("" 386 0 386 0) false
+     (((Qident ((id_str A) (id_ats ()) (id_loc ("" 385 0 385 0)))) ())))
+    (Dlet ((id_str prog) (id_ats ()) (id_loc ("" 256 0 256 0))) false RKnone
+     ((expr_desc
+       (Efun
+        ((("" 287 0 287 0)
+          (((id_str l_s) (id_ats ()) (id_loc ("" 266 0 266 0)))) false
+          ((PTtyapp
+            (Qident ((id_str state) (id_ats ()) (id_loc ("" 82 0 82 0)))) ())))
+         (("" 288 0 288 0)
+          (((id_str r_s) (id_ats ()) (id_loc ("" 268 0 268 0)))) false
+          ((PTtyapp
+            (Qident ((id_str state) (id_ats ()) (id_loc ("" 82 0 82 0)))) ())))
+         (("" 289 0 289 0)
+          (((id_str pi) (id_ats ()) (id_loc ("" 273 0 273 0)))) false
+          ((PTtyapp
+            (Qdot
+             (Qident
+              ((id_str PreRefperm) (id_ats ()) (id_loc ("" 84 0 84 0))))
+             ((id_str t) (id_ats ()) (id_loc ("" 83 0 83 0))))
+            ()))))
+        ((PTtuple
+          ((PTtyapp (Qident ((id_str int) (id_ats ()) (id_loc ("" 3 0 3 0))))
+            ())
+           (PTtyapp (Qident ((id_str int) (id_ats ()) (id_loc ("" 3 0 3 0))))
+            ()))))
+        ((pat_desc Pwild) (pat_loc ("" 380 0 380 0))) MaskVisible
+        ((sp_pre
+          (((term_desc
+             (Tidapp
+              (Qident
+               ((id_str okRefperm) (id_ats ()) (id_loc ("" 146 0 146 0))))
+              (((term_desc
+                 (Tident
+                  (Qident
+                   ((id_str l_s) (id_ats ()) (id_loc ("" 270 0 270 0))))))
+                (term_loc ("" 292 0 292 0)))
+               ((term_desc
+                 (Tident
+                  (Qident
+                   ((id_str r_s) (id_ats ()) (id_loc ("" 269 0 269 0))))))
+                (term_loc ("" 291 0 291 0)))
+               ((term_desc
+                 (Tident
+                  (Qident
+                   ((id_str pi) (id_ats ()) (id_loc ("" 274 0 274 0))))))
+                (term_loc ("" 290 0 290 0))))))
+            (term_loc ("" 293 0 293 0)))))
+         (sp_post
+          ((("" 296 0 296 0)
+            ((((pat_desc
+                (Pvar
+                 ((id_str result) (id_ats ()) (id_loc ("" 294 0 294 0)))))
+               (pat_loc ("" 295 0 295 0)))
+              ((term_desc
+                (Tidapp
+                 (Qident
+                  ((id_str okRefperm) (id_ats ()) (id_loc ("" 146 0 146 0))))
+                 (((term_desc
+                    (Tident
+                     (Qident
+                      ((id_str l_s) (id_ats ()) (id_loc ("" 270 0 270 0))))))
+                   (term_loc ("" 292 0 292 0)))
+                  ((term_desc
+                    (Tident
+                     (Qident
+                      ((id_str r_s) (id_ats ()) (id_loc ("" 269 0 269 0))))))
+                   (term_loc ("" 291 0 291 0)))
+                  ((term_desc
+                    (Tident
+                     (Qident
+                      ((id_str pi) (id_ats ()) (id_loc ("" 274 0 274 0))))))
+                   (term_loc ("" 290 0 290 0))))))
+               (term_loc ("" 293 0 293 0))))))))
+         (sp_xpost ()) (sp_reads ()) (sp_writes ()) (sp_alias ())
+         (sp_variant ()) (sp_checkrw false) (sp_diverge false)
+         (sp_partial false))
+        ((expr_desc
+          (Elabel ((id_str INIT) (id_ats ()) (id_loc ("" 77 0 77 0)))
+           ((expr_desc
+             (Elet ((id_str r_result) (id_ats ()) (id_loc ("" 262 0 262 0)))
+              false RKnone
+              ((expr_desc
+                (Eapply ((expr_desc Eref) (expr_loc ("" 354 0 354 0)))
+                 ((expr_desc
+                   (Econst (ConstInt ((il_kind ILitDec) (il_int 0)))))
+                  (expr_loc ("" 351 0 351 0)))))
+               (expr_loc ("" 355 0 355 0)))
+              ((expr_desc
+                (Elet
+                 ((id_str l_result) (id_ats ()) (id_loc ("" 259 0 259 0)))
+                 false RKnone
+                 ((expr_desc
+                   (Eapply ((expr_desc Eref) (expr_loc ("" 352 0 352 0)))
+                    ((expr_desc
+                      (Econst (ConstInt ((il_kind ILitDec) (il_int 0)))))
+                     (expr_loc ("" 350 0 350 0)))))
+                  (expr_loc ("" 353 0 353 0)))
+                 ((expr_desc
+                   (Elet
+                    ((id_str l_flipcoin_ret) (id_ats ())
+                     (id_loc ("" 342 0 342 0)))
+                    false RKnone
+                    ((expr_desc
+                      (Eapply ((expr_desc Eref) (expr_loc ("" 305 0 305 0)))
+                       ((expr_desc
+                         (Econst (ConstInt ((il_kind ILitDec) (il_int 0)))))
+                        (expr_loc ("" 304 0 304 0)))))
+                     (expr_loc ("" 306 0 306 0)))
+                    ((expr_desc
+                      (Elet
+                       ((id_str r_flipcoin_ret) (id_ats ())
+                        (id_loc ("" 341 0 341 0)))
+                       false RKnone
+                       ((expr_desc
+                         (Eapply
+                          ((expr_desc Eref) (expr_loc ("" 308 0 308 0)))
+                          ((expr_desc
+                            (Econst
+                             (ConstInt ((il_kind ILitDec) (il_int 0)))))
+                           (expr_loc ("" 307 0 307 0)))))
+                        (expr_loc ("" 309 0 309 0)))
+                       ((expr_desc
+                         (Esequence
+                          ((expr_desc
+                            (Eassert Assert
+                             ((term_desc
+                               (Tquant DTexists
+                                ((("" 314 0 314 0)
+                                  (((id_str r_flipcoin_ret) (id_ats ())
+                                    (id_loc ("" 312 0 312 0))))
+                                  false
+                                  ((PTtyapp
+                                    (Qident
+                                     ((id_str int) (id_ats ())
+                                      (id_loc ("" 3 0 3 0))))
+                                    ()))))
+                                ()
+                                ((term_desc
+                                  (Tbinop
+                                   ((term_desc
+                                     (Tbinop
+                                      ((term_desc Ttrue)
+                                       (term_loc ("" 315 0 315 0)))
+                                      DTimplies
+                                      ((term_desc Ttrue)
+                                       (term_loc ("" 316 0 316 0)))))
+                                    (term_loc ("" 317 0 317 0)))
+                                   DTand
+                                   ((term_desc
+                                     (Tbinop
+                                      ((term_desc Ttrue)
+                                       (term_loc ("" 318 0 318 0)))
+                                      DTimplies
+                                      ((term_desc Ttrue)
+                                       (term_loc ("" 319 0 319 0)))))
+                                    (term_loc ("" 320 0 320 0)))))
+                                 (term_loc ("" 321 0 321 0)))))
+                              (term_loc ("" 322 0 322 0)))))
+                           (expr_loc ("" 323 0 323 0)))
+                          ((expr_desc
+                            (Esequence
+                             ((expr_desc
+                               (Eidapp
+                                (Qident
+                                 ((id_str "infix :=") (id_ats ())
+                                  (id_loc ("" 12 0 12 0))))
+                                (((expr_desc
+                                   (Eident
+                                    (Qident
+                                     ((id_str r_flipcoin_ret) (id_ats ())
+                                      (id_loc ("" 311 0 311 0))))))
+                                  (expr_loc ("" 328 0 328 0)))
+                                 ((expr_desc
+                                   (Eattr (ATstr "expl:havoc flipcoin_ret")
+                                    ((expr_desc
+                                      (Eany () RKnone
+                                       ((PTtyapp
+                                         (Qident
+                                          ((id_str int) (id_ats ())
+                                           (id_loc ("" 3 0 3 0))))
+                                         ()))
+                                       ((pat_desc Pwild)
+                                        (pat_loc ("" 325 0 325 0)))
+                                       MaskVisible
+                                       ((sp_pre ()) (sp_post ())
+                                        (sp_xpost ()) (sp_reads ())
+                                        (sp_writes ()) (sp_alias ())
+                                        (sp_variant ()) (sp_checkrw false)
+                                        (sp_diverge false)
+                                        (sp_partial false))))
+                                     (expr_loc ("" 326 0 326 0)))))
+                                  (expr_loc ("" 327 0 327 0))))))
+                              (expr_loc ("" 329 0 329 0)))
+                             ((expr_desc
+                               (Esequence
+                                ((expr_desc
+                                  (Eassert Assume
+                                   ((term_desc
+                                     (Tbinop
+                                      ((term_desc
+                                        (Tbinop
+                                         ((term_desc Ttrue)
+                                          (term_loc ("" 331 0 331 0)))
+                                         DTimplies
+                                         ((term_desc Ttrue)
+                                          (term_loc ("" 332 0 332 0)))))
+                                       (term_loc ("" 333 0 333 0)))
+                                      DTand
+                                      ((term_desc
+                                        (Tbinop
+                                         ((term_desc Ttrue)
+                                          (term_loc ("" 334 0 334 0)))
+                                         DTimplies
+                                         ((term_desc Ttrue)
+                                          (term_loc ("" 335 0 335 0)))))
+                                       (term_loc ("" 336 0 336 0)))))
+                                    (term_loc ("" 337 0 337 0)))))
+                                 (expr_loc ("" 338 0 338 0)))
+                                ((expr_desc
+                                  (Etuple
+                                   (((expr_desc
+                                      (Eidapp
+                                       (Qident
+                                        ((id_str "prefix !") (id_ats ())
+                                         (id_loc ("" 11 0 11 0))))
+                                       (((expr_desc
+                                          (Eident
+                                           (Qident
+                                            ((id_str l_result) (id_ats ())
+                                             (id_loc ("" 297 0 297 0))))))
+                                         (expr_loc ("" 299 0 299 0))))))
+                                     (expr_loc ("" 300 0 300 0)))
+                                    ((expr_desc
+                                      (Eidapp
+                                       (Qident
+                                        ((id_str "prefix !") (id_ats ())
+                                         (id_loc ("" 11 0 11 0))))
+                                       (((expr_desc
+                                          (Eident
+                                           (Qident
+                                            ((id_str r_result) (id_ats ())
+                                             (id_loc ("" 298 0 298 0))))))
+                                         (expr_loc ("" 301 0 301 0))))))
+                                     (expr_loc ("" 302 0 302 0))))))
+                                 (expr_loc ("" 303 0 303 0)))))
+                              (expr_loc ("" 371 0 371 0)))))
+                           (expr_loc ("" 373 0 373 0)))))
+                        (expr_loc ("" 374 0 374 0)))))
+                     (expr_loc ("" 375 0 375 0)))))
+                  (expr_loc ("" 376 0 376 0)))))
+               (expr_loc ("" 377 0 377 0)))))
+            (expr_loc ("" 378 0 378 0)))))
+         (expr_loc ("" 379 0 379 0)))))
+      (expr_loc ("" 381 0 381 0))))))))
+(Modules
+ ((((id_str FREL_biinterface) (id_ats ()) (id_loc ("" 392 0 392 0)))
+   ((Duseimport ("" 73 0 73 0) false
+     (((Qdot (Qident ((id_str prelude) (id_ats ()) (id_loc ("" 72 0 72 0))))
+        ((id_str Prelude) (id_ats ()) (id_loc ("" 71 0 71 0))))
+       ())))
+    (Duseimport ("" 204 0 204 0) false
+     (((Qident ((id_str State) (id_ats ()) (id_loc ("" 203 0 203 0)))) ())))
+    (Duseimport ("" 391 0 391 0) false
+     (((Qident ((id_str A) (id_ats ()) (id_loc ("" 390 0 390 0)))) ())))))))
+(Modules
+ ((((id_str MAIN) (id_ats ()) (id_loc ("" 393 0 393 0)))
+   ((Duseimport ("" 73 0 73 0) false
+     (((Qdot (Qident ((id_str prelude) (id_ats ()) (id_loc ("" 72 0 72 0))))
+        ((id_str Prelude) (id_ats ()) (id_loc ("" 71 0 71 0))))
+       ())))
+    (Duseimport ("" 204 0 204 0) false
+     (((Qident ((id_str State) (id_ats ()) (id_loc ("" 203 0 203 0)))) ())))))))

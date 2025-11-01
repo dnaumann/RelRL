@@ -78,6 +78,10 @@ let translate_program fmt penv ctbl =
   let ctxt, state_module = Translate.Build_State.mk (penv,ctbl) in
   let mlw_files = compile_penv ctxt penv in
   emit_mlw state_module;
+  (* Why3.Mlw_printer.pp_mlw_file Format.std_formatter (Why3.Ptree.mlw_file_of_sexp (Sexplib.Sexp.load_sexp "sexp.txt")); *)
+  (* Sexplib.Sexp.output_hum stdout (Sexplib.Sexp.load_sexp "sexp.txt");
+  output_char stdout '\n';
+  flush stdout; *)
   (* (Sexplib.Sexp.save_sexps_hum "sexp.txt" ((List.map Why3.Ptree.sexp_of_mlw_file) mlw_files)); *)
   List.iter emit_mlw mlw_files
 
