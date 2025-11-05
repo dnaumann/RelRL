@@ -1582,6 +1582,7 @@ end = struct
 
   let dfs gph visited start =
     let rec walk path node visited =
+      Printf.printf "Visiting %s\n" (id_name node);
       if mem node path then failwith "Cyclic imports" else
       if mem node visited then visited else
         let path = node :: path in
@@ -1593,12 +1594,19 @@ end = struct
     let gph = build_gph prog in
     rev (foldl (fun (node,_) visited -> dfs gph node visited) [] gph)
 
+ let  print_gph gph =  List.iter (fun (node, succ) ->
+        Printf.printf "%s -> [%s]\n" (id_name node)
+          (String.concat "; " (List.map id_name succ))
+      ) gph
+
   let dependencies_parsed_program : Ast.program -> ident list =
+
     let imports (i:Ast.import_directive Ast.node) =
       if i.elt.import_kind <> Ast.Iregular then [] else
       [i.elt.import_name] @ Option.to_list i.elt.related_by in
     let interface_imports (intr: Ast.interface_def Ast.node) =
       concat_map imports (Astutil.interface_imports intr) in
+
     let module_imports (mdl: Ast.module_def Ast.node) =
       let intr = mdl.elt.mdl_interface in
       intr :: concat_map imports (Astutil.module_imports mdl) in
@@ -1616,15 +1624,20 @@ end = struct
       map f programs in
     fun prog -> 
       let gph = build_gph prog in
-      rev (foldl (fun (node,_) visited -> dfs gph node visited) [] gph)
+      print_gph gph;
+      rev (foldl (fun (node,_) visited ->  dfs gph node visited) [] gph)
+
+      
 
   let sort_by_dependencies (p:Ast.program) : Ast.program =
+    
     let pmap = foldr (fun e acc -> match e.Ast.elt with
-      | Ast.Unr_intr i -> M.add i.elt.intr_name e acc
-      | Ast.Unr_mdl m -> M.add m.elt.mdl_name e acc
-      | Ast.Rel_mdl bm -> M.add bm.elt.bimdl_name e acc
-      ) M.empty p in
+    | Ast.Unr_intr i -> M.add i.elt.intr_name e acc
+    | Ast.Unr_mdl m -> M.add m.elt.mdl_name e acc
+    | Ast.Rel_mdl bm -> M.add bm.elt.bimdl_name e acc
+    ) M.empty p in
     let deps = dependencies_parsed_program p in
+
     foldr (fun name acc -> M.find name pmap :: acc) [] deps
 
 end

@@ -36,6 +36,7 @@ We use postcondition that describes after last iteration, see below.
 end
 
 bimodule FREL (A | A) =
+
   meth itzhaky  (a: int array, n: int | a: int array, n: int) : (Cell | Cell)
     requires { a =:= a /\ n =:= n }
     requires { Both (n  < length(a)) }

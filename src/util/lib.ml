@@ -121,11 +121,11 @@ let rec no_duplicates = function
 
 let is_unique = no_duplicates
 
-let index n lst =
+(* let index n lst =
   let rec aux n c = function
     | [] -> raise Not_found
     | h::t -> if n=h then c else aux n (c+1) t
-  in aux n 0 lst
+  in aux n 0 lst *)
 
 let rec unzip ls =
   match ls with

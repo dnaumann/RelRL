@@ -1220,7 +1220,7 @@ let cdecl_equal_fields (c: class_decl node) (c': class_decl node) =
       let fname = f.elt.field_name in
       match List.find (fun f' -> f'.elt.field_name = fname) flds' with
       | f' -> equal_field f f'
-      | exception Not_found -> false
+      | exception Not_found ->  false
     ) flds
 
 let wf_interface_module_cdecl intr_cdecl mdl_cdecl : (unit,string) result =
