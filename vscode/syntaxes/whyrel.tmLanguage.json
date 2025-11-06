@@ -1,0 +1,126 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "WhyRel",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#keywords" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#operators" },
+    { "include": "#identifiers" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.whyrel",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.whyrel" }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.whyrel",
+          "match": "\\b(interface|module|bimodule|end|import|theory|as|related|by)\\b"
+        },
+        {
+          "name": "keyword.declaration.whyrel",
+          "match": "\\b(class|meth|predicate|inductive|bipredicate|axiom|lemma|coupling|extern|type|const|default)\\b"
+        },
+        {
+          "name": "keyword.modifier.whyrel",
+          "match": "\\b(ghost|public|private|modscope)\\b"
+        },
+        {
+          "name": "keyword.control.flow.whyrel",
+          "match": "\\b(if|then|else|while|do|done|var|in)\\b"
+        },
+        {
+          "name": "keyword.operator.logical.whyrel",
+          "match": "\\b(forall|exists|let|old|init|not|and|or|True|False|Type)\\b"
+        },
+        {
+          "name": "keyword.specification.whyrel",
+          "match": "\\b(requires|ensures|effects|invariant|variant|boundary|datagroup|contains)\\b"
+        },
+        {
+          "name": "keyword.command.whyrel",
+          "match": "\\b(skip|havoc|new|assume|assert|rd|wr|rw|reads|writes)\\b"
+        },
+        {
+          "name": "keyword.relational.whyrel",
+          "match": "\\b(Agree|Both|HavocR|Var|If|While|WhileL|WhileR|Assume|Assert|Link|Connect|with|If4|thenThen|thenElse|elseThen|elseElse)\\b"
+        },
+        {
+          "name": "constant.language.whyrel",
+          "match": "\\b(null|true|false|result|alloc|pool)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.whyrel",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.whyrel",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "numbers": {
+      "name": "constant.numeric.whyrel",
+      "match": "\\b\\d+\\b"
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.assignment.whyrel",
+          "match": ":="
+        },
+        {
+          "name": "keyword.operator.relational.whyrel",
+          "match": "=:=|\\|_|_\\||<\\||\\|>|\\[<|>\\]|<\\]|\\[>"
+        },
+        {
+          "name": "keyword.operator.logical.whyrel",
+          "match": "/\\\\|\\\\/|->|<->|~"
+        },
+        {
+          "name": "keyword.operator.comparison.whyrel",
+          "match": "<=|>=|<>|<|>|="
+        },
+        {
+          "name": "keyword.operator.arithmetic.whyrel",
+          "match": "\\+|-|\\*|/|mod"
+        },
+        {
+          "name": "keyword.operator.set.whyrel",
+          "match": "union|inter|diff|subset|#|`"
+        },
+        {
+          "name": "keyword.operator.membership.whyrel",
+          "match": "\\bin\\b|\\bnotin\\b|\\bof\\b"
+        }
+      ]
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "name": "entity.name.type.whyrel",
+          "match": "\\b[A-Z][a-zA-Z0-9_']*\\b"
+        },
+        {
+          "name": "variable.other.whyrel",
+          "match": "\\b[a-z][a-zA-Z0-9_']*\\b"
+        }
+      ]
+    }
+  },
+  "scopeName": "source.whyrel"
+}
