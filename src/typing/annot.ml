@@ -1582,7 +1582,7 @@ end = struct
 
   let dfs gph visited start =
     let rec walk path node visited =
-      Printf.printf "Visiting %s\n" (id_name node);
+      (* Printf.printf "Visiting %s\n" (id_name node); *)
       if mem node path then failwith "Cyclic imports" else
       if mem node visited then visited else
         let path = node :: path in
@@ -1624,7 +1624,7 @@ end = struct
       map f programs in
     fun prog -> 
       let gph = build_gph prog in
-      print_gph gph;
+      (* print_gph gph; *)
       rev (foldl (fun (node,_) visited ->  dfs gph node visited) [] gph)
 
       
