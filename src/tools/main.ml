@@ -196,6 +196,7 @@ let set_behaviour_flags () =
   Translate.gen_frame_lemma := not !no_frame_lemma;
   Pretrans.simplify_effects := not !no_simplify_effects;
   Typing.all_exists_mode := !all_exists_mode;
+  Typing.only_parse_or_typecheck := !only_parse_flag || !only_typecheck_flag;
   ()
 
 let main () =

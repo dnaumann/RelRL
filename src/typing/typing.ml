@@ -12,6 +12,7 @@ let ( -: ) = T.( -: )
 
 let tc_debug = ref false
 let all_exists_mode = ref false
+let only_parse_or_typecheck = ref false
 
 (* -------------------------------------------------------------------------- *)
 (* Typing environments                                                        *)
@@ -1754,7 +1755,7 @@ let rec tc_bicommand env cc : (T.bicommand, string) result =
   let { left_tenv = lenv; right_tenv = renv; _ } = env in
   match cc.elt with
   | Bihavoc_right (x, r) ->
-    if !all_exists_mode then
+    if !all_exists_mode || !only_parse_or_typecheck then
       let* () = wf_ident cc.loc x in
       let* x_ty = find_in_ctxt env.right_tenv x cc.loc in
       let* rfrm = tc_rformula env r in
