@@ -39,7 +39,7 @@
       "properties": {
         "whyrel.binaryPath": {
           "type": "string",
-          "description": "Path to the WhyRel binary",
+          "description": "./bin/whyrel",
           "default": ""
         }
       }

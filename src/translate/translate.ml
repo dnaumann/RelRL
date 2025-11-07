@@ -1788,7 +1788,7 @@ let rec interp_exp (interp: 'a exp_interpretation) ctxt state (e: T.exp T.t)
          failwith @@ "Unknown symbol: " ^ string_of_ident fn.node) in
     let state_arg = interp.mk_var state in
     (* FIXME: handle generally? *)
-    let args = if mem fn [array_get_fn; array_set_fn; array_len_fn]
+    let args = if mem fn [array_get_fn; array_set_fn; array_len_fn; array_make_fn]
                || fk = Id_extern
       then args
       else state_arg :: args in

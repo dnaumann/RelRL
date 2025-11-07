@@ -534,7 +534,6 @@ module BiList
             (if (! pub3) then
                (let v = ref 0 in
                 (v := ([@expl:v := p.value] (l_s.value[! l_p])));
-                assert { (! v) = ((! l_xs).List.LIST.hd) };
                 (l_result
                    := ([@expl:result := result + v] ((! l_result) + (! v))));
                 (l_xs := ([@expl:xs := tl(xs)] ((! l_xs).List.LIST.tl))))
@@ -548,7 +547,6 @@ module BiList
                (if (! pub4) then
                   (let v = ref 0 in
                    (v := ([@expl:v := p.value] (r_s.value[! r_p])));
-                   assert { (! v) = ((! r_xs).List.LIST.hd) };
                    (r_result
                       := ([@expl:result := result + v] ((! r_result) + (! v))));
                    (r_xs := ([@expl:xs := tl(xs)] ((! r_xs).List.LIST.tl))))
@@ -655,7 +653,6 @@ module BiList
             (if (! pub6) then
                (let v = ref 0 in
                 (v := ([@expl:v := p.value] (l_s.value[! l_p])));
-                assert { (! v) = ((! l_xs).List.LIST.hd) };
                 (l_result
                    := ([@expl:result := result + v] ((! l_result) + (! v))));
                 (l_xs := ([@expl:xs := tl(xs)] ((! l_xs).List.LIST.tl))))
@@ -674,7 +671,6 @@ module BiList
                (if (! pub7) then
                   (let v = ref 0 in
                    (v := ([@expl:v := p.value] (r_s.value[! r_p])));
-                   assert { (! v) = ((! r_xs).List.LIST.hd) };
                    (r_result
                       := ([@expl:result := result + v] ((! r_result) + (! v))));
                    (r_xs := ([@expl:xs := tl(xs)] ((! r_xs).List.LIST.tl))))

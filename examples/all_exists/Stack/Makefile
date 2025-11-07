@@ -1,5 +1,5 @@
 WHY3=why3
-WHYREL=../../bin/whyrel
+WHYREL=whyrel
 WHYREL_STDLIB=../../stdlib
 POST_PROCESS=../../util/post-process.sed
 FILES=stack.rl arraystack.rl liststack.rl relstack.rl client.rl
