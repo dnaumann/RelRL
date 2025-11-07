@@ -1,7 +1,6 @@
 WHY3=why3
-WHYREL=whyrel
-WHYREL_STDLIB=${HOME}/RelRL/stdlib
-# THEORY=${HOME}/RelRL/examples/all_exists/CCR
+WHYREL=../../../bin/whyrel
+WHYREL_STDLIB=../../../stdlib
 PROG = prog
 
 
