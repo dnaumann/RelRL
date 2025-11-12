@@ -231,50 +231,5 @@ bimodule MAP_REL ( Map_Array | Map_Fun ) =
 
 
 end
-/*
 
 
-end
-
-procedure A_refines_S(sz: int)
-  requires sz  >= 0;
-  modifies map_A, map_I;
-  ensures (forall k: int :: 0 <= k && k < sz  ==> map_A[k] == map_I[k]);
-{
-    var i:int;
-
-    call init_A(sz);
-    call init_I(sz);
-    
-    i := 0;
-    
-    while (i < sz)
-      invariant 0 <= i && i <= sz;
-      invariant (forall k: int :: (0 <= k && k < i) ==> map_A[k] == map_I[k]);
-    {
-        call set_by_user_A(i);
-        call set_by_user_I(i);
-        i := i + 1;
-    }
-}
-
-
-module Main =
-  import CELL related by CELL_REL
-
-  meth main(x:int) : int
-    requires { pool = {} }
-    requires { x >= 0 }
-    effects { rw alloc, pool, x }
-  = var c : Cell in
-    c := new Cell;
-    var k : int in
-    k := 0;
-    Cell (c,k);
-    { c in alloc };
-    x := x + 1;
-    cset (c, x);
-    result := cget (c);
-
-end
-*/
