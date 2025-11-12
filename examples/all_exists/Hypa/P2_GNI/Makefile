@@ -1,6 +1,6 @@
 WHY3=why3
-WHYREL=whyrel
-WHYREL_STDLIB=${HOME}/RelRL/stdlib
+WHYREL=../../../../bin/whyrel
+WHYREL_STDLIB=../../../../stdlib
 PROG = prog
 
 all: $(PROG).mlw
