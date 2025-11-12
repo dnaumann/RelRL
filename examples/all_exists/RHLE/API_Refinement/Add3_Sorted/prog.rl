@@ -2,18 +2,30 @@ interface I =
 
   import theory List3
   extern type intList with default = nil
-  extern listNth(int, intList): int
+  extern listNth3(int, intList): int
   extern listLength(intList): int
   extern is_sorted3(intList) : bool
   extern is_permutation3(intList, intList) : bool
-  extern equals3(intList, intList) : bool
-  extern add3_3(intList): intList
+  extern add3(intList): intList
+  extern cons(int, intList): intList
 
   meth prog (l:intList) : intList
 
 
-  lemma add3_preserves_equals3 : forall l1: intList, l2: intList .
-    equals3(l1, l2) -> equals3(add3_3(l1), add3_3(l2))
+
+  lemma permutation3_is_transitive: forall l1: intList, l2: intList, l3: intList .
+    is_permutation3(l1, l2) -> is_permutation3(l2, l3) -> is_permutation3(l2, l3) 
+
+  lemma permutation3_is_reflexive: forall l1: intList, l2: intList .
+    is_permutation3(l1, l2) -> is_permutation3(l2, l1)
+
+  lemma list3_listNth3_form: forall l: intList . 
+    listLength(l) = 3 <-> l = cons(listNth3(0, l), cons(listNth3(1, l), cons( listNth3(2, l), nil)))
+
+  lemma sort_perm_unique : forall l1: intList, l2: intList .
+    is_sorted3(l1) -> is_permutation3(l1, l2) -> is_sorted3(l2) ->  l1 = l2
+
+
 end
 
 module A : I =
@@ -30,30 +42,26 @@ bimodule FREL (A | B) =
 
   import theory List3
 
-  predicate equals3_bipred  (l: intList | l: intList) =
-      let fst | fst = listNth(0, l) | listNth(0, l) in let snd | snd = listNth(1, l) | listNth(1, l) in let third | third = listNth(2, l) | listNth(2, l) in fst =:= fst /\ snd =:= snd /\ third =:= third
-
   meth prog (l: intList|  l: intList) : (intList | intList)
   requires {Both (listLength(l) = 3)}
-  requires { equals3_bipred(  l  |  l ) }
-  ensures { equals3_bipred(  result | result  ) }
+  requires {   l  =:=  l  }
+  ensures { result =:= result   }
  =
-
     Var sort_ret: intList | shuffle_ret : intList in
     Var | choice_list : intList in 
 
      /* left program calls shuffle with universal spec */
-    (havoc sort_ret; assume { is_permutation3(l, sort_ret) } | skip);
+    (havoc sort_ret; assume { is_permutation3(l, sort_ret) /\ is_sorted3(sort_ret)} | skip);
 
      /* right program calls sort with existential spec instantiated with sort_ret */
     (skip | assume { is_sorted3(choice_list) });
     (skip | assume { is_permutation3(l, choice_list) });
-    HavocR shuffle_ret { [> equals3(shuffle_ret, choice_list) |> };
-    Assert { equals3_bipred(sort_ret | shuffle_ret) };
+    HavocR shuffle_ret { [> shuffle_ret = choice_list |> };
+    Assert { sort_ret =:= shuffle_ret };
 
      (l := sort_ret | l := shuffle_ret);
      
-     |_ l := add3_3(l) _|;  
+     |_ l := add3(l) _|;  
 
      |_ result := l _|; 
 
