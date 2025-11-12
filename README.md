@@ -57,7 +57,7 @@ The recommended way of installing dependencies is by using an
 
 ```
 opam switch create whyrel 4.09.1
-opam install why3.1.3.3 ocamlbuild
+opam install why3.1.7.0 ocamlbuild
 ```
 
 You may also consider installing the `why-ide` package.
