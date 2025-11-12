@@ -26,23 +26,31 @@ This research has been partially supported by grants NSF CNS 1718713 and ONR
 N00014-17-1-2787
 
 
+## State of this repository
+
+The `encoding` branch contains in progress work on all-exists verification. The
+tag `stable` points to a stable release of WhyRel that works with Why3 version
+1.7.0.
+
+
 ## Documentation
 
 The relational program logic and a high level description of the current version
 of WhyRel can be found [here](http://arxiv.org/abs/1910.14560).
 
+
 ## Installation
 
 The dependencies for WhyRel are:
 
-- Why3 1.3.3
+- Why3 1.7.0
 - OCamlbuild 0.14.0
 
-Please refer to Why3's [installation instructions](http://why3.lri.fr/doc/install.html#installing-why3).
-If you install Why3 from source, make sure to also install the OCaml API.
-OCamlbuild is required to build WhyRel.  The sources are expected to compile
-using OCaml 4.09.1.  Please note that WhyRel may not work with the latest
-version of Why3 (1.4.1).  However, we plan to upgrade WhyRel soon.
+Please refer to Why3's [installation
+instructions](http://why3.lri.fr/doc/install.html#installing-why3). If you
+install Why3 from source, make sure to also install the OCaml API.
+OCamlbuild is required to build WhyRel.  The sources are expected to
+compile using OCaml 4.09.1 and above.
 
 The recommended way of installing dependencies is by using an
 [opam](https://opam.ocaml.org) switch.
