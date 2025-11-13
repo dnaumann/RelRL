@@ -509,7 +509,7 @@
   <proof prover="0"><result status="valid" time="0.148757" steps="688"/></proof>
   </goal>
   <goal name="sum2&#39;vc.8" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.065816" steps="51"/></proof>
+  <proof prover="0"><result status="valid" time="0.257247" steps="970"/></proof>
   </goal>
   <goal name="sum2&#39;vc.9" expl="precondition" proved="true">
   <proof prover="0"><result status="valid" time="0.087197" steps="135"/></proof>
@@ -518,7 +518,7 @@
   <proof prover="0"><result status="valid" time="0.090185" steps="147"/></proof>
   </goal>
   <goal name="sum2&#39;vc.11" expl="pub := p.pub" proved="true">
-  <proof prover="0"><result status="valid" time="0.092667" steps="155"/></proof>
+  <proof prover="0"><result status="valid" time="0.092667" steps="156"/></proof>
   </goal>
   <goal name="sum2&#39;vc.12" expl="v := p.value" proved="true">
   <proof prover="0"><result status="valid" time="0.065014" steps="79"/></proof>
@@ -545,13 +545,13 @@
   <proof prover="0"><result status="valid" time="0.057609" steps="79"/></proof>
   </goal>
   <goal name="sum2&#39;vc.20" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.056003" steps="79"/></proof>
+  <proof prover="0"><result status="valid" time="0.057292" steps="79"/></proof>
   </goal>
   <goal name="sum2&#39;vc.21" expl="p := p.nxt" proved="true">
   <proof prover="0"><result status="valid" time="0.085872" steps="160"/></proof>
   </goal>
   <goal name="sum2&#39;vc.22" expl="locals type invariant left" proved="true">
-  <proof prover="0"><result status="valid" time="0.103417" steps="330"/></proof>
+  <proof prover="0"><result status="valid" time="0.103417" steps="331"/></proof>
   </goal>
   <goal name="sum2&#39;vc.23" expl="locals type invariant right" proved="true">
   <proof prover="0"><result status="valid" time="0.052845" steps="85"/></proof>
@@ -569,16 +569,16 @@
   <proof prover="0"><result status="valid" time="0.060300" steps="87"/></proof>
   </goal>
   <goal name="sum2&#39;vc.28" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.057292" steps="87"/></proof>
+  <proof prover="0"><result status="valid" time="0.255332" steps="1141"/></proof>
   </goal>
   <goal name="sum2&#39;vc.29" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.072409" steps="142"/></proof>
+  <proof prover="0"><result status="valid" time="0.072409" steps="143"/></proof>
   </goal>
   <goal name="sum2&#39;vc.30" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.094170" steps="159"/></proof>
+  <proof prover="0"><result status="valid" time="0.094170" steps="161"/></proof>
   </goal>
   <goal name="sum2&#39;vc.31" expl="pub := p.pub" proved="true">
-  <proof prover="0"><result status="valid" time="0.101087" steps="162"/></proof>
+  <proof prover="0"><result status="valid" time="0.101087" steps="165"/></proof>
   </goal>
   <goal name="sum2&#39;vc.32" expl="v := p.value" proved="true">
   <proof prover="0"><result status="valid" time="0.059184" steps="81"/></proof>
@@ -605,22 +605,22 @@
   <proof prover="0"><result status="valid" time="0.060522" steps="81"/></proof>
   </goal>
   <goal name="sum2&#39;vc.40" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.055991" steps="81"/></proof>
+  <proof prover="0"><result status="valid" time="0.066995" steps="81"/></proof>
   </goal>
   <goal name="sum2&#39;vc.41" expl="p := p.nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.087324" steps="167"/></proof>
+  <proof prover="0"><result status="valid" time="0.087324" steps="169"/></proof>
   </goal>
   <goal name="sum2&#39;vc.42" expl="locals type invariant left" proved="true">
   <proof prover="0"><result status="valid" time="0.060395" steps="85"/></proof>
   </goal>
   <goal name="sum2&#39;vc.43" expl="locals type invariant right" proved="true">
-  <proof prover="0"><result status="valid" time="0.104309" steps="338"/></proof>
+  <proof prover="0"><result status="valid" time="0.104309" steps="339"/></proof>
   </goal>
   <goal name="sum2&#39;vc.44" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.062535" steps="87"/></proof>
   </goal>
   <goal name="sum2&#39;vc.45" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.079139" steps="164"/></proof>
+  <proof prover="0"><result status="valid" time="0.079139" steps="166"/></proof>
   </goal>
   <goal name="sum2&#39;vc.46" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.070419" steps="89"/></proof>
@@ -629,37 +629,37 @@
   <proof prover="0"><result status="valid" time="0.068459" steps="89"/></proof>
   </goal>
   <goal name="sum2&#39;vc.48" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.066995" steps="89"/></proof>
+  <proof prover="0"><result status="valid" time="0.405244" steps="1567"/></proof>
   </goal>
   <goal name="sum2&#39;vc.49" expl="pub := p.pub" proved="true">
-  <proof prover="0"><result status="valid" time="0.204882" steps="876"/></proof>
+  <proof prover="0"><result status="valid" time="0.204882" steps="684"/></proof>
   </goal>
   <goal name="sum2&#39;vc.50" expl="pub := p.pub" proved="true">
-  <proof prover="0"><result status="valid" time="0.166590" steps="619"/></proof>
+  <proof prover="0"><result status="valid" time="0.166590" steps="652"/></proof>
   </goal>
   <goal name="sum2&#39;vc.51" expl="v := p.value" proved="true">
-  <proof prover="0"><result status="valid" time="0.190120" steps="709"/></proof>
+  <proof prover="0"><result status="valid" time="0.190120" steps="637"/></proof>
   </goal>
   <goal name="sum2&#39;vc.52" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.283196" steps="1299"/></proof>
+  <proof prover="0"><result status="valid" time="0.283196" steps="1310"/></proof>
   </goal>
   <goal name="sum2&#39;vc.53" expl="p := p.nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.224358" steps="732"/></proof>
+  <proof prover="0"><result status="valid" time="0.224358" steps="655"/></proof>
   </goal>
   <goal name="sum2&#39;vc.54" expl="v := p.value" proved="true">
-  <proof prover="0"><result status="valid" time="0.136178" steps="449"/></proof>
+  <proof prover="0"><result status="valid" time="0.136178" steps="447"/></proof>
   </goal>
   <goal name="sum2&#39;vc.55" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.371493" steps="1787"/></proof>
+  <proof prover="0"><result status="valid" time="0.371493" steps="1682"/></proof>
   </goal>
   <goal name="sum2&#39;vc.56" expl="p := p.nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.150586" steps="461"/></proof>
+  <proof prover="0"><result status="valid" time="0.150586" steps="460"/></proof>
   </goal>
   <goal name="sum2&#39;vc.57" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.095670" steps="118"/></proof>
   </goal>
   <goal name="sum2&#39;vc.58" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.352202" steps="1837"/></proof>
+  <proof prover="0"><result status="valid" time="0.491987" steps="1837"/></proof>
   </goal>
   <goal name="sum2&#39;vc.59" expl="locals type invariant left" proved="true">
   <proof prover="0"><result status="valid" time="0.182241" steps="699"/></proof>
@@ -671,7 +671,7 @@
   <proof prover="0"><result status="valid" time="0.082039" steps="110"/></proof>
   </goal>
   <goal name="sum2&#39;vc.62" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.304373" steps="1513"/></proof>
+  <proof prover="0"><result status="valid" time="0.304373" steps="1561"/></proof>
   </goal>
   <goal name="sum2&#39;vc.63" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.076836" steps="114"/></proof>
@@ -680,16 +680,16 @@
   <proof prover="0"><result status="valid" time="0.083695" steps="115"/></proof>
   </goal>
   <goal name="sum2&#39;vc.65" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.066933" steps="116"/></proof>
+  <proof prover="0"><result status="valid" time="0.432662" steps="1910"/></proof>
   </goal>
   <goal name="sum2&#39;vc.66" expl="p := p.nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.118514" steps="449"/></proof>
+  <proof prover="0"><result status="valid" time="0.118514" steps="95"/></proof>
   </goal>
   <goal name="sum2&#39;vc.67" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.089433" steps="107"/></proof>
+  <proof prover="0"><result status="valid" time="0.089433" steps="99"/></proof>
   </goal>
   <goal name="sum2&#39;vc.68" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.194090" steps="913"/></proof>
+  <proof prover="0"><result status="valid" time="0.194090" steps="100"/></proof>
   </goal>
   <goal name="sum2&#39;vc.69" expl="locals type invariant left" proved="true">
   <proof prover="0"><result status="valid" time="0.071612" steps="94"/></proof>
@@ -710,76 +710,76 @@
   <proof prover="0"><result status="valid" time="0.061100" steps="94"/></proof>
   </goal>
   <goal name="sum2&#39;vc.75" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.064167" steps="94"/></proof>
+  <proof prover="0"><result status="valid" time="0.066933" steps="94"/></proof>
   </goal>
   <goal name="sum2&#39;vc.76" expl="p := p.nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.164635" steps="725"/></proof>
+  <proof prover="0"><result status="valid" time="0.164635" steps="213"/></proof>
   </goal>
   <goal name="sum2&#39;vc.77" expl="v := p.value" proved="true">
-  <proof prover="0"><result status="valid" time="0.094278" steps="192"/></proof>
+  <proof prover="0"><result status="valid" time="0.094278" steps="84"/></proof>
   </goal>
   <goal name="sum2&#39;vc.78" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.094022" steps="194"/></proof>
+  <proof prover="0"><result status="valid" time="0.094022" steps="88"/></proof>
   </goal>
   <goal name="sum2&#39;vc.79" expl="p := p.nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.096716" steps="203"/></proof>
+  <proof prover="0"><result status="valid" time="0.096716" steps="94"/></proof>
   </goal>
   <goal name="sum2&#39;vc.80" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.079978" steps="116"/></proof>
+  <proof prover="0"><result status="valid" time="0.079978" steps="92"/></proof>
   </goal>
   <goal name="sum2&#39;vc.81" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.101346" steps="241"/></proof>
+  <proof prover="0"><result status="valid" time="0.101346" steps="92"/></proof>
   </goal>
   <goal name="sum2&#39;vc.82" expl="locals type invariant left" proved="true">
-  <proof prover="0"><result status="valid" time="0.132116" steps="413"/></proof>
+  <proof prover="0"><result status="valid" time="0.132116" steps="98"/></proof>
   </goal>
   <goal name="sum2&#39;vc.83" expl="locals type invariant right" proved="true">
-  <proof prover="0"><result status="valid" time="0.116183" steps="399"/></proof>
+  <proof prover="0"><result status="valid" time="0.116183" steps="100"/></proof>
   </goal>
   <goal name="sum2&#39;vc.84" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.073935" steps="100"/></proof>
+  <proof prover="0"><result status="valid" time="0.073935" steps="96"/></proof>
   </goal>
   <goal name="sum2&#39;vc.85" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.117399" steps="404"/></proof>
+  <proof prover="0"><result status="valid" time="0.117399" steps="101"/></proof>
   </goal>
   <goal name="sum2&#39;vc.86" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.103950" steps="243"/></proof>
+  <proof prover="0"><result status="valid" time="0.103950" steps="106"/></proof>
   </goal>
   <goal name="sum2&#39;vc.87" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.110863" steps="248"/></proof>
+  <proof prover="0"><result status="valid" time="0.110863" steps="108"/></proof>
   </goal>
   <goal name="sum2&#39;vc.88" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.068430" steps="106"/></proof>
+  <proof prover="0"><result status="valid" time="0.056003" steps="123"/></proof>
   </goal>
   <goal name="sum2&#39;vc.89" expl="p := p.nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.101883" steps="247"/></proof>
+  <proof prover="0"><result status="valid" time="0.101883" steps="259"/></proof>
   </goal>
   <goal name="sum2&#39;vc.90" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.064638" steps="97"/></proof>
+  <proof prover="0"><result status="valid" time="0.064638" steps="102"/></proof>
   </goal>
   <goal name="sum2&#39;vc.91" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.062114" steps="98"/></proof>
+  <proof prover="0"><result status="valid" time="0.062114" steps="103"/></proof>
   </goal>
   <goal name="sum2&#39;vc.92" expl="locals type invariant left" proved="true">
-  <proof prover="0"><result status="valid" time="0.113978" steps="455"/></proof>
+  <proof prover="0"><result status="valid" time="0.113978" steps="461"/></proof>
   </goal>
   <goal name="sum2&#39;vc.93" expl="locals type invariant right" proved="true">
-  <proof prover="0"><result status="valid" time="0.118424" steps="463"/></proof>
+  <proof prover="0"><result status="valid" time="0.118424" steps="469"/></proof>
   </goal>
   <goal name="sum2&#39;vc.94" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.057249" steps="102"/></proof>
+  <proof prover="0"><result status="valid" time="0.057249" steps="86"/></proof>
   </goal>
   <goal name="sum2&#39;vc.95" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.109968" steps="263"/></proof>
+  <proof prover="0"><result status="valid" time="0.109968" steps="269"/></proof>
   </goal>
   <goal name="sum2&#39;vc.96" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.066183" steps="106"/></proof>
+  <proof prover="0"><result status="valid" time="0.066183" steps="90"/></proof>
   </goal>
   <goal name="sum2&#39;vc.97" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.065124" steps="106"/></proof>
+  <proof prover="0"><result status="valid" time="0.065124" steps="90"/></proof>
   </goal>
   <goal name="sum2&#39;vc.98" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.056003" steps="106"/></proof>
+  <proof prover="0"><result status="valid" time="0.326483" steps="1602"/></proof>
   </goal>
   <goal name="sum2&#39;vc.99" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.059468" steps="66"/></proof>

@@ -145,8 +145,8 @@ bimodule BiList (List | List) =
     |_ p := self.head _|;
     |_ result := 0 _|;
     While (p <> null) | (p <> null) .
-        <| p.pub = false <] /\ [> p <> null -> p.pub = true |>
-      | [> p.pub = false |> /\ <| p <> null -> p.pub = true <] do
+        <| p.pub = false <] /\ [> p = null \/ p.pub = true |>
+      | [> p.pub = false |> /\ <| p = null \/ p.pub = true <] do
       invariant { Both (listpub(p,xs)) }
       invariant { result =:= result }
       invariant { xs =:= xs }
