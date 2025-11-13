@@ -10,12 +10,6 @@ end
 module A : I =
   meth prog () : int
 /*
-*/
-end
-
-module B : I =
-  meth prog () : int
-/*  =
 
 pre:  (= run!1!low run!2!low);
 post: (= run!1!low run!2!low);
@@ -52,7 +46,7 @@ fun run(high, low) {
 end
 
 /* Should and does verify */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (|) : (int |int )
   requires { low  =:= low }
   ensures { low =:= low }

@@ -13,12 +13,6 @@ module A : I =
   meth prog (x_h: int) : int
 /*
 
-*/
-end
-
-module B : I =
-  meth prog (x_h: int) : int
-/*  =
 
 fun denning(i_L, e_L, f_L, x_H, sum_H) {
   max_sum := 100;

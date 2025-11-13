@@ -11,13 +11,7 @@ end
 
 module A : I =
   meth prog () : int
-/*
 
-*/
-end
-
-module B : I =
-  meth prog () : int
 /*  =Custom
 
 fun denning(f1_L, f2_L, f3_H, f4_H) {
@@ -54,7 +48,7 @@ post: (and
 end
 
 /* should verify but the division operation needs the fact n != 0  to go through */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (|) : (int |int )
   requires { f1_l =:= f1_l /\ f2_l =:= f2_l}
   ensures { f1_l =:= f1_l /\ f2_l =:= f2_l }

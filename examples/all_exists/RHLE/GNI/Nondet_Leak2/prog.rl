@@ -10,13 +10,6 @@ end
 module A : I =
   meth prog () : int
 /*
-*/
-end
-
-module B : I =
-  meth prog () : int
-/*  =
-
 
 aspecs:
   flipCoin() {
@@ -48,7 +41,7 @@ post: (= run!1!low run!2!low);
 end
 
 /* should not and does not verify  */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (|) : (int |int )
   requires { low  =:= low }
   ensures { low =:= low }

@@ -10,13 +10,6 @@ module A : I =
   meth prog () : int
 /*
 
-*/
-end
-
-module B : I =
-  meth prog () : int
-/*  =
-
 expected: invalid;
 
 forall: used[1];
@@ -33,7 +26,7 @@ fun used(param) {
 end
 
 /* should not and does not verify */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (param :int | param: int) : (int | int)
   requires { [< param <] <> [> param >] }
   ensures { result =:= result }

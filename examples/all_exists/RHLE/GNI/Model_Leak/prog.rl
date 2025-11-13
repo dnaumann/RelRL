@@ -15,13 +15,6 @@ aspecs:
     pre:  true;
     post: (and (>= ret! 0) (< ret! 100));
   }
-*/
-end
-
-module B : I =
-  meth prog (x_h: int) : int
-/*  =
-
 
 especs:
   randInt() {
@@ -51,7 +44,7 @@ post: (and
 end
 
 /* should not and does not verify  */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (x_h: int|x_h : int) : (int |int )
   requires { low  =:= low }
   ensures { low =:= low }

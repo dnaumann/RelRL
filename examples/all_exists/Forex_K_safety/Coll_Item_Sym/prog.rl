@@ -19,13 +19,10 @@ module A : I =
 
 end
 
-module B : I =
-  meth prog () : int
 
-end
 
 /* verifies */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (|) : (int |int )
   requires {(cs =:= ccs) /\
             (cr =:= ccr) /\

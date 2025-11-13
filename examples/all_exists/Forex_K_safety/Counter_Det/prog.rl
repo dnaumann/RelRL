@@ -15,13 +15,10 @@ module A : I =
 
 end
 
-module B : I =
-  meth prog () : unit
 
-end
 
 /* verifies */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (|) : (unit |unit )
   requires {(n =:= n) /\
             (x =:= x)}

@@ -1,11 +1,19 @@
 interface I =
+  ghost choice_var: int
+
+  meth flipcoin () : int
+
   meth prog () : int
     effects {  }
 end
 
 module A : I =
   meth prog () : int
-/*
+
+  meth flipcoin (): int
+    ensures {result = 0 \/ result = 1}
+
+  /*
 aspecs:
   flipCoin() {
     pre: true;
@@ -26,6 +34,11 @@ end
 
 module B : I =
   meth prog () : int
+
+
+  meth flipcoin (): int
+    requires {choice_var = 0 \/ choice_var = 1}
+    ensures {result = choice_var}
 /*  =
   especs:
     flipCoin() {
@@ -52,29 +65,27 @@ end
 /* verifies */
 bimodule FREL (A | B) =
   meth flipCoin (|) : (int | int)
-   requires {}
+   requires {[> choice_var = 0 \/ choice_var = 1 |>}
+   ensures { <| result = 0 \/ result = 1 <] }
+   ensures { [> result = choice_var |>}
 
   meth prog (|) : (int | int)
+  requires {[> choice_var = 0 \/ choice_var = 1 |>}
   ensures { result =:= result }
  =
 
   Var | choice_var : int in
   Var flipret: int | flipret: int in
 
-  (havoc flipret | skip);
+  |_ flipret := flipcoin() _|;
+  Assume { [< 1 -  flipret <] = [> choice_var >]};
 
-  (assume { flipret = 0 \/ flipret = 1} | skip); /* universal spec */
   
   (if (flipret = 0) then
     result := 10;
   else
     result := 20;
-  end | skip);
-
-  /* existential spec instantiated with flipret_ref */
-  HavocR flipret {  [< 1 -  flipret <] = [>  flipret >]}; 
-
-  (skip | if (flipret = 0) then
+  end  | if (flipret = 0) then
       result := 20;
     else
       result := 10;

@@ -17,12 +17,6 @@ aspecs:
     post: (= ret! (mod val 2));
   }
 
-*/
-end
-
-module B : I =
-  meth prog () : int
-/*  =
 
 especs:
   parity(val) {
@@ -53,7 +47,7 @@ post: (= run!1!l run!2!l);
 end
 
 /* verifies */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (|) : (int |int )
   requires {l =:= l}
   requires { [< h mod 2 <] = [> h mod 2 >] } /* delimited release */

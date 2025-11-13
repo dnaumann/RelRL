@@ -12,15 +12,6 @@ module A : I =
   meth prog () : int
 /*
 
-*/
-end
-
-module B : I =
-  meth prog () : int
-/*  =
-
-
-
 fun buy(funds, spent, cost) {
   if (funds >= cost) then
     funds := funds - cost;
@@ -43,7 +34,7 @@ post: (= buy!1!spent buy!2!spent);
 end
 
 /* verifies */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (|) : (int |int )
   requires { spent =:= spent }
   requires { <| funds >= cost <] /\ [> funds >= cost |> } /* delimited release */

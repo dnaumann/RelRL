@@ -10,12 +10,6 @@ end
 module A : I =
   meth prog () : int
 /*
-*/
-end
-
-module B : I =
-  meth prog () : int
-/*  =
 
 aspecs:
   randInt() {
@@ -50,7 +44,7 @@ post: (and
 end
 
 /* verifies  */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (|) : (int |int )
   requires { low  =:= low }
   ensures { low =:= low }

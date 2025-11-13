@@ -10,12 +10,6 @@ end
 module A : I =
   meth prog () : int
 /*
-*/
-end
-
-module B : I =
-  meth prog () : int
-/*  =
 
 pre:  (= nonleak!1!low  nonleak!2!low);
 post: (and
@@ -32,7 +26,7 @@ fun nonleak(high, low) {
 end
 
 /* verifies  */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (|) : (int |int )
   requires { low  =:= low }
   ensures { low =:= low }

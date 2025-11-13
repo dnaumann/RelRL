@@ -12,15 +12,6 @@ module A : I =
   meth prog () : int
 /*
 
-*/
-end
-
-module B : I =
-  meth prog () : int
-/*  =
-
-
-
 fun parity() {
   if (h % 2 == 1) then
     l := 1;
@@ -43,7 +34,7 @@ post: (= parity!1!l parity!2!l);
 end
 
 /* Verifies */
-bimodule FREL (A | B) =
+bimodule FREL (A | A) =
   meth prog (|) : (int |int )
   requires {l =:= l}
   requires { [< h mod 2 <] = [> h mod 2 >] } /* delimited release */
