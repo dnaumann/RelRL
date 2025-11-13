@@ -57,8 +57,8 @@ bimodule FREL (A | B) =
   meth prog (|) : (int |int )
   requires {l =:= l}
   requires { [< h mod 2 <] = [> h mod 2 >] } /* delimited release */
-  effects {rw l, h | rw l, h}
   ensures { l =:= l }
+  effects {rw l, h | rw l, h}
  =
 
   Var p: int | p: int in

@@ -145,12 +145,11 @@ bimodule Birefine ( A | B ) =
     thenThen
         (skip | x := 0);
         (skip | c := 0);
-        
-        WhileR (k > 0) do variant { [> k >]}
-          (skip | k := k - 1);
-          (skip | x := (x + 1));
-          (skip | x := (x + 1));
-        done;
+        (skip | while (k > 0) do variant { k }
+             k := k - 1;
+             x := (x + 1);
+             x := (x + 1);
+        done);
     thenElse
         (skip | x := 0);
         (skip | c := 1);
@@ -168,11 +167,11 @@ bimodule Birefine ( A | B ) =
         (skip | x := 0);
         (skip | c := 0);
         
-        WhileR (k > 0) do variant { [> k >]}
-          (skip | k := k - 1);
-          (skip | x := (x + 1));
-          (skip | x := (x + 1));
-        done;
+        (skip | while (k > 0) do variant { k }
+             k := k - 1;
+             x := (x + 1);
+             x := (x + 1);
+        done);
     elseElse
         (skip | x := 0);
         (skip | c := 1);

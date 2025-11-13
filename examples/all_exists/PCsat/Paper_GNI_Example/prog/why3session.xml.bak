@@ -8,9 +8,8 @@
 <theory name="State" proved="true">
  <goal name="state&#39;vc" expl="VC for state" proved="true">
  <proof prover="0"><result status="valid" time="0.018300" steps="49"/></proof>
- <transf name="split_vc" proved="true" >
-  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
-  <proof prover="0"><result status="valid" time="0.045041" steps="48"/></proof>
+ <transf name="split_vc" >
+  <goal name="state&#39;vc.0" expl="type invariant">
   </goal>
  </transf>
  </goal>
@@ -106,40 +105,40 @@
   <proof prover="0"><result status="valid" time="0.020259" steps="18"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.23" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.018690" steps="22"/></proof>
+  <proof prover="0"><result status="valid" time="0.018690" steps="18"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.24" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.016609" steps="20"/></proof>
+  <proof prover="0"><result status="valid" time="0.016609" steps="18"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.25" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.018091" steps="26"/></proof>
+  <proof prover="0"><result status="valid" time="0.018091" steps="24"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.26" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.021238" steps="26"/></proof>
+  <proof prover="0"><result status="valid" time="0.021238" steps="24"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.27" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.019093" steps="24"/></proof>
+  <proof prover="0"><result status="valid" time="0.019093" steps="22"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.28" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.028659" steps="31"/></proof>
+  <proof prover="0"><result status="valid" time="0.028659" steps="29"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.29" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.018644" steps="31"/></proof>
+  <proof prover="0"><result status="valid" time="0.018644" steps="29"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.30" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.021802" steps="26"/></proof>
+  <proof prover="0"><result status="valid" time="0.021802" steps="24"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.31" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.020426" steps="26"/></proof>
+  <proof prover="0"><result status="valid" time="0.020426" steps="24"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.32" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.020440" steps="26"/></proof>
+  <proof prover="0"><result status="valid" time="0.020440" steps="24"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.33" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.020064" steps="26"/></proof>
+  <proof prover="0"><result status="valid" time="0.020064" steps="24"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.34" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.018072" steps="26"/></proof>
+  <proof prover="0"><result status="valid" time="0.018072" steps="24"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.35" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.014843" steps="18"/></proof>

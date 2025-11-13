@@ -98,14 +98,14 @@ bimodule Birefine ( A | A ) =
         (skip | result.x := 0);
         (skip | result.c := 0);
         
-        WhileR (k > 0) do variant { [> k >]}
-          effects { | rw {result}`any }
-          (skip | k := k - 1);
-          (skip | temp1 := result.x);
-          (skip | result.x := (temp1 + 1));
-        done;
+        (skip | while (k > 0) do variant { k }
+          effects { rw {result}`any }
+             k := k - 1;
+           temp1 := result.x;
+           result.x := (temp1 + 1);
+        done);
     thenElse
-(skip | result.x := 0);
+        (skip | result.x := 0);
         (skip | result.c := 1);
 
         WhileR (k > 0) do  variant { [> k >]}
@@ -123,12 +123,12 @@ bimodule Birefine ( A | A ) =
         (skip | result.x := 0);
         (skip | result.c := 0);
         
-        WhileR (k > 0) do variant { [> k >]}
-             effects { | rw {result}`any }
-          (skip | k := k - 1);
-          (skip | temp1 := result.x);
-          (skip | result.x := (temp1 + 1));
-        done;
+        (skip | while (k > 0) do variant { k }
+          effects { rw {result}`any }
+             k := k - 1;
+           temp1 := result.x;
+           result.x := (temp1 + 1);
+        done);
     elseElse
         (skip | result.x := 0);
         (skip | result.c := 1);

@@ -57,16 +57,16 @@ bimodule FREL (A | A) =
     thenThen
       |_ i := 0 _|;
 
-      WhileL (i < n - 1) do variant { [< i <] }
-         (temp := get(a, i) | skip);
-         (sum := sum + temp | skip);
-         (i := i + 1 | skip);
-      done;
-      WhileR (i < n - 1) do variant { [> i >] }
-         (skip | temp := get(a, i));
-         (skip | sum := sum + temp);
-         (skip | i := i + 1);
-      done;
+      (while (i < n - 1) do variant {  i  }
+         temp := get(a, i);
+         sum := sum + temp;
+         i := i + 1;
+      done | skip);
+      (skip | while (i < n - 1) do variant { i }
+         temp := get(a, i);
+         sum := sum + temp;
+         i := i + 1;
+      done);
     thenElse
       (i := 0 | i := 1);
 
@@ -87,19 +87,19 @@ bimodule FREL (A | A) =
     
     elseThen
       (i := 1 | i := 0);
-      WhileL (i < n) do 
-        invariant { <| (0 <= i) <]  }
-        (havoc y | skip);
-        (temp := get(a, i) | skip);
-        (sum := sum + temp + y | skip);
-        (i := i + 1 | skip);
-      done;
-      WhileR (i < n - 1) do variant { [> i >] }
-          invariant { [> (0 <= i) |>  }
-        (skip | temp := get(a, i));
-        (skip | sum := sum + temp);
-        (skip | i := i + 1);
-      done;
+      (while (i < n) do 
+        invariant { 0 <= i  }
+        havoc y;
+        temp := get(a, i);
+        sum := sum + temp + y;
+        i := i + 1;
+      done | skip);
+      (skip | while (i < n - 1) do variant {  i }
+          invariant { (0 <= i) }
+        temp := get(a, i);
+        sum := sum + temp;
+        i := i + 1;
+      done );
     
     elseElse
       |_ i := 1 _|;

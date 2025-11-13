@@ -63,10 +63,10 @@ bimodule UREL (U | U) =
 
     elseThen
       ( x := low; havoc b | skip );
-      WhileL b <> 0 do
-        invariant { <| x >= low <] }
-        ( x := x+1; havoc b | skip );
-      done;
+      (while b <> 0 do
+        invariant { x >= low }
+         x := x+1; havoc b;
+      done | skip);
       HavocR x { Agree x };
       ( skip
       | if x >= low then skip

@@ -61,11 +61,11 @@ bimodule FREL (A | B) =
       |_ x := x - 1 _|;
 
       (havoc t | skip);
-      WhileL (t > 0) do
-          (t := t - 1 | skip);
-          (havoc s0 | skip);
-          (result := result + s0 | skip);
-      done;
+      (while (t > 0) do
+          t := t - 1;
+          havoc s0 ;
+          result := result + s0;
+      done | skip);
       
       HavocR s0 { [> s0 >] = [< result <] - [> result >] };
       (skip | result := result + s0);

@@ -18,35 +18,6 @@
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.019961" steps="14"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.1" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.021049" steps="12"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.2" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.021721" steps="18"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.3" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.020671" steps="18"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.4" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.020061" steps="16"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.5" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.018478" steps="22"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.6" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.017206" steps="22"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.7" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.017879" steps="22"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.021402" steps="22"/></proof>
-  </goal>
- </transf>
- <transf name="split_vc" proved="true" >
-  <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.023324" steps="14"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="loop invariant init" proved="true">

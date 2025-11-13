@@ -18,7 +18,7 @@ end
 
 module B : I =
   meth prog () : int
-/*  =
+/*  =Custom
 
 fun denning(f1_L, f2_L, f3_H, f4_H) {
   i   := 1;

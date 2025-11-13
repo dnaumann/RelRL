@@ -238,576 +238,576 @@
   <goal name="refine&#39;vc.69" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.020012" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.70" expl="locals type invariant" proved="true">
+  <goal name="refine&#39;vc.70" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.020061" steps="36"/></proof>
+  </goal>
+  <goal name="refine&#39;vc.71" expl="locals type invariant right" proved="true">
   <proof prover="0"><result status="valid" time="0.020256" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.71" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.019237" steps="36"/></proof>
-  </goal>
-  <goal name="refine&#39;vc.72" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.022488" steps="36"/></proof>
+  <goal name="refine&#39;vc.72" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.017187" steps="36"/></proof>
   </goal>
   <goal name="refine&#39;vc.73" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.021578" steps="36"/></proof>
+  <proof prover="0"><result status="valid" time="0.018893" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.74" expl="locals type invariant" proved="true">
-  <proof prover="0"><result status="valid" time="0.023233" steps="36"/></proof>
+  <goal name="refine&#39;vc.74" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.024956" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.75" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.019328" steps="36"/></proof>
+  <goal name="refine&#39;vc.75" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.023600" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.76" expl="result.x := x" proved="true">
-  <proof prover="0"><result status="valid" time="0.024202" steps="36"/></proof>
+  <goal name="refine&#39;vc.76" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.023864" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.77" expl="result.x := x" proved="true">
-  <proof prover="0"><result status="valid" time="0.024079" steps="36"/></proof>
+  <goal name="refine&#39;vc.77" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.020322" steps="36"/></proof>
   </goal>
   <goal name="refine&#39;vc.78" expl="result.x := x" proved="true">
-  <proof prover="0"><result status="valid" time="0.021995" steps="36"/></proof>
+  <proof prover="0"><result status="valid" time="0.018244" steps="36"/></proof>
   </goal>
   <goal name="refine&#39;vc.79" expl="result.x := x" proved="true">
-  <proof prover="0"><result status="valid" time="0.021410" steps="36"/></proof>
+  <proof prover="0"><result status="valid" time="0.025199" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.80" expl="result.c := c" proved="true">
-  <proof prover="0"><result status="valid" time="0.025097" steps="36"/></proof>
+  <goal name="refine&#39;vc.80" expl="result.x := x" proved="true">
+  <proof prover="0"><result status="valid" time="0.023702" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.81" expl="result.c := c" proved="true">
-  <proof prover="0"><result status="valid" time="0.036009" steps="36"/></proof>
+  <goal name="refine&#39;vc.81" expl="result.x := x" proved="true">
+  <proof prover="0"><result status="valid" time="0.018974" steps="36"/></proof>
   </goal>
   <goal name="refine&#39;vc.82" expl="result.c := c" proved="true">
-  <proof prover="0"><result status="valid" time="0.023278" steps="36"/></proof>
+  <proof prover="0"><result status="valid" time="0.022597" steps="36"/></proof>
   </goal>
   <goal name="refine&#39;vc.83" expl="result.c := c" proved="true">
-  <proof prover="0"><result status="valid" time="0.034958" steps="36"/></proof>
+  <proof prover="0"><result status="valid" time="0.020715" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.84" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.039224" steps="36"/></proof>
+  <goal name="refine&#39;vc.84" expl="result.c := c" proved="true">
+  <proof prover="0"><result status="valid" time="0.022965" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.85" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.040774" steps="36"/></proof>
+  <goal name="refine&#39;vc.85" expl="result.c := c" proved="true">
+  <proof prover="0"><result status="valid" time="0.023079" steps="36"/></proof>
   </goal>
   <goal name="refine&#39;vc.86" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.061867" steps="36"/></proof>
+  <proof prover="0"><result status="valid" time="0.017871" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.87" expl="wr {}`c" proved="true">
-  <proof prover="0"><result status="valid" time="0.103217" steps="36"/></proof>
+  <goal name="refine&#39;vc.87" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.021872" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.88" expl="wr {}`x" proved="true">
-  <proof prover="0"><result status="valid" time="0.098176" steps="36"/></proof>
+  <goal name="refine&#39;vc.88" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.018496" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.89" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.066961" steps="36"/></proof>
+  <goal name="refine&#39;vc.89" expl="wr {}`c" proved="true">
+  <proof prover="0"><result status="valid" time="0.025353" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.90" expl="wr {}`c" proved="true">
-  <proof prover="0"><result status="valid" time="0.042341" steps="36"/></proof>
+  <goal name="refine&#39;vc.90" expl="wr {}`x" proved="true">
+  <proof prover="0"><result status="valid" time="0.023091" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.91" expl="wr {}`x" proved="true">
-  <proof prover="0"><result status="valid" time="0.121464" steps="36"/></proof>
+  <goal name="refine&#39;vc.91" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.019095" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.92" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.043538" steps="36"/></proof>
+  <goal name="refine&#39;vc.92" expl="wr {}`c" proved="true">
+  <proof prover="0"><result status="valid" time="0.022166" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.93" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.033682" steps="36"/></proof>
+  <goal name="refine&#39;vc.93" expl="wr {}`x" proved="true">
+  <proof prover="0"><result status="valid" time="0.020719" steps="36"/></proof>
   </goal>
   <goal name="refine&#39;vc.94" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.027953" steps="36"/></proof>
+  <proof prover="0"><result status="valid" time="0.021312" steps="36"/></proof>
   </goal>
-  <goal name="refine&#39;vc.95" expl="locals type invariant left" proved="true">
+  <goal name="refine&#39;vc.95" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.025125" steps="36"/></proof>
+  </goal>
+  <goal name="refine&#39;vc.96" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.020560" steps="36"/></proof>
+  </goal>
+  <goal name="refine&#39;vc.97" expl="locals type invariant left" proved="true">
   <proof prover="0"><result status="valid" time="0.019736" steps="42"/></proof>
   </goal>
-  <goal name="refine&#39;vc.96" expl="locals type invariant right" proved="true">
+  <goal name="refine&#39;vc.98" expl="locals type invariant right" proved="true">
   <proof prover="0"><result status="valid" time="0.022613" steps="46"/></proof>
   </goal>
-  <goal name="refine&#39;vc.97" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.99" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.020300" steps="44"/></proof>
   </goal>
-  <goal name="refine&#39;vc.98" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.100" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.023150" steps="44"/></proof>
   </goal>
-  <goal name="refine&#39;vc.99" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.101" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.024717" steps="47"/></proof>
   </goal>
-  <goal name="refine&#39;vc.100" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.102" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.023429" steps="47"/></proof>
   </goal>
-  <goal name="refine&#39;vc.101" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.103" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.021049" steps="54"/></proof>
   </goal>
-  <goal name="refine&#39;vc.102" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.104" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.025335" steps="58"/></proof>
   </goal>
-  <goal name="refine&#39;vc.103" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.105" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.023654" steps="59"/></proof>
   </goal>
-  <goal name="refine&#39;vc.104" expl="locals type invariant left" proved="true">
+  <goal name="refine&#39;vc.106" expl="locals type invariant left" proved="true">
   <proof prover="0"><result status="valid" time="0.033433" steps="60"/></proof>
   </goal>
-  <goal name="refine&#39;vc.105" expl="locals type invariant right" proved="true">
+  <goal name="refine&#39;vc.107" expl="locals type invariant right" proved="true">
   <proof prover="0"><result status="valid" time="0.021958" steps="60"/></proof>
   </goal>
-  <goal name="refine&#39;vc.106" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.108" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.021378" steps="60"/></proof>
   </goal>
-  <goal name="refine&#39;vc.107" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.109" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.015630" steps="60"/></proof>
   </goal>
-  <goal name="refine&#39;vc.108" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.110" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.023930" steps="61"/></proof>
   </goal>
-  <goal name="refine&#39;vc.109" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.111" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.021970" steps="65"/></proof>
   </goal>
-  <goal name="refine&#39;vc.110" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.112" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.024149" steps="72"/></proof>
   </goal>
-  <goal name="refine&#39;vc.111" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.113" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.021548" steps="72"/></proof>
   </goal>
-  <goal name="refine&#39;vc.112" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.114" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.024367" steps="78"/></proof>
   </goal>
-  <goal name="refine&#39;vc.113" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.115" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.032934" steps="78"/></proof>
   </goal>
-  <goal name="refine&#39;vc.114" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.116" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.021071" steps="84"/></proof>
   </goal>
-  <goal name="refine&#39;vc.115" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.117" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.028142" steps="223"/></proof>
   </goal>
-  <goal name="refine&#39;vc.116" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.118" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.033767" steps="90"/></proof>
   </goal>
-  <goal name="refine&#39;vc.117" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.119" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.033457" steps="251"/></proof>
   </goal>
-  <goal name="refine&#39;vc.118" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.120" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.037697" steps="280"/></proof>
   </goal>
-  <goal name="refine&#39;vc.119" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.121" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.039703" steps="286"/></proof>
   </goal>
-  <goal name="refine&#39;vc.120" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.122" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.054413" steps="592"/></proof>
   </goal>
-  <goal name="refine&#39;vc.121" expl="wr {}`c" proved="true">
+  <goal name="refine&#39;vc.123" expl="wr {}`c" proved="true">
   <proof prover="0"><result status="valid" time="0.091718" steps="1114"/></proof>
   </goal>
-  <goal name="refine&#39;vc.122" expl="wr {}`x" proved="true">
+  <goal name="refine&#39;vc.124" expl="wr {}`x" proved="true">
   <proof prover="0"><result status="valid" time="0.097080" steps="1124"/></proof>
   </goal>
-  <goal name="refine&#39;vc.123" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.125" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.059664" steps="610"/></proof>
   </goal>
-  <goal name="refine&#39;vc.124" expl="wr {}`c" proved="true">
+  <goal name="refine&#39;vc.126" expl="wr {}`c" proved="true">
   <proof prover="0"><result status="valid" time="0.126737" steps="1130"/></proof>
   </goal>
-  <goal name="refine&#39;vc.125" expl="wr {}`x" proved="true">
+  <goal name="refine&#39;vc.127" expl="wr {}`x" proved="true">
   <proof prover="0"><result status="valid" time="0.115939" steps="1139"/></proof>
   </goal>
-  <goal name="refine&#39;vc.126" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.128" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.387689" steps="4852"/></proof>
   </goal>
-  <goal name="refine&#39;vc.127" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.129" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.057785" steps="359"/></proof>
   </goal>
-  <goal name="refine&#39;vc.128" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.130" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.029490" steps="114"/></proof>
   </goal>
-  <goal name="refine&#39;vc.129" expl="locals type invariant" proved="true">
+  <goal name="refine&#39;vc.131" expl="locals type invariant" proved="true">
   <proof prover="0"><result status="valid" time="0.024895" steps="22"/></proof>
   </goal>
-  <goal name="refine&#39;vc.130" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.132" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.026469" steps="23"/></proof>
   </goal>
-  <goal name="refine&#39;vc.131" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.133" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.023816" steps="24"/></proof>
   </goal>
-  <goal name="refine&#39;vc.132" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.134" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.021016" steps="22"/></proof>
   </goal>
-  <goal name="refine&#39;vc.133" expl="locals type invariant" proved="true">
+  <goal name="refine&#39;vc.135" expl="locals type invariant" proved="true">
   <proof prover="0"><result status="valid" time="0.018289" steps="30"/></proof>
   </goal>
-  <goal name="refine&#39;vc.134" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.136" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.022376" steps="30"/></proof>
   </goal>
-  <goal name="refine&#39;vc.135" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.137" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.027937" steps="30"/></proof>
   </goal>
-  <goal name="refine&#39;vc.136" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.138" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.022727" steps="30"/></proof>
   </goal>
-  <goal name="refine&#39;vc.137" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.139" expl="assertion" proved="true">
   <proof prover="0"><undone/></proof>
   <proof prover="1"><result status="valid" time="0.006990" steps="18137"/></proof>
   </goal>
-  <goal name="refine&#39;vc.138" expl="locals type invariant" proved="true">
+  <goal name="refine&#39;vc.140" expl="locals type invariant" proved="true">
   <proof prover="0"><result status="valid" time="0.021033" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.139" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.141" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.019118" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.140" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.142" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.022827" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.141" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.143" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.022545" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.142" expl="locals type invariant" proved="true">
+  <goal name="refine&#39;vc.144" expl="locals type invariant" proved="true">
   <proof prover="0"><result status="valid" time="0.018395" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.143" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.145" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.020028" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.144" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.146" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.022165" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.145" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.147" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.022544" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.146" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.148" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.021174" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.147" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.149" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.019784" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.148" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.150" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.019559" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.149" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.151" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.021645" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.150" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.152" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.024380" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.151" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.153" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.021198" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.152" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.154" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.022099" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.153" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.155" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.021399" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.154" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.156" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.023155" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.155" expl="wr {}`c" proved="true">
+  <goal name="refine&#39;vc.157" expl="wr {}`c" proved="true">
   <proof prover="0"><result status="valid" time="0.019090" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.156" expl="wr {}`x" proved="true">
+  <goal name="refine&#39;vc.158" expl="wr {}`x" proved="true">
   <proof prover="0"><result status="valid" time="0.020918" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.157" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.159" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.022953" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.158" expl="wr {}`c" proved="true">
+  <goal name="refine&#39;vc.160" expl="wr {}`c" proved="true">
   <proof prover="0"><result status="valid" time="0.023644" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.159" expl="wr {}`x" proved="true">
+  <goal name="refine&#39;vc.161" expl="wr {}`x" proved="true">
   <proof prover="0"><result status="valid" time="0.022975" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.160" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.162" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.021428" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.161" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.163" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.022899" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.162" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.164" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.023458" steps="32"/></proof>
   </goal>
-  <goal name="refine&#39;vc.163" expl="locals type invariant left" proved="true">
+  <goal name="refine&#39;vc.165" expl="locals type invariant left" proved="true">
   <proof prover="0"><result status="valid" time="0.021146" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.164" expl="locals type invariant right" proved="true">
+  <goal name="refine&#39;vc.166" expl="locals type invariant right" proved="true">
   <proof prover="0"><result status="valid" time="0.018912" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.165" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.167" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.020962" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.166" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.168" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.024394" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.167" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.169" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.040438" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.168" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.170" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.034159" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.169" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.171" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.019969" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.170" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.172" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.019910" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.171" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.173" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.024147" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.172" expl="locals type invariant left" proved="true">
+  <goal name="refine&#39;vc.174" expl="locals type invariant left" proved="true">
   <proof prover="0"><result status="valid" time="0.017255" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.173" expl="locals type invariant right" proved="true">
+  <goal name="refine&#39;vc.175" expl="locals type invariant right" proved="true">
   <proof prover="0"><result status="valid" time="0.022877" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.174" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.176" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.030537" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.175" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.177" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.021808" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.176" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.178" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.019681" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.177" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.179" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.019730" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.178" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.180" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.021173" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.179" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.181" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.019842" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.180" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.182" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.019819" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.181" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.183" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.023491" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.182" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.184" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.024144" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.183" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.185" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.020976" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.184" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.186" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.019446" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.185" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.187" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.023112" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.186" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.188" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.030935" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.187" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.189" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.021694" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.188" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.190" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.023543" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.189" expl="wr {}`c" proved="true">
+  <goal name="refine&#39;vc.191" expl="wr {}`c" proved="true">
   <proof prover="0"><result status="valid" time="0.020511" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.190" expl="wr {}`x" proved="true">
+  <goal name="refine&#39;vc.192" expl="wr {}`x" proved="true">
   <proof prover="0"><result status="valid" time="0.022126" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.191" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.193" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.022095" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.192" expl="wr {}`c" proved="true">
+  <goal name="refine&#39;vc.194" expl="wr {}`c" proved="true">
   <proof prover="0"><result status="valid" time="0.021080" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.193" expl="wr {}`x" proved="true">
+  <goal name="refine&#39;vc.195" expl="wr {}`x" proved="true">
   <proof prover="0"><result status="valid" time="0.023134" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.194" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.196" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.021392" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.195" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.197" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.020131" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.196" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.198" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.021749" steps="34"/></proof>
   </goal>
-  <goal name="refine&#39;vc.197" expl="locals type invariant" proved="true">
-  <proof prover="0"><result status="valid" time="0.023864" steps="43"/></proof>
+  <goal name="refine&#39;vc.199" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.021695" steps="40"/></proof>
   </goal>
-  <goal name="refine&#39;vc.198" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.017187" steps="45"/></proof>
+  <goal name="refine&#39;vc.200" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.023233" steps="43"/></proof>
   </goal>
-  <goal name="refine&#39;vc.199" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.018893" steps="54"/></proof>
+  <goal name="refine&#39;vc.201" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.019237" steps="42"/></proof>
   </goal>
-  <goal name="refine&#39;vc.200" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.024956" steps="55"/></proof>
+  <goal name="refine&#39;vc.202" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.022488" steps="54"/></proof>
   </goal>
-  <goal name="refine&#39;vc.201" expl="locals type invariant" proved="true">
+  <goal name="refine&#39;vc.203" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.021578" steps="55"/></proof>
+  </goal>
+  <goal name="refine&#39;vc.204" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.021235" steps="56"/></proof>
+  </goal>
+  <goal name="refine&#39;vc.205" expl="locals type invariant right" proved="true">
   <proof prover="0"><result status="valid" time="0.023556" steps="56"/></proof>
   </goal>
-  <goal name="refine&#39;vc.202" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.020322" steps="56"/></proof>
+  <goal name="refine&#39;vc.206" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.019328" steps="56"/></proof>
   </goal>
-  <goal name="refine&#39;vc.203" expl="result.x := x" proved="true">
-  <proof prover="0"><result status="valid" time="0.018244" steps="70"/></proof>
+  <goal name="refine&#39;vc.207" expl="result.x := x" proved="true">
+  <proof prover="0"><result status="valid" time="0.024202" steps="68"/></proof>
   </goal>
-  <goal name="refine&#39;vc.204" expl="result.x := x" proved="true">
-  <proof prover="0"><result status="valid" time="0.025199" steps="70"/></proof>
+  <goal name="refine&#39;vc.208" expl="result.x := x" proved="true">
+  <proof prover="0"><result status="valid" time="0.024079" steps="68"/></proof>
   </goal>
-  <goal name="refine&#39;vc.205" expl="result.x := x" proved="true">
-  <proof prover="0"><result status="valid" time="0.023702" steps="76"/></proof>
+  <goal name="refine&#39;vc.209" expl="result.x := x" proved="true">
+  <proof prover="0"><result status="valid" time="0.021995" steps="74"/></proof>
   </goal>
-  <goal name="refine&#39;vc.206" expl="result.x := x" proved="true">
-  <proof prover="0"><result status="valid" time="0.018974" steps="76"/></proof>
+  <goal name="refine&#39;vc.210" expl="result.x := x" proved="true">
+  <proof prover="0"><result status="valid" time="0.021410" steps="74"/></proof>
   </goal>
-  <goal name="refine&#39;vc.207" expl="result.c := c" proved="true">
-  <proof prover="0"><result status="valid" time="0.022597" steps="82"/></proof>
+  <goal name="refine&#39;vc.211" expl="result.c := c" proved="true">
+  <proof prover="0"><result status="valid" time="0.025097" steps="80"/></proof>
   </goal>
-  <goal name="refine&#39;vc.208" expl="result.c := c" proved="true">
-  <proof prover="0"><result status="valid" time="0.020715" steps="219"/></proof>
+  <goal name="refine&#39;vc.212" expl="result.c := c" proved="true">
+  <proof prover="0"><result status="valid" time="0.036009" steps="217"/></proof>
   </goal>
-  <goal name="refine&#39;vc.209" expl="result.c := c" proved="true">
-  <proof prover="0"><result status="valid" time="0.022965" steps="88"/></proof>
+  <goal name="refine&#39;vc.213" expl="result.c := c" proved="true">
+  <proof prover="0"><result status="valid" time="0.023278" steps="86"/></proof>
   </goal>
-  <goal name="refine&#39;vc.210" expl="result.c := c" proved="true">
-  <proof prover="0"><result status="valid" time="0.023079" steps="247"/></proof>
+  <goal name="refine&#39;vc.214" expl="result.c := c" proved="true">
+  <proof prover="0"><result status="valid" time="0.034958" steps="245"/></proof>
   </goal>
-  <goal name="refine&#39;vc.211" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.017871" steps="276"/></proof>
-  </goal>
-  <goal name="refine&#39;vc.212" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.021872" steps="282"/></proof>
-  </goal>
-  <goal name="refine&#39;vc.213" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.140200" steps="584"/></proof>
-  </goal>
-  <goal name="refine&#39;vc.214" expl="wr {}`c" proved="true">
-  <proof prover="0"><result status="valid" time="0.230197" steps="1090"/></proof>
-  </goal>
-  <goal name="refine&#39;vc.215" expl="wr {}`x" proved="true">
-  <proof prover="0"><result status="valid" time="0.225522" steps="1101"/></proof>
+  <goal name="refine&#39;vc.215" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.039224" steps="274"/></proof>
   </goal>
   <goal name="refine&#39;vc.216" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.138360" steps="602"/></proof>
+  <proof prover="0"><result status="valid" time="0.040774" steps="280"/></proof>
   </goal>
-  <goal name="refine&#39;vc.217" expl="wr {}`c" proved="true">
-  <proof prover="0"><result status="valid" time="0.274927" steps="1106"/></proof>
+  <goal name="refine&#39;vc.217" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.061867" steps="582"/></proof>
   </goal>
-  <goal name="refine&#39;vc.218" expl="wr {}`x" proved="true">
-  <proof prover="0"><result status="valid" time="0.224037" steps="1116"/></proof>
+  <goal name="refine&#39;vc.218" expl="wr {}`c" proved="true">
+  <proof prover="0"><result status="valid" time="0.103217" steps="1089"/></proof>
   </goal>
-  <goal name="refine&#39;vc.219" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.820811" steps="5072"/></proof>
+  <goal name="refine&#39;vc.219" expl="wr {}`x" proved="true">
+  <proof prover="0"><result status="valid" time="0.098176" steps="1099"/></proof>
   </goal>
   <goal name="refine&#39;vc.220" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.025125" steps="141"/></proof>
+  <proof prover="0"><result status="valid" time="0.066961" steps="600"/></proof>
   </goal>
-  <goal name="refine&#39;vc.221" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.020560" steps="112"/></proof>
+  <goal name="refine&#39;vc.221" expl="wr {}`c" proved="true">
+  <proof prover="0"><result status="valid" time="0.181137" steps="1106"/></proof>
   </goal>
-  <goal name="refine&#39;vc.222" expl="locals type invariant left" proved="true">
+  <goal name="refine&#39;vc.222" expl="wr {}`x" proved="true">
+  <proof prover="0"><result status="valid" time="0.121464" steps="1115"/></proof>
+  </goal>
+  <goal name="refine&#39;vc.223" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.478269" steps="6379"/></proof>
+  </goal>
+  <goal name="refine&#39;vc.224" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.033682" steps="141"/></proof>
+  </goal>
+  <goal name="refine&#39;vc.225" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.027953" steps="110"/></proof>
+  </goal>
+  <goal name="refine&#39;vc.226" expl="locals type invariant left" proved="true">
   <proof prover="0"><result status="valid" time="0.021359" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.223" expl="locals type invariant right" proved="true">
+  <goal name="refine&#39;vc.227" expl="locals type invariant right" proved="true">
   <proof prover="0"><result status="valid" time="0.039253" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.224" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.228" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.025304" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.225" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.229" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.024646" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.226" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.230" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.035244" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.227" expl="loop invariant init" proved="true">
+  <goal name="refine&#39;vc.231" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.024075" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.228" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.232" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.041360" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.229" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.233" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.022366" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.230" expl="assertion" proved="true">
+  <goal name="refine&#39;vc.234" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.023593" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.231" expl="locals type invariant left" proved="true">
+  <goal name="refine&#39;vc.235" expl="locals type invariant left" proved="true">
   <proof prover="0"><result status="valid" time="0.025731" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.232" expl="locals type invariant right" proved="true">
+  <goal name="refine&#39;vc.236" expl="locals type invariant right" proved="true">
   <proof prover="0"><result status="valid" time="0.023134" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.233" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.237" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.044125" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.234" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.238" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.024726" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.235" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.239" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.022998" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.236" expl="loop invariant preservation" proved="true">
+  <goal name="refine&#39;vc.240" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.022090" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.237" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.241" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.022553" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.238" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.242" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.023724" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.239" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.243" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.021102" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.240" expl="result.x := x" proved="true">
+  <goal name="refine&#39;vc.244" expl="result.x := x" proved="true">
   <proof prover="0"><result status="valid" time="0.033841" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.241" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.245" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.023988" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.242" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.246" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.037176" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.243" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.247" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.037614" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.244" expl="result.c := c" proved="true">
+  <goal name="refine&#39;vc.248" expl="result.c := c" proved="true">
   <proof prover="0"><result status="valid" time="0.019158" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.245" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.249" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.015697" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.246" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.250" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.021910" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.247" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.251" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.022996" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.248" expl="wr {}`c" proved="true">
+  <goal name="refine&#39;vc.252" expl="wr {}`c" proved="true">
   <proof prover="0"><result status="valid" time="0.022449" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.249" expl="wr {}`x" proved="true">
+  <goal name="refine&#39;vc.253" expl="wr {}`x" proved="true">
   <proof prover="0"><result status="valid" time="0.020654" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.250" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.254" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.021212" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.251" expl="wr {}`c" proved="true">
+  <goal name="refine&#39;vc.255" expl="wr {}`c" proved="true">
   <proof prover="0"><result status="valid" time="0.022055" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.252" expl="wr {}`x" proved="true">
+  <goal name="refine&#39;vc.256" expl="wr {}`x" proved="true">
   <proof prover="0"><result status="valid" time="0.017799" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.253" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.257" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.025328" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.254" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.258" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.023152" steps="38"/></proof>
   </goal>
-  <goal name="refine&#39;vc.255" expl="postcondition" proved="true">
+  <goal name="refine&#39;vc.259" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.025179" steps="38"/></proof>
-  </goal>
-  <goal name="refine&#39;vc.199" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
-  </goal>
-  <goal name="refine&#39;vc.70" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
-  </goal>
-  <goal name="refine&#39;vc.204" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
-  </goal>
-  <goal name="refine&#39;vc.75" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
   </goal>
   <goal name="refine&#39;vc.142" expl="locals type invariant left">
   <proof prover="0"><undone/></proof>
@@ -815,10 +815,10 @@
   <goal name="refine&#39;vc.11" expl="locals type invariant left">
   <proof prover="0"><undone/></proof>
   </goal>
-  <goal name="refine&#39;vc.16" expl="locals type invariant left">
+  <goal name="refine&#39;vc.147" expl="locals type invariant left">
   <proof prover="0"><undone/></proof>
   </goal>
-  <goal name="refine&#39;vc.147" expl="locals type invariant left">
+  <goal name="refine&#39;vc.16" expl="locals type invariant left">
   <proof prover="0"><undone/></proof>
   </goal>
  </transf>

@@ -17,18 +17,14 @@
 <theory name="A" proved="true">
  <goal name="paper_example_fig3&#39;vc" expl="VC for paper_example_fig3" proved="true">
  <proof prover="0"><result status="valid" time="0.028264" steps="30"/></proof>
- <transf name="split_vc" proved="true" >
-  <goal name="paper_example_fig3&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.041867" steps="8"/></proof>
+ <transf name="split_vc" >
+  <goal name="paper_example_fig3&#39;vc.0" expl="loop invariant init">
   </goal>
-  <goal name="paper_example_fig3&#39;vc.1" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.042128" steps="8"/></proof>
+  <goal name="paper_example_fig3&#39;vc.1" expl="loop invariant preservation">
   </goal>
-  <goal name="paper_example_fig3&#39;vc.2" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.044011" steps="8"/></proof>
+  <goal name="paper_example_fig3&#39;vc.2" expl="loop invariant init">
   </goal>
-  <goal name="paper_example_fig3&#39;vc.3" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.039931" steps="14"/></proof>
+  <goal name="paper_example_fig3&#39;vc.3" expl="loop invariant preservation">
   </goal>
  </transf>
  </goal>
@@ -49,37 +45,37 @@
  <goal name="paper_example_fig3&#39;vc" expl="VC for paper_example_fig3" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="paper_example_fig3&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.016903" steps="17"/></proof>
+  <proof prover="0"><result status="valid" time="0.019291" steps="12"/></proof>
   </goal>
   <goal name="paper_example_fig3&#39;vc.1" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.023146" steps="18"/></proof>
+  <proof prover="0"><result status="valid" time="0.014778" steps="16"/></proof>
   </goal>
   <goal name="paper_example_fig3&#39;vc.2" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.022923" steps="16"/></proof>
+  <proof prover="0"><result status="valid" time="0.022923" steps="14"/></proof>
   </goal>
   <goal name="paper_example_fig3&#39;vc.3" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.019291" steps="22"/></proof>
+  <proof prover="0"><result status="valid" time="0.016903" steps="20"/></proof>
   </goal>
   <goal name="paper_example_fig3&#39;vc.4" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.019655" steps="22"/></proof>
+  <proof prover="0"><result status="valid" time="0.019655" steps="20"/></proof>
   </goal>
   <goal name="paper_example_fig3&#39;vc.5" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.021286" steps="23"/></proof>
+  <proof prover="0"><result status="valid" time="0.021286" steps="21"/></proof>
   </goal>
   <goal name="paper_example_fig3&#39;vc.6" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.014778" steps="36"/></proof>
+  <proof prover="0"><result status="valid" time="0.023146" steps="34"/></proof>
   </goal>
   <goal name="paper_example_fig3&#39;vc.7" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.021359" steps="36"/></proof>
+  <proof prover="0"><result status="valid" time="0.021359" steps="34"/></proof>
   </goal>
   <goal name="paper_example_fig3&#39;vc.8" expl="lockstep" proved="true">
   <proof prover="0"><result status="valid" time="0.021199" steps="38"/></proof>
   </goal>
   <goal name="paper_example_fig3&#39;vc.9" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.021361" steps="28"/></proof>
+  <proof prover="0"><result status="valid" time="0.021361" steps="26"/></proof>
   </goal>
   <goal name="paper_example_fig3&#39;vc.10" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.021303" steps="28"/></proof>
+  <proof prover="0"><result status="valid" time="0.021303" steps="26"/></proof>
   </goal>
  </transf>
  </goal>
