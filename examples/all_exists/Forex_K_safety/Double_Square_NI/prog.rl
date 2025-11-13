@@ -12,12 +12,23 @@ end
 
 module A : I =
   meth prog () : unit
-
+  = y := 0;
+    z := 2 * x;
+    while (z > 0) do
+      z := z - 1;
+      y := y + x;
+    done
 end
 
 module B : I =
   meth prog () : unit
-
+  = y := 0;
+    z := x;
+    while (z > 0) do
+      z := z - 1;
+      y := y + x;
+    done;
+    y := 2 * y;
 end
 
 /* verifies */
