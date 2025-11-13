@@ -14,11 +14,7 @@ _build/
 *.cmxs
 *.cmxa
 
-*.gz
-*.gz.bak
-*.mlw.bak
-*.xml
-*.xml.bak
+
 .gitignore
 bin/whyrel
 

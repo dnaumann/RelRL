@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.034172" steps="61"/></proof>
+  </goal>
+  <goal name="state&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.034512" steps="178"/></proof>
+  </goal>
+  <goal name="state&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.024755" steps="86"/></proof>
+  </goal>
+  <goal name="state&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.015238" steps="10"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="FREL" proved="true">
+ <goal name="itzhaky&#39;vc" expl="VC for itzhaky" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="itzhaky&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><undone/></proof>
+  <proof prover="1"><result status="valid" time="0.020070" steps="125650"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.1" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.020467" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.2" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.016884" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.023766" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.4" expl="temp := get(a,i) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.019607" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.5" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.022213" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.6" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.022904" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.025746" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.8" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.020898" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.9" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.022019" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.10" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.017668" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.11" expl="temp := get(a,i) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.019461" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.12" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.020224" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.13" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.020161" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.14" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.038267" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.15" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.021069" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.019296" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.17" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.023872" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.18" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.022121" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.19" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.027688" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.20" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.019421" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.21" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.018719" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.22" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.025001" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.23" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.043348" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.24" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.038004" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.25" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.017225" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.26" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.021652" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.27" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.021207" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.28" expl="wr {}`sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.018908" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.29" expl="wr {}`b" proved="true">
+  <proof prover="0"><result status="valid" time="0.023705" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.30" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.021148" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.31" expl="wr {}`sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.024490" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.32" expl="wr {}`b" proved="true">
+  <proof prover="0"><result status="valid" time="0.019319" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.33" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.018068" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.34" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.028737" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.35" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.022673" steps="26"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.36" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.023663" steps="39"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.37" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.030503" steps="40"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.38" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.018949" steps="37"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.39" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.020796" steps="37"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.40" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.021240" steps="37"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.41" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.021440" steps="38"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.42" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.019078" steps="40"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.43" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.023049" steps="41"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.44" expl="temp := get(a,i) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.027272" steps="48"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.45" expl="temp := get(a,i) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.018028" steps="56"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.46" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.021267" steps="62"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.47" expl="temp := get(a,i) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.024324" steps="67"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.48" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.025947" steps="74"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.49" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.026751" steps="74"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.50" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.025501" steps="74"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.51" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.025573" steps="77"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.52" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.021595" steps="76"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.53" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.024145" steps="76"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.54" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.021990" steps="77"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.55" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.023128" steps="77"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.56" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.018048" steps="72"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.57" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.024963" steps="72"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.58" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.021109" steps="78"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.59" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.020162" steps="78"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.60" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.026167" steps="84"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.61" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.034179" steps="228"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.62" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.028074" steps="90"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.63" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.034062" steps="256"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.64" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.038321" steps="285"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.65" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.039347" steps="291"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.66" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.060289" steps="596"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.67" expl="wr {}`sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.100131" steps="1124"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.68" expl="wr {}`b" proved="true">
+  <proof prover="0"><result status="valid" time="0.099166" steps="1136"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.69" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.062886" steps="614"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.70" expl="wr {}`sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.177693" steps="1140"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.71" expl="wr {}`b" proved="true">
+  <proof prover="0"><result status="valid" time="0.115199" steps="1151"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.72" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.377431" steps="4704"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.73" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049070" steps="277"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.74" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.027380" steps="118"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.75" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.021590" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.76" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.039800" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.77" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.025055" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.78" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.023651" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.79" expl="temp := get(a,i) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.021673" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.80" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.021001" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.81" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.020512" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.82" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.023062" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.83" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.020890" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.84" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.022913" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.85" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.020414" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.86" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.021699" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.87" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.027490" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.88" expl="temp := get(a,i) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.024209" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.89" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.021154" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.90" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.018257" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.91" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.019462" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.92" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.023182" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.93" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.021119" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.94" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.020854" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.95" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.027070" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.96" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.024920" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.97" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.020255" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.98" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.020584" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.99" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.022160" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.100" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.032039" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.101" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.020062" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.102" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.020384" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.103" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.020089" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.104" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.024338" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.105" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.029967" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.106" expl="wr {}`sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.021553" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.107" expl="wr {}`b" proved="true">
+  <proof prover="0"><result status="valid" time="0.019149" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.108" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.019009" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.109" expl="wr {}`sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.023357" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.110" expl="wr {}`b" proved="true">
+  <proof prover="0"><result status="valid" time="0.020044" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.111" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.018026" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.112" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.021567" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.113" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.018164" steps="31"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.114" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.023176" steps="41"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.115" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.026504" steps="42"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.116" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.017248" steps="41"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.117" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.019526" steps="41"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.118" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.019924" steps="41"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.119" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.021668" steps="42"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.120" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.022929" steps="43"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.121" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.020862" steps="45"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.122" expl="temp := get(a,i) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.021000" steps="52"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.123" expl="temp := get(a,i) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.019594" steps="60"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.124" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.024432" steps="64"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.125" expl="temp := get(a,i) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.021947" steps="69"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.126" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.022963" steps="77"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.127" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.023329" steps="77"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.128" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.027283" steps="77"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.129" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.020272" steps="79"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.130" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.026877" steps="78"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.131" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.022865" steps="78"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.132" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.023531" steps="79"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.133" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.028862" steps="79"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.134" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.026023" steps="76"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.135" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.022979" steps="76"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.136" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.025104" steps="82"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.137" expl="result.sum := sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.022367" steps="82"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.138" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.021360" steps="88"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.139" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.031674" steps="232"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.140" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.026057" steps="94"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.141" expl="result.b := b" proved="true">
+  <proof prover="0"><result status="valid" time="0.033255" steps="260"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.142" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.038731" steps="289"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.143" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.031662" steps="295"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.144" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.061356" steps="600"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.145" expl="wr {}`sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.108721" steps="1126"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.146" expl="wr {}`b" proved="true">
+  <proof prover="0"><result status="valid" time="0.105350" steps="1138"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.147" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.066331" steps="618"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.148" expl="wr {}`sum" proved="true">
+  <proof prover="0"><result status="valid" time="0.113869" steps="1142"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.149" expl="wr {}`b" proved="true">
+  <proof prover="0"><result status="valid" time="0.107940" steps="1153"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.150" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.384056" steps="5436"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.151" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.039323" steps="284"/></proof>
+  </goal>
+  <goal name="itzhaky&#39;vc.152" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.023987" steps="122"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State">
+ <goal name="state&#39;vc" expl="VC for state">
+ </goal>
+</theory>
+<theory name="LIST">
+ <goal name="rep_closed_prop">
+ </goal>
+ <goal name="listpub_nxt">
+ </goal>
+ <goal name="listpub_unique">
+ <transf name="split_vc" >
+  <goal name="listpub_unique.0">
+  <transf name="induction_arg_pr" arg1="H1">
+   <goal name="listpub_unique.0.0" proved="true">
+   <proof prover="0"><result status="valid" time="0.053831" steps="41"/></proof>
+   </goal>
+   <goal name="listpub_unique.0.1">
+   <proof prover="0"><result status="timeout" time="200.000000" steps="1469156"/></proof>
+   <transf name="split_vc" >
+    <goal name="listpub_unique.0.1.0">
+    <transf name="apply" arg1="H3">
+     <goal name="listpub_unique.0.1.0.0" expl="apply premises" proved="true">
+     <proof prover="0"><result status="valid" time="0.053370" steps="26"/></proof>
+     </goal>
+     <goal name="listpub_unique.0.1.0.1" expl="apply premises">
+     <transf name="inversion_arg_pr" arg1="H8">
+      <goal name="listpub_unique.0.1.0.1.0" expl="apply premises" proved="true">
+      <proof prover="0"><result status="valid" time="0.087882" steps="35"/></proof>
+      </goal>
+      <goal name="listpub_unique.0.1.0.1.1" expl="apply premises">
+      <proof prover="0"><result status="timeout" time="200.000000" steps="1423932"/></proof>
+      <transf name="split_vc" >
+       <goal name="listpub_unique.0.1.0.1.1.0" expl="apply premises">
+       <transf name="subst_all" >
+        <goal name="listpub_unique.0.1.0.1.1.0.0" expl="apply premises">
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+      <goal name="listpub_unique.0.1.0.1.2" expl="apply premises" proved="true">
+      <proof prover="0"><result status="valid" time="0.064963" steps="26"/></proof>
+      </goal>
+     </transf>
+     <transf name="subst" arg1="n">
+      <goal name="listpub_unique.0.1.0.1.0" expl="apply premises">
+      </goal>
+     </transf>
+     </goal>
+     <goal name="listpub_unique.0.1.0.2" expl="apply premises">
+     </goal>
+    </transf>
+    <transf name="subst_all" >
+     <goal name="listpub_unique.0.1.0.0">
+     <transf name="inversion_arg_pr" arg1="H5">
+      <goal name="listpub_unique.0.1.0.0.0" proved="true">
+      <proof prover="0"><result status="valid" time="0.062081" steps="26"/></proof>
+      </goal>
+      <goal name="listpub_unique.0.1.0.0.1">
+      <proof prover="0"><result status="timeout" time="200.000000" steps="1155292"/></proof>
+      <transf name="split_vc" >
+       <goal name="listpub_unique.0.1.0.0.1.0">
+       <transf name="subst_all" >
+        <goal name="listpub_unique.0.1.0.0.1.0.0">
+        <proof prover="0"><result status="timeout" time="200.000000" steps="1136093"/></proof>
+        <transf name="apply" arg1="H4">
+         <goal name="listpub_unique.0.1.0.0.1.0.0.0" expl="apply premises" proved="true">
+         <proof prover="0"><result status="valid" time="0.065306" steps="14"/></proof>
+         </goal>
+         <goal name="listpub_unique.0.1.0.0.1.0.0.1" expl="apply premises">
+         <proof prover="0"><result status="timeout" time="200.000000" steps="1106185"/></proof>
+         </goal>
+         <goal name="listpub_unique.0.1.0.0.1.0.0.2" expl="apply premises">
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+      <goal name="listpub_unique.0.1.0.0.2" proved="true">
+      <proof prover="0"><result status="valid" time="0.073798" steps="14"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="listpub_unique.0.2">
+   <proof prover="0"><result status="timeout" time="200.000000" steps="1379457"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="listpub_nexists">
+ </goal>
+</theory>
+<theory name="List">
+ <goal name="sum&#39;vc" expl="VC for sum">
+ </goal>
+</theory>
+<theory name="BiList">
+ <goal name="sum&#39;vc" expl="VC for sum">
+ </goal>
+ <goal name="sum2&#39;vc" expl="VC for sum2">
+ </goal>
+</theory>
+</file>
+</why3session>

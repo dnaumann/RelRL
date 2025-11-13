@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" alternative="BV" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="1" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="ex.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.053496" steps="71"/></proof>
+  </goal>
+  <goal name="state&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.089840" steps="398"/></proof>
+  </goal>
+  <goal name="state&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.060790" steps="74"/></proof>
+  </goal>
+  <goal name="state&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.056803" steps="88"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Fib1" proved="true">
+ <goal name="fib&#39;vc" expl="VC for fib" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="fib&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.060714" steps="7"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.1" expl="arr := new(IntArray){sz}" proved="true">
+  <proof prover="1"><result status="valid" time="0.052763" steps="18"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.2" expl="arr := new(IntArray){sz}" proved="true">
+  <proof prover="1"><result status="valid" time="0.061023" steps="18"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.3" expl="array size" proved="true">
+  <proof prover="1"><result status="valid" time="0.070551" steps="24"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.4" expl="arr := new(IntArray){sz}" proved="true">
+  <proof prover="1"><result status="valid" time="0.076596" steps="26"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.5" expl="arr := new(IntArray){sz}" proved="true">
+  <proof prover="1"><result status="valid" time="0.061819" steps="81"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.6" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.082307" steps="134"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.7" expl="arr.{0} := 0 ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.066150" steps="45"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.051182" steps="38"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.9" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.060689" steps="125"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.10" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.091509" steps="211"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.11" expl="arr.{1} := 1 ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.067725" steps="74"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.12" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.050367" steps="50"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.13" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.073773" steps="173"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.14" expl="locals type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.076585" steps="198"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.15" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.137707" steps="599"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.16" expl="wr {arr}`slots" proved="true">
+  <proof prover="1"><result status="valid" time="0.217417" steps="1011"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.17" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.060927" steps="64"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.18" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.083946" steps="93"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.19" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.132094" steps="402"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.20" expl="m1 := arr.{i - 1} ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.142927" steps="505"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.21" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.068682" steps="82"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.22" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.128939" steps="423"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.23" expl="m2 := arr.{i - 2} ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.140065" steps="459"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.24" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.146138" steps="432"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.25" expl="arr.{i} := m1 + m2 ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.149072" steps="530"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.26" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.069000" steps="90"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.27" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.062693" steps="90"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.28" expl="locals type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.098785" steps="309"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.29" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.203720" steps="890"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.30" expl="wr {arr}`slots" proved="true">
+  <proof prover="1"><result status="valid" time="0.413944" steps="2160"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.31" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.070048" steps="104"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.32" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.082110" steps="98"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.33" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.131801" steps="404"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.34" expl="result := arr.{n} ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.134943" steps="448"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.35" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.065264" steps="82"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.36" expl="wr {}`slots" proved="true">
+  <proof prover="1"><result status="valid" time="0.258305" steps="1213"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.37" expl="wr {}`length" proved="true">
+  <proof prover="1"><result status="valid" time="0.248998" steps="1291"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Fib2" proved="true">
+ <goal name="fib&#39;vc" expl="VC for fib" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="fib&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.060368" steps="14"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.065305" steps="10"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.068216" steps="39"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.3" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046980" steps="29"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.4" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050570" steps="29"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.068424" steps="50"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.051695" steps="27"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="FibREL" proved="true">
+ <goal name="fib&#39;vc" expl="VC for fib" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="fib&#39;vc.0" expl="arr := new(IntArray){sz}" proved="true">
+  <proof prover="1"><result status="valid" time="0.063478" steps="25"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.1" expl="arr := new(IntArray){sz}" proved="true">
+  <proof prover="1"><result status="valid" time="0.054811" steps="25"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.2" expl="array size" proved="true">
+  <proof prover="1"><result status="valid" time="0.057046" steps="31"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.3" expl="arr := new(IntArray){sz}" proved="true">
+  <proof prover="1"><result status="valid" time="0.067975" steps="33"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.4" expl="arr := new(IntArray){sz}" proved="true">
+  <proof prover="1"><result status="valid" time="0.085645" steps="100"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.100818" steps="149"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.6" expl="arr.{0} := 0 ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.082874" steps="54"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.7" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.056895" steps="45"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.069764" steps="144"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.9" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.091450" steps="227"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.10" expl="arr.{1} := 1 ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.071969" steps="76"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.11" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.053017" steps="57"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.12" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.071595" steps="187"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.13" expl="locals type invariant left" proved="true">
+  <proof prover="1"><result status="valid" time="0.086995" steps="220"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.14" expl="wr {arr}`slots" proved="true">
+  <proof prover="1"><result status="valid" time="0.238240" steps="1067"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.15" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.226414" steps="1000"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.16" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.066118" steps="77"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.17" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.063829" steps="78"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.18" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.133955" steps="471"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.19" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.089844" steps="121"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.20" expl="lockstep" proved="true">
+  <proof prover="1"><result status="valid" time="0.062100" steps="86"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.21" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.118610" steps="447"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.22" expl="m1 := arr.{i - 1} ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.122881" steps="554"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.23" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.125077" steps="463"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.24" expl="m2 := arr.{i - 2} ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.139323" steps="507"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.25" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.141108" steps="469"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.26" expl="arr.{i} := m1 + m2 ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.138801" steps="508"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.27" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.069335" steps="111"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.28" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.056964" steps="111"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.29" expl="locals type invariant left" proved="true">
+  <proof prover="1"><result status="valid" time="0.109889" steps="370"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.30" expl="wr {arr}`slots" proved="true">
+  <proof prover="1"><result status="valid" time="0.468196" steps="2546"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.31" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.467228" steps="2373"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.32" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.059823" steps="133"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.33" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.062793" steps="134"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.34" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.205613" steps="734"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.35" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.138863" steps="212"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.36" expl="lockstep" proved="true">
+  <proof prover="1"><result status="valid" time="0.090792" steps="142"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.37" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.150807" steps="449"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.38" expl="result := arr.{n} ( index is in bounds)" proved="true">
+  <proof prover="1"><result status="valid" time="0.137120" steps="511"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.39" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.185867" steps="810"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.40" expl="wr {}`length" proved="true">
+  <proof prover="1"><result status="valid" time="0.317780" steps="1584"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.41" expl="wr {}`slots" proved="true">
+  <proof prover="1"><result status="valid" time="0.304980" steps="1562"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.42" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.067122" steps="111"/></proof>
+  </goal>
+  <goal name="fib&#39;vc.43" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.079662" steps="111"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>
