@@ -14,41 +14,64 @@
  </transf>
  </goal>
 </theory>
+<theory name="A" proved="true">
+ <goal name="prog&#39;vc" expl="VC for prog" proved="true">
+ <proof prover="0"><result status="valid" time="0.063910" steps="274"/></proof>
+ </goal>
+</theory>
+<theory name="B" proved="true">
+ <goal name="prog&#39;vc" expl="VC for prog" proved="true">
+ <proof prover="0"><result status="valid" time="0.066311" steps="273"/></proof>
+ </goal>
+</theory>
 <theory name="FREL" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
+ <proof prover="0"><result status="valid" time="3.631435" steps="33576"/></proof>
  <transf name="split_vc" proved="true" >
   <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.080589" steps="259"/></proof>
+  <proof prover="0"><result status="valid" time="0.080589" steps="320"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.042211" steps="28"/></proof>
+  <proof prover="0"><result status="valid" time="0.049432" steps="34"/></proof>
   </goal>
   <goal name="prog&#39;vc.2" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.049432" steps="29"/></proof>
+  <proof prover="0"><result status="valid" time="0.042211" steps="35"/></proof>
   </goal>
   <goal name="prog&#39;vc.3" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.046238" steps="30"/></proof>
+  <proof prover="0"><result status="valid" time="0.048612" steps="36"/></proof>
   </goal>
   <goal name="prog&#39;vc.4" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.109647" steps="540"/></proof>
+  <proof prover="0"><result status="valid" time="0.133383" steps="791"/></proof>
   </goal>
   <goal name="prog&#39;vc.5" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.051042" steps="82"/></proof>
+  <proof prover="0"><result status="valid" time="0.051042" steps="85"/></proof>
   </goal>
   <goal name="prog&#39;vc.6" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.053620" steps="82"/></proof>
+  <proof prover="0"><result status="valid" time="0.062091" steps="86"/></proof>
   </goal>
   <goal name="prog&#39;vc.7" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.048612" steps="84"/></proof>
+  <proof prover="0"><result status="valid" time="0.048112" steps="87"/></proof>
   </goal>
-  <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.051455" steps="44"/></proof>
+  <goal name="prog&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.109647" steps="70"/></proof>
   </goal>
-  <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.042900" steps="44"/></proof>
+  <goal name="prog&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053620" steps="70"/></proof>
   </goal>
-  <goal name="prog&#39;vc.10" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.043357" steps="44"/></proof>
+  <goal name="prog&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051831" steps="70"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.11" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.046238" steps="70"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.051455" steps="46"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.13" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.042900" steps="46"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.14" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.043357" steps="46"/></proof>
   </goal>
  </transf>
  </goal>

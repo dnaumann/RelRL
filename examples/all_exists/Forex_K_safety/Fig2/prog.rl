@@ -3,44 +3,60 @@ interface I =
 
   public x: int
   public y: int
-  public z: int
 
 
   meth prog () : unit
-  effects { rw c, x }
+  effects { rw y, x } 
+
+
 end
 
 module A : I =
   meth prog () : unit
+  =
+  x := 1;
+  y := 2 * x;
+
+  while (y > 0) do
+      y := y - 1;
+      x := 2 * x;
+  done;
+
 
 end
 
 module B : I =
   meth prog () : unit
+  = 
+  x := 1;
+  y :=  x;
 
+  while (y > 0) do
+      y := y - 1;
+      x := 4 * x;
+  done;
 end
 
 /* verifies */
 bimodule FREL (A | B) =
   meth prog (|) : (unit |unit )
-  requires {(n =:= n) /\
-            (x =:= x)}
-  ensures { c =:= c }
-    effects { rw c, x | rw c, x }
+  requires { (x =:= x) }
+  ensures { (x =:= x) }
+    effects { rw y, x | rw y, x }
  =
    
-    |_ y := 0 _|; 
+    |_ x := 1 _|; 
 
-    (z := 2 * x | z := x);
+    (y := 2 * x | y := x);
 
-    While (z > 0) | (z > 0)  . <| false <] | [> false |> do
+    While (y > 0) | (y > 0)  . <| false <] | [> false |> do
+      invariant { x =:= x }
       invariant { y =:= 2 * y }
-      invariant { z =:= 2 * z }
       
-      |_ z := z + 1 _|;
-      |_ y := y + x _|;
+      |_ y := y - 1 _|;
+      ( x := 2 * x | x := 4 * x);
 
-      (skip | if (z > 0) then
+      (if (y > 0) then y := y - 1; x := 2 * x; end | skip);
               
 
    done;
