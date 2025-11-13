@@ -1038,6 +1038,27 @@ let rec free_vars_rformula = function
     (lfree, IdS.remove rid.node (IdS.union rlb_fv lfree))
   | Rlet (None, None, rf) -> assert false (* impossible *)
 
+
+(* -------------------------------------------------------------------------- *)
+(* Equality mod assertions/assumptions/invariants/extra locals                *)
+(* -------------------------------------------------------------------------- *)
+
+let rec eqv_command c c' = match c, c' with
+  | Acommand ac, Acommand ac' -> ac = ac'
+  | Vardecl (id, m, ty, c), Vardecl (id', m', ty', c') ->
+    eqv_command c c'
+    (* id = id' && m = m' && ty = ty' && eqv_command c c' *)
+  | Vardecl (id, m, ty, c), c' -> eqv_command c c'
+  | c, Vardecl (id, m, ty, c') -> eqv_command c c'
+  | Seq (c1, c2), Seq (c1', c2') -> eqv_command c1 c1' && eqv_command c2 c2'
+  | If (e, c1, c2), If (e', c1', c2') ->
+    e = e' && eqv_command c1 c1' && eqv_command c2 c2'
+  | While (e, _, c), While (e', _, c') -> e = e' && eqv_command c c'
+  | Assume _, Assume _ -> true
+  | Assert _, Assert _ -> true
+  | _, _ -> false
+
+
 (* -------------------------------------------------------------------------- *)
 (* Simplifications and rewritings                                             *)
 (* -------------------------------------------------------------------------- *)
@@ -1117,12 +1138,23 @@ let rec rw_skip (c: command) : command =
   | While (e, f, c) -> While (e, f, rw_skip c)
   | _ -> c
 
+let rec find_last_in_seq (c: command) : command =
+  match c with
+  | Seq (c1, c2) -> find_last_in_seq c2
+  | _ -> c
+
+let rec remove_last_in_seq (c: command) : command =
+  match c with
+  | Seq (c1, (Seq (_, _) as c2)) -> Seq (c1, remove_last_in_seq c2)
+  | Seq (c1, _) -> c1
+  | c -> c
 
 (* simplify_command c = c'
 
    rewrite every occurence of skip ; D or D ; skip in c to D in c';
    rewrite assert { f } and assume { f } in c to skip in c';
    rewrite while false do C done to skip
+   rewrite while e do c; if e then c end to while e do c
 *)
 let rec simplify_command (c: command) : command =
   match c with
@@ -1139,7 +1171,16 @@ let rec simplify_command (c: command) : command =
   | While ({node=Econst {node=Ebool false}}, _, _) -> Acommand Skip
   | While (e, {winvariants; wframe; wvariant}, c) ->
     let winvariants = map simplify_formula winvariants in
-    While (e, {winvariants; wframe; wvariant}, simplify_command c)
+    let body = simplify_command c in
+    begin match find_last_in_seq body with
+    | If (e', c', Acommand Skip) ->
+      let body_wo_if = remove_last_in_seq body in
+      if eqv_command body_wo_if c' && e = e' then
+        While (e, {winvariants; wframe; wvariant}, body_wo_if)
+      else
+        While (e, {winvariants; wframe; wvariant}, body)
+    | _ -> While (e, {winvariants; wframe; wvariant}, body)
+    end
   | Assume _ | Assert _ -> Acommand Skip
 
 (* rewrite ((c1 ; c2) ; c3) to (c1 ; (c2 ; c3)) *)
@@ -1158,26 +1199,6 @@ let rec reassoc_command (c: command) : command =
   | c -> c
 
 let rw_command = reassoc_command % simplify_command % rw_skip
-
-
-(* -------------------------------------------------------------------------- *)
-(* Equality mod assertions/assumptions/invariants/extra locals                *)
-(* -------------------------------------------------------------------------- *)
-
-let rec eqv_command c c' = match c, c' with
-  | Acommand ac, Acommand ac' -> ac = ac'
-  | Vardecl (id, m, ty, c), Vardecl (id', m', ty', c') ->
-    eqv_command c c'
-    (* id = id' && m = m' && ty = ty' && eqv_command c c' *)
-  | Vardecl (id, m, ty, c), c' -> eqv_command c c'
-  | c, Vardecl (id, m, ty, c') -> eqv_command c c'
-  | Seq (c1, c2), Seq (c1', c2') -> eqv_command c1 c1' && eqv_command c2 c2'
-  | If (e, c1, c2), If (e', c1', c2') ->
-    e = e' && eqv_command c1 c1' && eqv_command c2 c2'
-  | While (e, _, c), While (e', _, c') -> e = e' && eqv_command c c'
-  | Assume _, Assume _ -> true
-  | Assert _, Assert _ -> true
-  | _, _ -> false
 
 
 (* -------------------------------------------------------------------------- *)
