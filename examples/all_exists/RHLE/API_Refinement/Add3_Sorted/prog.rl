@@ -50,7 +50,7 @@ bimodule FREL (A | B) =
     Var sort_ret: intList | shuffle_ret : intList in
     Var | choice_list : intList in 
 
-     /* left program calls shuffle with universal spec */
+     /* left program calls sort with universal spec */
     (havoc sort_ret; assume { is_permutation3(l, sort_ret) /\ is_sorted3(sort_ret)} | skip);
 
      /* right program calls sort with existential spec instantiated with sort_ret */
