@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.057357" steps="48"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="FREL">
+ <goal name="prog&#39;vc" expl="VC for prog">
+ <transf name="split_vc" >
+  <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.042957" steps="23"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.042673" steps="23"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044009" steps="23"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.3" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.049764" steps="24"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.4" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.099630" steps="401"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054287" steps="102"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053164" steps="103"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.7" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.057145" steps="105"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051303" steps="90"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052328" steps="90"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055499" steps="90"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.11" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.050309" steps="90"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.12" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049211" steps="89"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.13" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049915" steps="89"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.14" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049367" steps="89"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.15" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.048882" steps="89"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.089239" steps="395"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.17" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053421" steps="97"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.18" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050777" steps="97"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.19" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.052588" steps="100"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.20" expl="precondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="884794"/></proof>
+  <proof prover="1"><result status="timeout" time="200.000000" steps="738599197"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.21" expl="precondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="904026"/></proof>
+  <proof prover="1"><result status="timeout" time="200.000000" steps="272406661"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.22" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.138465" steps="928"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.23" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.060610" steps="71"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.068180" steps="109"/></proof>
+  </goal>
+  <goal name="state&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.080397" steps="345"/></proof>
+  </goal>
+  <goal name="state&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.064961" steps="87"/></proof>
+  </goal>
+  <goal name="state&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.065548" steps="112"/></proof>
+  </goal>
+  <goal name="state&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.076058" steps="128"/></proof>
+  </goal>
+  <goal name="state&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.073538" steps="148"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Map_Array" proved="true">
+ <goal name="init_Map&#39;vc" expl="VC for init_Map" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="init_Map&#39;vc.0" expl="array size" proved="true">
+  <proof prover="0"><result status="valid" time="0.091086" steps="8"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.1" expl="self.data := make(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.105356" steps="10"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.2" expl="self.data := make(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.079271" steps="10"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.094649" steps="20"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.4" expl="self.contents := create_list(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.079699" steps="20"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.5" expl="self.contents := create_list(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.086165" steps="61"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.6" expl="self.sz := sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.092982" steps="30"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.7" expl="self.sz := sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.126206" steps="86"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.090068" steps="40"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.9" expl="wr {self}`data" proved="true">
+  <proof prover="0"><result status="valid" time="0.195604" steps="411"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.10" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.110058" steps="417"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.11" expl="wr {self}`sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.115305" steps="424"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.098950" steps="49"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.13" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.222978" steps="321"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.14" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.132549" steps="198"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.15" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.134060" steps="462"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="set_val&#39;vc" expl="VC for set_val" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="set_val&#39;vc.0" expl="array size" proved="true">
+  <proof prover="0"><result status="valid" time="0.094490" steps="14"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.1" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.101664" steps="85"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.2" expl="temp_intarray := self.data" proved="true">
+  <proof prover="0"><result status="valid" time="0.121668" steps="66"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.3" expl=" index is in bounds" proved="true">
+  <proof prover="0"><result status="valid" time="0.139081" steps="42"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.4" expl="self.data := set(temp_intarray,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.100602" steps="24"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.5" expl="self.data := set(temp_intarray,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.084230" steps="24"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.6" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.097063" steps="34"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.7" expl="temp_intlist := self.contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.121512" steps="108"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.098976" steps="66"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.9" expl="self.contents := upd_list(k,v,temp_intlist)" proved="true">
+  <proof prover="0"><result status="valid" time="0.100797" steps="38"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.10" expl="self.contents := upd_list(k,v,temp_intlist)" proved="true">
+  <proof prover="0"><result status="valid" time="0.130028" steps="151"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.090802" steps="48"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.12" expl="wr {self}`data" proved="true">
+  <proof prover="0"><result status="valid" time="0.358564" steps="928"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.13" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.342356" steps="930"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.14" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.089287" steps="52"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.15" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.170367" steps="73"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.16" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.144201" steps="208"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.17" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.193418" steps="1456"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="get_val&#39;vc" expl="VC for get_val" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="get_val&#39;vc.0" expl="array size" proved="true">
+  <proof prover="0"><result status="valid" time="0.071806" steps="14"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.1" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.101045" steps="85"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.2" expl="temp_intarray := self.data" proved="true">
+  <proof prover="0"><result status="valid" time="0.079908" steps="66"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.3" expl="result := get(temp_intarray,k) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.089624" steps="37"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.062803" steps="24"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.096603" steps="130"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="set_by_user&#39;vc" expl="VC for set_by_user" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="set_by_user&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.132293" steps="77"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.1" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.087026" steps="14"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.2" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.106244" steps="14"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.3" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.074525" steps="14"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.4" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.119268" steps="14"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.5" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.078730" steps="14"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.075453" steps="31"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.7" expl="wr {self}`data" proved="true">
+  <proof prover="0"><result status="valid" time="0.092463" steps="31"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.8" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.068573" steps="31"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.080695" steps="31"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.071074" steps="31"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.092257" steps="35"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.081782" steps="35"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Map_Fun" proved="true">
+ <goal name="init_Map&#39;vc" expl="VC for init_Map" proved="true">
+ <proof prover="0" obsolete="true"><result status="valid" time="1.760869" steps="7911"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="init_Map&#39;vc.0" expl="self.data_fn := empty_fun" proved="true">
+  <proof prover="0"><result status="valid" time="0.068571" steps="8"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.1" expl="self.data_fn := empty_fun" proved="true">
+  <proof prover="0"><result status="valid" time="0.063612" steps="8"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.085564" steps="18"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.3" expl="self.contents := create_list(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.073302" steps="18"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.4" expl="self.contents := create_list(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.091746" steps="54"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.5" expl="self.sz := sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.085073" steps="28"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.6" expl="self.sz := sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.107159" steps="79"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.064784" steps="38"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.8" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.180592" steps="392"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.9" expl="wr {self}`sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.211583" steps="397"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.10" expl="wr {self}`data_fn" proved="true">
+  <proof prover="0"><result status="valid" time="0.200030" steps="421"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.120567" steps="46"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.169775" steps="305"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.13" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.130591" steps="189"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.14" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.079700" steps="190"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="set_val&#39;vc" expl="VC for set_val" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="set_val&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.126635" steps="71"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.1" expl="temp_fn := self.data_fn" proved="true">
+  <proof prover="0"><result status="valid" time="0.133439" steps="55"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.2" expl="self.data_fn := add_mapping(k,v,temp_fn)" proved="true">
+  <proof prover="0"><result status="valid" time="0.092877" steps="18"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.3" expl="self.data_fn := add_mapping(k,v,temp_fn)" proved="true">
+  <proof prover="0"><result status="valid" time="0.122532" steps="18"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.4" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.122371" steps="28"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.5" expl="temp_intlist := self.contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.131081" steps="84"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.6" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.117251" steps="52"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.7" expl="self.contents := upd_list(k,v,temp_intlist)" proved="true">
+  <proof prover="0"><result status="valid" time="0.099377" steps="32"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.8" expl="self.contents := upd_list(k,v,temp_intlist)" proved="true">
+  <proof prover="0"><result status="valid" time="0.107200" steps="112"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.099661" steps="42"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.10" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.275641" steps="694"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.11" expl="wr {self}`data_fn" proved="true">
+  <proof prover="0"><result status="valid" time="0.262666" steps="715"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.127559" steps="46"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.13" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.101680" steps="56"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.14" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.102218" steps="169"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.15" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.257772" steps="1126"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="get_val&#39;vc" expl="VC for get_val" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="get_val&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.071995" steps="71"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.1" expl="temp_fn := self.data_fn" proved="true">
+  <proof prover="0"><result status="valid" time="0.070621" steps="55"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.058260" steps="20"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.083825" steps="92"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.065521" steps="22"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="set_by_user&#39;vc" expl="VC for set_by_user" proved="true">
+ <proof prover="0"><result status="valid" time="0.143515" steps="143"/></proof>
+ </goal>
+</theory>
+<theory name="MAP_REL" proved="true">
+ <goal name="init_Map&#39;vc" expl="VC for init_Map" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="init_Map&#39;vc.0" expl="array size" proved="true">
+  <proof prover="0"><result status="valid" time="0.066725" steps="22"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.1" expl="self.data := make(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.109586" steps="24"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.2" expl="self.data := make(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.101212" steps="24"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.3" expl="self.data_fn := empty_fun" proved="true">
+  <proof prover="0"><result status="valid" time="0.077768" steps="34"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.4" expl="self.data_fn := empty_fun" proved="true">
+  <proof prover="0"><result status="valid" time="0.094114" steps="34"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.079364" steps="44"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.6" expl="self.contents := create_list(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.086542" steps="44"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.7" expl="self.contents := create_list(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.095553" steps="125"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.092556" steps="54"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.9" expl="self.contents := create_list(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.079674" steps="54"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.10" expl="self.contents := create_list(sz,0)" proved="true">
+  <proof prover="0"><result status="valid" time="0.125655" steps="150"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.11" expl="self.sz := sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.100239" steps="64"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.12" expl="self.sz := sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.116923" steps="178"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.13" expl="self.sz := sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.067293" steps="74"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.14" expl="self.sz := sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.121118" steps="203"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.15" expl="wr {self}`sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.275531" steps="809"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.16" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.298863" steps="822"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.17" expl="wr {self}`data" proved="true">
+  <proof prover="0"><result status="valid" time="0.320293" steps="832"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.18" expl="wr {self}`data_fn" proved="true">
+  <proof prover="0"><result status="valid" time="0.351725" steps="869"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.19" expl="wr {self}`sz" proved="true">
+  <proof prover="0"><result status="valid" time="0.349566" steps="859"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.20" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.338786" steps="872"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.21" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.480246" steps="2533"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.22" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.220893" steps="426"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.23" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.141291" steps="115"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.24" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.328819" steps="1626"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.25" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.105695" steps="104"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="set_val&#39;vc" expl="VC for set_val" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="set_val&#39;vc.0" expl="array size" proved="true">
+  <proof prover="0"><result status="valid" time="0.090611" steps="40"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.1" expl="temp_intarray := self.data" proved="true">
+  <proof prover="0"><result status="valid" time="0.113367" steps="119"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.2" expl="temp_fn := self.data_fn" proved="true">
+  <proof prover="0"><result status="valid" time="0.119545" steps="124"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.3" expl=" index is in bounds" proved="true">
+  <proof prover="0" obsolete="true"><undone/></proof>
+  <transf name="split_vc" >
+   <goal name="set_val&#39;vc.3.0" expl=" index is in bounds">
+   <proof prover="0"><undone/></proof>
+   </goal>
+   <goal name="set_val&#39;vc.3.1" expl=" index is in bounds">
+   <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1065609"/></proof>
+   <transf name="subst" arg1="l_k">
+    <goal name="set_val&#39;vc.3.1.0" expl=" index is in bounds">
+    <proof prover="0"><undone/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  <transf name="split_vc" proved="true" >
+   <goal name="set_val&#39;vc.3.0" expl=" index is in bounds" proved="true">
+   <proof prover="0"><result status="valid" time="0.070328" steps="46"/></proof>
+   </goal>
+   <goal name="set_val&#39;vc.3.1" expl=" index is in bounds" proved="true">
+   <proof prover="0"><result status="valid" time="0.059475" steps="64"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="set_val&#39;vc.4" expl="self.data := set(temp_intarray,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.085935" steps="54"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.5" expl="self.data := set(temp_intarray,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.084164" steps="54"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.6" expl="self.data_fn := add_mapping(k,v,temp_fn)" proved="true">
+  <proof prover="0"><result status="valid" time="0.083906" steps="64"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.7" expl="self.data_fn := add_mapping(k,v,temp_fn)" proved="true">
+  <proof prover="0"><result status="valid" time="0.083746" steps="64"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.8" expl="temp_intlist := self.contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.138626" steps="234"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.9" expl="temp_intlist := self.contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.161231" steps="245"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.10" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.107618" steps="141"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.11" expl="self.contents := upd_list(k,v,temp_intlist)" proved="true">
+  <proof prover="0"><result status="valid" time="0.088039" steps="82"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.12" expl="self.contents := upd_list(k,v,temp_intlist)" proved="true">
+  <proof prover="0"><result status="valid" time="0.130658" steps="205"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.13" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.095516" steps="153"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.14" expl="self.contents := upd_list(k,v,temp_intlist)" proved="true">
+  <proof prover="0"><result status="valid" time="0.096702" steps="92"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.15" expl="self.contents := upd_list(k,v,temp_intlist)" proved="true">
+  <proof prover="0"><result status="valid" time="0.126324" steps="231"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.16" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.325250" steps="979"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.17" expl="wr {self}`data" proved="true">
+  <proof prover="0"><result status="valid" time="0.251601" steps="988"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.18" expl="wr {self}`data_fn" proved="true">
+  <proof prover="0"><result status="valid" time="0.353579" steps="1041"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.19" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.211975" steps="1033"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.20" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.385496" steps="2369"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.21" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.338405" steps="1444"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.22" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.118852" steps="116"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.23" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.084809" steps="154"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.24" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.648622" steps="3598"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.25" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.305031" steps="1698"/></proof>
+  </goal>
+  <goal name="set_val&#39;vc.26" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.118972" steps="123"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="get_val&#39;vc" expl="VC for get_val" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="get_val&#39;vc.0" expl="array size" proved="true">
+  <proof prover="0"><result status="valid" time="0.067541" steps="35"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.1" expl="temp_intarray := self.data" proved="true">
+  <proof prover="0"><result status="valid" time="0.082014" steps="114"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.2" expl="temp_fn := self.data_fn" proved="true">
+  <proof prover="0"><result status="valid" time="0.082433" steps="119"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.3" expl="result := get(temp_intarray,k) ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.070855" steps="62"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.072504" steps="51"/></proof>
+  </goal>
+  <goal name="get_val&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.090984" steps="153"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="set_by_user&#39;vc" expl="VC for set_by_user" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="set_by_user&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.094712" steps="35"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.1" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.111759" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.2" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.098081" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.3" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.115123" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.4" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.107234" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.5" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.083158" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.6" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.051057" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.7" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.069818" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.8" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.101234" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.9" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.055174" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.10" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.050473" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.11" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.114038" steps="37"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.12" expl="set_val(self,k,v)" proved="true">
+  <proof prover="0"><result status="valid" time="0.097186" steps="41"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.13" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.116131" steps="71"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.14" expl="wr {self}`data" proved="true">
+  <proof prover="0"><result status="valid" time="0.135833" steps="71"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.15" expl="wr {self}`data_fn" proved="true">
+  <proof prover="0"><result status="valid" time="0.136998" steps="71"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.16" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.115175" steps="71"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.17" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.143018" steps="71"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.18" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.104789" steps="71"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.19" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.081849" steps="71"/></proof>
+  </goal>
+  <goal name="set_by_user&#39;vc.20" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.107565" steps="73"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

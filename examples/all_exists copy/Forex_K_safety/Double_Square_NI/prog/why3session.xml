@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <proof prover="0"><result status="valid" time="0.047013" steps="49"/></proof>
+ </goal>
+</theory>
+<theory name="A" proved="true">
+ <goal name="prog&#39;vc" expl="VC for prog" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044955" steps="32"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046975" steps="72"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.044039" steps="24"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="B" proved="true">
+ <goal name="prog&#39;vc" expl="VC for prog" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.074824" steps="31"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.086135" steps="71"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.070301" steps="32"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="FREL" proved="true">
+ <goal name="prog&#39;vc" expl="VC for prog" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.097724" steps="331"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.070630" steps="42"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.055308" steps="43"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.3" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.137240" steps="804"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.4" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.058964" steps="109"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055123" steps="109"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056581" steps="89"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057340" steps="89"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055486" steps="89"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.097266" steps="370"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.053254" steps="66"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.043002" steps="67"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

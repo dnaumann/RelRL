@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="1" name="Z3" version="4.15.3" timelimit="5" steplimit="0" memlimit="8000"/>
+<file format="whyml">
+<path name=".."/><path name="IntList.mlw"/>
+<theory name="IntList">
+ <goal name="hd&#39;vc" expl="VC for hd" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="hd&#39;vc.0" expl="unreachable point" proved="true">
+  <proof prover="0"><result status="valid" time="0.035762" steps="11"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="listNth&#39;vc" expl="VC for listNth" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="listNth&#39;vc.0" expl="unreachable point" proved="true">
+  <proof prover="0"><result status="valid" time="0.033798" steps="8"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="listNth_0_Cons" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="listNth_0_Cons.0" proved="true">
+  <proof prover="0"><result status="valid" time="0.050192" steps="64"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="listNth_pos_Cons" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="listNth_pos_Cons.0" proved="true">
+  <proof prover="0"><result status="valid" time="0.097549" steps="470"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="upd_list&#39;vc" expl="VC for upd_list" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="upd_list&#39;vc.0" expl="variant decrease" proved="true">
+  <proof prover="0"><result status="valid" time="0.040489" steps="8"/></proof>
+  </goal>
+  <goal name="upd_list&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.035843" steps="43"/></proof>
+  </goal>
+  <goal name="upd_list&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.036854" steps="68"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="upd_list_diff">
+ <transf name="split_vc" >
+  <goal name="upd_list_diff.0">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="868454"/></proof>
+  <proof prover="1" timelimit="200"><undone/></proof>
+  <transf name="induction" arg1="k">
+   <goal name="upd_list_diff.0.0" expl="base case" proved="true">
+   <proof prover="0"><result status="valid" time="0.086852" steps="175"/></proof>
+   </goal>
+   <goal name="upd_list_diff.0.1" expl="recursive case">
+   <proof prover="0" timelimit="5" memlimit="2000"><undone/></proof>
+   <proof prover="1" memlimit="2000"><undone/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="upd_list_same">
+ <transf name="split_vc" >
+  <goal name="upd_list_same.0">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="428990"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

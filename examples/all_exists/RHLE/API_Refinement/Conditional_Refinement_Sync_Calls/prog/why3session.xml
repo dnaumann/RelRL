@@ -3,14 +3,13 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
  <goal name="state&#39;vc" expl="VC for state" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="state&#39;vc.0" expl="type invariant" proved="true">
-  <proof prover="0"><result status="valid" time="0.018880" steps="48"/></proof>
+  <proof prover="0"><result status="valid" time="0.041728" steps="48"/></proof>
   </goal>
  </transf>
  </goal>
@@ -18,36 +17,35 @@
 <theory name="FREL" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
  <transf name="split_vc" proved="true" >
-  <goal name="prog&#39;vc.0" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.018214" steps="10"/></proof>
+  <goal name="prog&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.042494" steps="6"/></proof>
   </goal>
-  <goal name="prog&#39;vc.1" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.015103" steps="12"/></proof>
+  <goal name="prog&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.039946" steps="6"/></proof>
   </goal>
   <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.019154" steps="12"/></proof>
+  <proof prover="0"><result status="valid" time="0.041133" steps="16"/></proof>
   </goal>
   <goal name="prog&#39;vc.3" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.020986" steps="15"/></proof>
+  <proof prover="0"><result status="valid" time="0.041494" steps="16"/></proof>
   </goal>
   <goal name="prog&#39;vc.4" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.016011" steps="15"/></proof>
+  <proof prover="0"><result status="valid" time="0.041715" steps="20"/></proof>
   </goal>
-  <goal name="prog&#39;vc.5" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.021117" steps="12"/></proof>
+  <goal name="prog&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.037524" steps="20"/></proof>
   </goal>
   <goal name="prog&#39;vc.6" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.020164" steps="17"/></proof>
+  <proof prover="0"><result status="valid" time="0.053715" steps="21"/></proof>
   </goal>
   <goal name="prog&#39;vc.7" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.018398" steps="17"/></proof>
+  <proof prover="0"><result status="valid" time="0.036784" steps="21"/></proof>
   </goal>
   <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.022273" steps="14"/></proof>
+  <proof prover="0"><result status="valid" time="0.043144" steps="17"/></proof>
   </goal>
   <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.021314" steps="14"/></proof>
-  <proof prover="1" obsolete="true"><undone/></proof>
+  <proof prover="0"><result status="valid" time="0.043137" steps="17"/></proof>
   </goal>
  </transf>
  </goal>

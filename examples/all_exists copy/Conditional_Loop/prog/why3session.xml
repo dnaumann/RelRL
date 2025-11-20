@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.041173" steps="48"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="ConditionalLoopAlignmentExample" proved="true">
+ <goal name="m&#39;vc" expl="VC for m" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="m&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044007" steps="30"/></proof>
+  </goal>
+  <goal name="m&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.041344" steps="30"/></proof>
+  </goal>
+  <goal name="m&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.043979" steps="31"/></proof>
+  </goal>
+  <goal name="m&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.043265" steps="32"/></proof>
+  </goal>
+  <goal name="m&#39;vc.4" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047812" steps="36"/></proof>
+  </goal>
+  <goal name="m&#39;vc.5" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.047414" steps="37"/></proof>
+  </goal>
+  <goal name="m&#39;vc.6" expl="w := (w + 1) mod n" proved="true">
+  <proof prover="0"><result status="valid" time="0.040857" steps="49"/></proof>
+  </goal>
+  <goal name="m&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050289" steps="49"/></proof>
+  </goal>
+  <goal name="m&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049767" steps="49"/></proof>
+  </goal>
+  <goal name="m&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.043972" steps="49"/></proof>
+  </goal>
+  <goal name="m&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049239" steps="49"/></proof>
+  </goal>
+  <goal name="m&#39;vc.11" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051552" steps="49"/></proof>
+  </goal>
+  <goal name="m&#39;vc.12" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049266" steps="49"/></proof>
+  </goal>
+  <goal name="m&#39;vc.13" expl="w := (w + 1) mod n" proved="true">
+  <proof prover="0"><result status="valid" time="0.044534" steps="49"/></proof>
+  </goal>
+  <goal name="m&#39;vc.14" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045906" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054602" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049115" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.17" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.067680" steps="261"/></proof>
+  </goal>
+  <goal name="m&#39;vc.18" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053954" steps="55"/></proof>
+  </goal>
+  <goal name="m&#39;vc.19" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.057317" steps="55"/></proof>
+  </goal>
+  <goal name="m&#39;vc.20" expl="w := (w + 1) mod n" proved="true">
+  <proof prover="0"><result status="valid" time="0.043269" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.21" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052456" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.22" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050509" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.23" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052583" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.24" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054130" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.25" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055880" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.26" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.053326" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.27" expl="w := (w + 1) mod n" proved="true">
+  <proof prover="0"><result status="valid" time="0.044069" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.28" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049421" steps="53"/></proof>
+  </goal>
+  <goal name="m&#39;vc.29" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046319" steps="53"/></proof>
+  </goal>
+  <goal name="m&#39;vc.30" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046777" steps="53"/></proof>
+  </goal>
+  <goal name="m&#39;vc.31" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.069884" steps="270"/></proof>
+  </goal>
+  <goal name="m&#39;vc.32" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052176" steps="57"/></proof>
+  </goal>
+  <goal name="m&#39;vc.33" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.050964" steps="57"/></proof>
+  </goal>
+  <goal name="m&#39;vc.34" expl="guard agreement" proved="true">
+  <proof prover="0"><result status="valid" time="0.047716" steps="52"/></proof>
+  </goal>
+  <goal name="m&#39;vc.35" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.057150" steps="61"/></proof>
+  </goal>
+  <goal name="m&#39;vc.36" expl="w := (w + 1) mod n" proved="true">
+  <proof prover="0"><result status="valid" time="0.055641" steps="74"/></proof>
+  </goal>
+  <goal name="m&#39;vc.37" expl="w := (w + 1) mod n" proved="true">
+  <proof prover="0"><result status="valid" time="0.051324" steps="77"/></proof>
+  </goal>
+  <goal name="m&#39;vc.38" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.051777" steps="77"/></proof>
+  </goal>
+  <goal name="m&#39;vc.39" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.051228" steps="78"/></proof>
+  </goal>
+  <goal name="m&#39;vc.40" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052217" steps="78"/></proof>
+  </goal>
+  <goal name="m&#39;vc.41" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048154" steps="78"/></proof>
+  </goal>
+  <goal name="m&#39;vc.42" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.061047" steps="79"/></proof>
+  </goal>
+  <goal name="m&#39;vc.43" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.144234" steps="2171"/></proof>
+  </goal>
+  <goal name="m&#39;vc.44" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059384" steps="84"/></proof>
+  </goal>
+  <goal name="m&#39;vc.45" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.057719" steps="95"/></proof>
+  </goal>
+  <goal name="m&#39;vc.46" expl="w := (w + 1) mod n" proved="true">
+  <proof prover="0"><result status="valid" time="0.054140" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.47" expl="w := (w + 1) mod n" proved="true">
+  <proof prover="0"><result status="valid" time="0.051253" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.48" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.056151" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.49" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.048055" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.50" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051851" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.51" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055353" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.52" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048304" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.53" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049915" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.54" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050397" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.55" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.045619" steps="51"/></proof>
+  </goal>
+  <goal name="m&#39;vc.56" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.044811" steps="59"/></proof>
+  </goal>
+  <goal name="m&#39;vc.57" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.053395" steps="59"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

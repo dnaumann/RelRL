@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.052079" steps="48"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="A" proved="true">
+ <goal name="compiler_opt&#39;vc" expl="VC for compiler_opt" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="compiler_opt&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.043152" steps="11"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.1" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.040412" steps="14"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.2" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.040993" steps="12"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="B" proved="true">
+ <goal name="compiler_opt&#39;vc" expl="VC for compiler_opt" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="compiler_opt&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.045262" steps="11"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.1" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.036420" steps="12"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="FREL" proved="true">
+ <goal name="compiler_opt&#39;vc" expl="VC for compiler_opt" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="compiler_opt&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.043365" steps="16"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.041291" steps="16"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049896" steps="17"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.3" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.044932" steps="18"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.4" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.042609" steps="33"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.038432" steps="38"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.042950" steps="38"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.041373" steps="38"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.8" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.052991" steps="41"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.9" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.043956" steps="30"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045939" steps="35"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.11" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.044290" steps="35"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.12" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053087" steps="35"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.13" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.046879" steps="38"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.14" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.042992" steps="24"/></proof>
+  </goal>
+  <goal name="compiler_opt&#39;vc.15" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.041253" steps="24"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

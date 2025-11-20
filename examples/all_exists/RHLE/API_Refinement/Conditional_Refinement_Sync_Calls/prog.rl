@@ -52,7 +52,7 @@ fun original() {
   if (r == 0) then
     ret := 10;
   else
-    ret := 20;
+    ret := 20; |_ flipret := flipcoin() _|;
   endif
   return ret;
 }
@@ -64,19 +64,18 @@ end
 
 /* verifies */
 bimodule FREL (A | B) =
-  meth flipCoin (|) : (int | int)
+  meth flipcoin (|) : (int | int)
    requires {[> choice_var = 0 \/ choice_var = 1 |>}
-   ensures { <| result = 0 \/ result = 1 <] }
-   ensures { [> result = choice_var |>}
+   ensures { <| result  = 0 \/ result = 1 <] /\ [> result = choice_var |>}
 
   meth prog (|) : (int | int)
   requires {[> choice_var = 0 \/ choice_var = 1 |>}
   ensures { result =:= result }
  =
 
-  Var | choice_var : int in
   Var flipret: int | flipret: int in
 
+  
   |_ flipret := flipcoin() _|;
   Assume { [< 1 -  flipret <] = [> choice_var >]};
 

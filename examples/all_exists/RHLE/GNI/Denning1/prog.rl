@@ -62,12 +62,13 @@ bimodule FREL (A | A) =
   Var x: int | x: int in
 
   |_ i := 1 _|;
-  |_ n := 0 _|;
+  |_ n := 1 _|; /*changed to 1 to avoid runtime fault from division by zero */
   |_ sum := 0 _|; 
 
   While (i <= 100) | (i <= 100) .  <| false <] | [> false |> do 
     invariant { f1_l =:= f1_l /\ f2_l =:= f2_l}
     invariant { i =:= i }
+    invariant { Both (n > 0) }
   
       |_ flag := f1_l _|; 
 

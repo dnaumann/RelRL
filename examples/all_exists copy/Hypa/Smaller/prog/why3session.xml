@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <proof prover="0"><result status="valid" time="0.042264" steps="49"/></proof>
+ </goal>
+</theory>
+<theory name="A" proved="true">
+ <goal name="smaller&#39;vc" expl="VC for smaller" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="smaller&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049330" steps="11"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.1" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048204" steps="14"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.2" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046550" steps="14"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="FREL" proved="true">
+ <goal name="smaller&#39;vc" expl="VC for smaller" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="smaller&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.040088" steps="16"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.043508" steps="16"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.041425" steps="17"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.3" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.041904" steps="18"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.4" expl="assertion" proved="true">
+  <proof prover="0"><undone/></proof>
+  <proof prover="1"><result status="valid" time="0.016519" steps="12008"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052683" steps="40"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047788" steps="40"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.041421" steps="41"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.8" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.055125" steps="42"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051084" steps="38"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.041454" steps="38"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.11" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047409" steps="38"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.12" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.047893" steps="38"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.13" expl="assertion" proved="true">
+  <proof prover="0"><undone/></proof>
+  <proof prover="1"><result status="valid" time="0.012747" steps="12012"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.14" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048645" steps="38"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050612" steps="38"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046958" steps="38"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.17" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.045798" steps="38"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.18" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049235" steps="40"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.19" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049852" steps="40"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.20" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049691" steps="41"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.21" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.047743" steps="42"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.22" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.047586" steps="24"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.23" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.048993" steps="24"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>
