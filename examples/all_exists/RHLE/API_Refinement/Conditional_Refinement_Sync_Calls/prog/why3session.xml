@@ -9,7 +9,7 @@
  <goal name="state&#39;vc" expl="VC for state" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="state&#39;vc.0" expl="type invariant" proved="true">
-  <proof prover="0"><result status="valid" time="0.041728" steps="48"/></proof>
+  <proof prover="0"><result status="valid" time="0.043924" steps="48"/></proof>
   </goal>
  </transf>
  </goal>
@@ -18,34 +18,31 @@
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="prog&#39;vc.0" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.042494" steps="6"/></proof>
+  <proof prover="0"><result status="valid" time="0.068681" steps="6"/></proof>
   </goal>
-  <goal name="prog&#39;vc.1" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.039946" steps="6"/></proof>
+  <goal name="prog&#39;vc.1" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.042370" steps="14"/></proof>
   </goal>
   <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.041133" steps="16"/></proof>
+  <proof prover="0"><result status="valid" time="0.044565" steps="14"/></proof>
   </goal>
   <goal name="prog&#39;vc.3" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.041494" steps="16"/></proof>
+  <proof prover="0"><result status="valid" time="0.045127" steps="18"/></proof>
   </goal>
   <goal name="prog&#39;vc.4" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.041715" steps="20"/></proof>
+  <proof prover="0"><result status="valid" time="0.039551" steps="18"/></proof>
   </goal>
   <goal name="prog&#39;vc.5" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.037524" steps="20"/></proof>
+  <proof prover="0"><result status="valid" time="0.046551" steps="18"/></proof>
   </goal>
   <goal name="prog&#39;vc.6" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.053715" steps="21"/></proof>
+  <proof prover="0"><result status="valid" time="0.054590" steps="18"/></proof>
   </goal>
   <goal name="prog&#39;vc.7" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.036784" steps="21"/></proof>
+  <proof prover="0"><result status="valid" time="0.045874" steps="16"/></proof>
   </goal>
   <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.043144" steps="17"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.043137" steps="17"/></proof>
+  <proof prover="0"><result status="valid" time="0.045528" steps="16"/></proof>
   </goal>
  </transf>
  </goal>

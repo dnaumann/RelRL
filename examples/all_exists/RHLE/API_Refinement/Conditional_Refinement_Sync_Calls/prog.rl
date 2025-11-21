@@ -65,8 +65,8 @@ end
 /* verifies */
 bimodule FREL (A | B) =
   meth flipcoin (|) : (int | int)
-   requires {[> choice_var = 0 \/ choice_var = 1 |>}
-   ensures { <| result  = 0 \/ result = 1 <] /\ [> result = choice_var |>}
+   ensures { Both (result = 0 \/ result = 1)}
+   ensures { [< 1 -  result <] = [> result >]}
 
   meth prog (|) : (int | int)
   requires {[> choice_var = 0 \/ choice_var = 1 |>}
@@ -77,8 +77,6 @@ bimodule FREL (A | B) =
 
   
   |_ flipret := flipcoin() _|;
-  Assume { [< 1 -  flipret <] = [> choice_var >]};
-
   
   (if (flipret = 0) then
     result := 10;
