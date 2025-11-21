@@ -1,7 +1,4 @@
 interface I =
-  ghost choice_var: int
-
-  meth flipcoin () : int
 
   meth prog () : int
     effects {  }
@@ -9,9 +6,6 @@ end
 
 module A : I =
   meth prog () : int
-
-  meth flipcoin (): int
-    ensures {result = 0 \/ result = 1}
 
   /*
 aspecs:
@@ -35,10 +29,6 @@ end
 module B : I =
   meth prog () : int
 
-
-  meth flipcoin (): int
-    requires {choice_var = 0 \/ choice_var = 1}
-    ensures {result = choice_var}
 /*  =
   especs:
     flipCoin() {
@@ -64,25 +54,27 @@ end
 
 /* verifies */
 bimodule FREL (A | B) =
-  meth flipcoin (|) : (int | int)
-   ensures { Both (result = 0 \/ result = 1)}
-   ensures { [< 1 -  result <] = [> result >]}
+  meth flipcoin (|) : (bool | bool)
+   ensures { [< not result <] = [> result >]}
+  = 
+    (havoc result | skip);
+    HavocR result { not result =:= result };
+
 
   meth prog (|) : (int | int)
-  requires {[> choice_var = 0 \/ choice_var = 1 |>}
   ensures { result =:= result }
  =
 
-  Var flipret: int | flipret: int in
+  Var flipret: bool | flipret: bool in
 
   
   |_ flipret := flipcoin() _|;
   
-  (if (flipret = 0) then
+  (if (flipret) then
     result := 10;
   else
     result := 20;
-  end  | if (flipret = 0) then
+  end  | if (flipret) then
       result := 20;
     else
       result := 10;
