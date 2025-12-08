@@ -1,49 +1,348 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
-"http://why3.lri.fr/why3session.dtd">
+"https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.3.1" timelimit="30" steplimit="0" memlimit="12000"/>
+<prover id="1" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="swap.mlw"/>
 <theory name="State" proved="true">
  <goal name="state&#39;vc" expl="VC for state" proved="true">
- <proof prover="0"><result status="valid" time="0.03" steps="65"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="0.030000" steps="65"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.068326" steps="61"/></proof>
+  </goal>
+  <goal name="state&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.084280" steps="178"/></proof>
+  </goal>
+  <goal name="state&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.075632" steps="86"/></proof>
+  </goal>
+  <goal name="state&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.059087" steps="10"/></proof>
+  </goal>
+ </transf>
  </goal>
 </theory>
 <theory name="A0" proved="true">
  <goal name="f&#39;vc" expl="VC for f" proved="true">
- <proof prover="0"><result status="valid" time="0.08" steps="477"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="0.080000" steps="477"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="f&#39;vc.0" expl="self.a := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.042797" steps="4"/></proof>
+  </goal>
+  <goal name="f&#39;vc.1" expl="self.a := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.047894" steps="4"/></proof>
+  </goal>
+  <goal name="f&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.055146" steps="10"/></proof>
+  </goal>
+  <goal name="f&#39;vc.3" expl="wr {self}`a" proved="true">
+  <proof prover="1"><result status="valid" time="0.079859" steps="151"/></proof>
+  </goal>
+  <goal name="f&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.063151" steps="14"/></proof>
+  </goal>
+ </transf>
  </goal>
  <goal name="g&#39;vc" expl="VC for g" proved="true">
- <proof prover="0"><result status="valid" time="0.11" steps="777"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="0.110000" steps="777"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="g&#39;vc.0" expl="self.b := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.046615" steps="4"/></proof>
+  </goal>
+  <goal name="g&#39;vc.1" expl="self.b := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.047922" steps="4"/></proof>
+  </goal>
+  <goal name="g&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.059923" steps="10"/></proof>
+  </goal>
+  <goal name="g&#39;vc.3" expl="wr {self}`b" proved="true">
+  <proof prover="1"><result status="valid" time="0.082325" steps="151"/></proof>
+  </goal>
+  <goal name="g&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.059757" steps="14"/></proof>
+  </goal>
+ </transf>
  </goal>
  <goal name="m&#39;vc" expl="VC for m" proved="true">
- <proof prover="0"><result status="valid" time="0.15" steps="1196"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="0.150000" steps="1196"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="m&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.074104" steps="43"/></proof>
+  </goal>
+  <goal name="m&#39;vc.1" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.061247" steps="4"/></proof>
+  </goal>
+  <goal name="m&#39;vc.2" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.051606" steps="4"/></proof>
+  </goal>
+  <goal name="m&#39;vc.3" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.059053" steps="12"/></proof>
+  </goal>
+  <goal name="m&#39;vc.4" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.069694" steps="56"/></proof>
+  </goal>
+  <goal name="m&#39;vc.5" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.050561" steps="14"/></proof>
+  </goal>
+  <goal name="m&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.053585" steps="20"/></proof>
+  </goal>
+  <goal name="m&#39;vc.7" expl="wr {self}`b" proved="true">
+  <proof prover="1"><result status="valid" time="0.102994" steps="174"/></proof>
+  </goal>
+  <goal name="m&#39;vc.8" expl="wr {self}`a" proved="true">
+  <proof prover="1"><result status="valid" time="0.105589" steps="179"/></proof>
+  </goal>
+  <goal name="m&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.071200" steps="24"/></proof>
+  </goal>
+ </transf>
  </goal>
 </theory>
 <theory name="A1" proved="true">
  <goal name="f&#39;vc" expl="VC for f" proved="true">
- <proof prover="0"><result status="valid" time="0.08" steps="477"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="0.080000" steps="477"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="f&#39;vc.0" expl="self.a := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.064228" steps="4"/></proof>
+  </goal>
+  <goal name="f&#39;vc.1" expl="self.a := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.058820" steps="4"/></proof>
+  </goal>
+  <goal name="f&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.048505" steps="10"/></proof>
+  </goal>
+  <goal name="f&#39;vc.3" expl="wr {self}`a" proved="true">
+  <proof prover="1"><result status="valid" time="0.095796" steps="151"/></proof>
+  </goal>
+  <goal name="f&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.068814" steps="14"/></proof>
+  </goal>
+ </transf>
  </goal>
  <goal name="g&#39;vc" expl="VC for g" proved="true">
- <proof prover="0"><result status="valid" time="0.12" steps="777"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="0.120000" steps="777"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="g&#39;vc.0" expl="self.b := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.062507" steps="4"/></proof>
+  </goal>
+  <goal name="g&#39;vc.1" expl="self.b := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.069042" steps="4"/></proof>
+  </goal>
+  <goal name="g&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.068027" steps="10"/></proof>
+  </goal>
+  <goal name="g&#39;vc.3" expl="wr {self}`b" proved="true">
+  <proof prover="1"><result status="valid" time="0.111595" steps="151"/></proof>
+  </goal>
+  <goal name="g&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.076578" steps="14"/></proof>
+  </goal>
+ </transf>
  </goal>
  <goal name="m&#39;vc" expl="VC for m" proved="true">
- <proof prover="0"><result status="valid" time="0.15" steps="1196"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="0.150000" steps="1196"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="m&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.068298" steps="43"/></proof>
+  </goal>
+  <goal name="m&#39;vc.1" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.060650" steps="4"/></proof>
+  </goal>
+  <goal name="m&#39;vc.2" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.074105" steps="4"/></proof>
+  </goal>
+  <goal name="m&#39;vc.3" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.077729" steps="12"/></proof>
+  </goal>
+  <goal name="m&#39;vc.4" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.085734" steps="56"/></proof>
+  </goal>
+  <goal name="m&#39;vc.5" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.056932" steps="14"/></proof>
+  </goal>
+  <goal name="m&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.053781" steps="20"/></proof>
+  </goal>
+  <goal name="m&#39;vc.7" expl="wr {self}`b" proved="true">
+  <proof prover="1"><result status="valid" time="0.084666" steps="173"/></proof>
+  </goal>
+  <goal name="m&#39;vc.8" expl="wr {self}`a" proved="true">
+  <proof prover="1"><result status="valid" time="0.083362" steps="180"/></proof>
+  </goal>
+  <goal name="m&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.052035" steps="24"/></proof>
+  </goal>
+ </transf>
  </goal>
 </theory>
 <theory name="A_REL" proved="true">
  <goal name="f&#39;vc" expl="VC for f" proved="true">
- <proof prover="0"><result status="valid" time="0.81" steps="5783"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="0.810000" steps="5783"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="f&#39;vc.0" expl="self.a := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.049158" steps="18"/></proof>
+  </goal>
+  <goal name="f&#39;vc.1" expl="self.a := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.050275" steps="18"/></proof>
+  </goal>
+  <goal name="f&#39;vc.2" expl="self.a := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.063558" steps="24"/></proof>
+  </goal>
+  <goal name="f&#39;vc.3" expl="self.a := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.087023" steps="24"/></proof>
+  </goal>
+  <goal name="f&#39;vc.4" expl="wr {self}`a" proved="true">
+  <proof prover="1"><result status="valid" time="0.128163" steps="305"/></proof>
+  </goal>
+  <goal name="f&#39;vc.5" expl="wr {self}`a" proved="true">
+  <proof prover="1"><result status="valid" time="0.123378" steps="331"/></proof>
+  </goal>
+  <goal name="f&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.288659" steps="1238"/></proof>
+  </goal>
+  <goal name="f&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="1.654661" steps="9665"/></proof>
+  </goal>
+  <goal name="f&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.072594" steps="40"/></proof>
+  </goal>
+ </transf>
  </goal>
  <goal name="g&#39;vc" expl="VC for g" proved="true">
- <proof prover="0"><result status="valid" time="0.80" steps="6088"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="0.800000" steps="6088"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="g&#39;vc.0" expl="self.b := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.048797" steps="18"/></proof>
+  </goal>
+  <goal name="g&#39;vc.1" expl="self.b := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.049767" steps="18"/></proof>
+  </goal>
+  <goal name="g&#39;vc.2" expl="self.b := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.044153" steps="24"/></proof>
+  </goal>
+  <goal name="g&#39;vc.3" expl="self.b := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.049201" steps="24"/></proof>
+  </goal>
+  <goal name="g&#39;vc.4" expl="wr {self}`b" proved="true">
+  <proof prover="1"><result status="valid" time="0.147283" steps="305"/></proof>
+  </goal>
+  <goal name="g&#39;vc.5" expl="wr {self}`b" proved="true">
+  <proof prover="1"><result status="valid" time="0.169867" steps="331"/></proof>
+  </goal>
+  <goal name="g&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.250721" steps="1238"/></proof>
+  </goal>
+  <goal name="g&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="1.586059" steps="9664"/></proof>
+  </goal>
+  <goal name="g&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.050501" steps="40"/></proof>
+  </goal>
+ </transf>
  </goal>
  <goal name="m&#39;vc" expl="VC for m" proved="true">
- <proof prover="0"><result status="valid" time="2.16" steps="14891"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="2.160000" steps="14891"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="m&#39;vc.0" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.046184" steps="18"/></proof>
+  </goal>
+  <goal name="m&#39;vc.1" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.050043" steps="18"/></proof>
+  </goal>
+  <goal name="m&#39;vc.2" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.050248" steps="26"/></proof>
+  </goal>
+  <goal name="m&#39;vc.3" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.054165" steps="26"/></proof>
+  </goal>
+  <goal name="m&#39;vc.4" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.072427" steps="100"/></proof>
+  </goal>
+  <goal name="m&#39;vc.5" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.056252" steps="36"/></proof>
+  </goal>
+  <goal name="m&#39;vc.6" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.062385" steps="116"/></proof>
+  </goal>
+  <goal name="m&#39;vc.7" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.051745" steps="44"/></proof>
+  </goal>
+  <goal name="m&#39;vc.8" expl="wr {self}`a" proved="true">
+  <proof prover="1"><result status="valid" time="0.087010" steps="165"/></proof>
+  </goal>
+  <goal name="m&#39;vc.9" expl="wr {self}`b" proved="true">
+  <proof prover="1"><result status="valid" time="0.093978" steps="170"/></proof>
+  </goal>
+  <goal name="m&#39;vc.10" expl="wr {self}`a" proved="true">
+  <proof prover="1"><result status="valid" time="0.088583" steps="174"/></proof>
+  </goal>
+  <goal name="m&#39;vc.11" expl="wr {self}`b" proved="true">
+  <proof prover="1"><result status="valid" time="0.088984" steps="177"/></proof>
+  </goal>
+  <goal name="m&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.247066" steps="1189"/></proof>
+  </goal>
+  <goal name="m&#39;vc.13" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="2.280066" steps="12393"/></proof>
+  </goal>
+  <goal name="m&#39;vc.14" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.065444" steps="68"/></proof>
+  </goal>
+ </transf>
  </goal>
  <goal name="m2&#39;vc" expl="VC for m2" proved="true">
- <proof prover="0"><result status="valid" time="5.09" steps="30948"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="5.090000" steps="30948"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="m2&#39;vc.0" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.079925" steps="18"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.1" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.071021" steps="18"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.2" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.080648" steps="74"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.3" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.062820" steps="28"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.4" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.053633" steps="34"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.5" expl="g(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.055962" steps="34"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.6" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.073291" steps="116"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.7" expl="f(self,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.058134" steps="44"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.8" expl="wr {self}`a" proved="true">
+  <proof prover="1"><result status="valid" time="0.088298" steps="165"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.9" expl="wr {self}`b" proved="true">
+  <proof prover="1"><result status="valid" time="0.093452" steps="170"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.10" expl="wr {self}`a" proved="true">
+  <proof prover="1"><result status="valid" time="0.090962" steps="174"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.11" expl="wr {self}`b" proved="true">
+  <proof prover="1"><result status="valid" time="0.099794" steps="177"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.293602" steps="1189"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.13" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="2.264542" steps="12392"/></proof>
+  </goal>
+  <goal name="m2&#39;vc.14" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.074843" steps="68"/></proof>
+  </goal>
+ </transf>
  </goal>
 </theory>
 </file>

@@ -86,71 +86,71 @@
   <goal name="count_female&#39;vc.1" expl="len := people.length" proved="true">
   <proof prover="0"><result status="valid" time="0.04" steps="69"/></proof>
   </goal>
-  <goal name="count_female&#39;vc.2" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="52"/></proof>
-  </goal>
-  <goal name="count_female&#39;vc.3" expl="locals type invariant left" proved="true">
+  <goal name="count_female&#39;vc.2" expl="locals type invariant left" proved="true">
   <proof prover="0"><result status="valid" time="0.03" steps="32"/></proof>
   </goal>
-  <goal name="count_female&#39;vc.4" expl="locals type invariant right" proved="true">
+  <goal name="count_female&#39;vc.3" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.03" steps="32"/></proof>
+  </goal>
+  <goal name="count_female&#39;vc.4" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.03" steps="32"/></proof>
   </goal>
   <goal name="count_female&#39;vc.5" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.03" steps="32"/></proof>
   </goal>
   <goal name="count_female&#39;vc.6" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="53"/></proof>
+  <proof prover="0"><result status="valid" time="0.03" steps="32"/></proof>
   </goal>
   <goal name="count_female&#39;vc.7" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="37"/></proof>
+  <proof prover="0"><result status="valid" time="0.03" steps="51"/></proof>
   </goal>
-  <goal name="count_female&#39;vc.8" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="37"/></proof>
+  <goal name="count_female&#39;vc.8" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.03" steps="57"/></proof>
   </goal>
   <goal name="count_female&#39;vc.9" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.04" steps="90"/></proof>
+  <proof prover="0"><result status="valid" time="0.04" steps="89"/></proof>
   </goal>
   <goal name="count_female&#39;vc.10" expl="current := people.{i} ( index is in bounds)" proved="true">
-  <proof prover="0"><result status="valid" time="0.04" steps="52"/></proof>
+  <proof prover="0"><result status="valid" time="0.04" steps="51"/></proof>
   </goal>
   <goal name="count_female&#39;vc.11" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="106"/></proof>
+  <proof prover="0"><result status="valid" time="0.03" steps="105"/></proof>
   </goal>
   <goal name="count_female&#39;vc.12" expl="current := people.{i} ( index is in bounds)" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="58"/></proof>
+  <proof prover="0"><result status="valid" time="0.03" steps="57"/></proof>
   </goal>
   <goal name="count_female&#39;vc.13" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="60"/></proof>
+  <proof prover="0"><result status="valid" time="0.03" steps="59"/></proof>
   </goal>
   <goal name="count_female&#39;vc.14" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="118"/></proof>
+  <proof prover="0"><result status="valid" time="0.03" steps="117"/></proof>
   </goal>
-  <goal name="count_female&#39;vc.15" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.04" steps="100"/></proof>
+  <goal name="count_female&#39;vc.15" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.03" steps="73"/></proof>
   </goal>
-  <goal name="count_female&#39;vc.16" expl="locals type invariant left" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="74"/></proof>
+  <goal name="count_female&#39;vc.16" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.03" steps="73"/></proof>
   </goal>
-  <goal name="count_female&#39;vc.17" expl="locals type invariant right" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="74"/></proof>
+  <goal name="count_female&#39;vc.17" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.03" steps="73"/></proof>
   </goal>
   <goal name="count_female&#39;vc.18" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="74"/></proof>
+  <proof prover="0"><result status="valid" time="0.02" steps="73"/></proof>
   </goal>
   <goal name="count_female&#39;vc.19" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.02" steps="74"/></proof>
+  <proof prover="0"><result status="valid" time="0.03" steps="74"/></proof>
   </goal>
   <goal name="count_female&#39;vc.20" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="78"/></proof>
+  <proof prover="0"><result status="valid" time="0.02" steps="75"/></proof>
   </goal>
-  <goal name="count_female&#39;vc.21" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.02" steps="79"/></proof>
+  <goal name="count_female&#39;vc.21" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.04" steps="105"/></proof>
   </goal>
   <goal name="count_female&#39;vc.22" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.03" steps="52"/></proof>
+  <proof prover="0"><result status="valid" time="0.03" steps="51"/></proof>
   </goal>
   <goal name="count_female&#39;vc.23" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.02" steps="52"/></proof>
+  <proof prover="0"><result status="valid" time="0.02" steps="51"/></proof>
   </goal>
  </transf>
  </goal>

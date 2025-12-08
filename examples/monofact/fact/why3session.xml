@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml">
+<path name=".."/><path name="fact.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.061012" steps="48"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="F" proved="true">
+ <goal name="fact&#39;vc" expl="VC for fact" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="fact&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.046103" steps="12"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.1" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045245" steps="37"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="FREL">
+ <goal name="fact&#39;vc" expl="VC for fact">
+ <transf name="split_vc" >
+  <goal name="fact&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.053037" steps="20"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.053750" steps="20"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.051433" steps="24"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.055945" steps="27"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.4" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047555" steps="26"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056536" steps="95"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.6" expl="loop invariant preservation">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1262634"/></proof>
+  <proof prover="1"><result status="timeout" time="200.000000" steps="18957304"/></proof>
+  <transf name="split_vc" >
+   <goal name="fact&#39;vc.6.0" expl="loop invariant preservation" proved="true">
+   <proof prover="0"><result status="valid" time="0.058240" steps="93"/></proof>
+   </goal>
+   <goal name="fact&#39;vc.6.1" expl="loop invariant preservation" proved="true">
+   <proof prover="0"><result status="valid" time="0.059298" steps="93"/></proof>
+   </goal>
+   <goal name="fact&#39;vc.6.2" expl="loop invariant preservation" proved="true">
+   <proof prover="0"><result status="valid" time="0.054117" steps="93"/></proof>
+   </goal>
+   <goal name="fact&#39;vc.6.3" expl="loop invariant preservation">
+   <proof prover="0"><result status="timeout" time="200.000000" steps="2158161"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="fact&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059328" steps="99"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.077251" steps="142"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.077504" steps="384"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.050121" steps="42"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049912" steps="42"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

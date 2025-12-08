@@ -75,36 +75,28 @@ module FREL
               end }
     diverges
   = label INIT in
-      let l_result = ref 0 in
       let r_result = ref 0 in
+      let l_result = ref 0 in
       let l_n = ref l_n in
       let r_n = ref r_n in
       let l_i = ref 0 in
       let r_i = ref 0 in
       let l_r = ref 0 in
       let r_r = ref 0 in
-      ((l_i := ([@expl:i := 0] 0)); (r_i := ([@expl:i := 0] 0)));
-      ((l_r := ([@expl:r := 1] 1)); (r_r := ([@expl:r := 1] 1)));
-      while ((! l_i) < (! l_n))  || ((! r_i) < (! r_n)) do
+      (l_i := ([@expl:i := 0] 0));
+      (r_i := ([@expl:i := 0] 0));
+      (l_r := ([@expl:r := 1] 1));
+      (r_r := ([@expl:r := 1] 1));
+      while ((! l_i) < (! l_n)) do
         invariant { okRefperm l_s r_s pi }
         invariant { (((0 <= (! l_i)) /\ ((! l_i) <= (! l_n))) /\ ((0 <= (! r_i)) /\ ((! r_i) <= (! r_n)))) }
         invariant { (! l_i) >= (! r_i) }
         invariant { ((! r_i) < (! r_n)) -> ((! l_i) = (! r_i)) }
         invariant { ((! l_r) >= (! r_r)) /\ (((! l_r) >= 1) /\ ((! r_r) >= 1)) }
-        invariant {
-          [@expl:alignment condition]
-          ((((! l_i) < (! l_n)) /\ ((! r_i) = (! r_n))) \/
-             ((((! r_i) < (! r_n)) /\ false) \/
-                ((((! l_i) < (! l_n)) /\ ((! r_i) < (! r_n))) \/ ((not ((! l_i) < (! l_n))) /\ (not ((! r_i) < (! r_n))))))) }
-        if ([@expl:Left step] (((! l_i) < (! l_n))  && ((! r_i) = (! r_n)))) then
-          ((l_i := ([@expl:i := i + 1] ((! l_i) + 1))); (l_r := ([@expl:r := r * i] ((! l_r) * (! l_i)))))
-        else
-          (if ([@expl:Right step] (((! r_i) < (! r_n))  && false)) then
-             ((r_i := ([@expl:i := i + 1] ((! r_i) + 1))); (r_r := ([@expl:r := r * i] ((! r_r) * (! r_i)))))
-           else
-             (((l_i := ([@expl:i := i + 1] ((! l_i) + 1))); (r_i := ([@expl:i := i + 1] ((! r_i) + 1))));
-              (l_r := ([@expl:r := r * i] ((! l_r) * (! l_i))));
-              (r_r := ([@expl:r := r * i] ((! r_r) * (! r_i))))))
+        (l_i := ([@expl:i := i + 1] ((! l_i) + 1)));
+        (r_i := ([@expl:i := i + 1] ((! r_i) + 1)));
+        (l_r := ([@expl:r := r * i] ((! l_r) * (! l_i))));
+        (r_r := ([@expl:r := r * i] ((! r_r) * (! r_i))))
       done;
       (l_result := ([@expl:result := r] (! l_r)));
       (r_result := ([@expl:result := r] (! r_r)));

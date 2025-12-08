@@ -1,0 +1,41 @@
+/*
+
+
+// A blackjack strategy that always stays on the beginning hand.
+// This strategy does not guarantee the possibility of 21 for
+// every possible starting hand.
+
+expected: invalid;
+
+exists: play;
+
+pre: (and
+       (>= play!handValue 2)
+       (<= play!handValue 20));
+post: (= play!handValue 21);
+
+especs:
+  draw() {
+    choiceVars: c;
+    pre: (and (>= c 1) (<= c 10));
+    post: (= ret! c);
+  }
+
+fun play() {
+  return handValue;
+}
+
+*/
+
+// Unary existential spec. can be captured as bicommand with skip on left.
+
+var handValue: int;
+
+// should not and does not verify
+procedure biprog () returns ()
+  requires 2 <= handValue && handValue <= 20;
+  ensures handValue == 21;
+  modifies handValue;
+{  
+  assert true;
+}
