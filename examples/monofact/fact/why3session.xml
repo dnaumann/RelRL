@@ -4,7 +4,7 @@
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
 <prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
-<file format="whyml">
+<file format="whyml" proved="true">
 <path name=".."/><path name="fact.mlw"/>
 <theory name="State" proved="true">
  <goal name="state&#39;vc" expl="VC for state" proved="true">
@@ -27,9 +27,9 @@
  </transf>
  </goal>
 </theory>
-<theory name="FREL">
- <goal name="fact&#39;vc" expl="VC for fact">
- <transf name="split_vc" >
+<theory name="FREL" proved="true">
+ <goal name="fact&#39;vc" expl="VC for fact" proved="true">
+ <transf name="split_vc" proved="true" >
   <goal name="fact&#39;vc.0" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.053037" steps="20"/></proof>
   </goal>
@@ -45,41 +45,83 @@
   <goal name="fact&#39;vc.4" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.047555" steps="26"/></proof>
   </goal>
-  <goal name="fact&#39;vc.5" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.056536" steps="95"/></proof>
+  <goal name="fact&#39;vc.5" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.040149" steps="30"/></proof>
   </goal>
-  <goal name="fact&#39;vc.6" expl="loop invariant preservation">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1262634"/></proof>
-  <proof prover="1"><result status="timeout" time="200.000000" steps="18957304"/></proof>
-  <transf name="split_vc" >
-   <goal name="fact&#39;vc.6.0" expl="loop invariant preservation" proved="true">
-   <proof prover="0"><result status="valid" time="0.058240" steps="93"/></proof>
+  <goal name="fact&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047470" steps="64"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050789" steps="67"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054137" steps="65"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047684" steps="76"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.061327" steps="79"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.11" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049023" steps="93"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.12" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.043645" steps="38"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.13" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049607" steps="38"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.14" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.044171" steps="38"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052051" steps="38"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045205" steps="38"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.17" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.042697" steps="38"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.18" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056536" steps="97"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.19" expl="loop invariant preservation" proved="true">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1262634"/></proof>
+  <proof prover="1" obsolete="true"><result status="timeout" time="200.000000" steps="18957304"/></proof>
+  <transf name="split_vc" proved="true" >
+   <goal name="fact&#39;vc.19.0" expl="loop invariant preservation" proved="true">
+   <proof prover="0"><result status="valid" time="0.058240" steps="95"/></proof>
    </goal>
-   <goal name="fact&#39;vc.6.1" expl="loop invariant preservation" proved="true">
-   <proof prover="0"><result status="valid" time="0.059298" steps="93"/></proof>
+   <goal name="fact&#39;vc.19.1" expl="loop invariant preservation" proved="true">
+   <proof prover="0"><result status="valid" time="0.059298" steps="168"/></proof>
    </goal>
-   <goal name="fact&#39;vc.6.2" expl="loop invariant preservation" proved="true">
-   <proof prover="0"><result status="valid" time="0.054117" steps="93"/></proof>
+   <goal name="fact&#39;vc.19.2" expl="loop invariant preservation" proved="true">
+   <proof prover="0"><result status="valid" time="0.054117" steps="95"/></proof>
    </goal>
-   <goal name="fact&#39;vc.6.3" expl="loop invariant preservation">
-   <proof prover="0"><result status="timeout" time="200.000000" steps="2158161"/></proof>
+   <goal name="fact&#39;vc.19.3" expl="loop invariant preservation" proved="true">
+   <proof prover="0"><result status="valid" time="0.052856" steps="167"/></proof>
    </goal>
   </transf>
   </goal>
-  <goal name="fact&#39;vc.7" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.059328" steps="99"/></proof>
+  <goal name="fact&#39;vc.20" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059328" steps="101"/></proof>
   </goal>
-  <goal name="fact&#39;vc.8" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.077251" steps="142"/></proof>
+  <goal name="fact&#39;vc.21" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.077251" steps="147"/></proof>
   </goal>
-  <goal name="fact&#39;vc.9" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.077504" steps="384"/></proof>
+  <goal name="fact&#39;vc.22" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.077504" steps="354"/></proof>
   </goal>
-  <goal name="fact&#39;vc.10" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.050121" steps="42"/></proof>
+  <goal name="fact&#39;vc.23" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.057957" steps="274"/></proof>
   </goal>
-  <goal name="fact&#39;vc.11" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.049912" steps="42"/></proof>
+  <goal name="fact&#39;vc.24" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.050121" steps="46"/></proof>
+  </goal>
+  <goal name="fact&#39;vc.25" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049912" steps="47"/></proof>
   </goal>
  </transf>
  </goal>
