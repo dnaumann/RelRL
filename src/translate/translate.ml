@@ -3315,10 +3315,6 @@ let rec compile_bicommand bi_ctxt (cc: T.bicommand) : Ptree.expr =
     mk_expr (Ptree.Eif (tt, then_then', mk_expr mid))
   | Biwhile (lg, rg, (lf,rf), rinv, cc) when is_false_ag lf && is_false_ag rf ->
     compile_lockstep_biwhile bi_ctxt lg rg rinv cc
-  | Biwhile (lg, _, (lf,rf), rinv, cc) when is_false_ag rf ->
-    compile_sided_biwhile bi_ctxt true lg rinv cc
-  | Biwhile (_, rg, (lf,rf), rinv, cc) when is_false_ag lf ->
-    compile_sided_biwhile bi_ctxt false rg rinv cc
   | Biwhile (lg, rg, (lf,rf), rinv, cc) ->
     compile_biwhile bi_ctxt lg rg lf rf rinv cc
 
