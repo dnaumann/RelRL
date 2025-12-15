@@ -20,3 +20,7 @@ bin/whyrel
 
 *notes.md
 *.mlw
+*.dot
+*.png
+*.svg
+tools/

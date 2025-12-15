@@ -4,25 +4,16 @@ WHYREL_STDLIB=../../stdlib
 POST_PROCESS=../../util/post-process.sed
 FILES=pqueue.rl pqueuer.rl pqueuebi.rl client.rl
 
-all: pqueue.mlw
+all: prog.mlw
 
-prepqueue.mlw: $(FILES)
+prog.mlw: $(FILES)
 	$(WHYREL) -margin 136 -o $@ $^
 
-pqueue.mlw: prepqueue.mlw
-	python3 post-process.py $< > $@
-
-ide: pqueue.mlw
+ide: prog.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 
-type: $(FILES)
-	$(WHYREL) -type-check -debug $^
-
-check: pqueue.mlw
-	$(WHY3) prove -L . -L $(WHYREL_STDLIB) --type-only $^
 
 .PHONY: clean
 clean:
-	rm -f prepqueue.mlw
-	rm -f pqueue.mlw
+	rm -f prog.mlw
 

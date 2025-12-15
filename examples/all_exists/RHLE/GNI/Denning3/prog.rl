@@ -54,8 +54,8 @@ post: (and
 end
 
 /* should not and does not verify  */
-bimodule FREL (A | B) =
-  meth prog (x_h: int|x_h : int) : (int |int )
+bimodule FREL (A | A) =
+  meth prog (x_h : int | x_h : int) : (unit | unit )
   requires { i_l =:= i_l /\ e_l =:= e_l}
   ensures { i_l =:= i_l /\ e_l =:= e_l }
   effects {  rw i_l, e_l, f_l, sum_h  | rw i_l, e_l, f_l, sum_h}
