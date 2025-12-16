@@ -24,3 +24,4 @@ bin/whyrel
 *.png
 *.svg
 tools/
+*code-workspace
