@@ -1,0 +1,2201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.121348" steps="140"/></proof>
+  </goal>
+  <goal name="state&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.229321" steps="656"/></proof>
+  </goal>
+  <goal name="state&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.239026" steps="745"/></proof>
+  </goal>
+  <goal name="state&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.188088" steps="570"/></proof>
+  </goal>
+  <goal name="state&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.294658" steps="1098"/></proof>
+  </goal>
+  <goal name="state&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.128410" steps="132"/></proof>
+  </goal>
+  <goal name="state&#39;vc.6" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.097746" steps="157"/></proof>
+  </goal>
+  <goal name="state&#39;vc.7" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.094906" steps="155"/></proof>
+  </goal>
+  <goal name="state&#39;vc.8" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.095249" steps="233"/></proof>
+  </goal>
+  <goal name="state&#39;vc.9" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.089018" steps="203"/></proof>
+  </goal>
+  <goal name="state&#39;vc.10" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.071945" steps="46"/></proof>
+  </goal>
+  <goal name="state&#39;vc.11" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.068173" steps="47"/></proof>
+  </goal>
+  <goal name="state&#39;vc.12" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.071464" steps="48"/></proof>
+  </goal>
+  <goal name="state&#39;vc.13" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.080779" steps="49"/></proof>
+  </goal>
+  <goal name="state&#39;vc.14" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.151132" steps="224"/></proof>
+  </goal>
+  <goal name="state&#39;vc.15" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.093185" steps="52"/></proof>
+  </goal>
+  <goal name="state&#39;vc.16" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.123701" steps="53"/></proof>
+  </goal>
+  <goal name="state&#39;vc.17" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.101668" steps="54"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="ArrayStack">
+ <goal name="init_Stack&#39;vc" expl="VC for init_Stack" proved="true">
+ <proof prover="0"><result status="valid" time="20.413903" steps="80378"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="init_Stack&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.068188" steps="30"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.1" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.116525" steps="232"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.2" expl="self.rep := {}" proved="true">
+  <proof prover="0"><result status="valid" time="0.075873" steps="24"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.3" expl="self.rep := {}" proved="true">
+  <proof prover="0"><result status="valid" time="0.070549" steps="24"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.4" expl="self.rep := {}" proved="true">
+  <proof prover="0"><result status="valid" time="0.066610" steps="24"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.5" expl="self.contents := nil" proved="true">
+  <proof prover="0"><result status="valid" time="0.072010" steps="54"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.6" expl="self.contents := nil" proved="true">
+  <proof prover="0"><result status="valid" time="0.092842" steps="140"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.7" expl="self.size := 0" proved="true">
+  <proof prover="0"><result status="valid" time="0.082142" steps="84"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.8" expl="self.size := 0" proved="true">
+  <proof prover="0"><result status="valid" time="0.094171" steps="201"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.9" expl="self.top := - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.072139" steps="114"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.10" expl="self.top := - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.093405" steps="262"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.11" expl="arr := new(CellArray){maxSize}" proved="true">
+  <proof prover="0"><result status="valid" time="0.095157" steps="180"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.12" expl="arr := new(CellArray){maxSize}" proved="true">
+  <proof prover="0"><result status="valid" time="0.090382" steps="180"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.13" expl="array size" proved="true">
+  <proof prover="0"><result status="valid" time="0.112177" steps="233"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.14" expl="arr := new(CellArray){maxSize}" proved="true">
+  <proof prover="0"><result status="valid" time="0.090572" steps="212"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.15" expl="arr := new(CellArray){maxSize}" proved="true">
+  <proof prover="0"><result status="valid" time="0.188979" steps="604"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.16" expl="self.arr := arr" proved="true">
+  <proof prover="0"><result status="valid" time="0.082881" steps="242"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.17" expl="self.arr := arr" proved="true">
+  <proof prover="0"><result status="valid" time="0.394981" steps="2028"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.18" expl="self.arr := arr" proved="true">
+  <proof prover="0"><result status="valid" time="0.187523" steps="716"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.19" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.389049" steps="1466"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.20" expl="rep := self.rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.172098" steps="893"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.21" expl="self.rep := rep union {arr}" proved="true">
+  <proof prover="0"><result status="valid" time="0.072875" steps="280"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.22" expl="self.rep := rep union {arr}" proved="true">
+  <proof prover="0"><result status="valid" time="0.696875" steps="2880"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.23" expl="self.rep := rep union {arr}" proved="true">
+  <proof prover="0"><result status="valid" time="0.893264" steps="4389"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.24" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="1.822755" steps="8191"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.25" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.093537" steps="344"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.26" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="1.705200" steps="9387"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.27" expl="wr {}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="1.814889" steps="9523"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.28" expl="wr {}`length" proved="true">
+  <proof prover="0"><result status="valid" time="1.693304" steps="8796"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.29" expl="wr {self}`arr" proved="true">
+  <proof prover="0"><result status="valid" time="1.547178" steps="8545"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.30" expl="wr {self}`top" proved="true">
+  <proof prover="0"><result status="valid" time="1.864311" steps="8642"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.31" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="1.777455" steps="9487"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.32" expl="wr {self}`size" proved="true">
+  <proof prover="0"><result status="valid" time="1.753919" steps="8724"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.33" expl="wr {self}`rep" proved="true">
+  <proof prover="0"><result status="valid" time="1.800898" steps="9565"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.34" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="1.884293" steps="9871"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.35" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.151976" steps="415"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.36" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.146333" steps="415"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.37" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.089195" steps="366"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.38" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="2.651943" steps="14172"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.39" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="2.701471" steps="14303"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.40" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="3.388508" steps="12593"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="isEmpty&#39;vc" expl="VC for isEmpty" proved="true">
+ <proof prover="0"><result status="valid" time="0.102169" steps="297"/></proof>
+ </goal>
+ <goal name="push&#39;vc" expl="VC for push">
+ <proof prover="0"><undone/></proof>
+ <transf name="split_vc" >
+  <goal name="push&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.062167" steps="32"/></proof>
+  </goal>
+  <goal name="push&#39;vc.1" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.069634" steps="33"/></proof>
+  </goal>
+  <goal name="push&#39;vc.2" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.111115" steps="218"/></proof>
+  </goal>
+  <goal name="push&#39;vc.3" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.098857" steps="126"/></proof>
+  </goal>
+  <goal name="push&#39;vc.4" expl="a := self.arr" proved="true">
+  <proof prover="0"><result status="valid" time="0.077073" steps="93"/></proof>
+  </goal>
+  <goal name="push&#39;vc.5" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.064978" steps="32"/></proof>
+  </goal>
+  <goal name="push&#39;vc.6" expl="t := self.top" proved="true">
+  <proof prover="0"><result status="valid" time="0.072541" steps="97"/></proof>
+  </goal>
+  <goal name="push&#39;vc.7" expl="self.top := t + 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.065904" steps="36"/></proof>
+  </goal>
+  <goal name="push&#39;vc.8" expl="self.top := t + 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.060589" steps="36"/></proof>
+  </goal>
+  <goal name="push&#39;vc.9" expl="v.cell_value := k" proved="true">
+  <proof prover="0"><result status="valid" time="0.068846" steps="102"/></proof>
+  </goal>
+  <goal name="push&#39;vc.10" expl="v.cell_value := k" proved="true">
+  <proof prover="0"><result status="valid" time="0.063344" steps="102"/></proof>
+  </goal>
+  <goal name="push&#39;vc.11" expl="v.cell_rep := {v}" proved="true">
+  <proof prover="0"><result status="valid" time="0.070727" steps="136"/></proof>
+  </goal>
+  <goal name="push&#39;vc.12" expl="v.cell_rep := {v}" proved="true">
+  <proof prover="0"><result status="valid" time="0.126465" steps="438"/></proof>
+  </goal>
+  <goal name="push&#39;vc.13" expl="v.cell_rep := {v}" proved="true">
+  <proof prover="0"><result status="valid" time="0.425744" steps="1758"/></proof>
+  </goal>
+  <goal name="push&#39;vc.14" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.499764" steps="2197"/></proof>
+  </goal>
+  <goal name="push&#39;vc.15" expl="a.{t + 1} := v ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="1.277378" steps="5842"/></proof>
+  </goal>
+  <goal name="push&#39;vc.16" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.292445" steps="987"/></proof>
+  </goal>
+  <goal name="push&#39;vc.17" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.624827" steps="2316"/></proof>
+  </goal>
+  <goal name="push&#39;vc.18" expl="self.arr := a" proved="true">
+  <proof prover="0"><result status="valid" time="0.107251" steps="202"/></proof>
+  </goal>
+  <goal name="push&#39;vc.19" expl="self.arr := a" proved="true">
+  <proof prover="0"><result status="valid" time="0.365935" steps="1126"/></proof>
+  </goal>
+  <goal name="push&#39;vc.20" expl="self.arr := a" proved="true">
+  <proof prover="0"><result status="valid" time="0.601135" steps="2658"/></proof>
+  </goal>
+  <goal name="push&#39;vc.21" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.099018" steps="232"/></proof>
+  </goal>
+  <goal name="push&#39;vc.22" expl="sz := self.size" proved="true">
+  <proof prover="0"><result status="valid" time="0.209179" steps="679"/></proof>
+  </goal>
+  <goal name="push&#39;vc.23" expl="self.size := sz + 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.136429" steps="236"/></proof>
+  </goal>
+  <goal name="push&#39;vc.24" expl="self.size := sz + 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.354389" steps="1411"/></proof>
+  </goal>
+  <goal name="push&#39;vc.25" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.088407" steps="266"/></proof>
+  </goal>
+  <goal name="push&#39;vc.26" expl="rep := self.rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.200961" steps="826"/></proof>
+  </goal>
+  <goal name="push&#39;vc.27" expl="self.rep := rep union {v}" proved="true">
+  <proof prover="0"><result status="valid" time="0.081515" steps="270"/></proof>
+  </goal>
+  <goal name="push&#39;vc.28" expl="self.rep := rep union {v}" proved="true">
+  <proof prover="0"><result status="valid" time="0.351947" steps="1707"/></proof>
+  </goal>
+  <goal name="push&#39;vc.29" expl="self.rep := rep union {v}" proved="true">
+  <proof prover="0"><result status="valid" time="3.842856" steps="16024"/></proof>
+  </goal>
+  <goal name="push&#39;vc.30" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.080974" steps="300"/></proof>
+  </goal>
+  <goal name="push&#39;vc.31" expl="contents := self.contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.197127" steps="968"/></proof>
+  </goal>
+  <goal name="push&#39;vc.32" expl="self.contents := cons(k,contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.092125" steps="304"/></proof>
+  </goal>
+  <goal name="push&#39;vc.33" expl="self.contents := cons(k,contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.496714" steps="2031"/></proof>
+  </goal>
+  <goal name="push&#39;vc.34" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="35.204160" steps="164188"/></proof>
+  </goal>
+  <goal name="push&#39;vc.35" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.095553" steps="338"/></proof>
+  </goal>
+  <goal name="push&#39;vc.36" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="4.841900" steps="20000"/></proof>
+  </goal>
+  <goal name="push&#39;vc.37" expl="wr ({self} union {self}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="5.862020" steps="24156"/></proof>
+  </goal>
+  <goal name="push&#39;vc.38" expl="wr {self}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="7.858040" steps="32977"/></proof>
+  </goal>
+  <goal name="push&#39;vc.39" expl="wr ({self} union {self}`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="6.380485" steps="23686"/></proof>
+  </goal>
+  <goal name="push&#39;vc.40" expl="wr ({self} union {self}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="6.245002" steps="24528"/></proof>
+  </goal>
+  <goal name="push&#39;vc.41" expl="wr {self}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="7.131172" steps="29236"/></proof>
+  </goal>
+  <goal name="push&#39;vc.42" expl="wr ({self} union {self}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="6.814813" steps="25430"/></proof>
+  </goal>
+  <goal name="push&#39;vc.43" expl="wr ({self} union {self}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="6.371449" steps="23426"/></proof>
+  </goal>
+  <goal name="push&#39;vc.44" expl="wr {self}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="7.716016" steps="30712"/></proof>
+  </goal>
+  <goal name="push&#39;vc.45" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="625471"/></proof>
+  <proof prover="1"><result status="outofmemory" time="77.093425"/></proof>
+  </goal>
+  <goal name="push&#39;vc.46" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.216760" steps="446"/></proof>
+  </goal>
+  <goal name="push&#39;vc.47" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.207239" steps="454"/></proof>
+  </goal>
+  <goal name="push&#39;vc.48" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="7.148607" steps="24816"/></proof>
+  </goal>
+  <goal name="push&#39;vc.49" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="10.639347" steps="39447"/></proof>
+  </goal>
+  <goal name="push&#39;vc.50" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="114.085050" steps="344730"/></proof>
+  </goal>
+  <goal name="push&#39;vc.51" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="545444"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="pop&#39;vc" expl="VC for pop">
+ <proof prover="0"><undone/></proof>
+ <transf name="split_vc" >
+  <goal name="pop&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.101696" steps="32"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.1" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.129879" steps="153"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.2" expl="a := self.arr" proved="true">
+  <proof prover="0"><result status="valid" time="0.090986" steps="85"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.3" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.074592" steps="28"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.4" expl="t := self.top" proved="true">
+  <proof prover="0"><result status="valid" time="0.104741" steps="89"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.5" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.142435" steps="242"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.6" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.257995" steps="935"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.7" expl="result := a.{t} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.567258" steps="1808"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.8" expl="self.top := t - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.083072" steps="38"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.9" expl="self.top := t - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.096549" steps="38"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.10" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.199853" steps="385"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.11" expl="sz := self.size" proved="true">
+  <proof prover="0"><result status="valid" time="0.117219" steps="170"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.12" expl="self.size := sz - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.087587" steps="72"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.13" expl="self.size := sz - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.123242" steps="178"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.14" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.097328" steps="102"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.15" expl="contents := self.contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.128534" steps="263"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.16" expl="self.contents := tl(contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.118689" steps="106"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.17" expl="self.contents := tl(contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.207348" steps="264"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.18" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="1.248212" steps="5708"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.19" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.913090" steps="4141"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.20" expl="wr ({self} union {self}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="2.071216" steps="9341"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.21" expl="wr ({self} union {self}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="2.126370" steps="9614"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.22" expl="wr ({self} union {self}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="2.146946" steps="10258"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.23" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="902380"/></proof>
+  <proof prover="1"><result status="outofmemory" time="78.298891"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.24" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.124051" steps="168"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.25" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="1.917504" steps="9184"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.26" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.115731" steps="178"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.27" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="1.541415" steps="7235"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.28" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.105983" steps="156"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.29" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="103.992676" steps="483686"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.30" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="152.813876" steps="668622"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="getMaxSize&#39;vc" expl="VC for getMaxSize" proved="true">
+ <proof prover="0"><result status="valid" time="0.078745" steps="29"/></proof>
+ </goal>
+ <goal name="getCellValue&#39;vc" expl="VC for getCellValue" proved="true">
+ <proof prover="0"><result status="valid" time="0.099166" steps="197"/></proof>
+ </goal>
+ <goal name="boundary_frames_invariant_ArrayStack">
+ <proof prover="0"><undone/></proof>
+ <transf name="split_vc" >
+  <goal name="boundary_frames_invariant_ArrayStack.0">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="584645"/></proof>
+  </goal>
+ </transf>
+ <transf name="split_vc" >
+  <goal name="boundary_frames_invariant_ArrayStack.0">
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Client1">
+ <goal name="prog&#39;vc" expl="VC for prog">
+ <transf name="split_vc" >
+  <goal name="prog&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.155965" steps="27"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.151917" steps="28"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.2" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.111552" steps="60"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.3" expl="Stack(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.103464" steps="56"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.4" expl="Stack(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.091277" steps="56"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.5" expl="Stack(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.142212" steps="163"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.6" expl="Stack(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.744972" steps="2485"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.7" expl="Stack(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.300954" steps="594"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.8" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.291828" steps="623"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.9" expl="locals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.285441" steps="599"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.10" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="1.154179" steps="5514"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.11" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="4.026828" steps="19308"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.12" expl="wr {stk}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="3.422162" steps="19248"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.13" expl="wr ({stk} union {stk}`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="3.638838" steps="19349"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.14" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="3.385477" steps="19359"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.15" expl="wr {stk}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.177903" steps="343"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.16" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="3.259716" steps="19372"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.17" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="3.991002" steps="19394"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.18" expl="wr {stk}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="0.192328" steps="355"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.19" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.138469" steps="122"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.20" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.139813" steps="123"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.21" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.128565" steps="124"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.22" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.109788" steps="124"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.23" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="41.277491" steps="250389"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.24" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.351752" steps="888"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.25" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.154476" steps="152"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.26" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.153302" steps="152"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.27" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.118741" steps="152"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.28" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.116710" steps="152"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.29" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.154081" steps="154"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.30" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.172826" steps="154"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.31" expl="locals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.613752" steps="1328"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.32" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="3.750117" steps="15878"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.33" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="45.027429" steps="284267"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.34" expl="wr {stk}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="145.965300" steps="871755"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.35" expl="wr ({stk} union {stk}`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="45.417722" steps="289462"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.36" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="44.864948" steps="291672"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.37" expl="wr {stk}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="158.367895" steps="948519"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.38" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="40.097944" steps="281178"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.39" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="47.961054" steps="289432"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.40" expl="wr {stk}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="151.431903" steps="938594"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.41" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.102993" steps="220"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.42" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.128564" steps="222"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.43" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.132842" steps="224"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.44" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.107767" steps="225"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.45" expl="loop invariant preservation">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1272609"/></proof>
+  <proof prover="1"><result status="timeout" time="200.000000" steps="6815868"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.46" expl="locals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.088828" steps="152"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.47" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.139659" steps="152"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.48" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.098551" steps="152"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.49" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="0.102582" steps="152"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.50" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="0.132796" steps="152"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.51" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.154472" steps="152"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.52" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.111663" steps="154"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.53" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.104646" steps="154"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.54" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.111330" steps="155"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.55" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.108093" steps="155"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.56" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.116451" steps="155"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.57" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="102.836420" steps="800961"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.58" expl="c := pop(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.135482" steps="205"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.59" expl="c := pop(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.138271" steps="205"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.60" expl="c := pop(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.099676" steps="205"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.61" expl="c := pop(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.113658" steps="205"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.62" expl="c := pop(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.108071" steps="206"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.63" expl="c := pop(stk)" proved="true">
+  <proof prover="0"><result status="valid" time="0.119294" steps="206"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.64" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="149.087950" steps="1191389"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.65" expl="v := getCellValue(c)" proved="true">
+  <proof prover="0"><result status="valid" time="0.119204" steps="254"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.66" expl="v := getCellValue(c)" proved="true">
+  <proof prover="0"><result status="valid" time="0.140963" steps="254"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.67" expl="v := getCellValue(c)" proved="true">
+  <proof prover="0"><result status="valid" time="0.134329" steps="254"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.68" expl="v := getCellValue(c)" proved="true">
+  <proof prover="0"><result status="valid" time="0.139443" steps="254"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.69" expl="locals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.242338" steps="725"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.70" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="6.982902" steps="35636"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.71" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="3.177053" steps="9353"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.72" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="2.318210" steps="9373"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.73" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="2.084066" steps="9377"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.74" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.127207" steps="272"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.75" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.121029" steps="274"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.76" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.132491" steps="276"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.77" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.114287" steps="277"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.78" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.125529" steps="277"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.79" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.122252" steps="277"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.80" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.116247" steps="203"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.81" expl="wr (pool union pool`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="35.208525" steps="256868"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.82" expl="wr (pool union pool`rep)`slots" proved="true">
+  <proof prover="0"><result status="valid" time="29.608488" steps="256058"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.83" expl="wr (pool union pool`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="4.320327" steps="28433"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.84" expl="wr (pool union pool`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="29.958393" steps="257528"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.85" expl="wr (pool union pool`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="29.421067" steps="253716"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.86" expl="wr (pool union pool`rep)`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="30.254687" steps="251235"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.87" expl="wr (pool union pool`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="31.122778" steps="251960"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.88" expl="wr (pool union pool`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="30.125840" steps="252296"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.89" expl="wr (pool union pool`rep)`length" proved="true">
+  <proof prover="0"><result status="valid" time="3.757666" steps="28626"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.90" expl="wr (pool union pool`rep)`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="30.902816" steps="255684"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="ListStack">
+ <goal name="init_Stack&#39;vc" expl="VC for init_Stack">
+ <transf name="split_vc" >
+  <goal name="init_Stack&#39;vc.0" expl="self.rep := {null}" proved="true">
+  <proof prover="0"><result status="valid" time="0.076882" steps="24"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.1" expl="self.rep := {null}" proved="true">
+  <proof prover="0"><result status="valid" time="0.087642" steps="24"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.2" expl="self.rep := {null}" proved="true">
+  <proof prover="0"><result status="valid" time="0.132099" steps="127"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.3" expl="self.head := null" proved="true">
+  <proof prover="0"><result status="valid" time="0.072970" steps="54"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.4" expl="self.head := null" proved="true">
+  <proof prover="0"><result status="valid" time="0.094983" steps="144"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.5" expl="self.head := null" proved="true">
+  <proof prover="0"><result status="valid" time="0.086022" steps="58"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.6" expl="self.contents := nil" proved="true">
+  <proof prover="0"><result status="valid" time="0.075925" steps="84"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.7" expl="self.contents := nil" proved="true">
+  <proof prover="0"><result status="valid" time="0.097086" steps="205"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.8" expl="self.size := 0" proved="true">
+  <proof prover="0"><result status="valid" time="0.075663" steps="114"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.9" expl="self.size := 0" proved="true">
+  <proof prover="0"><result status="valid" time="0.124745" steps="266"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.10" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.372105" steps="1224"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.095285" steps="178"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.12" expl="wr {self}`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.502666" steps="1609"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.13" expl="wr {self}`size" proved="true">
+  <proof prover="0"><result status="valid" time="0.421736" steps="1623"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.14" expl="wr {self}`rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.417967" steps="1646"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.15" expl="wr {self}`head" proved="true">
+  <proof prover="0"><result status="valid" time="0.405388" steps="1650"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.16" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="8.900940" steps="35977"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.17" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.213123" steps="190"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.18" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.231007" steps="192"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.19" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.115233" steps="192"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.20" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.379997" steps="835"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.21" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="22.774747" steps="88381"/></proof>
+  </goal>
+  <goal name="init_Stack&#39;vc.22" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="752441"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="isEmpty&#39;vc" expl="VC for isEmpty" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="isEmpty&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.146797" steps="110"/></proof>
+  </goal>
+  <goal name="isEmpty&#39;vc.1" expl="sz := self.size" proved="true">
+  <proof prover="0"><result status="valid" time="0.132651" steps="81"/></proof>
+  </goal>
+  <goal name="isEmpty&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.132119" steps="42"/></proof>
+  </goal>
+  <goal name="isEmpty&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.127443" steps="26"/></proof>
+  </goal>
+  <goal name="isEmpty&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.113747" steps="26"/></proof>
+  </goal>
+  <goal name="isEmpty&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.094855" steps="26"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="push&#39;vc" expl="VC for push">
+ <transf name="split_vc" >
+  <goal name="push&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.098912" steps="32"/></proof>
+  </goal>
+  <goal name="push&#39;vc.1" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.107977" steps="33"/></proof>
+  </goal>
+  <goal name="push&#39;vc.2" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.084893" steps="26"/></proof>
+  </goal>
+  <goal name="push&#39;vc.3" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.145818" steps="218"/></proof>
+  </goal>
+  <goal name="push&#39;vc.4" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="1.050417" steps="3451"/></proof>
+  </goal>
+  <goal name="push&#39;vc.5" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.151984" steps="70"/></proof>
+  </goal>
+  <goal name="push&#39;vc.6" expl="Cell(v,k)" proved="true">
+  <proof prover="0"><result status="valid" time="0.097241" steps="66"/></proof>
+  </goal>
+  <goal name="push&#39;vc.7" expl="Cell(v,k)" proved="true">
+  <proof prover="0"><result status="valid" time="0.091827" steps="66"/></proof>
+  </goal>
+  <goal name="push&#39;vc.8" expl="n.car := v" proved="true">
+  <proof prover="0"><result status="valid" time="0.154796" steps="136"/></proof>
+  </goal>
+  <goal name="push&#39;vc.9" expl="n.car := v" proved="true">
+  <proof prover="0"><result status="valid" time="0.107782" steps="136"/></proof>
+  </goal>
+  <goal name="push&#39;vc.10" expl="n.car := v" proved="true">
+  <proof prover="0"><result status="valid" time="0.346687" steps="676"/></proof>
+  </goal>
+  <goal name="push&#39;vc.11" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.372157" steps="871"/></proof>
+  </goal>
+  <goal name="push&#39;vc.12" expl="tmp := self.head" proved="true">
+  <proof prover="0"><result status="valid" time="0.188168" steps="437"/></proof>
+  </goal>
+  <goal name="push&#39;vc.13" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="2.186220" steps="6521"/></proof>
+  </goal>
+  <goal name="push&#39;vc.14" expl="n.cdr := tmp" proved="true">
+  <proof prover="0"><result status="valid" time="0.133518" steps="172"/></proof>
+  </goal>
+  <goal name="push&#39;vc.15" expl="n.cdr := tmp" proved="true">
+  <proof prover="0"><result status="valid" time="0.200325" steps="584"/></proof>
+  </goal>
+  <goal name="push&#39;vc.16" expl="n.cdr := tmp" proved="true">
+  <proof prover="0"><result status="valid" time="0.603093" steps="1815"/></proof>
+  </goal>
+  <goal name="push&#39;vc.17" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="36.480194" steps="93301"/></proof>
+  </goal>
+  <goal name="push&#39;vc.18" expl="self.head := n" proved="true">
+  <proof prover="0"><result status="valid" time="0.114212" steps="206"/></proof>
+  </goal>
+  <goal name="push&#39;vc.19" expl="self.head := n" proved="true">
+  <proof prover="0"><result status="valid" time="0.418670" steps="1155"/></proof>
+  </goal>
+  <goal name="push&#39;vc.20" expl="self.head := n" proved="true">
+  <proof prover="0"><result status="valid" time="0.251658" steps="733"/></proof>
+  </goal>
+  <goal name="push&#39;vc.21" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.120784" steps="236"/></proof>
+  </goal>
+  <goal name="push&#39;vc.22" expl="sz := self.size" proved="true">
+  <proof prover="0"><result status="valid" time="0.264486" steps="698"/></proof>
+  </goal>
+  <goal name="push&#39;vc.23" expl="self.size := sz + 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.124003" steps="240"/></proof>
+  </goal>
+  <goal name="push&#39;vc.24" expl="self.size := sz + 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.509052" steps="1466"/></proof>
+  </goal>
+  <goal name="push&#39;vc.25" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.115569" steps="270"/></proof>
+  </goal>
+  <goal name="push&#39;vc.26" expl="rep := self.rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.288161" steps="836"/></proof>
+  </goal>
+  <goal name="push&#39;vc.27" expl="self.rep := rep union {v} union {n}" proved="true">
+  <proof prover="0"><result status="valid" time="0.128387" steps="282"/></proof>
+  </goal>
+  <goal name="push&#39;vc.28" expl="self.rep := rep union {v} union {n}" proved="true">
+  <proof prover="0"><result status="valid" time="0.644518" steps="1805"/></proof>
+  </goal>
+  <goal name="push&#39;vc.29" expl="self.rep := rep union {v} union {n}" proved="true">
+  <proof prover="0"><result status="valid" time="4.956428" steps="16281"/></proof>
+  </goal>
+  <goal name="push&#39;vc.30" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.740786" steps="2194"/></proof>
+  </goal>
+  <goal name="push&#39;vc.31" expl="assertion">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="634336"/></proof>
+  </goal>
+  <goal name="push&#39;vc.32" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.178377" steps="318"/></proof>
+  </goal>
+  <goal name="push&#39;vc.33" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="10.183516" steps="34683"/></proof>
+  </goal>
+  <goal name="push&#39;vc.34" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.129566" steps="322"/></proof>
+  </goal>
+  <goal name="push&#39;vc.35" expl="contents := self.contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.301568" steps="1026"/></proof>
+  </goal>
+  <goal name="push&#39;vc.36" expl="self.contents := cons(k,contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.182943" steps="326"/></proof>
+  </goal>
+  <goal name="push&#39;vc.37" expl="self.contents := cons(k,contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.696312" steps="2273"/></proof>
+  </goal>
+  <goal name="push&#39;vc.38" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.294889" steps="465"/></proof>
+  </goal>
+  <goal name="push&#39;vc.39" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.138292" steps="358"/></proof>
+  </goal>
+  <goal name="push&#39;vc.40" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="7.423055" steps="20469"/></proof>
+  </goal>
+  <goal name="push&#39;vc.41" expl="wr ({self} union {self}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="9.466431" steps="31784"/></proof>
+  </goal>
+  <goal name="push&#39;vc.42" expl="wr ({self} union {self}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="10.041917" steps="31007"/></proof>
+  </goal>
+  <goal name="push&#39;vc.43" expl="wr {self}`rep`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="12.350069" steps="41837"/></proof>
+  </goal>
+  <goal name="push&#39;vc.44" expl="wr {self}`rep`car" proved="true">
+  <proof prover="0"><result status="valid" time="12.191698" steps="40759"/></proof>
+  </goal>
+  <goal name="push&#39;vc.45" expl="wr ({self} union {self}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="10.973898" steps="33760"/></proof>
+  </goal>
+  <goal name="push&#39;vc.46" expl="wr {self}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="8.052544" steps="32130"/></proof>
+  </goal>
+  <goal name="push&#39;vc.47" expl="wr ({self} union {self}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="7.606790" steps="30388"/></proof>
+  </goal>
+  <goal name="push&#39;vc.48" expl="wr {self}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="7.827899" steps="31257"/></proof>
+  </goal>
+  <goal name="push&#39;vc.49" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="654707"/></proof>
+  </goal>
+  <goal name="push&#39;vc.50" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.214218" steps="496"/></proof>
+  </goal>
+  <goal name="push&#39;vc.51" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.195976" steps="504"/></proof>
+  </goal>
+  <goal name="push&#39;vc.52" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="9.164006" steps="33929"/></proof>
+  </goal>
+  <goal name="push&#39;vc.53" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="19.796719" steps="68984"/></proof>
+  </goal>
+  <goal name="push&#39;vc.54" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="676238"/></proof>
+  </goal>
+  <goal name="push&#39;vc.55" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="617270"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="pop&#39;vc" expl="VC for pop">
+ <transf name="split_vc" >
+  <goal name="pop&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.124643" steps="32"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.1" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.114165" steps="24"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.2" expl="assertion">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1100299"/></proof>
+  <proof prover="1"><result status="outofmemory" time="90.888579"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.3" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.093496" steps="177"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.4" expl="tmp := self.head" proved="true">
+  <proof prover="0"><result status="valid" time="0.080023" steps="101"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.5" expl="assertion">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1085544"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.6" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.097837" steps="255"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.7" expl="result := tmp.car" proved="true">
+  <proof prover="0"><result status="valid" time="0.172350" steps="489"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.8" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.155694" steps="308"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.9" expl="nxt := tmp.cdr" proved="true">
+  <proof prover="0"><result status="valid" time="0.157275" steps="497"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.10" expl="self.head := nxt" proved="true">
+  <proof prover="0"><result status="valid" time="0.080103" steps="42"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.11" expl="self.head := nxt" proved="true">
+  <proof prover="0"><result status="valid" time="0.087790" steps="42"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.12" expl="self.head := nxt" proved="true">
+  <proof prover="0"><result status="valid" time="0.579483" steps="2430"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.13" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.270053" steps="382"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.14" expl="sz := self.size" proved="true">
+  <proof prover="0"><result status="valid" time="0.153603" steps="180"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.15" expl="self.size := sz - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.103902" steps="76"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.16" expl="self.size := sz - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.153898" steps="180"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.17" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.089088" steps="106"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.18" expl="contents := self.contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.151991" steps="257"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.19" expl="self.contents := tl(contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.114063" steps="110"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.20" expl="self.contents := tl(contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.155132" steps="259"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.21" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1189227"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.22" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.785592" steps="4298"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.23" expl="wr ({self} union {self}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="1.573113" steps="7906"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.24" expl="wr ({self} union {self}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="1.439842" steps="7947"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.25" expl="wr ({self} union {self}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="1.433296" steps="7965"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.26" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1280842"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.27" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.088380" steps="164"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.28" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1196255"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.29" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.111602" steps="169"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.30" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="1.961127" steps="8935"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.31" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.075962" steps="160"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.32" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="116.552578" steps="716345"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.33" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1220460"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="getMaxSize&#39;vc" expl="VC for getMaxSize">
+ <transf name="split_vc" >
+  <goal name="getMaxSize&#39;vc.0" expl="postcondition">
+  </goal>
+  <goal name="getMaxSize&#39;vc.1" expl="postcondition">
+  </goal>
+  <goal name="getMaxSize&#39;vc.2" expl="postcondition">
+  </goal>
+  <goal name="getMaxSize&#39;vc.3" expl="postcondition">
+  </goal>
+ </transf>
+ </goal>
+ <goal name="getCellValue&#39;vc" expl="VC for getCellValue">
+ </goal>
+ <goal name="boundary_frames_invariant_ListStack">
+ </goal>
+</theory>
+<theory name="Client2">
+ <goal name="prog&#39;vc" expl="VC for prog">
+ <transf name="split_vc" >
+  <goal name="prog&#39;vc.0" expl="assertion">
+  </goal>
+  <goal name="prog&#39;vc.1" expl="assertion">
+  </goal>
+  <goal name="prog&#39;vc.2" expl="assertion">
+  </goal>
+  <goal name="prog&#39;vc.3" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.4" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.5" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.6" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.7" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.8" expl="locals type invariant">
+  </goal>
+  <goal name="prog&#39;vc.9" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.10" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.11" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.12" expl="wr {stk}`rep`cdr">
+  </goal>
+  <goal name="prog&#39;vc.13" expl="wr {stk}`rep`car">
+  </goal>
+  <goal name="prog&#39;vc.14" expl="wr ({stk} union {stk}`rep)`rep">
+  </goal>
+  <goal name="prog&#39;vc.15" expl="wr {stk}`rep`cell_rep">
+  </goal>
+  <goal name="prog&#39;vc.16" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.17" expl="wr {stk}`rep`cell_value">
+  </goal>
+  <goal name="prog&#39;vc.18" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.19" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.20" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.21" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.22" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.23" expl="assertion">
+  </goal>
+  <goal name="prog&#39;vc.24" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.25" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.26" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.27" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.28" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.29" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.30" expl="locals type invariant">
+  </goal>
+  <goal name="prog&#39;vc.31" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.32" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.33" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.34" expl="wr {stk}`rep`cdr">
+  </goal>
+  <goal name="prog&#39;vc.35" expl="wr {stk}`rep`car">
+  </goal>
+  <goal name="prog&#39;vc.36" expl="wr ({stk} union {stk}`rep)`rep">
+  </goal>
+  <goal name="prog&#39;vc.37" expl="wr {stk}`rep`cell_rep">
+  </goal>
+  <goal name="prog&#39;vc.38" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.39" expl="wr {stk}`rep`cell_value">
+  </goal>
+  <goal name="prog&#39;vc.40" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.41" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.42" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.43" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.44" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.45" expl="locals type invariant">
+  </goal>
+  <goal name="prog&#39;vc.46" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.47" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.48" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.49" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.50" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.51" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.52" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.53" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.54" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.55" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.56" expl="assertion">
+  </goal>
+  <goal name="prog&#39;vc.57" expl="c := pop(stk)">
+  </goal>
+  <goal name="prog&#39;vc.58" expl="c := pop(stk)">
+  </goal>
+  <goal name="prog&#39;vc.59" expl="c := pop(stk)">
+  </goal>
+  <goal name="prog&#39;vc.60" expl="c := pop(stk)">
+  </goal>
+  <goal name="prog&#39;vc.61" expl="c := pop(stk)">
+  </goal>
+  <goal name="prog&#39;vc.62" expl="c := pop(stk)">
+  </goal>
+  <goal name="prog&#39;vc.63" expl="assertion">
+  </goal>
+  <goal name="prog&#39;vc.64" expl="v := getCellValue(c)">
+  </goal>
+  <goal name="prog&#39;vc.65" expl="v := getCellValue(c)">
+  </goal>
+  <goal name="prog&#39;vc.66" expl="v := getCellValue(c)">
+  </goal>
+  <goal name="prog&#39;vc.67" expl="v := getCellValue(c)">
+  </goal>
+  <goal name="prog&#39;vc.68" expl="locals type invariant">
+  </goal>
+  <goal name="prog&#39;vc.69" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.70" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.71" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.72" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.73" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.74" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.75" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.76" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.77" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.78" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.79" expl="postcondition">
+  </goal>
+  <goal name="prog&#39;vc.80" expl="wr (pool union pool`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.81" expl="wr (pool union pool`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.82" expl="wr (pool union pool`rep)`cdr">
+  </goal>
+  <goal name="prog&#39;vc.83" expl="wr (pool union pool`rep)`arr">
+  </goal>
+  <goal name="prog&#39;vc.84" expl="wr (pool union pool`rep)`car">
+  </goal>
+  <goal name="prog&#39;vc.85" expl="wr (pool union pool`rep)`rep">
+  </goal>
+  <goal name="prog&#39;vc.86" expl="wr (pool union pool`rep)`cell_rep">
+  </goal>
+  <goal name="prog&#39;vc.87" expl="wr (pool union pool`rep)`top">
+  </goal>
+  <goal name="prog&#39;vc.88" expl="wr (pool union pool`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.89" expl="wr (pool union pool`rep)`cell_value">
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="CLIENT_REL">
+ <goal name="prog&#39;vc" expl="VC for prog">
+ <transf name="split_vc" >
+  <goal name="prog&#39;vc.0" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.1" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.2" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.3" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.4" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.5" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.6" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.7" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.8" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.9" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.10" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.11" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.12" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.13" expl="Stack(stk)">
+  </goal>
+  <goal name="prog&#39;vc.14" expl="locals type invariant left">
+  </goal>
+  <goal name="prog&#39;vc.15" expl="locals type invariant right">
+  </goal>
+  <goal name="prog&#39;vc.16" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.17" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.18" expl="wr {stk}`rep`cdr">
+  </goal>
+  <goal name="prog&#39;vc.19" expl="wr {stk}`rep`car">
+  </goal>
+  <goal name="prog&#39;vc.20" expl="wr ({stk} union {stk}`rep)`rep">
+  </goal>
+  <goal name="prog&#39;vc.21" expl="wr {stk}`rep`cell_rep">
+  </goal>
+  <goal name="prog&#39;vc.22" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.23" expl="wr {stk}`rep`cell_value">
+  </goal>
+  <goal name="prog&#39;vc.24" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.25" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.26" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.27" expl="wr {stk}`rep`cdr">
+  </goal>
+  <goal name="prog&#39;vc.28" expl="wr {stk}`rep`car">
+  </goal>
+  <goal name="prog&#39;vc.29" expl="wr ({stk} union {stk}`rep)`rep">
+  </goal>
+  <goal name="prog&#39;vc.30" expl="wr {stk}`rep`cell_rep">
+  </goal>
+  <goal name="prog&#39;vc.31" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.32" expl="wr {stk}`rep`cell_value">
+  </goal>
+  <goal name="prog&#39;vc.33" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.34" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.35" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.36" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.37" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.38" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.39" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.40" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.41" expl="lockstep">
+  </goal>
+  <goal name="prog&#39;vc.42" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.43" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.44" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.45" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.46" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.47" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.48" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.49" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.50" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.51" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.52" expl="push(stk,i)">
+  </goal>
+  <goal name="prog&#39;vc.53" expl="locals type invariant left">
+  </goal>
+  <goal name="prog&#39;vc.54" expl="locals type invariant right">
+  </goal>
+  <goal name="prog&#39;vc.55" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.56" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.57" expl="wr {stk}`rep`cdr">
+  </goal>
+  <goal name="prog&#39;vc.58" expl="wr {stk}`rep`car">
+  </goal>
+  <goal name="prog&#39;vc.59" expl="wr ({stk} union {stk}`rep)`rep">
+  </goal>
+  <goal name="prog&#39;vc.60" expl="wr {stk}`rep`cell_rep">
+  </goal>
+  <goal name="prog&#39;vc.61" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.62" expl="wr {stk}`rep`cell_value">
+  </goal>
+  <goal name="prog&#39;vc.63" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.64" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.65" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.66" expl="wr {stk}`rep`cdr">
+  </goal>
+  <goal name="prog&#39;vc.67" expl="wr {stk}`rep`car">
+  </goal>
+  <goal name="prog&#39;vc.68" expl="wr ({stk} union {stk}`rep)`rep">
+  </goal>
+  <goal name="prog&#39;vc.69" expl="wr {stk}`rep`cell_rep">
+  </goal>
+  <goal name="prog&#39;vc.70" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.71" expl="wr {stk}`rep`cell_value">
+  </goal>
+  <goal name="prog&#39;vc.72" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.73" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.74" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.75" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.76" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.77" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.78" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.79" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.80" expl="lockstep">
+  </goal>
+  <goal name="prog&#39;vc.81" expl="assertion">
+  </goal>
+  <goal name="prog&#39;vc.82" expl="locals type invariant left">
+  </goal>
+  <goal name="prog&#39;vc.83" expl="locals type invariant right">
+  </goal>
+  <goal name="prog&#39;vc.84" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.85" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.86" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.87" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.88" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.89" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.90" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.91" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.92" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.93" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.94" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.95" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.96" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.97" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.98" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.99" expl="loop invariant init">
+  </goal>
+  <goal name="prog&#39;vc.100" expl="lockstep">
+  </goal>
+  <goal name="prog&#39;vc.101" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.102" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.103" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.104" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.105" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.106" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.107" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.108" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.109" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.110" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.111" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.112" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.113" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.114" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.115" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.116" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.117" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.118" expl="precondition">
+  </goal>
+  <goal name="prog&#39;vc.119" expl="locals type invariant left">
+  </goal>
+  <goal name="prog&#39;vc.120" expl="locals type invariant right">
+  </goal>
+  <goal name="prog&#39;vc.121" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.122" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.123" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.124" expl="wr ({stk} union {stk}`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.125" expl="wr ({stk} union {stk}`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.126" expl="wr ({stk} union {stk}`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.127" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.128" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.129" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.130" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.131" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.132" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.133" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.134" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.135" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.136" expl="loop invariant preservation">
+  </goal>
+  <goal name="prog&#39;vc.137" expl="lockstep">
+  </goal>
+  <goal name="prog&#39;vc.138" expl="wr (pool union pool`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.139" expl="wr (pool union pool`rep)`slots">
+  </goal>
+  <goal name="prog&#39;vc.140" expl="wr (pool union pool`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.141" expl="wr (pool union pool`rep)`cdr">
+  </goal>
+  <goal name="prog&#39;vc.142" expl="wr (pool union pool`rep)`arr">
+  </goal>
+  <goal name="prog&#39;vc.143" expl="wr (pool union pool`rep)`car">
+  </goal>
+  <goal name="prog&#39;vc.144" expl="wr (pool union pool`rep)`rep">
+  </goal>
+  <goal name="prog&#39;vc.145" expl="wr (pool union pool`rep)`cell_rep">
+  </goal>
+  <goal name="prog&#39;vc.146" expl="wr (pool union pool`rep)`top">
+  </goal>
+  <goal name="prog&#39;vc.147" expl="wr (pool union pool`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.148" expl="wr (pool union pool`rep)`length">
+  </goal>
+  <goal name="prog&#39;vc.149" expl="wr (pool union pool`rep)`cell_value">
+  </goal>
+  <goal name="prog&#39;vc.150" expl="postcondition">
+  </goal>
+  <goal name="prog&#39;vc.151" expl="wr (pool union pool`rep)`contents">
+  </goal>
+  <goal name="prog&#39;vc.152" expl="wr (pool union pool`rep)`slots">
+  </goal>
+  <goal name="prog&#39;vc.153" expl="wr (pool union pool`rep)`head">
+  </goal>
+  <goal name="prog&#39;vc.154" expl="wr (pool union pool`rep)`cdr">
+  </goal>
+  <goal name="prog&#39;vc.155" expl="wr (pool union pool`rep)`arr">
+  </goal>
+  <goal name="prog&#39;vc.156" expl="wr (pool union pool`rep)`car">
+  </goal>
+  <goal name="prog&#39;vc.157" expl="wr (pool union pool`rep)`rep">
+  </goal>
+  <goal name="prog&#39;vc.158" expl="wr (pool union pool`rep)`cell_rep">
+  </goal>
+  <goal name="prog&#39;vc.159" expl="wr (pool union pool`rep)`top">
+  </goal>
+  <goal name="prog&#39;vc.160" expl="wr (pool union pool`rep)`size">
+  </goal>
+  <goal name="prog&#39;vc.161" expl="wr (pool union pool`rep)`length">
+  </goal>
+  <goal name="prog&#39;vc.162" expl="wr (pool union pool`rep)`cell_value">
+  </goal>
+  <goal name="prog&#39;vc.163" expl="postcondition">
+  </goal>
+  <goal name="prog&#39;vc.164" expl="postcondition">
+  </goal>
+  <goal name="prog&#39;vc.165" expl="postcondition">
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="REL_STACK">
+ <goal name="init_Stack&#39;vc" expl="VC for init_Stack">
+ <transf name="split_vc" >
+  <goal name="init_Stack&#39;vc.0" expl="self.rep := {}">
+  </goal>
+  <goal name="init_Stack&#39;vc.1" expl="self.rep := {}">
+  </goal>
+  <goal name="init_Stack&#39;vc.2" expl="self.rep := {}">
+  </goal>
+  <goal name="init_Stack&#39;vc.3" expl="self.rep := {null}">
+  </goal>
+  <goal name="init_Stack&#39;vc.4" expl="self.rep := {null}">
+  </goal>
+  <goal name="init_Stack&#39;vc.5" expl="self.rep := {null}">
+  </goal>
+  <goal name="init_Stack&#39;vc.6" expl="self.head := null">
+  </goal>
+  <goal name="init_Stack&#39;vc.7" expl="self.head := null">
+  </goal>
+  <goal name="init_Stack&#39;vc.8" expl="self.head := null">
+  </goal>
+  <goal name="init_Stack&#39;vc.9" expl="self.contents := nil">
+  </goal>
+  <goal name="init_Stack&#39;vc.10" expl="self.contents := nil">
+  </goal>
+  <goal name="init_Stack&#39;vc.11" expl="self.contents := nil">
+  </goal>
+  <goal name="init_Stack&#39;vc.12" expl="self.contents := nil">
+  </goal>
+  <goal name="init_Stack&#39;vc.13" expl="assertion">
+  </goal>
+  <goal name="init_Stack&#39;vc.14" expl="self.size := 0">
+  </goal>
+  <goal name="init_Stack&#39;vc.15" expl="self.size := 0">
+  </goal>
+  <goal name="init_Stack&#39;vc.16" expl="self.size := 0">
+  </goal>
+  <goal name="init_Stack&#39;vc.17" expl="self.size := 0">
+  </goal>
+  <goal name="init_Stack&#39;vc.18" expl="self.top := - 1">
+  </goal>
+  <goal name="init_Stack&#39;vc.19" expl="self.top := - 1">
+  </goal>
+  <goal name="init_Stack&#39;vc.20" expl="arr := new(CellArray){maxSize}">
+  </goal>
+  <goal name="init_Stack&#39;vc.21" expl="arr := new(CellArray){maxSize}">
+  </goal>
+  <goal name="init_Stack&#39;vc.22" expl="array size">
+  </goal>
+  <goal name="init_Stack&#39;vc.23" expl="arr := new(CellArray){maxSize}">
+  </goal>
+  <goal name="init_Stack&#39;vc.24" expl="arr := new(CellArray){maxSize}">
+  </goal>
+  <goal name="init_Stack&#39;vc.25" expl="self.arr := arr">
+  </goal>
+  <goal name="init_Stack&#39;vc.26" expl="self.arr := arr">
+  </goal>
+  <goal name="init_Stack&#39;vc.27" expl="self.arr := arr">
+  </goal>
+  <goal name="init_Stack&#39;vc.28" expl="rep := self.rep">
+  </goal>
+  <goal name="init_Stack&#39;vc.29" expl="self.rep := rep union {arr}">
+  </goal>
+  <goal name="init_Stack&#39;vc.30" expl="self.rep := rep union {arr}">
+  </goal>
+  <goal name="init_Stack&#39;vc.31" expl="self.rep := rep union {arr}">
+  </goal>
+  <goal name="init_Stack&#39;vc.32" expl="precondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.33" expl="precondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.34" expl="wr {self}`rep">
+  </goal>
+  <goal name="init_Stack&#39;vc.35" expl="wr {self}`size">
+  </goal>
+  <goal name="init_Stack&#39;vc.36" expl="wr {self}`contents">
+  </goal>
+  <goal name="init_Stack&#39;vc.37" expl="wr {self}`top">
+  </goal>
+  <goal name="init_Stack&#39;vc.38" expl="wr {self}`arr">
+  </goal>
+  <goal name="init_Stack&#39;vc.39" expl="postcondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.40" expl="wr {}`length">
+  </goal>
+  <goal name="init_Stack&#39;vc.41" expl="wr {}`slots">
+  </goal>
+  <goal name="init_Stack&#39;vc.42" expl="wr {self}`head">
+  </goal>
+  <goal name="init_Stack&#39;vc.43" expl="wr {self}`rep">
+  </goal>
+  <goal name="init_Stack&#39;vc.44" expl="wr {self}`size">
+  </goal>
+  <goal name="init_Stack&#39;vc.45" expl="wr {self}`contents">
+  </goal>
+  <goal name="init_Stack&#39;vc.46" expl="postcondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.47" expl="postcondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.48" expl="postcondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.49" expl="postcondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.50" expl="postcondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.51" expl="postcondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.52" expl="postcondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.53" expl="postcondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.54" expl="postcondition">
+  </goal>
+  <goal name="init_Stack&#39;vc.55" expl="postcondition">
+  </goal>
+ </transf>
+ </goal>
+ <goal name="isEmpty&#39;vc" expl="VC for isEmpty">
+ <transf name="split_vc" >
+  <goal name="isEmpty&#39;vc.0" expl="sz := self.size">
+  </goal>
+  <goal name="isEmpty&#39;vc.1" expl="sz := self.size">
+  </goal>
+  <goal name="isEmpty&#39;vc.2" expl="postcondition">
+  </goal>
+  <goal name="isEmpty&#39;vc.3" expl="postcondition">
+  </goal>
+  <goal name="isEmpty&#39;vc.4" expl="postcondition">
+  </goal>
+  <goal name="isEmpty&#39;vc.5" expl="postcondition">
+  </goal>
+  <goal name="isEmpty&#39;vc.6" expl="postcondition">
+  </goal>
+  <goal name="isEmpty&#39;vc.7" expl="postcondition">
+  </goal>
+ </transf>
+ </goal>
+ <goal name="push&#39;vc" expl="VC for push">
+ <transf name="split_vc" >
+  <goal name="push&#39;vc.0" expl="a := self.arr">
+  </goal>
+  <goal name="push&#39;vc.1" expl="t := self.top">
+  </goal>
+  <goal name="push&#39;vc.2" expl="self.top := t + 1">
+  </goal>
+  <goal name="push&#39;vc.3" expl="self.top := t + 1">
+  </goal>
+  <goal name="push&#39;vc.4" expl="precondition">
+  </goal>
+  <goal name="push&#39;vc.5" expl="precondition">
+  </goal>
+  <goal name="push&#39;vc.6" expl="precondition">
+  </goal>
+  <goal name="push&#39;vc.7" expl="precondition">
+  </goal>
+  <goal name="push&#39;vc.8" expl="v.cell_value := k">
+  </goal>
+  <goal name="push&#39;vc.9" expl="v.cell_value := k">
+  </goal>
+  <goal name="push&#39;vc.10" expl="v.cell_rep := {v}">
+  </goal>
+  <goal name="push&#39;vc.11" expl="v.cell_rep := {v}">
+  </goal>
+  <goal name="push&#39;vc.12" expl="v.cell_rep := {v}">
+  </goal>
+  <goal name="push&#39;vc.13" expl="Cell(v,k)">
+  </goal>
+  <goal name="push&#39;vc.14" expl="Cell(v,k)">
+  </goal>
+  <goal name="push&#39;vc.15" expl="precondition">
+  </goal>
+  <goal name="push&#39;vc.16" expl="a.{t + 1} := v ( index is in bounds)">
+  </goal>
+  <goal name="push&#39;vc.17" expl="precondition">
+  </goal>
+  <goal name="push&#39;vc.18" expl="precondition">
+  </goal>
+  <goal name="push&#39;vc.19" expl="self.arr := a">
+  </goal>
+  <goal name="push&#39;vc.20" expl="self.arr := a">
+  </goal>
+  <goal name="push&#39;vc.21" expl="self.arr := a">
+  </goal>
+  <goal name="push&#39;vc.22" expl="n.car := v">
+  </goal>
+  <goal name="push&#39;vc.23" expl="n.car := v">
+  </goal>
+  <goal name="push&#39;vc.24" expl="n.car := v">
+  </goal>
+  <goal name="push&#39;vc.25" expl="tmp := self.head">
+  </goal>
+  <goal name="push&#39;vc.26" expl="n.cdr := tmp">
+  </goal>
+  <goal name="push&#39;vc.27" expl="n.cdr := tmp">
+  </goal>
+  <goal name="push&#39;vc.28" expl="n.cdr := tmp">
+  </goal>
+  <goal name="push&#39;vc.29" expl="self.head := n">
+  </goal>
+  <goal name="push&#39;vc.30" expl="self.head := n">
+  </goal>
+  <goal name="push&#39;vc.31" expl="self.head := n">
+  </goal>
+  <goal name="push&#39;vc.32" expl="sz := self.size">
+  </goal>
+  <goal name="push&#39;vc.33" expl="sz := self.size">
+  </goal>
+  <goal name="push&#39;vc.34" expl="self.size := sz + 1">
+  </goal>
+  <goal name="push&#39;vc.35" expl="self.size := sz + 1">
+  </goal>
+  <goal name="push&#39;vc.36" expl="self.size := sz + 1">
+  </goal>
+  <goal name="push&#39;vc.37" expl="self.size := sz + 1">
+  </goal>
+  <goal name="push&#39;vc.38" expl="rep := self.rep">
+  </goal>
+  <goal name="push&#39;vc.39" expl="rep := self.rep">
+  </goal>
+  <goal name="push&#39;vc.40" expl="self.rep := rep union {v}">
+  </goal>
+  <goal name="push&#39;vc.41" expl="self.rep := rep union {v}">
+  </goal>
+  <goal name="push&#39;vc.42" expl="self.rep := rep union {v}">
+  </goal>
+  <goal name="push&#39;vc.43" expl="self.rep := rep union {v} union {n}">
+  </goal>
+  <goal name="push&#39;vc.44" expl="self.rep := rep union {v} union {n}">
+  </goal>
+  <goal name="push&#39;vc.45" expl="self.rep := rep union {v} union {n}">
+  </goal>
+  <goal name="push&#39;vc.46" expl="contents := self.contents">
+  </goal>
+  <goal name="push&#39;vc.47" expl="contents := self.contents">
+  </goal>
+  <goal name="push&#39;vc.48" expl="self.contents := cons(k,contents)">
+  </goal>
+  <goal name="push&#39;vc.49" expl="self.contents := cons(k,contents)">
+  </goal>
+  <goal name="push&#39;vc.50" expl="self.contents := cons(k,contents)">
+  </goal>
+  <goal name="push&#39;vc.51" expl="self.contents := cons(k,contents)">
+  </goal>
+  <goal name="push&#39;vc.52" expl="wr ({self} union {self}`rep)`contents">
+  </goal>
+  <goal name="push&#39;vc.53" expl="wr {self}`rep`slots">
+  </goal>
+  <goal name="push&#39;vc.54" expl="wr ({self} union {self}`rep)`arr">
+  </goal>
+  <goal name="push&#39;vc.55" expl="wr ({self} union {self}`rep)`rep">
+  </goal>
+  <goal name="push&#39;vc.56" expl="wr {self}`rep`cell_rep">
+  </goal>
+  <goal name="push&#39;vc.57" expl="wr ({self} union {self}`rep)`top">
+  </goal>
+  <goal name="push&#39;vc.58" expl="wr ({self} union {self}`rep)`size">
+  </goal>
+  <goal name="push&#39;vc.59" expl="wr {self}`rep`cell_value">
+  </goal>
+  <goal name="push&#39;vc.60" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.61" expl="wr ({self} union {self}`rep)`contents">
+  </goal>
+  <goal name="push&#39;vc.62" expl="wr ({self} union {self}`rep)`head">
+  </goal>
+  <goal name="push&#39;vc.63" expl="wr {self}`rep`cdr">
+  </goal>
+  <goal name="push&#39;vc.64" expl="wr {self}`rep`car">
+  </goal>
+  <goal name="push&#39;vc.65" expl="wr ({self} union {self}`rep)`rep">
+  </goal>
+  <goal name="push&#39;vc.66" expl="wr {self}`rep`cell_rep">
+  </goal>
+  <goal name="push&#39;vc.67" expl="wr ({self} union {self}`rep)`size">
+  </goal>
+  <goal name="push&#39;vc.68" expl="wr {self}`rep`cell_value">
+  </goal>
+  <goal name="push&#39;vc.69" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.70" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.71" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.72" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.73" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.74" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.75" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.76" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.77" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.78" expl="postcondition">
+  </goal>
+  <goal name="push&#39;vc.79" expl="postcondition">
+  </goal>
+ </transf>
+ </goal>
+ <goal name="pop&#39;vc" expl="VC for pop">
+ <transf name="split_vc" >
+  <goal name="pop&#39;vc.0" expl="a := self.arr" proved="true">
+  <proof prover="0"><result status="valid" time="0.202083" steps="271"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.1" expl="t := self.top" proved="true">
+  <proof prover="0"><result status="valid" time="0.206695" steps="276"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.2" expl="tmp := self.head" proved="true">
+  <proof prover="0"><result status="valid" time="0.163361" steps="283"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.3" expl="assertion">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="567859"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.4" expl="assertion">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="578558"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.5" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.143451" steps="70"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.6" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.506491" steps="1076"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.7" expl="result := a.{t} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.349157" steps="906"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.8" expl="result := tmp.car" proved="true">
+  <proof prover="0"><result status="valid" time="0.424686" steps="1117"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.9" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.083542" steps="76"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.10" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.197202" steps="366"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.11" expl="self.top := t - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.082693" steps="78"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.12" expl="self.top := t - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.087880" steps="78"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.13" expl="nxt := tmp.cdr" proved="true">
+  <proof prover="0"><result status="valid" time="0.512705" steps="1798"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.14" expl="self.head := nxt" proved="true">
+  <proof prover="0"><result status="valid" time="0.089161" steps="112"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.15" expl="self.head := nxt" proved="true">
+  <proof prover="0"><result status="valid" time="0.095554" steps="112"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.16" expl="self.head := nxt" proved="true">
+  <proof prover="0"><result status="valid" time="0.768820" steps="2890"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.17" expl="sz := self.size" proved="true">
+  <proof prover="0"><result status="valid" time="0.229652" steps="526"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.18" expl="sz := self.size" proved="true">
+  <proof prover="0"><result status="valid" time="0.202703" steps="547"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.19" expl="self.size := sz - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.086037" steps="150"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.20" expl="self.size := sz - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.138199" steps="451"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.21" expl="self.size := sz - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.111959" steps="180"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.22" expl="self.size := sz - 1" proved="true">
+  <proof prover="0"><result status="valid" time="0.168218" steps="518"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.23" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.132364" steps="249"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.24" expl="contents := self.contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.285064" steps="835"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.25" expl="contents := self.contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.316551" steps="848"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.26" expl="self.contents := tl(contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.095533" steps="220"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.27" expl="self.contents := tl(contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.169292" steps="602"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.28" expl="self.contents := tl(contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.106006" steps="250"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.29" expl="self.contents := tl(contents)" proved="true">
+  <proof prover="0"><result status="valid" time="0.175483" steps="666"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.30" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="2.636042" steps="8786"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.31" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="2.269440" steps="7566"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.32" expl="wr ({self} union {self}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="1.267008" steps="3798"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.33" expl="wr ({self} union {self}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="1.130260" steps="3836"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.34" expl="wr ({self} union {self}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="1.010397" steps="3858"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.35" expl="wr ({self} union {self}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="1.222564" steps="3921"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.36" expl="wr ({self} union {self}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="1.404259" steps="3949"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.37" expl="wr ({self} union {self}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="1.440093" steps="3963"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.38" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="4.453665" steps="14065"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.39" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="14.744723" steps="42843"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.40" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="611632"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.41" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1262395"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.42" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.115091" steps="318"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.43" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.130959" steps="318"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.44" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.120300" steps="320"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.45" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.281850" steps="905"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.46" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="8.591502" steps="30243"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.47" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.200662" steps="649"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.48" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1285517"/></proof>
+  </goal>
+  <goal name="pop&#39;vc.49" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1341524"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="getCellValue&#39;vc" expl="VC for getCellValue" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="getCellValue&#39;vc.0" expl="result := c.cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="0.141271" steps="141"/></proof>
+  </goal>
+  <goal name="getCellValue&#39;vc.1" expl="result := c.cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="0.191987" steps="149"/></proof>
+  </goal>
+  <goal name="getCellValue&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.124299" steps="36"/></proof>
+  </goal>
+  <goal name="getCellValue&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.133939" steps="36"/></proof>
+  </goal>
+  <goal name="getCellValue&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.110160" steps="36"/></proof>
+  </goal>
+  <goal name="getCellValue&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.135041" steps="141"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="boundary_frames_coupling_REL_STACK" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="boundary_frames_coupling_REL_STACK.0" proved="true">
+  <proof prover="0"><result status="valid" time="13.927628" steps="45821"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="stackCoupling_is_refperm_monotonic">
+ </goal>
+</theory>
+<theory name="Cell" proved="true">
+ <goal name="init_Cell&#39;vc" expl="VC for init_Cell" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="init_Cell&#39;vc.0" expl="self.cell_value := k" proved="true">
+  <proof prover="0"><result status="valid" time="0.059153" steps="14"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.1" expl="self.cell_value := k" proved="true">
+  <proof prover="0"><result status="valid" time="0.074970" steps="14"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.2" expl="self.cell_rep := {self}" proved="true">
+  <proof prover="0"><result status="valid" time="0.083937" steps="48"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.3" expl="self.cell_rep := {self}" proved="true">
+  <proof prover="0"><result status="valid" time="0.162571" steps="124"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.4" expl="self.cell_rep := {self}" proved="true">
+  <proof prover="0"><result status="valid" time="0.169261" steps="183"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.089698" steps="78"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.6" expl="wr {self}`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.265263" steps="545"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.7" expl="wr {self}`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="0.245812" steps="558"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.107386" steps="84"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.091288" steps="86"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

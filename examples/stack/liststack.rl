@@ -1,4 +1,5 @@
 module ListStack : STACK =
+  import theory Stack_theory
 
   class Node { car: Cell; cdr: Node; }
   class Stack { rep: rgn; size: int; ghost contents: intList; head: Node; }
@@ -6,25 +7,11 @@ module ListStack : STACK =
   /* predicate nodeNth (n: Node, i: int, c: Cell) = true */
   /* NOTE: REPLACED by script replacements.py */
 
-  predicate stackRep (xs: intList, n: Node) = true
-  /* NOTE: REPLACED by script replacements.py in Makefile:
-
-     The predicate stackRep(xs, n) says xs is the mathematical list that
-     corresponds to n.  Unfortunately, we cannot express this predicate in
-     WhyRel's source language.  The predicate is recursive and Why3 requires
-     all recursion be structural (for predicates, at least in v1.3.3 which we
-     use).  WhyRel does not support this yet, but if it did, stackRep(xs,n)
-     could be defined as:
-
-     match xs with
-     | Nil -> n = null
-     | Cons h t ->
-       n <> null /\ n.car <> null /\ n.car.cell_value = h /\ stackRep t n.cdr
-     end
-
-     The script also adds two lemmas about stackRep.
-   */
-
+  inductive stackRep (xs: intList, n: Node) =
+    | nil_stack : stackRep(nil, null)
+    | cons_stack : forall m: Node, l: intList.
+      let nxt = m.cdr in stackRep(l, nxt) -> let new_cell = m.car in let v = new_cell.cell_value in stackRep(cons(v, l), m)
+ 
   private invariant listStackPriv =
     stackPub () /\ forall s:Stack in pool.
       let rep = s.rep in

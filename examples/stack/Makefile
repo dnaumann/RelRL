@@ -4,18 +4,13 @@ WHYREL_STDLIB=../../stdlib
 POST_PROCESS=../../util/post-process.sed
 FILES=stack.rl arraystack.rl liststack.rl relstack.rl client.rl
 
-all: stack.mlw
+all: prog.mlw
 
-prestack.mlw: $(FILES)
+prog.mlw: $(FILES)
 	$(WHYREL) -margin 136 -o $@ $^
-	sed -f $(POST_PROCESS) -i $@
 
-stack.mlw: prestack.mlw # $(FILES)
-	# $(WHYREL) -margin 136 -o $@ $^
-	# sed -f $(POST_PROCESS) -i $@
-	python3 replacements.py $< > $@
 
-ide: stack.mlw
+ide: prog.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 
 type: $(FILES)
@@ -23,6 +18,5 @@ type: $(FILES)
 
 .PHONY: clean
 clean:
-	rm -f prestack.mlw
-	rm -f stack.mlw
+	rm -f prog.mlw
 
