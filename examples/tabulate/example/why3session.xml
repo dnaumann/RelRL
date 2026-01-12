@@ -6,6 +6,7 @@
 <prover id="1" name="Alt-Ergo" version="2.6.2" alternative="counterexamples" timelimit="200" steplimit="0" memlimit="8000"/>
 <prover id="2" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
 <prover id="3" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="4" name="CVC5" version="1.3.2" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml">
 <path name=".."/><path name="example.mlw"/>
 <theory name="State" proved="true">
@@ -1204,6 +1205,7 @@
     <proof prover="0" obsolete="true"><result status="valid" time="22.720000" steps="88115"/></proof>
     <proof prover="2"><result status="timeout" time="200.000000" steps="530159"/></proof>
     <proof prover="3"><result status="outofmemory" time="64.728876"/></proof>
+    <proof prover="4"><result status="timeout" time="200.000000" steps="2214356"/></proof>
     </goal>
    </transf>
    </goal>
@@ -1231,16 +1233,16 @@
    <proof prover="0" obsolete="true"><result status="valid" time="0.120000" steps="373"/></proof>
    <proof prover="2"><result status="valid" time="7.260411" steps="22204"/></proof>
    </goal>
-   <goal name="tabulate&#39;vc.67.2" expl="type invariant">
-   <proof prover="0"><result status="valid" time="0.180000" steps="943"/></proof>
+   <goal name="tabulate&#39;vc.67.1" expl="type invariant">
+   <proof prover="0"><result status="valid" time="1.740000" steps="12057"/></proof>
    <proof prover="2"><undone/></proof>
    </goal>
    <goal name="tabulate&#39;vc.67.3" expl="type invariant">
    <proof prover="0"><result status="valid" time="3.780000" steps="17747"/></proof>
    <proof prover="2"><undone/></proof>
    </goal>
-   <goal name="tabulate&#39;vc.67.1" expl="type invariant">
-   <proof prover="0"><result status="valid" time="1.740000" steps="12057"/></proof>
+   <goal name="tabulate&#39;vc.67.2" expl="type invariant">
+   <proof prover="0"><result status="valid" time="0.180000" steps="943"/></proof>
    <proof prover="2"><undone/></proof>
    </goal>
   </transf>
