@@ -188,7 +188,7 @@ let usage = "Usage: " ^ get_progname () ^ " [options] [<file>...]"
 let set_debug_flags () =
   tc_debug := !debug;
   trans_debug := !debug;
-  Pretrans.pretrans_debug := !debug;
+  Rename_locals.pretrans_debug := !debug;
   Encap_check.encap_debug := !debug
 
 let set_behaviour_flags () =

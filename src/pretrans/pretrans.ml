@@ -5,8 +5,8 @@ open Astutil
 open Annot
 open Annot.Norm
 open Typing
+open Rename_locals
 
-let pretrans_debug = ref false
 let simplify_effects = ref true
 
 (* -------------------------------------------------------------------------- *)
@@ -249,190 +249,6 @@ end = struct
 
 end
 
-
-(* -------------------------------------------------------------------------- *)
-(* Rename Locals                                                              *)
-(* -------------------------------------------------------------------------- *)
-
-(* Rename any local that shadows any global variable *)
-module Rename_Locals : sig
-  val rename : penv -> penv
-end = struct
-
-  let gen, reset =
-    let stamp = ref 0 in
-    (fun name -> incr stamp; Ast.Id (name ^ string_of_int !stamp)),
-    (fun () -> stamp := 0)
-
-  let gen_ident (i: ident t) : ident t =
-    match i.node with
-    | Id name -> gen name -: i.ty
-    | Qualid _ -> failwith "Qualified identifiers not supported"
-
-  let globals penv : ident list =
-    let interface_globals intr =
-      let ext = function
-        | Intr_vdecl (m, name, ty) -> Some name.node
-        | Intr_mdecl m -> Some m.meth_name.node
-        | Intr_cdecl c -> Some c.class_name
-        | Intr_formula nf -> Some nf.formula_name.node
-        | Intr_inductive ind -> Some ind.ind_name.node
-        | _ -> None in
-      filtermap ext intr.intr_elts in
-    let module_globals mdl =
-      let ext = function
-        | Mdl_cdef (Class c) -> Some c.class_name
-        | Mdl_mdef (Method (m, _)) -> Some m.meth_name.node
-        | Mdl_vdecl (m, name, ty) -> Some name.node
-        | Mdl_formula nf -> Some nf.formula_name.node
-        | Mdl_inductive ind -> Some ind.ind_name.node
-        | _ -> None in
-      filtermap ext mdl.mdl_elts in
-    let bimodule_globals bimdl =
-      let ext = function
-        | Bimdl_formula rnf -> Some rnf.biformula_name
-        | Bimdl_mdef (Bimethod (bm, _)) -> Some bm.bimeth_name
-        | _ -> None in
-      filtermap ext bimdl.bimdl_elts in
-    let step k m gbls = match m with
-      | Unary_interface i -> interface_globals i @ gbls
-      | Unary_module m -> module_globals m @ gbls
-      | Relation_module bm -> bimodule_globals bm @ gbls in
-    nub @@ M.fold step penv []
-
-  type vsubst = ident t M.t
-
-  let lookup (s: vsubst) (x: ident t) : ident t =
-    try M.find x.node s with Not_found -> x
-
-  let ( #! ) s x = lookup s x
-
-  let ( #? ) s x = match x with
-    | None -> None
-    | Some x -> Some (s #! x)
-
-  let add (s: vsubst) (x: ident t) (y: ident t) : vsubst =
-    M.add x.node y s
-
-  let subste (s: vsubst) (e: exp t) : exp t =
-    let rec subst e = begin match e.node with
-      | Econst c -> Econst c
-      | Evar x -> Evar (s #! x)
-      | Ebinop (op, e1, e2) -> Ebinop (op, subst e1, subst e2)
-      | Eunrop (op, e) -> Eunrop (op, subst e)
-      | Esingleton e -> Esingleton (subst e)
-      | Eimage (g, f) -> Eimage (subst g, f)
-      | Esubrgn (g, k) -> Esubrgn (subst g, k)
-      | Ecall (m, es) -> Ecall (m, List.map subst es)
-      | Einit e -> Einit (subst e)
-      end -: e.ty in
-    subst e
-
-  let substlb (s: vsubst) (lb: let_bound_value t) : let_bound_value t =
-    begin match lb.node with
-    | Lloc (x, f) -> Lloc (s #! x, f)
-    | Larr (a, e) -> Larr (s #! a, subste s e)
-    | Lexp e -> Lexp (subste s e)
-    end -: lb.ty
-
-  (* NOTE: Variables bound by let or quantifiers are not substituted. *)
-  let rec substf (s: vsubst) (f: formula) : formula =
-    match f with
-    | Ftrue | Ffalse -> f
-    | Fexp e -> Fexp (subste s e)
-    | Finit lb -> Finit (substlb s lb)
-    | Fnot f -> Fnot (substf s f)
-    | Fpointsto (x, f, e) -> Fpointsto (s #! x, f, subste s e)
-    | Farray_pointsto(a, i, e) ->
-      let i', e' = subste s i, subste s e in
-      Farray_pointsto (s #! a, i', e')
-    | Fsubseteq (e1, e2) -> Fsubseteq (subste s e1, subste s e2)
-    | Fdisjoint (e1, e2) -> Fdisjoint (subste s e1, subste s e2)
-    | Fmember (e1, e2) -> Fmember (subste s e1, subste s e2)
-    | Flet (x, ({node={value=lb; _} as l; ty}), f) ->
-      let l' = {l with value = substlb s lb} in
-      Flet (x, l' -: ty, substf s f)
-    | Fconn (c, f1, f2) -> Fconn (c, substf s f1, substf s f2)
-    | Fquant (q, qbinds, f) -> Fquant (q, substqbs s qbinds, substf s f)
-    | Fold (e, lb) -> Fold (subste s e, substlb s lb)
-    | Ftype (e, k) -> Ftype (subste s e, k)
-
-  and substqbs (s: vsubst) (qbinds: qbinders) : qbinders =
-    let subst ({in_rgn} as qbind) =
-      match in_rgn with
-      | None -> qbind
-      | Some e -> {qbind with in_rgn = Some (subste s e)}
-    in map subst qbinds
-
-  let rec substeff (s: vsubst) (eff: effect) : effect =
-    match eff with
-    | [] -> []
-    | {effect_kind; effect_desc = {node = Effvar x} as e} :: rest ->
-      let effect_desc = {node = Effvar (s #! x); ty = e.ty} in
-      {effect_kind; effect_desc} :: substeff s rest
-    | {effect_kind; effect_desc = {node = Effimg (g,f)} as e} :: rest ->
-      let effect_desc = {node = Effimg (subste s g,f); ty = e.ty} in
-      {effect_kind; effect_desc} :: substeff s rest
-
-  let substac (s: vsubst) (ac: atomic_command) : atomic_command =
-    match ac with
-    | Skip -> Skip
-    | Assign (x, e) -> Assign (s #! x, subste s e)
-    | Havoc x -> Havoc (s #! x)
-    | New_class (x, k) -> New_class (s #! x, k)
-    | New_array (x, k, e) -> New_array (s #! x, k, subste s e)
-    | Field_deref (x, y, f) -> Field_deref (s #! x, s #! y, f)
-    | Field_update (x, f, e) -> Field_update (s #! x, f, subste s e)
-    | Array_access (x, a, i) -> Array_access (s #! x, s #! a, subste s i)
-    | Array_update (a, i, e) -> Array_update (s #! a, subste s i, subste s e)
-    | Call (x, m, es) -> Call (s #? x, m, List.map ((#!) s) es)
-
-  let substc (gbls: ident list) (s: vsubst) (c: command) : command =
-    let rec subst s = function
-      | Acommand ac -> Acommand (substac s ac)
-      | Vardecl (x, m, ty, c) when List.mem x.node gbls ->
-        let x' = gen_ident x in
-        if !pretrans_debug then begin
-          let x_name = string_of_ident x.node in
-          let x'_name = string_of_ident x'.node in
-          Printf.fprintf stderr "Renaming %s to %s\n" x_name x'_name
-        end;
-        Vardecl (x', m, ty, subst (add s x x') c)
-      | Vardecl (x, m, ty, c) -> Vardecl (x, m, ty, subst s c)
-      | Seq (c1, c2) -> Seq (subst s c1, subst s c2)
-      | If (e, c1, c2) -> If (subste s e, subst s c1, subst s c2)
-      | While (e, {winvariants; wframe; wvariant}, c) ->
-        let winvariants = map (substf s) winvariants in
-        let wframe = substeff s wframe in
-        let wvariant = Option.map (subste s) wvariant in
-        While (subste s e, {winvariants; wframe; wvariant}, subst s c)
-      | Assume f -> Assume (substf s f)
-      | Assert f -> Assert (substf s f) in
-    subst s c
-
-  let rename_meth_def gbls mdef : meth_def =
-    let Method (mdecl, com) = mdef in
-    match com with
-    | None -> Method (mdecl, None)
-    | Some c -> reset (); Method (mdecl, Some (substc gbls M.empty c))
-
-  let rename_in_module gbls mdl : module_def =
-    let mdl_elts = List.fold_right (fun elt rest ->
-        match elt with
-        | Mdl_mdef mdef -> Mdl_mdef (rename_meth_def gbls mdef) :: rest
-        | _ -> elt :: rest
-      ) mdl.mdl_elts [] in
-    { mdl with mdl_elts }
-
-  let rename penv =
-    let gbls = globals penv in
-    let process name m env = match m with
-      | Unary_module m ->
-        let m' = rename_in_module gbls m in
-        M.add name (Unary_module m') env
-      | _ -> M.add name m env in
-    M.fold process penv M.empty
-end
 
 
 (* -------------------------------------------------------------------------- *)
@@ -1137,58 +953,6 @@ end
 
 
 (* -------------------------------------------------------------------------- *)
-(* Post-agreement compatibility                                               *)
-(* -------------------------------------------------------------------------- *)
-
-(* TODO: this is very similar to Pre_agreement_compat; refactor *)
-(* [Sep-30-22] DEPRECATED
-module Post_agreement_compat : sig
-  val mk_lemma : boundary_decl -> ident -> meth_decl -> named_rformula
-end = struct
-
-  (* derive_post_agreement S n bnd R is
-
-     Both(S) ==> <> (forall s_alloc|s_alloc. E[s_alloc]) /\ <> R
-             ==> <> ((forall s_alloc|s_alloc. E[s_alloc]) /\ R)
-
-       where E[s] = (rd(alloc\s)`any, Asnap(n))\bnd
-
-     Additional snapshot variables introduced by Asnap(n) are universally
-     quantified over.
-  *)
-  let derive_post_agreement postcond eff bnd coupling : rformula =
-    let coupling = Rprimitive {name=coupling; left_args=[]; right_args=[]} in
-    let effpost = agreement_effpost ~quantify:true eff bnd in
-    let later_agr = Rlater effpost and later_coupling = Rlater coupling in
-    let later_agr_coupling = Rlater (Rconn (Ast.Conj, effpost, coupling)) in
-    rimp_list [Rboth postcond; later_agr; later_coupling; later_agr_coupling]
-
-  let rec mk_lemma bnd coupling meth_decl =
-    let {meth_name; meth_spec; params} = meth_decl in
-    let eff = spec_effects meth_spec in
-    let postcond = try fconj_list (spec_postconds meth_spec) with _ -> Ftrue in
-    let lem_name = Ast.Id (id_name meth_name.node ^ "_post_agreement") in
-    let lem_inner = derive_post_agreement postcond eff bnd coupling in
-    let lem_body = quantify_over_meth_params params lem_inner in
-    { kind = `Lemma;
-      biformula_name = lem_name;
-      biparams = ([], []);
-      body = lem_body;
-      is_coupling = false }
-
-  and quantify_over_meth_params meth_params body : rformula =
-    let rec rqbinders_of_params = function
-      | [] -> ([], [])
-      | {param_name; is_non_null} :: rest ->
-         let ps,qs = rqbinders_of_params rest in
-         let p = {name=param_name; in_rgn=None; is_non_null} in
-         (p::ps, p::qs)
-    in Rquant(Ast.Forall, rqbinders_of_params meth_params, body)
-end
- *)
-
-
-(* -------------------------------------------------------------------------- *)
 (* Agreement compatibility (simplified/afoot check)                           *)
 (* -------------------------------------------------------------------------- *)
 
@@ -1460,58 +1224,13 @@ end = struct
 
   and mk_rimplies ants rfrm = rimp_list (ants @ [rfrm])
 
-  (* DEPRECATED *)
-  let rec build_link_module_pre_agreements penv : bimodule_elt list =
-    if not (does_main_exist penv) then [] else
-      let main = find_main_module penv in
-      let imports = find_relating_bimodules main in
-      let bimdls = map (fun {related_by} -> related_by) imports in
-      let bimdls = map (find_relation_module penv) bimdls in
-      let lems = concat_map (build_pre_agreement_lemmas penv) bimdls in
-      map (fun l -> Bimdl_formula l) lems
-
-  (* DEPRECATED *)
-  and build_pre_agreement_lemmas penv bimdl : named_rformula list =
-    let bnd = Boundary_info.overall_boundary bimdl.bimdl_name in
-    let coupling = bimodule_coupling bimdl in
-    let left_mdl = find_unary_module penv bimdl.bimdl_left_impl in
-    let interface = find_unary_interface penv left_mdl.mdl_interface in
-    let mdecls = interface_meth_decls interface in
-    match coupling with
-    | None -> []
-    | Some c -> map (Pre_agreement_compat.mk_lemma bnd c.biformula_name) mdecls
-
-  (* DEPRECATED *)
-  (* let rec build_link_module_post_agreements penv : bimodule_elt list =
-    if not (does_main_exist penv) && not (does_main_method_exist penv) then []
-    else begin
-        let get_bimdl {related_by} = related_by in
-        let main = find_main_module penv in
-        let Method (mdecl,_) = find_main_method penv in
-        let imports = find_relating_bimodules main in
-        let bimdls = map (find_relation_module penv % get_bimdl) imports in
-        let lems = concat_map (build_post_agreement_lemmas penv mdecl) bimdls in
-        map (fun l -> Bimdl_formula l) lems
-      end *)
-
-  (* DEPRECATED *)
-  (* and build_post_agreement_lemmas penv mdecl bimdl : named_rformula list =
-    let bnd = Boundary_info.overall_boundary bimdl.bimdl_name in
-    let coupling = bimodule_coupling bimdl in
-    match coupling with
-    | None -> []
-    | Some c -> [Post_agreement_compat.mk_lemma bnd c.biformula_name mdecl] *)
 
   let build_link_module ctbl penv : ident * bimodule_def =
     let module_name = gen_module_name penv "Main_Link" in
     let imports = build_link_module_imports penv in
     let meths = build_link_module_methods ctbl penv in
     let inv_lemmas = build_link_module_invariant_lemmas ctbl penv in
-    (* let pre_agreements = build_link_module_pre_agreements penv in
-     * let post_agreements = build_link_module_post_agreements penv in *)
     let bimdl_elts = imports @ inv_lemmas @ meths in
-    (* let bimdl_elts =
-     *   imports @ inv_lemmas @ pre_agreements @ post_agreements @ meths in *)
     let bimdl =
       { bimdl_name = module_name;
         bimdl_left_impl = main_module_name;
