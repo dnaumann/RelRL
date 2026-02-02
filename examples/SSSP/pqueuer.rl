@@ -16,10 +16,10 @@ module PqueueR : PQUEUE =
     forall n:Node in rep.
       let chl = n.child in
       let sib = n.sibling in
-      let pre = n.prev in
+      let prev_ = n.prev in
       (chl in rep \/ chl = sntl) /\
       (sib in rep \/ sib = sntl) /\
-      (pre in rep \/ pre = sntl)
+      (prev_ in rep \/ prev_ = sntl)
 
   lemma repOk_EMPTY : forall p:Pqueue. p.rep = {} -> repOk (p)
 
@@ -30,11 +30,6 @@ module PqueueR : PQUEUE =
     sntl.sibling = sntl /\
     sntl.child = sntl /\
     sntl.prev = sntl
-
-  predicate nodeP (r:rgn) = forall n:Node in r.
-    let t = n.tag in
-    let k = n.key in
-    k >= 0 /\ t >= 0
 
   predicate strongDisjoint (r:rgn) = forall p:Pqueue in r, q:Pqueue in r.
     let prep = p.rep in
@@ -48,14 +43,15 @@ module PqueueR : PQUEUE =
     let head = pq.head in
     sntl <> null /\
     sntl in pool /\
-    sntlOk (sntl) /\
+    sntl notin rep /\
     repOk (pq) /\
     head <> null /\
     (head <> sntl -> head in rep) /\
     sz >= 0 /\
     (sz = 0 <-> head = sntl) /\
-    nodeP (rep) /\
-    (forall pq2:Pqueue in pool. pq <> pq2 -> sntl <> pq2.sntl)
+    (forall pq2:Pqueue in pool. pq <> pq2 -> sntl <> pq2.sntl) /\
+    (forall pq2:Pqueue in pool. let r = pq2.rep in sntl notin r) /\
+    sntlOk(sntl)
 
   lemma disjointNotIn : forall r:rgn.
     forall p:Pqueue in pool, q:Pqueue in pool.
@@ -65,12 +61,12 @@ module PqueueR : PQUEUE =
       let qrep = q.rep in
       forall n:Node in prep. ~ (n in qrep)
 
-  meth Node (self:Node, k:int, t:int) : unit
+  meth Node (self:Node, k:int, m:int) : unit
     ensures { self.key = k }
-    ensures { self.tag = t }
-    effects  { rw {self}`tag, {self}`key; rd k, t, self }
+    ensures { self.tag = m }
+    effects  { rw {self}`tag, {self}`key; rd k, m, self }
   = self.key := k;
-    self.tag := t;
+    self.tag := m;
 
   meth getTag (self:Node) : int
   = result := self.tag;
@@ -122,16 +118,22 @@ module PqueueR : PQUEUE =
     var sntl : Node in
     sntl := self.sntl;
     { first <> sntl /\ second <> sntl };
+    { forall p:Pqueue in pool. let snt = p.sntl in first <> snt /\ second <> snt };
     rep := self.rep; fkey := first.key; skey := second.key;
     { forall p:Pqueue in pool. p <> self -> repOk (p) };
+    { sntlOk (sntl) };
+    { forall p:Pqueue in pool. p <> self -> let snt = p.sntl in sntlOk(snt) };
     if skey < fkey then
         tmp := first.prev;
         { tmp <> sntl -> tmp in rep };
         second.prev := tmp;
+	{ let snt = self.sntl in sntlOk(snt) };
         first.prev := second;
         { let p = first.prev in p in rep };
         tmp := second.child;
         first.sibling := tmp;
+	{ sntlOk (sntl) };
+	{ forall p:Pqueue in pool. let snt = p.sntl in sntlOk(snt) };
         if tmp <> sntl then
             tmp := first.sibling;
             { let rep = self.rep in tmp in rep };
@@ -141,10 +143,16 @@ module PqueueR : PQUEUE =
             { tmp in rep };
             { let p = tmp.prev in p in rep };
             { repOk (self) };
+	    { sntlOk (sntl) };
+	    { forall p:Pqueue in pool. let snt = p.sntl in sntlOk(snt) };
         end;
+	{ first <> sntl };
         second.child := first;
+	{ second.child <> sntl };
         result := second;
         { repOk (self) };
+	{ sntlOk (sntl) };
+	{ forall p:Pqueue in pool. let snt = p.sntl in sntlOk(snt) };
     else
         second.prev := first;
         tmp := second.sibling;
@@ -172,11 +180,11 @@ module PqueueR : PQUEUE =
     n in rep ->
     {n} union {self}`rep = {self}`rep
 
-  meth insert (self:Pqueue, k:int, t:int) : Node
+  meth insert (self:Pqueue, k:int, m:int) : Node
   = var sntl : Node in
     sntl := self.sntl;
     result := new Node;
-    Node (result, k, t);
+    Node (result, k, m);
     { pqueuePub () };
     { forall p:Pqueue in pool. let rep = p.rep in result notin rep };
 
@@ -185,15 +193,13 @@ module PqueueR : PQUEUE =
     result.prev := sntl;
 
     var rep : rgn in
-    rep := self.rep; { repOk (self) /\ nodeP (rep) };
+    rep := self.rep; { repOk (self) };
     self.rep := rep union {result}; { repOk (self) };
 
     { forall p:Pqueue in pool. p <> self -> let r = old(p.rep) in p.rep = r };
     { forall p:Pqueue in pool. p <> self -> let r = p.rep in result notin r };
     { forall p:Pqueue in pool. p <> self -> let r = p.rep in let r2 = self.rep in r#r2 };
     { pqueuePub () };
-    { let r = self.rep in nodeP(r) };
-    { forall p:Pqueue in pool. let r = p.rep in nodeP(r) };
 
     var hd : Node in
     hd := self.head;
@@ -237,7 +243,7 @@ module PqueueR : PQUEUE =
 
     trees := new NodeArray[1024];
     trees[0] := handle; { trees[0] <> null };
-    { forall p:NodeArray. p <> trees -> let s = old(p.slots) in s = p.slots };
+    { forall p:NodeArray. p <> trees -> let old_slots = old(p.slots) in old_slots = p.slots };
     index := 1;
     current := handle.sibling;
 
@@ -376,7 +382,7 @@ module PqueueR : PQUEUE =
                 /* handle.prev.sibling := handle.sibling */
                 pos := handle.sibling;
                 tmp.sibling := pos;
-                { pos <> sntl -> let rep = self.rep in let s = tmp.sibling in s in rep };
+                { pos <> sntl -> let rep = self.rep in let sibling_ = tmp.sibling in sibling_ in rep };
             end;
             { forall p:Node. let r = self.rep in
                 p notin r -> let sib = old(p.sibling) in p.sibling = sib };

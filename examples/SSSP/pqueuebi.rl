@@ -13,14 +13,14 @@ bimodule PQUEUE_REL ( PqueueL | PqueueR ) =
       (forall n:Node in rep | n:Node in rep.
          Agree n -> (
            let k | k = n.key | n.key in
-           let t | t = n.tag | n.tag in
-           let pre | pre = n.prev | n.prev in
+           let m | m = n.tag | n.tag in
+           let prev_ | prev_ = n.prev | n.prev in
            let sib | sib = n.sibling | n.sibling in
            let chl | chl = n.child | n.child in
            Agree k /\
-           Agree t /\
-           /* For f in pre,sib,chl: can say (Agree f /\ Both (f in rep)) \/ (<| f = null <] /\ [> f = sntl |>) */
-           ((Agree pre /\ (<| pre <> null <] /\ [> pre <> sntl |>)) \/ (<| pre = null <] /\ [> pre = sntl |>)) /\
+           Agree m /\
+           /* For f in prev_,sib,chl: can say (Agree f /\ Both (f in rep)) \/ (<| f = null <] /\ [> f = sntl |>) */
+           ((Agree prev_ /\ (<| prev_ <> null <] /\ [> prev_ <> sntl |>)) \/ (<| prev_ = null <] /\ [> prev_ = sntl |>)) /\
            ((Agree sib /\ (<| sib <> null <] /\ [> sib <> sntl |>)) \/ (<| sib = null <] /\ [> sib = sntl |>)) /\
            ((Agree chl /\ (<| chl <> null <] /\ [> chl <> sntl |>)) \/ (<| chl = null <] /\ [> chl = sntl |>))))
 
@@ -82,20 +82,18 @@ bimodule PQUEUE_REL ( PqueueL | PqueueR ) =
     effects  { wr {self}`rep`child, {self}`rep`prev, {self}`rep`sibling; rd {self}`rep`any
              | wr {self}`rep`child, {self}`rep`prev, {self}`rep`sibling; rd {self}`rep`any }
 
-  meth insert (self:Pqueue, k:int, t:int | self:Pqueue, k:int, t:int) : (Node | Node)
-    requires { Both (0 <= k) }
-    requires { Both (0 <= t) }
+  meth insert (self:Pqueue, k:int, m:int | self:Pqueue, k:int, m:int) : (Node | Node)
     requires { Both (self in pool) }
     requires { Both (pqueuePub ()) }
     requires { Both (pqueueI ()) }
     requires { Agree self }
     requires { Agree k }
-    requires { Agree t }
+    requires { Agree m }
     ensures  { Both (let rep = self.rep in result in rep) }
     ensures  { Both (let orep = old(self.rep) in self.rep = orep union {result}) }
     ensures  { Both (let osz = old(self.size) in self.size = osz + 1) }
     ensures  { Both (result.key = k) }
-    ensures  { Both (result.tag = t) }
+    ensures  { Both (result.tag = m) }
     ensures  { Agree result }
     ensures  { Both (pqueuePub ()) }
     ensures  { Both (pqueueI ()) }
@@ -109,7 +107,7 @@ bimodule PQUEUE_REL ( PqueueL | PqueueR ) =
      Var sntl: Node | sntl: Node in
      ( skip | sntl := self.sntl );
      |_ result := new Node _|;
-     |_ Node(result,k,t) _|;
+     |_ Node(result,k,m) _|;
      ( skip | result.sibling := sntl; result.child := sntl; result.prev := sntl );
      Connect result with result;
 
@@ -211,7 +209,6 @@ bimodule PQUEUE_REL ( PqueueL | PqueueR ) =
   meth decreaseKey (self:Pqueue, handle:Node, k:int | self:Pqueue, handle:Node, k:int) : (unit | unit)
     requires { Both (self in pool) }
     requires { Both (let rep = self.rep in handle in rep) }
-    requires { Both (0 <= k) }
     requires { Both (let key = handle.key in k <= key) }
     requires { Both (let sz = self.size in sz > 0) }
     requires { Both (pqueuePub ()) }

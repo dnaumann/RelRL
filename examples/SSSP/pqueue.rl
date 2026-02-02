@@ -22,11 +22,6 @@ interface PQUEUE =
       let prep = p.rep in
       p <> q -> q notin prep
 
-  /* meth Node (self:Node, k:int, t:int) : unit */
-  /*   ensures  { self.key = k } */
-  /*   ensures  { self.tag = t } */
-  /*   effects  { rw {self}`tag, {self}`key, alloc; rd k, t } */
-
   meth getTag (self:Node) : int
     ensures { result = self.tag }
     effects { rd self, {self}`tag }
@@ -55,22 +50,20 @@ interface PQUEUE =
     ensures  { let hd = self.head in result = hd }
     effects  { rd self, {self}`head }
 
-  meth insert (self:Pqueue, k:int, t:int) : Node
-    requires { 0 <= k }
-    requires { 0 <= t }
+  meth insert (self:Pqueue, k:int, m:int) : Node
     requires { self in pool }
     ensures  { let rep = self.rep in result in rep }
     ensures  { let orep = old(self.rep) in self.rep = orep union {result} }
     ensures  { let osz = old(self.size) in self.size = osz + 1 }
     ensures  { result.key = k }
-    ensures  { result.tag = t }
+    ensures  { result.tag = m }
     ensures  { let rep = self.rep in forall n:Node in rep. n <> result ->
                  let ot = old(n.tag) in
                  let ok = old(n.key) in
                  n.tag = ot /\ n.key = ok }
     ensures  { let oa = old(alloc) in
                (alloc diff oa) subset {self}`rep /\ result in (alloc diff oa) }
-    effects  { rd self, k, t, {self}`any, {self}`rep`any, alloc;
+    effects  { rd self, k, m, {self}`any, {self}`rep`any, alloc;
                wr {self}`head, {self}`size, {self}`rep, {self}`rep`any, alloc }
                /* rw {self}`head, {self}`size, {self}`rep, {self}`rep`any, alloc } */
 
@@ -90,7 +83,6 @@ interface PQUEUE =
   meth decreaseKey (self:Pqueue, handle:Node, k:int) : unit
     requires { self in pool }
     requires { let rep = self.rep in handle in rep }
-    requires { 0 <= k }
     requires { let key = handle.key in k <= key }
     requires { let sz = self.size in sz > 0 }
     ensures  { handle.key = k }
@@ -119,14 +111,9 @@ module PqueueL : PQUEUE =
     null in r /\
     forall n:Node in r.
       let sib = n.sibling in
-      let pre = n.prev in
+      let prev_ = n.prev in
       let chl = n.child in
-      sib in r /\ pre in r /\ chl in r
-
-  predicate nodeP (r:rgn) = forall n:Node in r.
-    let t = n.tag in
-    let k = n.key in
-    k >= 0 /\ t >= 0
+      sib in r /\ prev_ in r /\ chl in r
 
   predicate strongDisjoint (r:rgn) = forall p:Pqueue in r, q:Pqueue in r.
     let prep = p.rep in
@@ -140,8 +127,7 @@ module PqueueL : PQUEUE =
     repClosed (rep) /\
     sz >= 0 /\
     hd in rep /\
-    (sz = 0 <-> hd = null) /\
-    nodeP (rep)
+    (sz = 0 <-> hd = null)
 
   lemma disjointNotIn : forall r:rgn.
     forall p:Pqueue in pool, q:Pqueue in pool.
@@ -151,12 +137,12 @@ module PqueueL : PQUEUE =
       let qrep = q.rep in
       forall n:Node in prep. ~ (n in qrep)
 
-  meth Node (self:Node, k:int, t:int) : unit
+  meth Node (self:Node, k:int, m:int) : unit
     ensures  { self.key = k }
-    ensures  { self.tag = t }
-    effects  { rw {self}`tag, {self}`key; rd self, k, t }
+    ensures  { self.tag = m }
+    effects  { rw {self}`tag, {self}`key; rd self, k, m }
   = self.key := k;
-    self.tag := t;
+    self.tag := m;
 
   meth getTag (self:Node) : int
   = result := self.tag;
@@ -250,12 +236,12 @@ module PqueueL : PQUEUE =
     n in rep ->
     {n} union {self}`rep = {self}`rep
 
-  lemma img_rep_lem : forall self:Pqueue. {self}`rep = self.rep
+  /* lemma img_rep_lem : forall self:Pqueue. {self}`rep = self.rep */
 
-  meth insert (self:Pqueue, k:int, t:int) : Node
+  meth insert (self:Pqueue, k:int, m:int) : Node
   = { pqueuePub () };
     result := new Node;  { pqueueI () }; { result <> null };
-    Node (result, k, t);
+    Node (result, k, m);
     { pqueuePub () };
     { forall p:Pqueue in pool. let rep = p.rep in result notin rep };
     { pqueueI () };
@@ -321,7 +307,7 @@ module PqueueL : PQUEUE =
 
     trees := new NodeArray[1024];
     trees[0] := handle; { trees[0] <> null };
-    { forall p:NodeArray. p <> trees -> let s = old(p.slots) in s = p.slots };
+    { forall p:NodeArray. p <> trees -> let old_slots = old(p.slots) in old_slots = p.slots };
     index := 1;
     current := handle.sibling;
 
@@ -443,7 +429,6 @@ module PqueueL : PQUEUE =
   meth decreaseKey (self:Pqueue, handle:Node, k:int) : unit
   = var tmp : Node in
     var pos : Node in
-    { let key = handle.key in key >= 0 };
     handle.key := k;
     tmp := self.head;
     if (handle <> tmp) then
