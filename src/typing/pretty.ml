@@ -372,7 +372,7 @@ let pp_spec outf spec =
       | Postcond f ->
         fprintf outf "@[ensures@ {@[<h 2>@ %a@ @]}@\n@]" pp_formula f
       | Effects eff ->
-        fprintf outf "@[effects@ {@[<hFormat 2>@ %a@ @]}@\n@]" pp_effect eff
+        fprintf outf "@[effects@ {@[<h 2>@ %a@ @]}@\n@]" pp_effect eff
     ) spec
 
 
@@ -580,6 +580,77 @@ let pp_bimodule_def outf {bimdl_name; bimdl_left_impl; bimdl_right_impl; bimdl_e
 
 let pp_program outf _ =
   fprintf outf "@[<program_stub>@]"
+
+let pp_interface_elt outf = function
+  | Intr_cdecl cdecl ->
+    fprintf outf "@[<v 4>%a@]" pp_class_decl cdecl
+  | Intr_mdecl mdecl ->
+    fprintf outf "@[<v 4>%a@]" pp_meth_decl mdecl
+  | Intr_vdecl (_, id, ty) ->
+    fprintf outf "@[var %a: %a@]" pp_ident id.node pp_ity ty
+  | Intr_boundary _ ->
+    fprintf outf "@[boundary@]"
+  | Intr_datagroup ids ->
+    fprintf outf "@[datagroup { %a }@]" 
+      (pp_print_list ~pp_sep:(fun outf _ -> fprintf outf ", ") pp_ident) ids
+  | Intr_formula nf ->
+    fprintf outf "@[<v 4>%a@]" pp_named_formula nf
+  | Intr_import imp ->
+    fprintf outf "@[<v 4>%a@]" pp_import_directive imp
+  | Intr_extern ed ->
+    fprintf outf "@[<v 4>%a@]" pp_extern_decl ed
+  | Intr_inductive ind ->
+    fprintf outf "@[<v 4>%a@]" pp_inductive_predicate ind
+
+let pp_module_elt outf = function
+  | Mdl_cdef cdef ->
+    fprintf outf "@[<v 4>%a@]" pp_class_def cdef
+  | Mdl_mdef mdef ->
+    fprintf outf "@[<v 4>%a@]" pp_meth_def mdef
+  | Mdl_vdecl (_, id, ty) ->
+    fprintf outf "@[var %a: %a@]" pp_ident id.node pp_ity ty
+  | Mdl_datagroup (dg_name, _) ->
+    fprintf outf "@[datagroup %a@]" pp_ident dg_name
+  | Mdl_formula nf ->
+    fprintf outf "@[<v 4>%a@]" pp_named_formula nf
+  | Mdl_import imp ->
+    fprintf outf "@[<v 4>%a@]" pp_import_directive imp
+  | Mdl_extern ed ->
+    fprintf outf "@[<v 4>%a@]" pp_extern_decl ed
+  | Mdl_inductive ind ->
+    fprintf outf "@[<v 4>%a@]" pp_inductive_predicate ind
+
+let pp_bimodule_elt outf = function
+  | Bimdl_formula nrf ->
+    fprintf outf "@[<v 4>%a@]" pp_named_rformula nrf
+  | Bimdl_mdef mdef ->
+    fprintf outf "@[<v 4>%a@]" pp_bimeth_def mdef
+  | Bimdl_extern ed ->
+    fprintf outf "@[<v 4>%a@]" pp_extern_decl ed
+  | Bimdl_import imp ->
+    fprintf outf "@[<v 4>%a@]" pp_import_directive imp
+
+let pp_penv outf penv =
+  let pp_elt outf (_name, elt) = match elt with
+    | Unary_interface idef ->
+      fprintf outf "@[<v 2>interface %a@." pp_ident idef.intr_name;
+      List.iter (fun ie -> fprintf outf "@[%a@]@." pp_interface_elt ie) idef.intr_elts;
+      fprintf outf "@]"
+    | Unary_module mdef ->
+      fprintf outf "@[<v 2>module %a implements %a@." 
+        pp_ident mdef.mdl_name pp_ident mdef.mdl_interface;
+      List.iter (fun me -> fprintf outf "@[%a@]@." pp_module_elt me) mdef.mdl_elts;
+      fprintf outf "@]"
+    | Relation_module bdef ->
+      fprintf outf "@[<v 2>bimodule %a (%a | %a)@." 
+        pp_ident bdef.bimdl_name pp_ident bdef.bimdl_left_impl pp_ident bdef.bimdl_right_impl;
+      List.iter (fun be -> fprintf outf "@[%a@]@." pp_bimodule_elt be) bdef.bimdl_elts;
+      fprintf outf "@]"
+  in
+  let elts = M.bindings penv in
+  fprintf outf "@[<v 2>Program Environment (%d entries):@." (List.length elts);
+  List.iter (fun elt -> fprintf outf "@[%a@]@." pp_elt elt) elts;
+  fprintf outf "@]"
 
 
   
