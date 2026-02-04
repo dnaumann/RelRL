@@ -1218,45 +1218,6 @@
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.3" expl="loop invariant preservation" proved="true">
      <proof prover="0"><result status="timeout" time="200.000000" steps="601249"/></proof>
-     <transf name="assert" arg1="(l_s.alloct.to_fmap.domain = ( union l_s5.alloct.to_fmap.domain  (singleton l_p)))" arg2="as" arg3="H999">
-      <goal name="tabulate&#39;vc.95.0.0.3.0" expl="asserted formula">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="995984"/></proof>
-      </goal>
-      <goal name="tabulate&#39;vc.95.0.0.3.1" expl="loop invariant preservation">
-      </goal>
-     </transf>
-     <transf name="assert" arg1="(l_s.alloct = l_s4.alloct)" arg2="as" arg3="H999">
-      <goal name="tabulate&#39;vc.95.0.0.3.0" expl="asserted formula" proved="true">
-      <proof prover="0"><result status="valid" time="0.088572" steps="441"/></proof>
-      </goal>
-      <goal name="tabulate&#39;vc.95.0.0.3.1" expl="loop invariant preservation">
-      <transf name="assert" arg1="(l_s4.alloct.to_fmap = add l_p Node (l_s5.alloct.to_fmap))" arg2="as" arg3="H999">
-       <goal name="tabulate&#39;vc.95.0.0.3.1.0" expl="asserted formula" proved="true">
-       <proof prover="0"><result status="valid" time="0.087012" steps="442"/></proof>
-       </goal>
-       <goal name="tabulate&#39;vc.95.0.0.3.1.1" expl="loop invariant preservation">
-       <transf name="case" arg1="(o = l_p)">
-        <goal name="tabulate&#39;vc.95.0.0.3.1.1.0" expl="true case (loop invariant preservation)" proved="true">
-        <transf name="subst" proved="true" arg1="o">
-         <goal name="tabulate&#39;vc.95.0.0.3.1.1.0.0" expl="true case (loop invariant preservation)" proved="true">
-         <proof prover="0"><result status="valid" time="0.195967" steps="686"/></proof>
-         </goal>
-        </transf>
-        </goal>
-        <goal name="tabulate&#39;vc.95.0.0.3.1.1.1" expl="false case (loop invariant preservation)">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="877812"/></proof>
-        <transf name="rewrite" arg1="Ensures24">
-         <goal name="tabulate&#39;vc.95.0.0.3.1.1.1.0" expl="false case (loop invariant preservation)">
-         <proof prover="0"><result status="timeout" time="200.000000" steps="865011"/></proof>
-         <proof prover="1"><result status="outofmemory" time="70.611274"/></proof>
-         </goal>
-        </transf>
-        </goal>
-       </transf>
-       </goal>
-      </transf>
-      </goal>
-     </transf>
      <transf name="case" proved="true" arg1="(o = l_p)">
       <goal name="tabulate&#39;vc.95.0.0.3.0" expl="true case (loop invariant preservation)" proved="true">
       <transf name="subst" proved="true" arg1="o">
@@ -2055,36 +2016,6 @@
      </transf>
      </goal>
     </transf>
-    </goal>
-   </transf>
-   <transf name="split_vc" >
-    <goal name="tabulate&#39;vc.95.0.0" expl="loop invariant preservation">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="633022"/></proof>
-    <transf name="compute_in_goal" >
-     <goal name="tabulate&#39;vc.95.0.0.0" expl="loop invariant preservation">
-     </goal>
-    </transf>
-    </goal>
-    <goal name="tabulate&#39;vc.95.0.1" expl="loop invariant preservation">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="636871"/></proof>
-    </goal>
-    <goal name="tabulate&#39;vc.95.0.2" expl="loop invariant preservation">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="619688"/></proof>
-    </goal>
-    <goal name="tabulate&#39;vc.95.0.3" expl="loop invariant preservation">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="641800"/></proof>
-    </goal>
-    <goal name="tabulate&#39;vc.95.0.4" expl="loop invariant preservation">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="721659"/></proof>
-    </goal>
-    <goal name="tabulate&#39;vc.95.0.5" expl="loop invariant preservation">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="715469"/></proof>
-    </goal>
-    <goal name="tabulate&#39;vc.95.0.6" expl="loop invariant preservation">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="733280"/></proof>
-    </goal>
-    <goal name="tabulate&#39;vc.95.0.7" expl="loop invariant preservation">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="751967"/></proof>
     </goal>
    </transf>
    </goal>

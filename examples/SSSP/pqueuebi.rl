@@ -167,6 +167,8 @@ bimodule PQUEUE_REL ( PqueueL | PqueueR ) =
              | wr {self}`rep`child, {self}`rep`prev, {self}`rep`sibling, alloc, {}`slots, {}`length;
                rd {self}`rep`any }
 
+
+
   meth deleteMin (self:Pqueue | self:Pqueue) : (Node | Node)
     requires { Both (self in pool) }
     /* requires { Both (let hd = self.head in hd <> null) } */
