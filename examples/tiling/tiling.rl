@@ -102,20 +102,20 @@ end
 bimodule BM (M0 | M1) =
 
   /* R(x,i,j) = 
-       forall l,r,s. 0 <= l < x /\ 0 <= r < i /\ 0 <= s < j /\ l = r*M + s
-                     ==> a1[l] =:= a2[r,s]
+       forall l,r,o. 0 <= l < x /\ 0 <= r < i /\ 0 <= o < j /\ l = r*M + o
+                     ==> a1[l] =:= a2[r,o]
          where M is the length of each row in a2.
 
      spec   prog|prog: Agree n /\ Agree m ==>>  R(n*m,n,m) */
 
   predicate tilingInv (x:int | i:int,j:int) =
-    forall l:int | r:int, s:int.
+    forall l:int | r:int, o:int.
       <| 0 <= l /\ l < x <] ->
-      [> 0 <= r /\ r < i /\ 0 <= s /\ s < j |> ->
+      [> 0 <= r /\ r < i /\ 0 <= o /\ o < j |> ->
       [< l <] = [> i*m + j >] ->
       let lftv | = a1[l] in
       let | row  = a2[r] in
-      let | rgtv = row[s] in
+      let | rgtv = row[o] in
       [< lftv <] = [> rgtv >]
 
   meth prog (|) : (unit|unit)
