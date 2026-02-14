@@ -43,5 +43,5 @@ module Stack_theory
 
   lemma listNth_pos_Cons : forall n h t.
     0 < n <= listLength t -> listNth n (Cons h t) = listNth (n-1) t
-  
+
 end

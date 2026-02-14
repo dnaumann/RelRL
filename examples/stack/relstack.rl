@@ -17,12 +17,12 @@ bimodule REL_STACK (ArrayStack | ListStack) =
     Both (stackPub()) /\ <| arrayStackPriv() <] /\ [> listStackPriv () |> /\
     Agree maxSize /\
     Agree pool /\
-    (forall s:Stack in pool|s:Stack in pool. s =:= s ->
-       let stk|stk = s.contents|s.contents in
+    (forall st:Stack in pool|st:Stack in pool. st =:= st ->
+       let stk|stk = st.contents|st.contents in
        Agree stk) /* /\
-    (forall s:Stack in pool | s:Stack in pool. s =:= s ->
-       let sz|sz = s.size|s.size in Agree sz /\
-       cellsAgree(s|s)) */
+    (forall st:Stack in pool | st:Stack in pool. st =:= st ->
+       let sz|sz = st.size|st.size in Agree sz /\
+       cellsAgree(st|st)) */
 
   meth Stack (self:Stack | self:Stack) : (unit | unit)
     requires { Both (~(self in pool)) }
@@ -90,20 +90,20 @@ bimodule REL_STACK (ArrayStack | ListStack) =
     effects  { rw {self}`any, {self}`rep`any, alloc; rd self, k, maxSize 
              | rw {self}`any, {self}`rep`any, alloc; rd self, k, maxSize }
   = Var a: CellArray | in
-    Var t: int | in
+    Var m: int | in
     Var v: Cell | v: Cell in
     Var | n: Node in
     Var | tmp: Node in
     Var sz: int | sz: int in
     Var rep: rgn | rep: rgn in
     Var ghost contents: intList | ghost contents: intList in
-    ( a := self.arr; t := self.top; self.top := t+1 | skip );
+    ( a := self.arr; m := self.top; self.top := m+1 | skip );
     |_ v := new Cell _|;
     Link v with v; /* update current refperm */
     /* TODO: Update ArrayStack -- use Cell constructor */
     ( v.cell_value := k; v.cell_rep := {v}
     | Cell(v,k) );
-    ( a[t+1] := v; self.arr := a | skip );
+    ( a[m+1] := v; self.arr := a | skip );
     ( skip 
     | n := new Node; n.car := v; tmp := self.head; n.cdr := tmp;
       self.head := n );
@@ -126,7 +126,7 @@ bimodule REL_STACK (ArrayStack | ListStack) =
     requires { Agree (({self} union {self}`rep) diff (pool union pool`rep))`any }
     ensures  { Both (let osz = old(self.size) in self.size = osz - 1) }
     ensures  { Both (let oxs = old(self.contents) in
-                     let t = hd(oxs) in result.cell_value = t) }
+                     let m = hd(oxs) in result.cell_value = m) }
     ensures  { Both (let ostk = old(self.contents) in self.contents = tl(ostk)) }
     ensures  { Both (let rep = self.rep in result in rep) }
     ensures  { Both(let rep = old(self.rep) in self.rep = rep) }
@@ -138,19 +138,19 @@ bimodule REL_STACK (ArrayStack | ListStack) =
     effects  { rw {self}`any, {self}`rep`any; rd self, maxSize 
              | rw {self}`any, {self}`rep`any; rd self, maxSize }
   = Var a: CellArray | in
-    Var t: int | in
+    Var m: int | in
     Var | tmp: Node in
     Var | nxt: Node in
     Var sz: int | sz: int in
     Var ghost contents: intList | ghost contents: intList in
-    ( a := self.arr; t := self.top | tmp := self.head );
-    Assert { [> let stk = self.contents in exists h:int, t:intList. stk = cons(h,t) |> };
+    ( a := self.arr; m := self.top | tmp := self.head );
+    Assert { [> let stk = self.contents in exists h:int, m:intList. stk = cons(h,m) |> };
     Assert { [> tmp <> null |> };
     Assert { <| arrayStackPriv() <] /\ [> listStackPriv() |> /\ stackCoupling(|) };
-    ( result := a[t] | result := tmp.car );
+    ( result := a[m] | result := tmp.car );
     /* Assert { Agree result }; */ Assert { stackCoupling(|) };
     Assert { let sz|sz = self.size|self.size in Agree sz };
-    ( self.top := t-1 | nxt := tmp.cdr; self.head := nxt );
+    ( self.top := m-1 | nxt := tmp.cdr; self.head := nxt );
     |_ sz := self.size _|; |_ self.size := sz-1 _|; 
     Assert { let sz|sz = self.size|self.size in Agree sz };
 /*    Assert { cellsAgree(self|self) }; */

@@ -4,6 +4,8 @@
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
 <prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="2" name="CVC5" version="1.3.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="3" name="Alt-Ergo" version="2.6.2" alternative="BV" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
@@ -66,7 +68,7 @@
  </transf>
  </goal>
 </theory>
-<theory name="ArrayStack">
+<theory name="ArrayStack" proved="true">
  <goal name="init_Stack&#39;vc" expl="VC for init_Stack" proved="true">
  <proof prover="0"><result status="valid" time="20.413903" steps="80378"/></proof>
  <transf name="split_vc" proved="true" >
@@ -198,9 +200,8 @@
  <goal name="isEmpty&#39;vc" expl="VC for isEmpty" proved="true">
  <proof prover="0"><result status="valid" time="0.102169" steps="297"/></proof>
  </goal>
- <goal name="push&#39;vc" expl="VC for push">
- <proof prover="0"><undone/></proof>
- <transf name="split_vc" >
+ <goal name="push&#39;vc" expl="VC for push" proved="true">
+ <transf name="split_vc" proved="true" >
   <goal name="push&#39;vc.0" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.062167" steps="32"/></proof>
   </goal>
@@ -219,13 +220,13 @@
   <goal name="push&#39;vc.5" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.064978" steps="32"/></proof>
   </goal>
-  <goal name="push&#39;vc.6" expl="t := self.top" proved="true">
+  <goal name="push&#39;vc.6" expl="m := self.top" proved="true">
   <proof prover="0"><result status="valid" time="0.072541" steps="97"/></proof>
   </goal>
-  <goal name="push&#39;vc.7" expl="self.top := t + 1" proved="true">
+  <goal name="push&#39;vc.7" expl="self.top := m + 1" proved="true">
   <proof prover="0"><result status="valid" time="0.065904" steps="36"/></proof>
   </goal>
-  <goal name="push&#39;vc.8" expl="self.top := t + 1" proved="true">
+  <goal name="push&#39;vc.8" expl="self.top := m + 1" proved="true">
   <proof prover="0"><result status="valid" time="0.060589" steps="36"/></proof>
   </goal>
   <goal name="push&#39;vc.9" expl="v.cell_value := k" proved="true">
@@ -246,7 +247,7 @@
   <goal name="push&#39;vc.14" expl="precondition" proved="true">
   <proof prover="0"><result status="valid" time="0.499764" steps="2197"/></proof>
   </goal>
-  <goal name="push&#39;vc.15" expl="a.{t + 1} := v ( index is in bounds)" proved="true">
+  <goal name="push&#39;vc.15" expl="a.{m + 1} := v ( index is in bounds)" proved="true">
   <proof prover="0"><result status="valid" time="1.277378" steps="5842"/></proof>
   </goal>
   <goal name="push&#39;vc.16" expl="precondition" proved="true">
@@ -336,9 +337,25 @@
   <goal name="push&#39;vc.44" expl="wr {self}`rep`cell_value" proved="true">
   <proof prover="0"><result status="valid" time="7.716016" steps="30712"/></proof>
   </goal>
-  <goal name="push&#39;vc.45" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="625471"/></proof>
+  <goal name="push&#39;vc.45" expl="postcondition" proved="true">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="885706"/></proof>
   <proof prover="1"><result status="outofmemory" time="77.093425"/></proof>
+  <transf name="inline_goal" proved="true" >
+   <goal name="push&#39;vc.45.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="push&#39;vc.45.0.0" expl="postcondition" proved="true">
+    <transf name="assert" proved="true" arg1="(s.pool = s9.pool)" arg2="as" arg3="H99">
+     <goal name="push&#39;vc.45.0.0.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="0.079928" steps="356"/></proof>
+     </goal>
+     <goal name="push&#39;vc.45.0.0.1" expl="postcondition" proved="true">
+     <proof prover="0"><result status="valid" time="14.476855" steps="91758"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
   <goal name="push&#39;vc.46" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.216760" steps="446"/></proof>
@@ -355,14 +372,292 @@
   <goal name="push&#39;vc.50" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="114.085050" steps="344730"/></proof>
   </goal>
-  <goal name="push&#39;vc.51" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="545444"/></proof>
+  <goal name="push&#39;vc.51" expl="postcondition" proved="true">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="790530"/></proof>
+  <proof prover="1"><result status="outofmemory" time="56.908742"/></proof>
+  <transf name="inline_goal" proved="true" >
+   <goal name="push&#39;vc.51.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="push&#39;vc.51.0.0" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="14.428866" steps="65550"/></proof>
+    </goal>
+    <goal name="push&#39;vc.51.0.1" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="8.145916" steps="40986"/></proof>
+    </goal>
+    <goal name="push&#39;vc.51.0.2" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="10.277374" steps="51918"/></proof>
+    </goal>
+    <goal name="push&#39;vc.51.0.3" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="9.356370" steps="44910"/></proof>
+    </goal>
+    <goal name="push&#39;vc.51.0.4" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="57.543575" steps="254611"/></proof>
+    <proof prover="1"><result status="outofmemory" time="93.075480"/></proof>
+    <proof prover="2"><result status="timeout" time="200.000000" steps="3144153"/></proof>
+    </goal>
+    <goal name="push&#39;vc.51.0.5" expl="postcondition" proved="true">
+    <proof prover="0"><result status="timeout" time="200.000000" steps="684892"/></proof>
+    <proof prover="1"><result status="outofmemory" time="90.706200"/></proof>
+    <proof prover="2"><result status="timeout" time="200.000000" steps="3117533"/></proof>
+    <transf name="case" proved="true" arg1="(st = self)">
+     <goal name="push&#39;vc.51.0.5.0" expl="true case (postcondition)" proved="true">
+     <proof prover="0"><result status="valid" time="25.869775" steps="131797"/></proof>
+     </goal>
+     <goal name="push&#39;vc.51.0.5.1" expl="false case (postcondition)" proved="true">
+     <proof prover="0"><result status="timeout" time="200.000000" steps="1113251"/></proof>
+     <proof prover="1"><result status="outofmemory" time="62.550740"/></proof>
+     <proof prover="2"><result status="timeout" time="200.000000" steps="3187393"/></proof>
+     <transf name="assert" proved="true" arg1="((s.rep)[st] = (s9.rep)[st])" arg2="as" arg3="H99">
+      <goal name="push&#39;vc.51.0.5.1.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="4.921496" steps="25447"/></proof>
+      </goal>
+      <goal name="push&#39;vc.51.0.5.1.1" expl="false case (postcondition)" proved="true">
+      <proof prover="0"><result status="timeout" time="200.000000" steps="1263545"/></proof>
+      <transf name="assert" proved="true" arg1="((s.arr)[st] = (s9.arr)[st])" arg2="as" arg3="H98">
+       <goal name="push&#39;vc.51.0.5.1.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="3.744623" steps="22767"/></proof>
+       </goal>
+       <goal name="push&#39;vc.51.0.5.1.1.1" expl="false case (postcondition)" proved="true">
+       <proof prover="0"><result status="timeout" time="200.000000" steps="1194291"/></proof>
+       <transf name="assert" proved="true" arg1="((s.top)[st] = (s9.top)[st])" arg2="as" arg3="H97">
+        <goal name="push&#39;vc.51.0.5.1.1.1.0" expl="asserted formula" proved="true">
+        <proof prover="0"><result status="valid" time="3.737116" steps="22215"/></proof>
+        </goal>
+        <goal name="push&#39;vc.51.0.5.1.1.1.1" expl="false case (postcondition)" proved="true">
+        <proof prover="0"><result status="timeout" time="200.000000" steps="1157137"/></proof>
+        <transf name="assert" proved="true" arg1="(not (s.arr)[st] = a)" arg2="as" arg3="H96">
+         <goal name="push&#39;vc.51.0.5.1.1.1.1.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="timeout" time="200.000000" steps="1019537"/></proof>
+         <transf name="assert" proved="true" arg1="(not (s9.arr)[st]=(s9.arr)[self])" arg2="as" arg3="H95">
+          <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="timeout" time="200.000000" steps="974267"/></proof>
+          <transf name="assert" proved="true" arg1="(mem1 a (s9.rep)[self])" arg2="as" arg3="H94">
+           <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.0" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="valid" time="0.527029" steps="2934"/></proof>
+           </goal>
+           <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="timeout" time="200.000000" steps="990131"/></proof>
+           <transf name="assert" proved="true" arg1="(mem1 (s9.arr)[st] (s9.rep)[st])" arg2="as" arg3="H93">
+            <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1.0" expl="asserted formula" proved="true">
+            <proof prover="0"><result status="valid" time="4.097046" steps="24427"/></proof>
+            </goal>
+            <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1.1" expl="asserted formula" proved="true">
+            <proof prover="0"><result status="timeout" time="200.000000" steps="987180"/></proof>
+            <transf name="case" proved="true" arg1="((s9.arr)[st] = (s9.arr)[self])">
+             <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1.1.0" expl="true case (asserted formula)" proved="true">
+             <proof prover="0"><result status="timeout" time="200.000000" steps="993809"/></proof>
+             <transf name="assert" proved="true" arg1="(mem1 ((s9.arr)[self]) (s9.rep)[self])" arg2="as" arg3="H92">
+              <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1.1.0.0" expl="asserted formula" proved="true">
+              <proof prover="0"><result status="valid" time="0.084449" steps="390"/></proof>
+              </goal>
+              <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1.1.0.1" expl="true case (asserted formula)" proved="true">
+              <proof prover="0"><result status="timeout" time="200.000000" steps="979125"/></proof>
+              <transf name="assert" proved="true" arg1="(mem1 ((s9.arr)[self]) (s9.rep)[st])" arg2="as" arg3="H91">
+               <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1.1.0.1.0" expl="asserted formula" proved="true">
+               <proof prover="0"><result status="valid" time="0.083097" steps="391"/></proof>
+               </goal>
+               <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1.1.0.1.1" expl="true case (asserted formula)" proved="true">
+               <proof prover="0"><result status="timeout" time="200.000000" steps="961315"/></proof>
+               <transf name="assert" proved="true" arg1="(inter (s9.rep)[self] (s9.rep)[st] = emptyRgn)" arg2="as" arg3="H90">
+                <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1.1.0.1.1.0" expl="asserted formula" proved="true">
+                <proof prover="0"><result status="timeout" time="200.000000" steps="894248"/></proof>
+                <proof prover="1"><result status="outofmemory" time="126.616310"/></proof>
+                <proof prover="2"><result status="valid" time="118.500166" steps="1758019"/></proof>
+                </goal>
+                <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1.1.0.1.1.1" expl="true case (asserted formula)" proved="true">
+                <proof prover="0"><result status="valid" time="6.880024" steps="43219"/></proof>
+                </goal>
+               </transf>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+             <goal name="push&#39;vc.51.0.5.1.1.1.1.0.0.1.1.1" expl="false case (asserted formula)" proved="true">
+             <proof prover="0"><result status="valid" time="0.076871" steps="390"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+          <goal name="push&#39;vc.51.0.5.1.1.1.1.0.1" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="valid" time="0.090592" steps="386"/></proof>
+          </goal>
+         </transf>
+         </goal>
+         <goal name="push&#39;vc.51.0.5.1.1.1.1.1" expl="false case (postcondition)" proved="true">
+         <proof prover="0"><result status="valid" time="15.228537" steps="81312"/></proof>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="push&#39;vc.51.0.6" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.536243" steps="2812"/></proof>
+    </goal>
+    <goal name="push&#39;vc.51.0.7" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="6.997165" steps="36645"/></proof>
+    <proof prover="1"><result status="outofmemory" time="92.286775"/></proof>
+    </goal>
+    <goal name="push&#39;vc.51.0.8" expl="postcondition" proved="true">
+    <proof prover="0"><result status="timeout" time="200.000000" steps="721045"/></proof>
+    <proof prover="1"><result status="outofmemory" time="92.928759"/></proof>
+    <proof prover="2"><result status="timeout" time="200.000000" steps="3057381"/></proof>
+    <transf name="inline_goal" proved="true" >
+     <goal name="push&#39;vc.51.0.8.0" expl="postcondition" proved="true">
+     <transf name="case" proved="true" arg1="(st = self)">
+      <goal name="push&#39;vc.51.0.8.0.0" expl="true case (postcondition)" proved="true">
+      <proof prover="2"><result status="valid" time="0.415483" steps="54161"/></proof>
+      </goal>
+      <goal name="push&#39;vc.51.0.8.0.1" expl="false case (postcondition)" proved="true">
+      <proof prover="2"><result status="timeout" time="200.000000" steps="3054633"/></proof>
+      <transf name="inline_all" proved="true" >
+       <goal name="push&#39;vc.51.0.8.0.1.0" expl="false case (postcondition)" proved="true">
+       <proof prover="0"><result status="timeout" time="200.000000" steps="1054292"/></proof>
+       <transf name="assert" proved="true" arg1="(forall x. mem x (inter (s9.rep)[self] (s9.rep)[st]) -&gt; mem x (singleton nullConst))" arg2="as" arg3="H99">
+        <goal name="push&#39;vc.51.0.8.0.1.0.0" expl="asserted formula" proved="true">
+        <proof prover="0"><result status="valid" time="1.723379" steps="9554"/></proof>
+        </goal>
+        <goal name="push&#39;vc.51.0.8.0.1.0.1" expl="false case (postcondition)" proved="true">
+        <proof prover="0"><undone/></proof>
+        <transf name="assert" proved="true" arg1="(not mem st (s9.rep)[self])" arg2="as" arg3="H98">
+         <goal name="push&#39;vc.51.0.8.0.1.0.1.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="timeout" time="200.000000" steps="919519"/></proof>
+         <proof prover="1"><result status="outofmemory" time="192.063892"/></proof>
+         <proof prover="2"><result status="timeout" time="200.000000" steps="1373581"/></proof>
+         <transf name="assert" proved="true" arg1="(s.pool = s9.pool)" arg2="as" arg3="H98">
+          <goal name="push&#39;vc.51.0.8.0.1.0.1.0.0" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="valid" time="0.111421" steps="345"/></proof>
+          </goal>
+          <goal name="push&#39;vc.51.0.8.0.1.0.1.0.1" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="timeout" time="200.000000" steps="994888"/></proof>
+          <transf name="assert" proved="true" arg1="((s9.alloct)[st] = Stack)" arg2="as" arg3="H97">
+           <goal name="push&#39;vc.51.0.8.0.1.0.1.0.1.0" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="valid" time="0.977908" steps="4894"/></proof>
+           </goal>
+           <goal name="push&#39;vc.51.0.8.0.1.0.1.0.1.1" expl="asserted formula" proved="true">
+           <proof prover="0"><undone/></proof>
+           <transf name="assert" proved="true" arg1="(forall p . mem p (s9.rep)[self] -&gt; p = nullConst \/ mem1 (s9.alloct)[p] (Cons CellArray (Cons Cell Nil)) )" arg2="as" arg3="H96">
+            <goal name="push&#39;vc.51.0.8.0.1.0.1.0.1.1.0" expl="asserted formula" proved="true">
+            <proof prover="0"><result status="valid" time="1.065652" steps="5006"/></proof>
+            </goal>
+            <goal name="push&#39;vc.51.0.8.0.1.0.1.0.1.1.1" expl="asserted formula" proved="true">
+            <proof prover="0"><result status="timeout" time="200.000000" steps="1073870"/></proof>
+            <transf name="case" proved="true" arg1="(st = nullConst)">
+             <goal name="push&#39;vc.51.0.8.0.1.0.1.0.1.1.1.0" expl="true case (asserted formula)" proved="true">
+             <proof prover="0"><result status="valid" time="0.285822" steps="582"/></proof>
+             </goal>
+             <goal name="push&#39;vc.51.0.8.0.1.0.1.0.1.1.1.1" expl="false case (asserted formula)" proved="true">
+             <proof prover="0"><result status="timeout" time="200.000000" steps="1032586"/></proof>
+             <proof prover="1"><result status="valid" time="56.156722" steps="77867706"/></proof>
+             <proof prover="2"><undone/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+         <goal name="push&#39;vc.51.0.8.0.1.0.1.1" expl="false case (postcondition)" proved="true">
+         <proof prover="0"><result status="timeout" time="200.000000" steps="965109"/></proof>
+         <transf name="assert" proved="true" arg1="(not mem v (s9.rep)[st] )" arg2="as" arg3="H97">
+          <goal name="push&#39;vc.51.0.8.0.1.0.1.1.0" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="valid" time="1.718831" steps="9454"/></proof>
+          </goal>
+          <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1" expl="false case (postcondition)" proved="true">
+          <proof prover="0"><result status="timeout" time="200.000000" steps="1178794"/></proof>
+          <transf name="assert" proved="true" arg1="((s.rep)[self] = union (s9.rep)[self] (singleton v) )" arg2="as" arg3="H96">
+           <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.0" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="valid" time="0.270927" steps="611"/></proof>
+           </goal>
+           <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1" expl="false case (postcondition)" proved="true">
+           <proof prover="0"><result status="timeout" time="200.000000" steps="1148440"/></proof>
+           <transf name="assert" arg1="(inter (s9.rep)[st] (s.rep)[self] = singleton nullConst)" arg2="as" arg3="H95">
+            <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.0" expl="asserted formula">
+            <proof prover="0"><result status="timeout" time="200.000000" steps="1022364"/></proof>
+            </goal>
+            <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.1" expl="false case (postcondition)">
+            <proof prover="0"><result status="timeout" time="200.000000" steps="1130819"/></proof>
+            </goal>
+           </transf>
+           <transf name="assert" proved="true" arg1="((s.top)[st]=(s9.top)[st] /\ (s.arr)[st]=(s9.arr)[st] /\ (s.contents)[st]=(s9.contents)[st])" arg2="as" arg3="H95">
+            <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.0" expl="asserted formula" proved="true">
+            <proof prover="0"><result status="valid" time="2.987953" steps="16066"/></proof>
+            </goal>
+            <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.1" expl="false case (postcondition)" proved="true">
+            <proof prover="0"><result status="timeout" time="200.000000" steps="1088024"/></proof>
+            <transf name="pose" proved="true" arg1="a" arg2="(s9.arr)[st]">
+             <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.1.0" expl="false case (postcondition)" proved="true">
+             <transf name="pose" proved="true" arg1="c" arg2="(get (s9.slots)[a] i)">
+              <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.1.0.0" expl="false case (postcondition)" proved="true">
+              <transf name="assert" proved="true" arg1="((s.slots)[a]=(s9.slots)[a] /\ (s.cell_value)[c]=(s9.cell_value)[c])" arg2="as" arg3="H94">
+               <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.1.0.0.0" expl="asserted formula" proved="true">
+               <proof prover="0"><undone/></proof>
+               <transf name="assert" proved="true" arg1="(mem a (s9.rep)[st] /\  mem c (s9.rep)[st])" arg2="as" arg3="H94">
+                <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.1.0.0.0.0" expl="asserted formula" proved="true">
+                <proof prover="0"><result status="valid" time="2.942916" steps="19049"/></proof>
+                </goal>
+                <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.1.0.0.0.1" expl="asserted formula" proved="true">
+                <proof prover="0"><result status="timeout" time="200.000000" steps="1201849"/></proof>
+                <transf name="assert" proved="true" arg1="(not mem a (s.rep)[self] /\  not mem c (s.rep)[self])" arg2="as" arg3="H93">
+                 <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.1.0.0.0.1.0" expl="asserted formula" proved="true">
+                 <proof prover="0"><result status="timeout" time="200.000000" steps="948486"/></proof>
+                 <proof prover="1"><result status="outofmemory" time="105.298335"/></proof>
+                 <proof prover="2"><result status="valid" time="15.808243" steps="431006"/></proof>
+                 </goal>
+                 <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.1.0.0.0.1.1" expl="asserted formula" proved="true">
+                 <proof prover="0"><result status="valid" time="19.368954" steps="156114"/></proof>
+                 </goal>
+                </transf>
+                </goal>
+               </transf>
+               </goal>
+               <goal name="push&#39;vc.51.0.8.0.1.0.1.1.1.1.1.0.0.1" expl="false case (postcondition)" proved="true">
+               <proof prover="0"><result status="valid" time="4.845916" steps="27189"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="push&#39;vc.51.0.9" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.095984" steps="366"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
  </transf>
  </goal>
- <goal name="pop&#39;vc" expl="VC for pop">
- <proof prover="0"><undone/></proof>
- <transf name="split_vc" >
+ <goal name="pop&#39;vc" expl="VC for pop" proved="true">
+ <transf name="split_vc" proved="true" >
   <goal name="pop&#39;vc.0" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.101696" steps="32"/></proof>
   </goal>
@@ -375,7 +670,7 @@
   <goal name="pop&#39;vc.3" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.074592" steps="28"/></proof>
   </goal>
-  <goal name="pop&#39;vc.4" expl="t := self.top" proved="true">
+  <goal name="pop&#39;vc.4" expl="m := self.top" proved="true">
   <proof prover="0"><result status="valid" time="0.104741" steps="89"/></proof>
   </goal>
   <goal name="pop&#39;vc.5" expl="assertion" proved="true">
@@ -384,13 +679,13 @@
   <goal name="pop&#39;vc.6" expl="precondition" proved="true">
   <proof prover="0"><result status="valid" time="0.257995" steps="935"/></proof>
   </goal>
-  <goal name="pop&#39;vc.7" expl="result := a.{t} ( index is in bounds)" proved="true">
+  <goal name="pop&#39;vc.7" expl="result := a.{m} ( index is in bounds)" proved="true">
   <proof prover="0"><result status="valid" time="0.567258" steps="1808"/></proof>
   </goal>
-  <goal name="pop&#39;vc.8" expl="self.top := t - 1" proved="true">
+  <goal name="pop&#39;vc.8" expl="self.top := m - 1" proved="true">
   <proof prover="0"><result status="valid" time="0.083072" steps="38"/></proof>
   </goal>
-  <goal name="pop&#39;vc.9" expl="self.top := t - 1" proved="true">
+  <goal name="pop&#39;vc.9" expl="self.top := m - 1" proved="true">
   <proof prover="0"><result status="valid" time="0.096549" steps="38"/></proof>
   </goal>
   <goal name="pop&#39;vc.10" expl="assertion" proved="true">
@@ -432,9 +727,10 @@
   <goal name="pop&#39;vc.22" expl="wr ({self} union {self}`rep)`contents" proved="true">
   <proof prover="0"><result status="valid" time="2.146946" steps="10258"/></proof>
   </goal>
-  <goal name="pop&#39;vc.23" expl="postcondition">
+  <goal name="pop&#39;vc.23" expl="postcondition" proved="true">
   <proof prover="0"><result status="timeout" time="200.000000" steps="902380"/></proof>
   <proof prover="1"><result status="outofmemory" time="78.298891"/></proof>
+  <proof prover="2"><result status="valid" time="6.326772" steps="154380"/></proof>
   </goal>
   <goal name="pop&#39;vc.24" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.124051" steps="168"/></proof>
@@ -465,22 +761,207 @@
  <goal name="getCellValue&#39;vc" expl="VC for getCellValue" proved="true">
  <proof prover="0"><result status="valid" time="0.099166" steps="197"/></proof>
  </goal>
- <goal name="boundary_frames_invariant_ArrayStack">
- <proof prover="0"><undone/></proof>
- <transf name="split_vc" >
-  <goal name="boundary_frames_invariant_ArrayStack.0">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="584645"/></proof>
-  </goal>
- </transf>
- <transf name="split_vc" >
-  <goal name="boundary_frames_invariant_ArrayStack.0">
+ <goal name="boundary_frames_invariant_ArrayStack" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="boundary_frames_invariant_ArrayStack.0" proved="true">
+  <proof prover="0"><undone/></proof>
+  <transf name="inline_goal" proved="true" >
+   <goal name="boundary_frames_invariant_ArrayStack.0.0" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="boundary_frames_invariant_ArrayStack.0.0.0" proved="true">
+    <proof prover="0"><result status="valid" time="15.031953" steps="87287"/></proof>
+    <proof prover="1"><result status="outofmemory" time="124.181613"/></proof>
+    <proof prover="2"><result status="timeout" time="200.000000" steps="2144701"/></proof>
+    </goal>
+    <goal name="boundary_frames_invariant_ArrayStack.0.0.1" proved="true">
+    <proof prover="0"><result status="valid" time="1.144494" steps="4519"/></proof>
+    </goal>
+    <goal name="boundary_frames_invariant_ArrayStack.0.0.2" proved="true">
+    <proof prover="0"><result status="valid" time="116.058550" steps="352334"/></proof>
+    <proof prover="1"><result status="outofmemory" time="105.785342"/></proof>
+    <proof prover="2"><result status="timeout" time="200.000000" steps="1744254"/></proof>
+    </goal>
+    <goal name="boundary_frames_invariant_ArrayStack.0.0.3" proved="true">
+    <proof prover="0"><result status="valid" time="2.622324" steps="9535"/></proof>
+    </goal>
+    <goal name="boundary_frames_invariant_ArrayStack.0.0.4" proved="true">
+    <proof prover="0"><result status="valid" time="141.283071" steps="422321"/></proof>
+    <proof prover="1"><result status="outofmemory" time="105.460654"/></proof>
+    <proof prover="2"><result status="timeout" time="200.000000" steps="1912732"/></proof>
+    </goal>
+    <goal name="boundary_frames_invariant_ArrayStack.0.0.5" proved="true">
+    <proof prover="0"><result status="timeout" time="200.000000" steps="594915"/></proof>
+    <proof prover="1"><result status="outofmemory" time="147.587747"/></proof>
+    <proof prover="2"><result status="timeout" time="200.000000" steps="2117160"/></proof>
+    <transf name="assert" proved="true" arg1="((s.arr)[st]=(t.arr)[st]=arr1 /\ (s.top)[st]=(t.top)[st]=top2 /\ (s.rep)[st]=(t.rep)[st]=rep3)" arg2="as" arg3="H99">
+     <goal name="boundary_frames_invariant_ArrayStack.0.0.5.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="3.183282" steps="15612"/></proof>
+     </goal>
+     <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1" proved="true">
+     <proof prover="0"><undone/></proof>
+     <transf name="pose" proved="true" arg1="cs" arg2="(get (s.slots)[arr1] i)">
+      <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0" proved="true">
+      <transf name="assert" proved="true" arg1="(mem1 cs rep3)" arg2="as" arg3="H98">
+       <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="0.520670" steps="2761"/></proof>
+       </goal>
+       <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0.1" proved="true">
+       <proof prover="0"><result status="timeout" time="200.000000" steps="889641"/></proof>
+       <transf name="assert" proved="true" arg1="((s.slots)[arr1]=(t.slots)[arr1])" arg2="as" arg3="H97">
+        <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0.1.0" expl="asserted formula" proved="true">
+        <proof prover="0"><result status="timeout" time="200.000000" steps="923957"/></proof>
+        <transf name="assert" proved="true" arg1="(mem1 (s.arr)[st] (s.rep)[st])" arg2="as" arg3="H96">
+         <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0.1.0.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="0.626557" steps="3065"/></proof>
+         </goal>
+         <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0.1.0.1" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="timeout" time="200.000000" steps="918718"/></proof>
+         <transf name="assert" proved="true" arg1="(mem1 arr1 rep3)" arg2="as" arg3="H95">
+          <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0.1.0.1.0" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="valid" time="0.059946" steps="44"/></proof>
+          </goal>
+          <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0.1.0.1.1" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="timeout" time="200.000000" steps="984063"/></proof>
+          <transf name="assert" proved="true" arg1="(mem1 arr1 ((img_rep @ s) @ s.pool))" arg2="as" arg3="H94">
+           <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0.1.0.1.1.0" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="valid" time="0.411388" steps="2070"/></proof>
+           </goal>
+           <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0.1.0.1.1.1" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="valid" time="17.217206" steps="95328"/></proof>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+        <goal name="boundary_frames_invariant_ArrayStack.0.0.5.1.0.1.1" proved="true">
+        <proof prover="0"><result status="valid" time="0.059338" steps="44"/></proof>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="boundary_frames_invariant_ArrayStack.0.0.6" proved="true">
+    <proof prover="0"><result status="valid" time="1.047254" steps="4034"/></proof>
+    <proof prover="1"><result status="outofmemory" time="106.073620"/></proof>
+    <proof prover="2"><result status="valid" time="0.729854" steps="46017"/></proof>
+    </goal>
+    <goal name="boundary_frames_invariant_ArrayStack.0.0.7" proved="true">
+    <proof prover="0"><result status="valid" time="1.044646" steps="4013"/></proof>
+    <proof prover="1"><result status="outofmemory" time="101.735949"/></proof>
+    <proof prover="2"><result status="timeout" time="200.000000" steps="1800589"/></proof>
+    </goal>
+    <goal name="boundary_frames_invariant_ArrayStack.0.0.8" proved="true">
+    <proof prover="0"><result status="timeout" time="200.000000" steps="551605"/></proof>
+    <proof prover="1"><result status="outofmemory" time="96.727103"/></proof>
+    <proof prover="2"><result status="timeout" time="200.000000" steps="2191006"/></proof>
+    <transf name="assert" proved="true" arg1="((s.arr)[st]=arr1 /\ (s.contents)[st]=stk /\ (s.top)[st] = top2 /\ (s.rep)[st]=rep3)" arg2="as" arg3="H99">
+     <goal name="boundary_frames_invariant_ArrayStack.0.0.8.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="3.056484" steps="15937"/></proof>
+     </goal>
+     <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1" proved="true">
+     <proof prover="0"><undone/></proof>
+     <transf name="assert" proved="true" arg1="(mem1 st (s.pool))" arg2="as" arg3="H98">
+      <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="0.077007" steps="55"/></proof>
+      </goal>
+      <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1" proved="true">
+      <proof prover="0"><result status="timeout" time="200.000000" steps="799215"/></proof>
+      <transf name="assert" proved="true" arg1="(mem1 arr1 rep3 /\ (s.slots)[arr1] = (t.slots)[arr1])" arg2="as" arg3="H98">
+       <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="timeout" time="200.000000" steps="727427"/></proof>
+       <transf name="split_vc" proved="true" >
+        <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.0.0" proved="true">
+        <proof prover="0"><result status="valid" time="0.575658" steps="2120"/></proof>
+        </goal>
+        <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.0.1" proved="true">
+        <proof prover="0"><result status="valid" time="172.944472" steps="558178"/></proof>
+        <transf name="assert" proved="true" arg1="(mem1 arr1 rep3)" arg2="as" arg3="H97">
+         <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.0.1.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="0.477368" steps="2120"/></proof>
+         </goal>
+         <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.0.1.1" proved="true">
+         <proof prover="0"><result status="timeout" time="200.000000" steps="817692"/></proof>
+         <proof prover="1"><result status="outofmemory" time="77.456886"/></proof>
+         <proof prover="2"><result status="timeout" time="200.000000" steps="2404818"/></proof>
+         <transf name="assert" proved="true" arg1="(mem1 arr1 ((img_rep @ s) @ s.pool))" arg2="as" arg3="H96">
+          <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.0.1.1.0" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="valid" time="0.434881" steps="1895"/></proof>
+          </goal>
+          <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.0.1.1.1" proved="true">
+          <proof prover="0"><result status="valid" time="15.221451" steps="67559"/></proof>
+          <proof prover="1"><result status="outofmemory" time="85.149512"/></proof>
+          <proof prover="2"><result status="timeout" time="200.000000" steps="2598674"/></proof>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+       <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.1" proved="true">
+       <proof prover="0"><result status="timeout" time="200.000000" steps="919882"/></proof>
+       <transf name="assert" proved="true" arg1="((s.cell_value)[c] = v)" arg2="as" arg3="H97">
+        <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.1.0" expl="asserted formula" proved="true">
+        <proof prover="0"><undone/></proof>
+        <transf name="assert" proved="true" arg1="((s.cell_value)[c]=(t.cell_value)[c])" arg2="as" arg3="H96">
+         <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.1.0.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="timeout" time="200.000000" steps="894399"/></proof>
+         <transf name="assert" proved="true" arg1="(mem1 c rep3)" arg2="as" arg3="H95">
+          <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.1.0.0.0" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="valid" time="0.521223" steps="2733"/></proof>
+          </goal>
+          <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.1.0.0.1" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="timeout" time="200.000000" steps="811621"/></proof>
+          <transf name="assert" proved="true" arg1="((t.slots)[arr1]=(s.slots)[arr1])" arg2="as" arg3="H94">
+           <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.1.0.0.1.0" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="valid" time="0.056297" steps="48"/></proof>
+           </goal>
+           <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.1.0.0.1.1" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="timeout" time="200.000000" steps="786946"/></proof>
+           <proof prover="1"><result status="outofmemory" time="68.750905"/></proof>
+           <proof prover="2"><result status="valid" time="5.398317" steps="222634"/></proof>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+         <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.1.0.1" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="0.063047" steps="48"/></proof>
+         </goal>
+        </transf>
+        </goal>
+        <goal name="boundary_frames_invariant_ArrayStack.0.0.8.1.1.1.1" proved="true">
+        <proof prover="0"><result status="valid" time="0.562140" steps="2523"/></proof>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="boundary_frames_invariant_ArrayStack.0.0.9" proved="true">
+    <proof prover="0"><result status="valid" time="31.721511" steps="112925"/></proof>
+    <proof prover="1"><result status="outofmemory" time="144.194563"/></proof>
+    <proof prover="2"><result status="timeout" time="200.000000" steps="3784128"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
  </transf>
  </goal>
 </theory>
-<theory name="Client1">
- <goal name="prog&#39;vc" expl="VC for prog">
- <transf name="split_vc" >
+<theory name="Client1" proved="true">
+ <goal name="prog&#39;vc" expl="VC for prog" proved="true">
+ <transf name="split_vc" proved="true" >
   <goal name="prog&#39;vc.0" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.155965" steps="27"/></proof>
   </goal>
@@ -616,9 +1097,98 @@
   <goal name="prog&#39;vc.44" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.107767" steps="225"/></proof>
   </goal>
-  <goal name="prog&#39;vc.45" expl="loop invariant preservation">
+  <goal name="prog&#39;vc.45" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="timeout" time="200.000000" steps="1272609"/></proof>
   <proof prover="1"><result status="timeout" time="200.000000" steps="6815868"/></proof>
+  <transf name="inline_all" proved="true" >
+   <goal name="prog&#39;vc.45.0" expl="loop invariant preservation" proved="true">
+   <transf name="introduce_premises" proved="true" >
+    <goal name="prog&#39;vc.45.0.0" expl="loop invariant preservation" proved="true">
+    <transf name="assert" proved="true" arg1="(not x = nullConst)" arg2="as" arg3="H99">
+     <goal name="prog&#39;vc.45.0.0.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="4.843517" steps="3117"/></proof>
+     </goal>
+     <goal name="prog&#39;vc.45.0.0.1" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="timeout" time="200.000000" steps="768694"/></proof>
+     <transf name="assert" proved="true" arg1="(x = stk \/ mem x (s.rep)[stk])" arg2="as" arg3="H98">
+      <goal name="prog&#39;vc.45.0.0.1.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="13.679576" steps="26305"/></proof>
+      </goal>
+      <goal name="prog&#39;vc.45.0.0.1.1" expl="loop invariant preservation" proved="true">
+      <proof prover="0"><result status="timeout" time="200.000000" steps="631341"/></proof>
+      <transf name="destruct" proved="true" arg1="H98">
+       <goal name="prog&#39;vc.45.0.0.1.1.0" expl="loop invariant preservation" proved="true">
+       <proof prover="0"><result status="valid" time="3.219873" steps="249"/></proof>
+       </goal>
+       <goal name="prog&#39;vc.45.0.0.1.1.1" expl="loop invariant preservation" proved="true">
+       <proof prover="0"><result status="timeout" time="200.000000" steps="768799"/></proof>
+       <transf name="assert" proved="true" arg1="(mem x (s1.rep)[stk] \/ mem x (diff(s.alloct.to_fmap.domain)(s1.alloct.to_fmap.domain)))" arg2="as" arg3="H97">
+        <goal name="prog&#39;vc.45.0.0.1.1.1.0" expl="asserted formula" proved="true">
+        <proof prover="0"><result status="valid" time="5.692898" steps="3562"/></proof>
+        </goal>
+        <goal name="prog&#39;vc.45.0.0.1.1.1.1" expl="loop invariant preservation" proved="true">
+        <proof prover="0"><result status="timeout" time="200.000000" steps="717598"/></proof>
+        <transf name="destruct" proved="true" arg1="H97">
+         <goal name="prog&#39;vc.45.0.0.1.1.1.1.0" expl="loop invariant preservation" proved="true">
+         <proof prover="0"><result status="timeout" time="200.000000" steps="803788"/></proof>
+         <proof prover="1"><result status="outofmemory" time="33.743120"/></proof>
+         <proof prover="2"><result status="timeout" time="200.000000" steps="1016609"/></proof>
+         <transf name="assert" proved="true" arg1="(mem x (s1.alloct.to_fmap.domain) /\ not mem x (s4.alloct.to_fmap.domain))" arg2="as" arg3="H96">
+          <goal name="prog&#39;vc.45.0.0.1.1.1.1.0.0" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="timeout" time="200.000000" steps="616802"/></proof>
+          <transf name="split_vc" proved="true" >
+           <goal name="prog&#39;vc.45.0.0.1.1.1.1.0.0.0" proved="true">
+           <proof prover="0"><result status="valid" time="5.790894" steps="3536"/></proof>
+           </goal>
+           <goal name="prog&#39;vc.45.0.0.1.1.1.1.0.0.1" proved="true">
+           <proof prover="0"><result status="timeout" time="200.000000" steps="736841"/></proof>
+           <proof prover="1"><result status="outofmemory" time="41.720396"/></proof>
+           <proof prover="2"><result status="timeout" time="200.000000" steps="625648"/></proof>
+           <transf name="assert" proved="true" arg1="(mem x (union (singleton stk) (s1.rep)[stk]))" arg2="as" arg3="H95">
+            <goal name="prog&#39;vc.45.0.0.1.1.1.1.0.0.1.0" expl="asserted formula" proved="true">
+            <proof prover="0"><result status="valid" time="3.020248" steps="289"/></proof>
+            </goal>
+            <goal name="prog&#39;vc.45.0.0.1.1.1.1.0.0.1.1" proved="true">
+            <proof prover="0"><result status="timeout" time="200.000000" steps="784136"/></proof>
+            <transf name="rewrite" proved="true" arg1="diff_def" arg2="in" arg3="H">
+             <goal name="prog&#39;vc.45.0.0.1.1.1.1.0.0.1.1.0" proved="true">
+             <proof prover="0"><result status="timeout" time="200.000000" steps="788157"/></proof>
+             <transf name="assert" proved="true" arg1="(mem x (diff (s1.alloct.to_fmap.domain) (s4.alloct.to_fmap.domain)))" arg2="as" arg3="H94">
+              <goal name="prog&#39;vc.45.0.0.1.1.1.1.0.0.1.1.0.0" expl="asserted formula" proved="true">
+              <proof prover="0"><result status="valid" time="5.489035" steps="3882"/></proof>
+              </goal>
+              <goal name="prog&#39;vc.45.0.0.1.1.1.1.0.0.1.1.0.1" proved="true">
+              <proof prover="0"><result status="valid" time="3.087011" steps="351"/></proof>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+          <goal name="prog&#39;vc.45.0.0.1.1.1.1.0.1" expl="loop invariant preservation" proved="true">
+          <proof prover="0"><result status="valid" time="3.086295" steps="315"/></proof>
+          </goal>
+         </transf>
+         </goal>
+         <goal name="prog&#39;vc.45.0.0.1.1.1.1.1" expl="loop invariant preservation" proved="true">
+         <proof prover="0"><result status="valid" time="5.461839" steps="3673"/></proof>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
   <goal name="prog&#39;vc.46" expl="locals type invariant" proved="true">
   <proof prover="0"><result status="valid" time="0.088828" steps="152"/></proof>
@@ -759,8 +1329,102 @@
  </goal>
 </theory>
 <theory name="ListStack">
- <goal name="init_Stack&#39;vc" expl="VC for init_Stack">
- <transf name="split_vc" >
+ <goal name="stackRep_mono" proved="true">
+ <proof prover="0"><result status="timeout" time="200.000000" steps="900293"/></proof>
+ <transf name="intros" proved="true" arg1="s, old_s, l">
+  <goal name="stackRep_mono.0" proved="true">
+  <transf name="revert" proved="true" arg1="s, old_s">
+   <goal name="stackRep_mono.0.0" proved="true">
+   <transf name="induction_arg_ty_lex" proved="true" arg1="l">
+    <goal name="stackRep_mono.0.0.0" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="stackRep_mono.0.0.0.0" proved="true">
+     <proof prover="0"><result status="valid" time="0.068712" steps="102"/></proof>
+     </goal>
+     <goal name="stackRep_mono.0.0.0.1" proved="true">
+     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1078858"/></proof>
+     <transf name="inversion_arg_pr" proved="true" arg1="H4">
+      <goal name="stackRep_mono.0.0.0.1.0" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1105523"/></proof>
+      <transf name="introduce_premises" proved="true" >
+       <goal name="stackRep_mono.0.0.0.1.0.0" proved="true">
+       <transf name="pose" proved="true" arg1="nxt" arg2="(old_s.cdr)[p]">
+        <goal name="stackRep_mono.0.0.0.1.0.0.0" proved="true">
+        <transf name="assert" proved="true" arg1="(stackRep old_s x nxt)">
+         <goal name="stackRep_mono.0.0.0.1.0.0.0.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="0.072079" steps="31"/></proof>
+         </goal>
+         <goal name="stackRep_mono.0.0.0.1.0.0.0.1" proved="true">
+         <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1219604"/></proof>
+         <transf name="pose" proved="true" arg1="v" arg2="(old_s.cell_value)[(old_s.car)[p]]">
+          <goal name="stackRep_mono.0.0.0.1.0.0.0.1.0" proved="true">
+          <transf name="assert" proved="true" arg1="(v = x1)">
+           <goal name="stackRep_mono.0.0.0.1.0.0.0.1.0.0" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="valid" time="0.069134" steps="36"/></proof>
+           </goal>
+           <goal name="stackRep_mono.0.0.0.1.0.0.0.1.0.1" proved="true">
+           <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1217493"/></proof>
+           <transf name="rewrite" proved="true" arg1="H3">
+            <goal name="stackRep_mono.0.0.0.1.0.0.0.1.0.1.0" proved="true">
+            <proof prover="3"><result status="valid" time="0.067952" steps="46"/></proof>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      <transf name="pose" arg1="nxt" arg2="(old_s.cdr)[p]">
+       <goal name="stackRep_mono.0.0.0.1.0.0">
+       <transf name="assert" arg1="(stackRep old_s x nxt)">
+        <goal name="stackRep_mono.0.0.0.1.0.0.0" expl="asserted formula">
+        <proof prover="0"><result status="timeout" time="200.000000" steps="988816"/></proof>
+        </goal>
+        <goal name="stackRep_mono.0.0.0.1.0.0.1" proved="true">
+        <proof prover="0"><result status="valid" time="0.066970" steps="33"/></proof>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+      <goal name="stackRep_mono.0.0.0.1.1" proved="true">
+      <proof prover="0"><result status="valid" time="0.700315" steps="3972"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="stackRep_agree" proved="true">
+ <transf name="intros" proved="true" arg1="s1, s2, l">
+  <goal name="stackRep_agree.0" proved="true">
+  <transf name="induction_arg_ty_lex" proved="true" arg1="l">
+   <goal name="stackRep_agree.0.0" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="stackRep_agree.0.0.0" proved="true">
+    <proof prover="0"><result status="valid" time="0.067009" steps="102"/></proof>
+    </goal>
+    <goal name="stackRep_agree.0.0.1" proved="true">
+    <proof prover="0"><result status="valid" time="0.435975" steps="2120"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="init_Stack&#39;vc" expl="VC for init_Stack" proved="true">
+ <transf name="split_vc" proved="true" >
   <goal name="init_Stack&#39;vc.0" expl="self.rep := {null}" proved="true">
   <proof prover="0"><result status="valid" time="0.076882" steps="24"/></proof>
   </goal>
@@ -798,10 +1462,10 @@
   <proof prover="0"><result status="valid" time="0.095285" steps="178"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.12" expl="wr {self}`contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.502666" steps="1609"/></proof>
+  <proof prover="0"><result status="valid" time="0.306517" steps="1610"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.13" expl="wr {self}`size" proved="true">
-  <proof prover="0"><result status="valid" time="0.421736" steps="1623"/></proof>
+  <proof prover="0"><result status="valid" time="0.421736" steps="1624"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.14" expl="wr {self}`rep" proved="true">
   <proof prover="0"><result status="valid" time="0.417967" steps="1646"/></proof>
@@ -810,7 +1474,7 @@
   <proof prover="0"><result status="valid" time="0.405388" steps="1650"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.16" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="8.900940" steps="35977"/></proof>
+  <proof prover="0"><result status="valid" time="8.019145" steps="35984"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.17" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.213123" steps="190"/></proof>
@@ -822,35 +1486,134 @@
   <proof prover="0"><result status="valid" time="0.115233" steps="192"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.20" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.379997" steps="835"/></proof>
+  <proof prover="0"><result status="valid" time="0.177466" steps="834"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.21" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="22.774747" steps="88381"/></proof>
+  <proof prover="0"><result status="valid" time="17.574142" steps="88445"/></proof>
   </goal>
-  <goal name="init_Stack&#39;vc.22" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="752441"/></proof>
+  <goal name="init_Stack&#39;vc.22" expl="postcondition" proved="true">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="900660"/></proof>
+  <transf name="inline_goal" proved="true" >
+   <goal name="init_Stack&#39;vc.22.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="init_Stack&#39;vc.22.0.0" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.075733" steps="197"/></proof>
+    </goal>
+    <goal name="init_Stack&#39;vc.22.0.1" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="2.972057" steps="13119"/></proof>
+    </goal>
+    <goal name="init_Stack&#39;vc.22.0.2" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="3.010418" steps="13610"/></proof>
+    </goal>
+    <goal name="init_Stack&#39;vc.22.0.3" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="98.612550" steps="584683"/></proof>
+    <proof prover="1" obsolete="true"><result status="outofmemory" time="89.656685"/></proof>
+    <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="2326534"/></proof>
+    </goal>
+    <goal name="init_Stack&#39;vc.22.0.4" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="8.193200" steps="38347"/></proof>
+    <proof prover="1" obsolete="true"><result status="outofmemory" time="90.066220"/></proof>
+    </goal>
+    <goal name="init_Stack&#39;vc.22.0.5" expl="postcondition" proved="true">
+    <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="786174"/></proof>
+    <proof prover="1" obsolete="true"><result status="outofmemory" time="88.740060"/></proof>
+    <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="4142997"/></proof>
+    <transf name="assert" proved="true" arg1="(st=self \/ mem1 st s5.pool)" arg2="as" arg3="H99">
+     <goal name="init_Stack&#39;vc.22.0.5.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="0.201504" steps="912"/></proof>
+     </goal>
+     <goal name="init_Stack&#39;vc.22.0.5.1" expl="postcondition" proved="true">
+     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1418824"/></proof>
+     <transf name="destruct" proved="true" arg1="H99">
+      <goal name="init_Stack&#39;vc.22.0.5.1.0" expl="postcondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.205187" steps="1044"/></proof>
+      </goal>
+      <goal name="init_Stack&#39;vc.22.0.5.1.1" expl="postcondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1162450"/></proof>
+      <transf name="assert" proved="true" arg1="(not st = self)" arg2="as" arg3="H98">
+       <goal name="init_Stack&#39;vc.22.0.5.1.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="0.095237" steps="205"/></proof>
+       </goal>
+       <goal name="init_Stack&#39;vc.22.0.5.1.1.1" expl="postcondition" proved="true">
+       <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1681865"/></proof>
+       <transf name="assert" proved="true" arg1="(s.alloct = s5.alloct /\ s.car = s5.car /\ s.cdr = s5.cdr /\ s.cell_value = s5.cell_value /\ (s.contents)[st] = (s5.contents)[st] /\ (s.head)[st] = (s5.head)[st])" arg2="as" arg3="H97">
+        <goal name="init_Stack&#39;vc.22.0.5.1.1.1.0" expl="asserted formula" proved="true">
+        <proof prover="0"><result status="valid" time="0.867333" steps="4089"/></proof>
+        </goal>
+        <goal name="init_Stack&#39;vc.22.0.5.1.1.1.1" expl="postcondition" proved="true">
+        <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1076053"/></proof>
+        <transf name="assert" proved="true" arg1="(stackRep s5 stk head2)" arg2="as" arg3="H96">
+         <goal name="init_Stack&#39;vc.22.0.5.1.1.1.1.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="1.104008" steps="3847"/></proof>
+         </goal>
+         <goal name="init_Stack&#39;vc.22.0.5.1.1.1.1.1" expl="postcondition" proved="true">
+         <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1034228"/></proof>
+         <proof prover="1" obsolete="true"><result status="outofmemory" time="70.221525"/></proof>
+         <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="4348368"/></proof>
+         <transf name="assert" proved="true" arg1="(forall sa, sb, l, r . (stackRep sa l r /\ sa.alloct = sb.alloct /\ sa.car = sb.car /\ sa.cdr = sb.cdr /\ sa.cell_value = sb.cell_value) -&gt; stackRep sb l r)" arg2="as" arg3="H95">
+          <goal name="init_Stack&#39;vc.22.0.5.1.1.1.1.1.0" expl="asserted formula" proved="true">
+          <transf name="intros" proved="true" arg1="sa, sb, l">
+           <goal name="init_Stack&#39;vc.22.0.5.1.1.1.1.1.0.0" proved="true">
+           <transf name="revert" proved="true" arg1="sa, sb">
+            <goal name="init_Stack&#39;vc.22.0.5.1.1.1.1.1.0.0.0" proved="true">
+            <transf name="induction_arg_ty_lex" proved="true" arg1="l">
+             <goal name="init_Stack&#39;vc.22.0.5.1.1.1.1.1.0.0.0.0" proved="true">
+             <transf name="split_vc" proved="true" >
+              <goal name="init_Stack&#39;vc.22.0.5.1.1.1.1.1.0.0.0.0.0" proved="true">
+              <proof prover="0"><result status="valid" time="1.235312" steps="4489"/></proof>
+              </goal>
+              <goal name="init_Stack&#39;vc.22.0.5.1.1.1.1.1.0.0.0.0.1" proved="true">
+              <proof prover="0"><result status="valid" time="2.186913" steps="9643"/></proof>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+          <goal name="init_Stack&#39;vc.22.0.5.1.1.1.1.1.1" expl="postcondition" proved="true">
+          <proof prover="0"><result status="valid" time="0.090679" steps="219"/></proof>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
  </transf>
  </goal>
  <goal name="isEmpty&#39;vc" expl="VC for isEmpty" proved="true">
- <transf name="split_vc" proved="true" >
-  <goal name="isEmpty&#39;vc.0" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.146797" steps="110"/></proof>
+ <proof prover="0"><result status="valid" time="0.100262" steps="297"/></proof>
+ <transf name="split_vc" >
+  <goal name="isEmpty&#39;vc.0" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.146797" steps="110"/></proof>
   </goal>
-  <goal name="isEmpty&#39;vc.1" expl="sz := self.size" proved="true">
-  <proof prover="0"><result status="valid" time="0.132651" steps="81"/></proof>
+  <goal name="isEmpty&#39;vc.1" expl="sz := self.size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.132651" steps="81"/></proof>
   </goal>
-  <goal name="isEmpty&#39;vc.2" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.132119" steps="42"/></proof>
+  <goal name="isEmpty&#39;vc.2" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.132119" steps="42"/></proof>
   </goal>
-  <goal name="isEmpty&#39;vc.3" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.127443" steps="26"/></proof>
+  <goal name="isEmpty&#39;vc.3" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.127443" steps="26"/></proof>
   </goal>
-  <goal name="isEmpty&#39;vc.4" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.113747" steps="26"/></proof>
+  <goal name="isEmpty&#39;vc.4" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.113747" steps="26"/></proof>
   </goal>
-  <goal name="isEmpty&#39;vc.5" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.094855" steps="26"/></proof>
+  <goal name="isEmpty&#39;vc.5" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.094855" steps="26"/></proof>
   </goal>
  </transf>
  </goal>
@@ -869,7 +1632,7 @@
   <proof prover="0"><result status="valid" time="0.145818" steps="218"/></proof>
   </goal>
   <goal name="push&#39;vc.4" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="1.050417" steps="3451"/></proof>
+  <proof prover="0"><result status="valid" time="0.761052" steps="3452"/></proof>
   </goal>
   <goal name="push&#39;vc.5" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.151984" steps="70"/></proof>
@@ -887,16 +1650,16 @@
   <proof prover="0"><result status="valid" time="0.107782" steps="136"/></proof>
   </goal>
   <goal name="push&#39;vc.10" expl="n.car := v" proved="true">
-  <proof prover="0"><result status="valid" time="0.346687" steps="676"/></proof>
+  <proof prover="0"><result status="valid" time="0.206422" steps="677"/></proof>
   </goal>
   <goal name="push&#39;vc.11" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.372157" steps="871"/></proof>
+  <proof prover="0"><result status="valid" time="0.372157" steps="872"/></proof>
   </goal>
   <goal name="push&#39;vc.12" expl="tmp := self.head" proved="true">
   <proof prover="0"><result status="valid" time="0.188168" steps="437"/></proof>
   </goal>
   <goal name="push&#39;vc.13" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="2.186220" steps="6521"/></proof>
+  <proof prover="0"><result status="valid" time="1.445866" steps="6522"/></proof>
   </goal>
   <goal name="push&#39;vc.14" expl="n.cdr := tmp" proved="true">
   <proof prover="0"><result status="valid" time="0.133518" steps="172"/></proof>
@@ -905,19 +1668,19 @@
   <proof prover="0"><result status="valid" time="0.200325" steps="584"/></proof>
   </goal>
   <goal name="push&#39;vc.16" expl="n.cdr := tmp" proved="true">
-  <proof prover="0"><result status="valid" time="0.603093" steps="1815"/></proof>
+  <proof prover="0"><result status="valid" time="0.411518" steps="1816"/></proof>
   </goal>
   <goal name="push&#39;vc.17" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="36.480194" steps="93301"/></proof>
+  <proof prover="0"><result status="valid" time="28.217723" steps="95058"/></proof>
   </goal>
   <goal name="push&#39;vc.18" expl="self.head := n" proved="true">
   <proof prover="0"><result status="valid" time="0.114212" steps="206"/></proof>
   </goal>
   <goal name="push&#39;vc.19" expl="self.head := n" proved="true">
-  <proof prover="0"><result status="valid" time="0.418670" steps="1155"/></proof>
+  <proof prover="0"><result status="valid" time="0.418670" steps="1156"/></proof>
   </goal>
   <goal name="push&#39;vc.20" expl="self.head := n" proved="true">
-  <proof prover="0"><result status="valid" time="0.251658" steps="733"/></proof>
+  <proof prover="0"><result status="valid" time="0.251658" steps="734"/></proof>
   </goal>
   <goal name="push&#39;vc.21" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.120784" steps="236"/></proof>
@@ -929,34 +1692,133 @@
   <proof prover="0"><result status="valid" time="0.124003" steps="240"/></proof>
   </goal>
   <goal name="push&#39;vc.24" expl="self.size := sz + 1" proved="true">
-  <proof prover="0"><result status="valid" time="0.509052" steps="1466"/></proof>
+  <proof prover="0"><result status="valid" time="0.339295" steps="1467"/></proof>
   </goal>
   <goal name="push&#39;vc.25" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.115569" steps="270"/></proof>
   </goal>
   <goal name="push&#39;vc.26" expl="rep := self.rep" proved="true">
-  <proof prover="0"><result status="valid" time="0.288161" steps="836"/></proof>
+  <proof prover="0"><result status="valid" time="0.288161" steps="837"/></proof>
   </goal>
   <goal name="push&#39;vc.27" expl="self.rep := rep union {v} union {n}" proved="true">
   <proof prover="0"><result status="valid" time="0.128387" steps="282"/></proof>
   </goal>
   <goal name="push&#39;vc.28" expl="self.rep := rep union {v} union {n}" proved="true">
-  <proof prover="0"><result status="valid" time="0.644518" steps="1805"/></proof>
+  <proof prover="0"><result status="valid" time="0.453298" steps="1805"/></proof>
   </goal>
   <goal name="push&#39;vc.29" expl="self.rep := rep union {v} union {n}" proved="true">
-  <proof prover="0"><result status="valid" time="4.956428" steps="16281"/></proof>
+  <proof prover="0"><result status="valid" time="3.520456" steps="16282"/></proof>
   </goal>
   <goal name="push&#39;vc.30" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.740786" steps="2194"/></proof>
+  <proof prover="0"><result status="valid" time="0.654429" steps="2193"/></proof>
   </goal>
   <goal name="push&#39;vc.31" expl="assertion">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="634336"/></proof>
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="802665"/></proof>
+  <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="3788163"/></proof>
+  <transf name="assert" arg1="(subset rep1 rep8 /\ subset rep1 rep8)" arg2="as" arg3="H99">
+   <goal name="push&#39;vc.31.0" expl="asserted formula" proved="true">
+   <proof prover="0"><result status="valid" time="0.621752" steps="2139"/></proof>
+   </goal>
+   <goal name="push&#39;vc.31.1" expl="assertion">
+   <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="850598"/></proof>
+   <transf name="assert" arg1="(mem1 tmp rep1)" arg2="as" arg3="H98">
+    <goal name="push&#39;vc.31.1.0" expl="asserted formula" proved="true">
+    <proof prover="0"><result status="valid" time="0.076618" steps="316"/></proof>
+    </goal>
+    <goal name="push&#39;vc.31.1.1" expl="assertion">
+    <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="806649"/></proof>
+    <transf name="assert" arg1="(mem1 null rep8)" arg2="as" arg3="H97">
+     <goal name="push&#39;vc.31.1.1.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="4.566205" steps="20889"/></proof>
+     </goal>
+     <goal name="push&#39;vc.31.1.1.1" expl="assertion">
+     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="804234"/></proof>
+     <transf name="assert" arg1="((s.cdr)[n] = tmp)" arg2="as" arg3="H96">
+      <goal name="push&#39;vc.31.1.1.1.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="0.139508" steps="421"/></proof>
+      </goal>
+      <goal name="push&#39;vc.31.1.1.1.1" expl="assertion">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="784189"/></proof>
+      <transf name="assert" arg1="(subset ((img_cdr @ s) @ (singleton n)) rep8)" arg2="as" arg3="H95">
+       <goal name="push&#39;vc.31.1.1.1.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="17.470692" steps="72976"/></proof>
+       </goal>
+       <goal name="push&#39;vc.31.1.1.1.1.1" expl="assertion">
+       <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="791627"/></proof>
+       <transf name="assert" arg1="(subset ((img_cdr @ s) @ (singleton v)) rep8)" arg2="as" arg3="H94">
+        <goal name="push&#39;vc.31.1.1.1.1.1.0" expl="asserted formula" proved="true">
+        <proof prover="0"><result status="valid" time="17.986837" steps="74990"/></proof>
+        </goal>
+        <goal name="push&#39;vc.31.1.1.1.1.1.1" expl="assertion">
+        <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="892028"/></proof>
+        <transf name="assert" arg1="(rep8 = union (union rep1 (singleton v)) (singleton n))" arg2="as" arg3="H93">
+         <goal name="push&#39;vc.31.1.1.1.1.1.1.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="0.125851" steps="432"/></proof>
+         </goal>
+         <goal name="push&#39;vc.31.1.1.1.1.1.1.1" expl="assertion">
+         <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="867532"/></proof>
+         <proof prover="1" obsolete="true"><result status="outofmemory" time="62.602002"/></proof>
+         <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="2383653"/></proof>
+         <transf name="assert" arg1="(rep1 = (s8.rep)[self])" arg2="as" arg3="H92">
+          <goal name="push&#39;vc.31.1.1.1.1.1.1.1.0" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="valid" time="0.074278" steps="327"/></proof>
+          </goal>
+          <goal name="push&#39;vc.31.1.1.1.1.1.1.1.1" expl="assertion">
+          <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="865838"/></proof>
+          <transf name="assert" arg1="(subset ((img_cdr @ s8) @ rep1) rep1)" arg2="as" arg3="H91">
+           <goal name="push&#39;vc.31.1.1.1.1.1.1.1.1.0" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="valid" time="5.322771" steps="23196"/></proof>
+           </goal>
+           <goal name="push&#39;vc.31.1.1.1.1.1.1.1.1.1" expl="assertion">
+           <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="828259"/></proof>
+           <transf name="inline_goal" >
+            <goal name="push&#39;vc.31.1.1.1.1.1.1.1.1.1.0" expl="assertion">
+            <transf name="intros" arg1="x">
+             <goal name="push&#39;vc.31.1.1.1.1.1.1.1.1.1.0.0" expl="assertion">
+             <transf name="assert" arg1="(not mem1 n rep1)" arg2="as" arg3="H90">
+              <goal name="push&#39;vc.31.1.1.1.1.1.1.1.1.1.0.0.0" expl="asserted formula" proved="true">
+              <proof prover="0"><result status="valid" time="0.563464" steps="2291"/></proof>
+              </goal>
+              <goal name="push&#39;vc.31.1.1.1.1.1.1.1.1.1.0.0.1" expl="assertion">
+              <proof prover="0" obsolete="true"><result status="valid" time="13.801006" steps="81356"/></proof>
+              <transf name="assert" arg1="(forall y:reference. mem1 y rep1 -&gt; (s.cdr)[y] = (s8.cdr)[y])" arg2="as" arg3="H89">
+               <goal name="push&#39;vc.31.1.1.1.1.1.1.1.1.1.0.0.1.0" expl="asserted formula">
+               <proof prover="0"><result status="timeout" time="200.000000" steps="1015292"/></proof>
+               </goal>
+               <goal name="push&#39;vc.31.1.1.1.1.1.1.1.1.1.0.0.1.1" expl="assertion" proved="true">
+               <proof prover="0"><result status="valid" time="16.789950" steps="70571"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
   <goal name="push&#39;vc.32" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.178377" steps="318"/></proof>
+  <proof prover="0"><result status="valid" time="0.072523" steps="318"/></proof>
   </goal>
   <goal name="push&#39;vc.33" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="10.183516" steps="34683"/></proof>
+  <proof prover="0"><result status="valid" time="7.723514" steps="34684"/></proof>
   </goal>
   <goal name="push&#39;vc.34" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.129566" steps="322"/></proof>
@@ -968,61 +1830,357 @@
   <proof prover="0"><result status="valid" time="0.182943" steps="326"/></proof>
   </goal>
   <goal name="push&#39;vc.37" expl="self.contents := cons(k,contents)" proved="true">
-  <proof prover="0"><result status="valid" time="0.696312" steps="2273"/></proof>
+  <proof prover="0"><result status="valid" time="0.517090" steps="2273"/></proof>
   </goal>
-  <goal name="push&#39;vc.38" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.294889" steps="465"/></proof>
+  <goal name="push&#39;vc.38" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="822643"/></proof>
+  <transf name="assert" arg1="((s.head)[self]=n /\ (s.contents)[self]=cons k contents2 /\ (s.cdr)[n]=tmp /\ (s.car)[n]=v /\ (s.cell_value)[v]=k)" arg2="as" arg3="H99">
+   <goal name="push&#39;vc.38.0" expl="asserted formula" proved="true">
+   <proof prover="0"><result status="valid" time="0.340605" steps="1867"/></proof>
+   </goal>
+   <goal name="push&#39;vc.38.1" expl="assertion">
+   <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="998377"/></proof>
+   <transf name="assert" arg1="(stackRep s contents2 tmp)" arg2="as" arg3="H98">
+    <goal name="push&#39;vc.38.1.0" expl="asserted formula">
+    <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1022570"/></proof>
+    <transf name="assert" arg1="(stackRep s9 (s9.contents)[self] (s9.head)[self])" arg2="as" arg3="H97">
+     <goal name="push&#39;vc.38.1.0.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="0.683898" steps="2664"/></proof>
+     </goal>
+     <goal name="push&#39;vc.38.1.0.1" expl="asserted formula">
+     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="968651"/></proof>
+     <transf name="assert" arg1="(tmp=(s9.head)[self])" arg2="as" arg3="H96">
+      <goal name="push&#39;vc.38.1.0.1.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="0.131423" steps="367"/></proof>
+      </goal>
+      <goal name="push&#39;vc.38.1.0.1.1" expl="asserted formula">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="950766"/></proof>
+      <transf name="assert" arg1="(contents2=(s9.contents)[self])" arg2="as" arg3="H95">
+       <goal name="push&#39;vc.38.1.0.1.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="0.100758" steps="368"/></proof>
+       </goal>
+       <goal name="push&#39;vc.38.1.0.1.1.1" expl="asserted formula">
+       <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="954333"/></proof>
+       <transf name="assert" arg1="(stackRep s9 contents2 tmp)" arg2="as" arg3="H94">
+        <goal name="push&#39;vc.38.1.0.1.1.1.0" expl="asserted formula" proved="true">
+        <proof prover="0"><result status="valid" time="0.139017" steps="369"/></proof>
+        </goal>
+        <goal name="push&#39;vc.38.1.0.1.1.1.1" expl="asserted formula">
+        <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1069937"/></proof>
+        <transf name="assert" arg1="(forall p . mem p (s9.alloct.to_fmap) -&gt; (not p = n) /\ not p = v)" arg2="as" arg3="H93">
+         <goal name="push&#39;vc.38.1.0.1.1.1.1.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="0.193377" steps="566"/></proof>
+         </goal>
+         <goal name="push&#39;vc.38.1.0.1.1.1.1.1" expl="asserted formula">
+         <proof prover="0" obsolete="true"><undone/></proof>
+         <transf name="assert" arg1="(forall p . mem p (s9.alloct.to_fmap) -&gt; (s.cdr)[p] = (s9.cdr)[p])" arg2="as" arg3="H92">
+          <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0" expl="asserted formula">
+          <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1001580"/></proof>
+          <proof prover="1" obsolete="true"><result status="outofmemory" time="64.148936"/></proof>
+          <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="1748106"/></proof>
+          <transf name="introduce_premises" >
+           <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0" expl="asserted formula">
+           <transf name="assert" arg1="((s7.cdr)[p] = (s9.cdr)[p])" arg2="as" arg3="H91">
+            <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0.0" expl="asserted formula" proved="true">
+            <proof prover="0"><result status="valid" time="0.101646" steps="374"/></proof>
+            </goal>
+            <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0.1" expl="asserted formula">
+            <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1111467"/></proof>
+            <transf name="assert" arg1="(not p = n)" arg2="as" arg3="H90">
+             <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0.1.0" expl="asserted formula" proved="true">
+             <proof prover="0"><result status="valid" time="0.091473" steps="375"/></proof>
+             </goal>
+             <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0.1.1" expl="asserted formula">
+             <proof prover="0" obsolete="true"><undone/></proof>
+             <transf name="assert" arg1="((s.cdr)[p] = (s4.cdr)[p])" arg2="as" arg3="H89">
+              <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0.1.1.0" expl="asserted formula" proved="true">
+              <proof prover="0"><result status="valid" time="0.090029" steps="377"/></proof>
+              </goal>
+              <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0.1.1.1" expl="asserted formula">
+              <proof prover="0"><result status="timeout" time="200.000000" steps="975486"/></proof>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           <transf name="case" arg1="(p = n)">
+            <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0.0" expl="true case (asserted formula)" proved="true">
+            <proof prover="0"><result status="valid" time="0.163685" steps="374"/></proof>
+            </goal>
+            <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0.1" expl="false case (asserted formula)">
+            <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1212738"/></proof>
+            <transf name="assert" arg1="((s.cdr)[p] = (s9.cdr)[p])" arg2="as" arg3="H91">
+             <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0.1.0" expl="asserted formula">
+             <proof prover="0"><result status="timeout" time="200.000000" steps="961307"/></proof>
+             </goal>
+             <goal name="push&#39;vc.38.1.0.1.1.1.1.1.0.0.1.1" expl="false case (asserted formula)" proved="true">
+             <proof prover="0"><result status="valid" time="0.094228" steps="378"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+          <goal name="push&#39;vc.38.1.0.1.1.1.1.1.1" expl="asserted formula">
+          <proof prover="0"><result status="timeout" time="200.000000" steps="893444"/></proof>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        <transf name="assert" arg1="(forall sA:state, sB:state, l:list int, r:reference. stackRep sA l r -&gt; (forall p:reference. isAllocated sA p -&gt; isAllocated sB p) -&gt; (forall p:reference. isAllocated sA p -&gt; hasNodeType sA p -&gt; hasNodeType sB p) -&gt; (forall p:reference. isAllocated sA p -&gt; hasNodeType sA p -&gt; (sB.cdr)[p] = (sA.cdr)[p]) -&gt; (forall p:reference. isAllocated sA p -&gt; hasNodeType sA p -&gt; (sB.car)[p] = (sA.car)[p]) -&gt; (forall c:reference. isAllocated sA c -&gt; (sB.cell_value)[c] = (sA.cell_value)[c]) -&gt; stackRep sB l r)" arg2="as" arg3="H93">
+         <goal name="push&#39;vc.38.1.0.1.1.1.1.0" expl="asserted formula" proved="true">
+         <transf name="intros" proved="true" arg1="sA, sB, l">
+          <goal name="push&#39;vc.38.1.0.1.1.1.1.0.0" proved="true">
+          <transf name="revert" proved="true" arg1="sA, sB">
+           <goal name="push&#39;vc.38.1.0.1.1.1.1.0.0.0" proved="true">
+           <transf name="induction_arg_ty_lex" proved="true" arg1="l">
+            <goal name="push&#39;vc.38.1.0.1.1.1.1.0.0.0.0" proved="true">
+            <transf name="split_vc" proved="true" >
+             <goal name="push&#39;vc.38.1.0.1.1.1.1.0.0.0.0.0" proved="true">
+             <proof prover="0"><result status="valid" time="4.079781" steps="17575"/></proof>
+             </goal>
+             <goal name="push&#39;vc.38.1.0.1.1.1.1.0.0.0.0.1" proved="true">
+             <proof prover="0"><result status="valid" time="8.022263" steps="34573"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+         <goal name="push&#39;vc.38.1.0.1.1.1.1.1" expl="asserted formula">
+         <proof prover="0"><result status="timeout" time="200.000000" steps="846529"/></proof>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="push&#39;vc.38.1.1" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.909029" steps="4197"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  <transf name="assert" arg1="(forall p . mem p (s9.alloct.to_fmap) -&gt; (s.car)[p] = (s9.car)[p] /\ (s.cdr)[p] = (s9.cdr)[p] /\ (s.cell_value)[p] = (s9.cell_value)[p])" arg2="as" arg3="Field_Stability">
+   <goal name="push&#39;vc.38.0" expl="asserted formula">
+   <proof prover="0" obsolete="true"><undone/></proof>
+   <transf name="introduce_premises" >
+    <goal name="push&#39;vc.38.0.0" expl="asserted formula">
+    <transf name="assert" arg1="(not mem v s9.alloct)" arg2="as" arg3="freshness_of_v">
+     <goal name="push&#39;vc.38.0.0.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="0.083443" steps="358"/></proof>
+     </goal>
+     <goal name="push&#39;vc.38.0.0.1" expl="asserted formula">
+     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="990776"/></proof>
+     <transf name="assert" arg1="(not mem n s9.alloct)" arg2="as" arg3="freshness_of_n">
+      <goal name="push&#39;vc.38.0.0.1.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="0.125283" steps="464"/></proof>
+      </goal>
+      <goal name="push&#39;vc.38.0.0.1.1" expl="asserted formula">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1014394"/></proof>
+      <transf name="case" arg1="(p = n)">
+       <goal name="push&#39;vc.38.0.0.1.1.0" expl="true case (asserted formula)" proved="true">
+       <proof prover="0"><result status="valid" time="0.081427" steps="360"/></proof>
+       </goal>
+       <goal name="push&#39;vc.38.0.0.1.1.1" expl="false case (asserted formula)">
+       <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="863617"/></proof>
+       <transf name="split_vc" >
+        <goal name="push&#39;vc.38.0.0.1.1.1.0">
+        <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="806929"/></proof>
+        <proof prover="1" obsolete="true"><result status="outofmemory" time="66.902608"/></proof>
+        <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="1680459"/></proof>
+        <transf name="assert" arg1="((s.car)[p]=(s5.car)[p])" arg2="as" arg3="s_2_s5_car">
+         <goal name="push&#39;vc.38.0.0.1.1.1.0.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="0.075903" steps="362"/></proof>
+         </goal>
+         <goal name="push&#39;vc.38.0.0.1.1.1.0.1">
+         <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1004531"/></proof>
+         <transf name="assert" arg1="((s5.car)[p] = (s6.car)[p])" arg2="as" arg3="s5_s6">
+          <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0" expl="asserted formula">
+          <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="907622"/></proof>
+          <transf name="assert" arg1="(find p s5.car.to_fmap = find p s6.car.to_fmap)">
+           <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0" expl="asserted formula">
+           <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1018391"/></proof>
+           <transf name="rewrite" arg1="Ensures17">
+            <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0" expl="asserted formula">
+            <transf name="rewrite" arg1="find_def">
+             <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.0" expl="asserted formula">
+             <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="948988"/></proof>
+             <transf name="rewrite" arg1="find_def">
+              <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.0.0" expl="asserted formula">
+              <transf name="rewrite" arg1="add_contents_other">
+               <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.0.0.0" expl="asserted formula" proved="true">
+               <proof prover="0"><result status="valid" time="0.084377" steps="363"/></proof>
+               </goal>
+               <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.0.0.1" expl="rewrite premises">
+               <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="949497"/></proof>
+               <proof prover="1" obsolete="true"><result status="outofmemory" time="58.053158"/></proof>
+               <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="3738262"/></proof>
+               <transf name="rewrite" arg1="Ensures19">
+                <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.0.0.1.0" expl="rewrite premises">
+                <transf name="rewrite" arg1="H102">
+                 <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.0.0.1.0.0" expl="rewrite premises">
+                 <transf name="rewrite" arg1="H115">
+                  <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.0.0.1.0.0.0" expl="rewrite premises">
+                  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1006138"/></proof>
+                  <transf name="compute_in_goal" >
+                   <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.0.0.1.0.0.0.0" expl="rewrite premises">
+                   <proof prover="0"><result status="timeout" time="200.000000" steps="773328"/></proof>
+                   </goal>
+                  </transf>
+                  </goal>
+                 </transf>
+                 </goal>
+                </transf>
+                </goal>
+               </transf>
+               </goal>
+               <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.0.0.2" expl="rewrite premises" proved="true">
+               <proof prover="0"><result status="valid" time="0.081905" steps="363"/></proof>
+               </goal>
+              </transf>
+              </goal>
+              <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.0.1" expl="rewrite premises">
+              <proof prover="0"><result status="timeout" time="200.000000" steps="722125"/></proof>
+              </goal>
+             </transf>
+             </goal>
+             <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.0.0.1" expl="rewrite premises">
+             <proof prover="0"><result status="timeout" time="200.000000" steps="725801"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0.1" expl="asserted formula">
+           <proof prover="0"><result status="timeout" time="200.000000" steps="713331"/></proof>
+           </goal>
+          </transf>
+          </goal>
+          <goal name="push&#39;vc.38.0.0.1.1.1.0.1.1">
+          <proof prover="0"><result status="timeout" time="200.000000" steps="719501"/></proof>
+          </goal>
+         </transf>
+         <transf name="assert" arg1="(mem1 p (s9.car.to_fmap.domain))">
+          <goal name="push&#39;vc.38.0.0.1.1.1.0.1.0" expl="asserted formula">
+          <proof prover="0"><result status="timeout" time="200.000000" steps="744174"/></proof>
+          </goal>
+          <goal name="push&#39;vc.38.0.0.1.1.1.0.1.1" proved="true">
+          <proof prover="0"><result status="valid" time="21.895200" steps="99403"/></proof>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+        <goal name="push&#39;vc.38.0.0.1.1.1.1">
+        <proof prover="0"><result status="timeout" time="200.000000" steps="752370"/></proof>
+        <proof prover="1" obsolete="true"><result status="outofmemory" time="67.424238"/></proof>
+        <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="1855830"/></proof>
+        </goal>
+        <goal name="push&#39;vc.38.0.0.1.1.1.2">
+        <proof prover="0"><result status="timeout" time="200.000000" steps="739677"/></proof>
+        <proof prover="1" obsolete="true"><result status="outofmemory" time="67.794406"/></proof>
+        <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="2186753"/></proof>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="push&#39;vc.38.1" expl="assertion">
+   <proof prover="0"><result status="timeout" time="200.000000" steps="731568"/></proof>
+   </goal>
+  </transf>
+  <transf name="assert" arg1="(isAllocated s n /\ hasNodeType s n )" arg2="as" arg3="H99">
+   <goal name="push&#39;vc.38.0" expl="asserted formula" proved="true">
+   <proof prover="0"><result status="valid" time="0.232380" steps="1533"/></proof>
+   </goal>
+   <goal name="push&#39;vc.38.1" expl="assertion">
+   <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="963217"/></proof>
+   <transf name="assert" arg1="(stackRep s contents2 (s.cdr)[n])" arg2="as" arg3="H98">
+    <goal name="push&#39;vc.38.1.0" expl="asserted formula">
+    <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="990825"/></proof>
+    <transf name="assert" arg1="(stackRep s9 contents2 tmp)" arg2="as" arg3="H98">
+     <goal name="push&#39;vc.38.1.0.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="0.515594" steps="2620"/></proof>
+     </goal>
+     <goal name="push&#39;vc.38.1.0.1" expl="asserted formula">
+     <proof prover="0"><result status="timeout" time="200.000000" steps="771827"/></proof>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="push&#39;vc.38.1.1" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="26.156437" steps="113000"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
   <goal name="push&#39;vc.39" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.138292" steps="358"/></proof>
+  <proof prover="0"><result status="valid" time="0.122148" steps="358"/></proof>
   </goal>
   <goal name="push&#39;vc.40" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="7.423055" steps="20469"/></proof>
+  <proof prover="0"><result status="valid" time="4.286336" steps="20647"/></proof>
   </goal>
   <goal name="push&#39;vc.41" expl="wr ({self} union {self}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="9.466431" steps="31784"/></proof>
+  <proof prover="0"><result status="valid" time="6.056010" steps="30309"/></proof>
   </goal>
   <goal name="push&#39;vc.42" expl="wr ({self} union {self}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="10.041917" steps="31007"/></proof>
+  <proof prover="0"><result status="valid" time="5.949251" steps="29486"/></proof>
   </goal>
   <goal name="push&#39;vc.43" expl="wr {self}`rep`cdr" proved="true">
-  <proof prover="0"><result status="valid" time="12.350069" steps="41837"/></proof>
+  <proof prover="0"><result status="valid" time="9.179876" steps="42043"/></proof>
   </goal>
   <goal name="push&#39;vc.44" expl="wr {self}`rep`car" proved="true">
-  <proof prover="0"><result status="valid" time="12.191698" steps="40759"/></proof>
+  <proof prover="0"><result status="valid" time="9.567623" steps="44651"/></proof>
   </goal>
   <goal name="push&#39;vc.45" expl="wr ({self} union {self}`rep)`rep" proved="true">
-  <proof prover="0"><result status="valid" time="10.973898" steps="33760"/></proof>
+  <proof prover="0"><result status="valid" time="7.061117" steps="32036"/></proof>
   </goal>
   <goal name="push&#39;vc.46" expl="wr {self}`rep`cell_rep" proved="true">
-  <proof prover="0"><result status="valid" time="8.052544" steps="32130"/></proof>
+  <proof prover="0"><result status="valid" time="7.026961" steps="31759"/></proof>
   </goal>
   <goal name="push&#39;vc.47" expl="wr ({self} union {self}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="7.606790" steps="30388"/></proof>
+  <proof prover="0"><result status="valid" time="6.236546" steps="30148"/></proof>
   </goal>
   <goal name="push&#39;vc.48" expl="wr {self}`rep`cell_value" proved="true">
-  <proof prover="0"><result status="valid" time="7.827899" steps="31257"/></proof>
+  <proof prover="0"><result status="valid" time="6.702911" steps="31649"/></proof>
   </goal>
   <goal name="push&#39;vc.49" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="654707"/></proof>
+  <proof prover="0"><result status="timeout" time="200.000000" steps="767797"/></proof>
   </goal>
   <goal name="push&#39;vc.50" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.214218" steps="496"/></proof>
+  <proof prover="0"><result status="valid" time="0.150813" steps="497"/></proof>
   </goal>
   <goal name="push&#39;vc.51" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.195976" steps="504"/></proof>
+  <proof prover="0"><result status="valid" time="0.144489" steps="506"/></proof>
   </goal>
   <goal name="push&#39;vc.52" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="9.164006" steps="33929"/></proof>
+  <proof prover="0"><result status="valid" time="8.331865" steps="32427"/></proof>
   </goal>
   <goal name="push&#39;vc.53" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="19.796719" steps="68984"/></proof>
+  <proof prover="0"><result status="valid" time="18.259938" steps="72077"/></proof>
   </goal>
   <goal name="push&#39;vc.54" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="676238"/></proof>
+  <proof prover="0"><result status="timeout" time="200.000000" steps="777349"/></proof>
   </goal>
   <goal name="push&#39;vc.55" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="617270"/></proof>
+  <proof prover="0"><result status="timeout" time="200.000000" steps="766808"/></proof>
   </goal>
  </transf>
  </goal>
@@ -1034,9 +2192,9 @@
   <goal name="pop&#39;vc.1" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.114165" steps="24"/></proof>
   </goal>
-  <goal name="pop&#39;vc.2" expl="assertion">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1100299"/></proof>
-  <proof prover="1"><result status="outofmemory" time="90.888579"/></proof>
+  <goal name="pop&#39;vc.2" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="1.606481" steps="8399"/></proof>
+  <proof prover="1" obsolete="true"><result status="outofmemory" time="90.888579"/></proof>
   </goal>
   <goal name="pop&#39;vc.3" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.093496" steps="177"/></proof>
@@ -1044,8 +2202,8 @@
   <goal name="pop&#39;vc.4" expl="tmp := self.head" proved="true">
   <proof prover="0"><result status="valid" time="0.080023" steps="101"/></proof>
   </goal>
-  <goal name="pop&#39;vc.5" expl="assertion">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1085544"/></proof>
+  <goal name="pop&#39;vc.5" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.239284" steps="993"/></proof>
   </goal>
   <goal name="pop&#39;vc.6" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.097837" steps="255"/></proof>
@@ -1066,7 +2224,7 @@
   <proof prover="0"><result status="valid" time="0.087790" steps="42"/></proof>
   </goal>
   <goal name="pop&#39;vc.12" expl="self.head := nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.579483" steps="2430"/></proof>
+  <proof prover="0"><result status="valid" time="0.579483" steps="2446"/></proof>
   </goal>
   <goal name="pop&#39;vc.13" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.270053" steps="382"/></proof>
@@ -1092,246 +2250,356 @@
   <goal name="pop&#39;vc.20" expl="self.contents := tl(contents)" proved="true">
   <proof prover="0"><result status="valid" time="0.155132" steps="259"/></proof>
   </goal>
-  <goal name="pop&#39;vc.21" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1189227"/></proof>
+  <goal name="pop&#39;vc.21" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.616242" steps="3228"/></proof>
   </goal>
   <goal name="pop&#39;vc.22" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.785592" steps="4298"/></proof>
+  <proof prover="0"><result status="valid" time="0.785592" steps="4316"/></proof>
   </goal>
   <goal name="pop&#39;vc.23" expl="wr ({self} union {self}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="1.573113" steps="7906"/></proof>
+  <proof prover="0"><result status="valid" time="1.875498" steps="7930"/></proof>
   </goal>
   <goal name="pop&#39;vc.24" expl="wr ({self} union {self}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="1.439842" steps="7947"/></proof>
+  <proof prover="0"><result status="valid" time="1.979558" steps="7970"/></proof>
   </goal>
   <goal name="pop&#39;vc.25" expl="wr ({self} union {self}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="1.433296" steps="7965"/></proof>
+  <proof prover="0"><result status="valid" time="1.749366" steps="7990"/></proof>
   </goal>
   <goal name="pop&#39;vc.26" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1280842"/></proof>
+  <proof prover="0"><undone/></proof>
   </goal>
   <goal name="pop&#39;vc.27" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.088380" steps="164"/></proof>
   </goal>
-  <goal name="pop&#39;vc.28" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1196255"/></proof>
+  <goal name="pop&#39;vc.28" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="4.427670" steps="20649"/></proof>
   </goal>
   <goal name="pop&#39;vc.29" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.111602" steps="169"/></proof>
   </goal>
   <goal name="pop&#39;vc.30" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="1.961127" steps="8935"/></proof>
+  <proof prover="0"><result status="valid" time="0.769582" steps="4380"/></proof>
   </goal>
   <goal name="pop&#39;vc.31" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.075962" steps="160"/></proof>
   </goal>
-  <goal name="pop&#39;vc.32" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="116.552578" steps="716345"/></proof>
+  <goal name="pop&#39;vc.32" expl="postcondition">
+  <proof prover="0"><undone/></proof>
   </goal>
   <goal name="pop&#39;vc.33" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1220460"/></proof>
+  <proof prover="0"><undone/></proof>
   </goal>
  </transf>
  </goal>
- <goal name="getMaxSize&#39;vc" expl="VC for getMaxSize">
+ <goal name="getMaxSize&#39;vc" expl="VC for getMaxSize" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="getMaxSize&#39;vc.0" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.079932" steps="30"/></proof>
+  </goal>
+  <goal name="getMaxSize&#39;vc.1" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.085360" steps="18"/></proof>
+  </goal>
+  <goal name="getMaxSize&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.094017" steps="18"/></proof>
+  </goal>
+  <goal name="getMaxSize&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.073429" steps="18"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="getCellValue&#39;vc" expl="VC for getCellValue" proved="true">
+ <proof prover="0"><result status="valid" time="0.107216" steps="197"/></proof>
  <transf name="split_vc" >
-  <goal name="getMaxSize&#39;vc.0" expl="postcondition">
+  <goal name="getCellValue&#39;vc.0" expl="assertion">
   </goal>
-  <goal name="getMaxSize&#39;vc.1" expl="postcondition">
+  <goal name="getCellValue&#39;vc.1" expl="result := c.cell_value">
   </goal>
-  <goal name="getMaxSize&#39;vc.2" expl="postcondition">
+  <goal name="getCellValue&#39;vc.2" expl="postcondition">
   </goal>
-  <goal name="getMaxSize&#39;vc.3" expl="postcondition">
+  <goal name="getCellValue&#39;vc.3" expl="postcondition">
+  </goal>
+  <goal name="getCellValue&#39;vc.4" expl="postcondition">
+  </goal>
+  <goal name="getCellValue&#39;vc.5" expl="postcondition">
   </goal>
  </transf>
- </goal>
- <goal name="getCellValue&#39;vc" expl="VC for getCellValue">
  </goal>
  <goal name="boundary_frames_invariant_ListStack">
+ <proof prover="0"><undone/></proof>
  </goal>
 </theory>
 <theory name="Client2">
  <goal name="prog&#39;vc" expl="VC for prog">
  <transf name="split_vc" >
   <goal name="prog&#39;vc.0" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.072183" steps="27"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.094933" steps="28"/></proof>
   </goal>
   <goal name="prog&#39;vc.2" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.119365" steps="60"/></proof>
   </goal>
   <goal name="prog&#39;vc.3" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.086682" steps="56"/></proof>
   </goal>
   <goal name="prog&#39;vc.4" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.069041" steps="56"/></proof>
   </goal>
   <goal name="prog&#39;vc.5" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.093489" steps="163"/></proof>
   </goal>
   <goal name="prog&#39;vc.6" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.478906" steps="2485"/></proof>
   </goal>
   <goal name="prog&#39;vc.7" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.168460" steps="581"/></proof>
   </goal>
   <goal name="prog&#39;vc.8" expl="locals type invariant">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.104066" steps="299"/></proof>
   </goal>
   <goal name="prog&#39;vc.9" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.918409" steps="7115"/></proof>
   </goal>
   <goal name="prog&#39;vc.10" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.846814" steps="23478"/></proof>
   </goal>
   <goal name="prog&#39;vc.11" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.877939" steps="23476"/></proof>
   </goal>
   <goal name="prog&#39;vc.12" expl="wr {stk}`rep`cdr">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.113626" steps="324"/></proof>
   </goal>
   <goal name="prog&#39;vc.13" expl="wr {stk}`rep`car">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.107597" steps="328"/></proof>
   </goal>
   <goal name="prog&#39;vc.14" expl="wr ({stk} union {stk}`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.911751" steps="23506"/></proof>
   </goal>
   <goal name="prog&#39;vc.15" expl="wr {stk}`rep`cell_rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.119627" steps="336"/></proof>
   </goal>
   <goal name="prog&#39;vc.16" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.965748" steps="23559"/></proof>
   </goal>
   <goal name="prog&#39;vc.17" expl="wr {stk}`rep`cell_value">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.098429" steps="344"/></proof>
   </goal>
   <goal name="prog&#39;vc.18" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.070892" steps="120"/></proof>
   </goal>
   <goal name="prog&#39;vc.19" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.196932" steps="693"/></proof>
   </goal>
   <goal name="prog&#39;vc.20" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.067814" steps="124"/></proof>
   </goal>
   <goal name="prog&#39;vc.21" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.104895" steps="124"/></proof>
   </goal>
   <goal name="prog&#39;vc.22" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="16.078642" steps="145773"/></proof>
   </goal>
   <goal name="prog&#39;vc.23" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.242323" steps="903"/></proof>
   </goal>
   <goal name="prog&#39;vc.24" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.102146" steps="151"/></proof>
   </goal>
   <goal name="prog&#39;vc.25" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.096896" steps="151"/></proof>
   </goal>
   <goal name="prog&#39;vc.26" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.080783" steps="151"/></proof>
   </goal>
   <goal name="prog&#39;vc.27" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.081744" steps="151"/></proof>
   </goal>
   <goal name="prog&#39;vc.28" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.084212" steps="153"/></proof>
   </goal>
   <goal name="prog&#39;vc.29" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.085979" steps="153"/></proof>
   </goal>
   <goal name="prog&#39;vc.30" expl="locals type invariant">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.396548" steps="1349"/></proof>
   </goal>
   <goal name="prog&#39;vc.31" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.735465" steps="16543"/></proof>
   </goal>
   <goal name="prog&#39;vc.32" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="54.953194" steps="462342"/></proof>
   </goal>
   <goal name="prog&#39;vc.33" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="57.134925" steps="451144"/></proof>
   </goal>
   <goal name="prog&#39;vc.34" expl="wr {stk}`rep`cdr">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1735166"/></proof>
   </goal>
   <goal name="prog&#39;vc.35" expl="wr {stk}`rep`car">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1743569"/></proof>
   </goal>
   <goal name="prog&#39;vc.36" expl="wr ({stk} union {stk}`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="52.276006" steps="450335"/></proof>
   </goal>
   <goal name="prog&#39;vc.37" expl="wr {stk}`rep`cell_rep">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1765557"/></proof>
   </goal>
   <goal name="prog&#39;vc.38" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="51.940235" steps="448977"/></proof>
   </goal>
   <goal name="prog&#39;vc.39" expl="wr {stk}`rep`cell_value">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1747147"/></proof>
   </goal>
   <goal name="prog&#39;vc.40" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.088372" steps="219"/></proof>
   </goal>
   <goal name="prog&#39;vc.41" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.103858" steps="221"/></proof>
   </goal>
   <goal name="prog&#39;vc.42" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.101109" steps="223"/></proof>
   </goal>
   <goal name="prog&#39;vc.43" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.088937" steps="224"/></proof>
   </goal>
   <goal name="prog&#39;vc.44" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1467698"/></proof>
   </goal>
   <goal name="prog&#39;vc.45" expl="locals type invariant">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.090477" steps="151"/></proof>
   </goal>
   <goal name="prog&#39;vc.46" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.102450" steps="151"/></proof>
   </goal>
   <goal name="prog&#39;vc.47" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.086187" steps="151"/></proof>
   </goal>
   <goal name="prog&#39;vc.48" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.090252" steps="151"/></proof>
   </goal>
   <goal name="prog&#39;vc.49" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.092454" steps="151"/></proof>
   </goal>
   <goal name="prog&#39;vc.50" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.105314" steps="151"/></proof>
   </goal>
   <goal name="prog&#39;vc.51" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.080268" steps="153"/></proof>
   </goal>
   <goal name="prog&#39;vc.52" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.088174" steps="153"/></proof>
   </goal>
   <goal name="prog&#39;vc.53" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.078367" steps="154"/></proof>
   </goal>
   <goal name="prog&#39;vc.54" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.085802" steps="154"/></proof>
   </goal>
   <goal name="prog&#39;vc.55" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.087754" steps="154"/></proof>
   </goal>
   <goal name="prog&#39;vc.56" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="97.460025" steps="1079108"/></proof>
   </goal>
   <goal name="prog&#39;vc.57" expl="c := pop(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.089592" steps="204"/></proof>
   </goal>
   <goal name="prog&#39;vc.58" expl="c := pop(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.081108" steps="204"/></proof>
   </goal>
   <goal name="prog&#39;vc.59" expl="c := pop(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.078304" steps="204"/></proof>
   </goal>
   <goal name="prog&#39;vc.60" expl="c := pop(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.080534" steps="204"/></proof>
   </goal>
   <goal name="prog&#39;vc.61" expl="c := pop(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.115023" steps="205"/></proof>
   </goal>
   <goal name="prog&#39;vc.62" expl="c := pop(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.082163" steps="205"/></proof>
   </goal>
   <goal name="prog&#39;vc.63" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="81.273713" steps="556543"/></proof>
   </goal>
   <goal name="prog&#39;vc.64" expl="v := getCellValue(c)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.124022" steps="253"/></proof>
   </goal>
   <goal name="prog&#39;vc.65" expl="v := getCellValue(c)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.116706" steps="253"/></proof>
   </goal>
   <goal name="prog&#39;vc.66" expl="v := getCellValue(c)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.119884" steps="253"/></proof>
   </goal>
   <goal name="prog&#39;vc.67" expl="v := getCellValue(c)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.120153" steps="253"/></proof>
   </goal>
   <goal name="prog&#39;vc.68" expl="locals type invariant">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.206884" steps="718"/></proof>
   </goal>
   <goal name="prog&#39;vc.69" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="5.963940" steps="38679"/></proof>
   </goal>
   <goal name="prog&#39;vc.70" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.670927" steps="10828"/></proof>
   </goal>
   <goal name="prog&#39;vc.71" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.644992" steps="10831"/></proof>
   </goal>
   <goal name="prog&#39;vc.72" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.706584" steps="10852"/></proof>
   </goal>
   <goal name="prog&#39;vc.73" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.124895" steps="271"/></proof>
   </goal>
   <goal name="prog&#39;vc.74" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.140642" steps="273"/></proof>
   </goal>
   <goal name="prog&#39;vc.75" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.093428" steps="275"/></proof>
   </goal>
   <goal name="prog&#39;vc.76" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.116116" steps="276"/></proof>
   </goal>
   <goal name="prog&#39;vc.77" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.106393" steps="276"/></proof>
   </goal>
   <goal name="prog&#39;vc.78" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.097395" steps="276"/></proof>
   </goal>
   <goal name="prog&#39;vc.79" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.092850" steps="202"/></proof>
   </goal>
   <goal name="prog&#39;vc.80" expl="wr (pool union pool`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="29.823664" steps="285184"/></proof>
   </goal>
   <goal name="prog&#39;vc.81" expl="wr (pool union pool`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="27.600058" steps="290106"/></proof>
   </goal>
   <goal name="prog&#39;vc.82" expl="wr (pool union pool`rep)`cdr">
+  <proof prover="0" obsolete="true"><result status="valid" time="27.033133" steps="287342"/></proof>
   </goal>
   <goal name="prog&#39;vc.83" expl="wr (pool union pool`rep)`arr">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.329492" steps="28709"/></proof>
   </goal>
   <goal name="prog&#39;vc.84" expl="wr (pool union pool`rep)`car">
+  <proof prover="0" obsolete="true"><result status="valid" time="26.693824" steps="283335"/></proof>
   </goal>
   <goal name="prog&#39;vc.85" expl="wr (pool union pool`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="27.002059" steps="289805"/></proof>
   </goal>
   <goal name="prog&#39;vc.86" expl="wr (pool union pool`rep)`cell_rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="26.744712" steps="284967"/></proof>
   </goal>
   <goal name="prog&#39;vc.87" expl="wr (pool union pool`rep)`top">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.272210" steps="28818"/></proof>
   </goal>
   <goal name="prog&#39;vc.88" expl="wr (pool union pool`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="30.186024" steps="291128"/></proof>
   </goal>
   <goal name="prog&#39;vc.89" expl="wr (pool union pool`rep)`cell_value">
+  <proof prover="0" obsolete="true"><result status="valid" time="30.154823" steps="286240"/></proof>
   </goal>
  </transf>
  </goal>
@@ -1340,336 +2608,502 @@
  <goal name="prog&#39;vc" expl="VC for prog">
  <transf name="split_vc" >
   <goal name="prog&#39;vc.0" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.076010" steps="102"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.073104" steps="102"/></proof>
   </goal>
   <goal name="prog&#39;vc.2" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.229419" steps="384"/></proof>
   </goal>
   <goal name="prog&#39;vc.3" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.222758" steps="397"/></proof>
   </goal>
   <goal name="prog&#39;vc.4" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.082943" steps="120"/></proof>
   </goal>
   <goal name="prog&#39;vc.5" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.075163" steps="120"/></proof>
   </goal>
   <goal name="prog&#39;vc.6" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.078738" steps="120"/></proof>
   </goal>
   <goal name="prog&#39;vc.7" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.077220" steps="120"/></proof>
   </goal>
   <goal name="prog&#39;vc.8" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="15.877219" steps="68696"/></proof>
   </goal>
   <goal name="prog&#39;vc.9" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.081587" steps="122"/></proof>
   </goal>
   <goal name="prog&#39;vc.10" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="842602"/></proof>
   </goal>
   <goal name="prog&#39;vc.11" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.080953" steps="126"/></proof>
   </goal>
   <goal name="prog&#39;vc.12" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="5.465304" steps="45439"/></proof>
   </goal>
   <goal name="prog&#39;vc.13" expl="Stack(stk)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.311576" steps="1218"/></proof>
   </goal>
   <goal name="prog&#39;vc.14" expl="locals type invariant left">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.506498" steps="1558"/></proof>
   </goal>
   <goal name="prog&#39;vc.15" expl="locals type invariant right">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.482794" steps="1563"/></proof>
   </goal>
   <goal name="prog&#39;vc.16" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.303537" steps="20512"/></proof>
   </goal>
   <goal name="prog&#39;vc.17" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.346296" steps="20517"/></proof>
   </goal>
   <goal name="prog&#39;vc.18" expl="wr {stk}`rep`cdr">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.180827" steps="740"/></proof>
   </goal>
   <goal name="prog&#39;vc.19" expl="wr {stk}`rep`car">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.228859" steps="744"/></proof>
   </goal>
   <goal name="prog&#39;vc.20" expl="wr ({stk} union {stk}`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.874410" steps="20564"/></proof>
   </goal>
   <goal name="prog&#39;vc.21" expl="wr {stk}`rep`cell_rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.199520" steps="752"/></proof>
   </goal>
   <goal name="prog&#39;vc.22" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.373957" steps="20570"/></proof>
   </goal>
   <goal name="prog&#39;vc.23" expl="wr {stk}`rep`cell_value">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.172730" steps="760"/></proof>
   </goal>
   <goal name="prog&#39;vc.24" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.479469" steps="1452"/></proof>
   </goal>
   <goal name="prog&#39;vc.25" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.664088" steps="21993"/></proof>
   </goal>
   <goal name="prog&#39;vc.26" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.718737" steps="21999"/></proof>
   </goal>
   <goal name="prog&#39;vc.27" expl="wr {stk}`rep`cdr">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.170810" steps="782"/></proof>
   </goal>
   <goal name="prog&#39;vc.28" expl="wr {stk}`rep`car">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.189203" steps="786"/></proof>
   </goal>
   <goal name="prog&#39;vc.29" expl="wr ({stk} union {stk}`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="4.173103" steps="22047"/></proof>
   </goal>
   <goal name="prog&#39;vc.30" expl="wr {stk}`rep`cell_rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.173952" steps="794"/></proof>
   </goal>
   <goal name="prog&#39;vc.31" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.670364" steps="22057"/></proof>
   </goal>
   <goal name="prog&#39;vc.32" expl="wr {stk}`rep`cell_value">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.169993" steps="802"/></proof>
   </goal>
   <goal name="prog&#39;vc.33" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.404007" steps="1504"/></proof>
   </goal>
   <goal name="prog&#39;vc.34" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.087723" steps="250"/></proof>
   </goal>
   <goal name="prog&#39;vc.35" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.766218" steps="3774"/></proof>
   </goal>
   <goal name="prog&#39;vc.36" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.091798" steps="255"/></proof>
   </goal>
   <goal name="prog&#39;vc.37" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.089857" steps="257"/></proof>
   </goal>
   <goal name="prog&#39;vc.38" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.086962" steps="258"/></proof>
   </goal>
   <goal name="prog&#39;vc.39" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.090473" steps="258"/></proof>
   </goal>
   <goal name="prog&#39;vc.40" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="128.630324" steps="917474"/></proof>
   </goal>
   <goal name="prog&#39;vc.41" expl="lockstep">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.116109" steps="262"/></proof>
   </goal>
   <goal name="prog&#39;vc.42" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.104003" steps="294"/></proof>
   </goal>
   <goal name="prog&#39;vc.43" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.135344" steps="294"/></proof>
   </goal>
   <goal name="prog&#39;vc.44" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.101192" steps="294"/></proof>
   </goal>
   <goal name="prog&#39;vc.45" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.134701" steps="294"/></proof>
   </goal>
   <goal name="prog&#39;vc.46" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.103760" steps="294"/></proof>
   </goal>
   <goal name="prog&#39;vc.47" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.116116" steps="294"/></proof>
   </goal>
   <goal name="prog&#39;vc.48" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1118483"/></proof>
   </goal>
   <goal name="prog&#39;vc.49" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.101035" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.50" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.096149" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.51" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.107170" steps="302"/></proof>
   </goal>
   <goal name="prog&#39;vc.52" expl="push(stk,i)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.111086" steps="302"/></proof>
   </goal>
   <goal name="prog&#39;vc.53" expl="locals type invariant left">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.828957" steps="3197"/></proof>
   </goal>
   <goal name="prog&#39;vc.54" expl="locals type invariant right">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.803008" steps="3203"/></proof>
   </goal>
   <goal name="prog&#39;vc.55" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="149.686765" steps="786744"/></proof>
   </goal>
   <goal name="prog&#39;vc.56" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="163.768290" steps="784354"/></proof>
   </goal>
   <goal name="prog&#39;vc.57" expl="wr {stk}`rep`cdr">
+  <proof prover="0" obsolete="true"><result status="valid" time="151.726599" steps="800386"/></proof>
   </goal>
   <goal name="prog&#39;vc.58" expl="wr {stk}`rep`car">
+  <proof prover="0" obsolete="true"><result status="valid" time="177.498146" steps="783477"/></proof>
   </goal>
   <goal name="prog&#39;vc.59" expl="wr ({stk} union {stk}`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="180.616594" steps="822766"/></proof>
   </goal>
   <goal name="prog&#39;vc.60" expl="wr {stk}`rep`cell_rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="169.127874" steps="791425"/></proof>
   </goal>
   <goal name="prog&#39;vc.61" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="187.474653" steps="788731"/></proof>
   </goal>
   <goal name="prog&#39;vc.62" expl="wr {stk}`rep`cell_value">
+  <proof prover="0" obsolete="true"><result status="valid" time="179.687630" steps="781556"/></proof>
   </goal>
   <goal name="prog&#39;vc.63" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.135842" steps="2973"/></proof>
   </goal>
   <goal name="prog&#39;vc.64" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="194.098068" steps="790175"/></proof>
   </goal>
   <goal name="prog&#39;vc.65" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="185.064477" steps="787110"/></proof>
   </goal>
   <goal name="prog&#39;vc.66" expl="wr {stk}`rep`cdr">
+  <proof prover="0" obsolete="true"><result status="valid" time="188.689193" steps="781534"/></proof>
   </goal>
   <goal name="prog&#39;vc.67" expl="wr {stk}`rep`car">
+  <proof prover="0" obsolete="true"><result status="valid" time="189.363785" steps="802918"/></proof>
   </goal>
   <goal name="prog&#39;vc.68" expl="wr ({stk} union {stk}`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="190.577641" steps="828959"/></proof>
   </goal>
   <goal name="prog&#39;vc.69" expl="wr {stk}`rep`cell_rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="174.494960" steps="774843"/></proof>
   </goal>
   <goal name="prog&#39;vc.70" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="181.971764" steps="814307"/></proof>
   </goal>
   <goal name="prog&#39;vc.71" expl="wr {stk}`rep`cell_value">
+  <proof prover="0" obsolete="true"><result status="valid" time="175.547498" steps="778003"/></proof>
   </goal>
   <goal name="prog&#39;vc.72" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.867114" steps="3001"/></proof>
   </goal>
   <goal name="prog&#39;vc.73" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.234957" steps="432"/></proof>
   </goal>
   <goal name="prog&#39;vc.74" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.129763" steps="432"/></proof>
   </goal>
   <goal name="prog&#39;vc.75" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.125223" steps="438"/></proof>
   </goal>
   <goal name="prog&#39;vc.76" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.178465" steps="441"/></proof>
   </goal>
   <goal name="prog&#39;vc.77" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.162045" steps="442"/></proof>
   </goal>
   <goal name="prog&#39;vc.78" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.196316" steps="444"/></proof>
   </goal>
   <goal name="prog&#39;vc.79" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1007215"/></proof>
   </goal>
   <goal name="prog&#39;vc.80" expl="lockstep">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.138270" steps="448"/></proof>
   </goal>
   <goal name="prog&#39;vc.81" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.106169" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.82" expl="locals type invariant left">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.115780" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.83" expl="locals type invariant right">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.139959" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.84" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.108043" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.85" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.112817" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.86" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.103138" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.87" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.102176" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.88" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.108425" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.89" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.129055" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.90" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.102127" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.91" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.097590" steps="298"/></proof>
   </goal>
   <goal name="prog&#39;vc.92" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.109729" steps="302"/></proof>
   </goal>
   <goal name="prog&#39;vc.93" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.107895" steps="303"/></proof>
   </goal>
   <goal name="prog&#39;vc.94" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.103305" steps="303"/></proof>
   </goal>
   <goal name="prog&#39;vc.95" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.121610" steps="305"/></proof>
   </goal>
   <goal name="prog&#39;vc.96" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.119968" steps="305"/></proof>
   </goal>
   <goal name="prog&#39;vc.97" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.130463" steps="305"/></proof>
   </goal>
   <goal name="prog&#39;vc.98" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.123180" steps="305"/></proof>
   </goal>
   <goal name="prog&#39;vc.99" expl="loop invariant init">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.129519" steps="305"/></proof>
   </goal>
   <goal name="prog&#39;vc.100" expl="lockstep">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.153782" steps="305"/></proof>
   </goal>
   <goal name="prog&#39;vc.101" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.154230" steps="366"/></proof>
   </goal>
   <goal name="prog&#39;vc.102" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.141237" steps="366"/></proof>
   </goal>
   <goal name="prog&#39;vc.103" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.142339" steps="366"/></proof>
   </goal>
   <goal name="prog&#39;vc.104" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.146080" steps="366"/></proof>
   </goal>
   <goal name="prog&#39;vc.105" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.151411" steps="366"/></proof>
   </goal>
   <goal name="prog&#39;vc.106" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.152089" steps="366"/></proof>
   </goal>
   <goal name="prog&#39;vc.107" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1075684"/></proof>
   </goal>
   <goal name="prog&#39;vc.108" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.110738" steps="370"/></proof>
   </goal>
   <goal name="prog&#39;vc.109" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.116130" steps="370"/></proof>
   </goal>
   <goal name="prog&#39;vc.110" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.140384" steps="370"/></proof>
   </goal>
   <goal name="prog&#39;vc.111" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.129642" steps="372"/></proof>
   </goal>
   <goal name="prog&#39;vc.112" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.236375" steps="469"/></proof>
   </goal>
   <goal name="prog&#39;vc.113" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.212378" steps="469"/></proof>
   </goal>
   <goal name="prog&#39;vc.114" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.175595" steps="469"/></proof>
   </goal>
   <goal name="prog&#39;vc.115" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.138629" steps="469"/></proof>
   </goal>
   <goal name="prog&#39;vc.116" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.131056" steps="469"/></proof>
   </goal>
   <goal name="prog&#39;vc.117" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.171618" steps="469"/></proof>
   </goal>
   <goal name="prog&#39;vc.118" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.134005" steps="469"/></proof>
   </goal>
   <goal name="prog&#39;vc.119" expl="locals type invariant left">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.322461" steps="1680"/></proof>
   </goal>
   <goal name="prog&#39;vc.120" expl="locals type invariant right">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.393711" steps="1686"/></proof>
   </goal>
   <goal name="prog&#39;vc.121" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="14.589796" steps="65083"/></proof>
   </goal>
   <goal name="prog&#39;vc.122" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="13.843460" steps="65085"/></proof>
   </goal>
   <goal name="prog&#39;vc.123" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="13.728361" steps="65162"/></proof>
   </goal>
   <goal name="prog&#39;vc.124" expl="wr ({stk} union {stk}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="14.156284" steps="65137"/></proof>
   </goal>
   <goal name="prog&#39;vc.125" expl="wr ({stk} union {stk}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="14.554256" steps="65153"/></proof>
   </goal>
   <goal name="prog&#39;vc.126" expl="wr ({stk} union {stk}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="14.707560" steps="65218"/></proof>
   </goal>
   <goal name="prog&#39;vc.127" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.182291" steps="499"/></proof>
   </goal>
   <goal name="prog&#39;vc.128" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.147224" steps="499"/></proof>
   </goal>
   <goal name="prog&#39;vc.129" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.148441" steps="503"/></proof>
   </goal>
   <goal name="prog&#39;vc.130" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.141819" steps="504"/></proof>
   </goal>
   <goal name="prog&#39;vc.131" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.143687" steps="508"/></proof>
   </goal>
   <goal name="prog&#39;vc.132" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.184781" steps="510"/></proof>
   </goal>
   <goal name="prog&#39;vc.133" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.143013" steps="510"/></proof>
   </goal>
   <goal name="prog&#39;vc.134" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.199026" steps="510"/></proof>
   </goal>
   <goal name="prog&#39;vc.135" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.142191" steps="511"/></proof>
   </goal>
   <goal name="prog&#39;vc.136" expl="loop invariant preservation">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.168137" steps="512"/></proof>
   </goal>
   <goal name="prog&#39;vc.137" expl="lockstep">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.164099" steps="514"/></proof>
   </goal>
   <goal name="prog&#39;vc.138" expl="wr (pool union pool`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="89.824458" steps="461667"/></proof>
   </goal>
   <goal name="prog&#39;vc.139" expl="wr (pool union pool`rep)`slots">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1080644"/></proof>
   </goal>
   <goal name="prog&#39;vc.140" expl="wr (pool union pool`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="89.387916" steps="464973"/></proof>
   </goal>
   <goal name="prog&#39;vc.141" expl="wr (pool union pool`rep)`cdr">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1027667"/></proof>
   </goal>
   <goal name="prog&#39;vc.142" expl="wr (pool union pool`rep)`arr">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1104525"/></proof>
   </goal>
   <goal name="prog&#39;vc.143" expl="wr (pool union pool`rep)`car">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1065405"/></proof>
   </goal>
   <goal name="prog&#39;vc.144" expl="wr (pool union pool`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1086689"/></proof>
   </goal>
   <goal name="prog&#39;vc.145" expl="wr (pool union pool`rep)`cell_rep">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1110190"/></proof>
   </goal>
   <goal name="prog&#39;vc.146" expl="wr (pool union pool`rep)`top">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1118951"/></proof>
   </goal>
   <goal name="prog&#39;vc.147" expl="wr (pool union pool`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="79.570907" steps="468601"/></proof>
   </goal>
   <goal name="prog&#39;vc.148" expl="wr (pool union pool`rep)`length">
+  <proof prover="0" obsolete="true"><result status="valid" time="14.419476" steps="87443"/></proof>
   </goal>
   <goal name="prog&#39;vc.149" expl="wr (pool union pool`rep)`cell_value">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1161425"/></proof>
   </goal>
   <goal name="prog&#39;vc.150" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.060547" steps="30112"/></proof>
   </goal>
   <goal name="prog&#39;vc.151" expl="wr (pool union pool`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="85.211239" steps="503027"/></proof>
   </goal>
   <goal name="prog&#39;vc.152" expl="wr (pool union pool`rep)`slots">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1117875"/></proof>
   </goal>
   <goal name="prog&#39;vc.153" expl="wr (pool union pool`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="84.491563" steps="494185"/></proof>
   </goal>
   <goal name="prog&#39;vc.154" expl="wr (pool union pool`rep)`cdr">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1125160"/></proof>
   </goal>
   <goal name="prog&#39;vc.155" expl="wr (pool union pool`rep)`arr">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1109785"/></proof>
   </goal>
   <goal name="prog&#39;vc.156" expl="wr (pool union pool`rep)`car">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1165663"/></proof>
   </goal>
   <goal name="prog&#39;vc.157" expl="wr (pool union pool`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1102821"/></proof>
   </goal>
   <goal name="prog&#39;vc.158" expl="wr (pool union pool`rep)`cell_rep">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1119753"/></proof>
   </goal>
   <goal name="prog&#39;vc.159" expl="wr (pool union pool`rep)`top">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1113815"/></proof>
   </goal>
   <goal name="prog&#39;vc.160" expl="wr (pool union pool`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="97.089195" steps="518018"/></proof>
   </goal>
   <goal name="prog&#39;vc.161" expl="wr (pool union pool`rep)`length">
+  <proof prover="0" obsolete="true"><result status="valid" time="15.121533" steps="95671"/></proof>
   </goal>
   <goal name="prog&#39;vc.162" expl="wr (pool union pool`rep)`cell_value">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1126546"/></proof>
   </goal>
   <goal name="prog&#39;vc.163" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.440119" steps="32573"/></proof>
   </goal>
   <goal name="prog&#39;vc.164" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.112273" steps="418"/></proof>
   </goal>
   <goal name="prog&#39;vc.165" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.111175" steps="418"/></proof>
   </goal>
  </transf>
  </goal>
@@ -1678,483 +3112,627 @@
  <goal name="init_Stack&#39;vc" expl="VC for init_Stack">
  <transf name="split_vc" >
   <goal name="init_Stack&#39;vc.0" expl="self.rep := {}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.064514" steps="40"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.1" expl="self.rep := {}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.061896" steps="40"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.2" expl="self.rep := {}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.229658" steps="833"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.3" expl="self.rep := {null}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.089224" steps="74"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.4" expl="self.rep := {null}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.074752" steps="74"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.5" expl="self.rep := {null}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.151523" steps="365"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.6" expl="self.head := null">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.069213" steps="104"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.7" expl="self.head := null">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.101971" steps="381"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.8" expl="self.head := null">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.106992" steps="108"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.9" expl="self.contents := nil">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.077968" steps="134"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.10" expl="self.contents := nil">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.119108" steps="442"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.11" expl="self.contents := nil">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.086409" steps="164"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.12" expl="self.contents := nil">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.123038" steps="503"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.13" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.103597" steps="196"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.14" expl="self.size := 0">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.106081" steps="196"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.15" expl="self.size := 0">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.129530" steps="573"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.16" expl="self.size := 0">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.079907" steps="226"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.17" expl="self.size := 0">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.170964" steps="634"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.18" expl="self.top := - 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.079631" steps="256"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.19" expl="self.top := - 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.192240" steps="698"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.20" expl="arr := new(CellArray){maxSize}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.081084" steps="322"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.21" expl="arr := new(CellArray){maxSize}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.081886" steps="322"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.22" expl="array size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.144098" steps="405"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.23" expl="arr := new(CellArray){maxSize}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.095231" steps="354"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.24" expl="arr := new(CellArray){maxSize}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.196091" steps="1047"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.25" expl="self.arr := arr">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.084492" steps="384"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.26" expl="self.arr := arr">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.014081" steps="4942"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.27" expl="self.arr := arr">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.211306" steps="1162"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.28" expl="rep := self.rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.552314" steps="2693"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.29" expl="self.rep := rep union {arr}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.097196" steps="422"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.30" expl="self.rep := rep union {arr}">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.177182" steps="5783"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.31" expl="self.rep := rep union {arr}">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.699733" steps="8356"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.32" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.345625" steps="10994"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.33" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.666622" steps="12205"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.34" expl="wr {self}`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.167077" steps="14820"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.35" expl="wr {self}`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.262615" steps="14615"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.36" expl="wr {self}`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.142272" steps="14634"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.37" expl="wr {self}`top">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.989786" steps="14677"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.38" expl="wr {self}`arr">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.032012" steps="14675"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.39" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.681803" steps="8600"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.40" expl="wr {}`length">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.210616" steps="14958"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.41" expl="wr {}`slots">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.131142" steps="14947"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.42" expl="wr {self}`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.038015" steps="14868"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.43" expl="wr {self}`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.982305" steps="14909"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.44" expl="wr {self}`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.051544" steps="14928"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.45" expl="wr {self}`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.073884" steps="14953"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.46" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.000359" steps="14470"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.47" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.992552" steps="14484"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.48" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="4.995292" steps="23716"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.49" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.108702" steps="564"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.50" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.115099" steps="564"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.51" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.194605" steps="688"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.52" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.341061" steps="1860"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.53" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.163306" steps="573"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.54" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="5.301785" steps="24668"/></proof>
   </goal>
   <goal name="init_Stack&#39;vc.55" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.111267" steps="577"/></proof>
   </goal>
  </transf>
  </goal>
  <goal name="isEmpty&#39;vc" expl="VC for isEmpty">
  <transf name="split_vc" >
   <goal name="isEmpty&#39;vc.0" expl="sz := self.size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.123642" steps="222"/></proof>
   </goal>
   <goal name="isEmpty&#39;vc.1" expl="sz := self.size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.122859" steps="227"/></proof>
   </goal>
   <goal name="isEmpty&#39;vc.2" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.066364" steps="48"/></proof>
   </goal>
   <goal name="isEmpty&#39;vc.3" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.067649" steps="48"/></proof>
   </goal>
   <goal name="isEmpty&#39;vc.4" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="4.641634" steps="27554"/></proof>
   </goal>
   <goal name="isEmpty&#39;vc.5" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.096052" steps="52"/></proof>
   </goal>
   <goal name="isEmpty&#39;vc.6" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.120429" steps="52"/></proof>
   </goal>
   <goal name="isEmpty&#39;vc.7" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.155975" steps="322"/></proof>
   </goal>
  </transf>
  </goal>
  <goal name="push&#39;vc" expl="VC for push">
  <transf name="split_vc" >
   <goal name="push&#39;vc.0" expl="a := self.arr">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.153913" steps="271"/></proof>
   </goal>
-  <goal name="push&#39;vc.1" expl="t := self.top">
+  <goal name="push&#39;vc.1" expl="m := self.top">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.149386" steps="276"/></proof>
   </goal>
-  <goal name="push&#39;vc.2" expl="self.top := t + 1">
+  <goal name="push&#39;vc.2" expl="self.top := m + 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.086805" steps="54"/></proof>
   </goal>
-  <goal name="push&#39;vc.3" expl="self.top := t + 1">
+  <goal name="push&#39;vc.3" expl="self.top := m + 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.076207" steps="54"/></proof>
   </goal>
   <goal name="push&#39;vc.4" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.080656" steps="156"/></proof>
   </goal>
   <goal name="push&#39;vc.5" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.094670" steps="156"/></proof>
   </goal>
   <goal name="push&#39;vc.6" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.214128" steps="676"/></proof>
   </goal>
   <goal name="push&#39;vc.7" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.215256" steps="685"/></proof>
   </goal>
   <goal name="push&#39;vc.8" expl="v.cell_value := k">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.093953" steps="174"/></proof>
   </goal>
   <goal name="push&#39;vc.9" expl="v.cell_value := k">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.106282" steps="174"/></proof>
   </goal>
   <goal name="push&#39;vc.10" expl="v.cell_rep := {v}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.103293" steps="208"/></proof>
   </goal>
   <goal name="push&#39;vc.11" expl="v.cell_rep := {v}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.157029" steps="655"/></proof>
   </goal>
   <goal name="push&#39;vc.12" expl="v.cell_rep := {v}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.328117" steps="1106"/></proof>
   </goal>
   <goal name="push&#39;vc.13" expl="Cell(v,k)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.084268" steps="238"/></proof>
   </goal>
   <goal name="push&#39;vc.14" expl="Cell(v,k)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.088802" steps="238"/></proof>
   </goal>
   <goal name="push&#39;vc.15" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="2.210243" steps="9353"/></proof>
   </goal>
-  <goal name="push&#39;vc.16" expl="a.{t + 1} := v ( index is in bounds)">
+  <goal name="push&#39;vc.16" expl="a.{m + 1} := v ( index is in bounds)">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.973688" steps="9493"/></proof>
   </goal>
   <goal name="push&#39;vc.17" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.035823" steps="4563"/></proof>
   </goal>
   <goal name="push&#39;vc.18" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.658844" steps="3233"/></proof>
   </goal>
   <goal name="push&#39;vc.19" expl="self.arr := a">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.134344" steps="308"/></proof>
   </goal>
   <goal name="push&#39;vc.20" expl="self.arr := a">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.543060" steps="1727"/></proof>
   </goal>
   <goal name="push&#39;vc.21" expl="self.arr := a">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.768275" steps="3588"/></proof>
   </goal>
   <goal name="push&#39;vc.22" expl="n.car := v">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.091008" steps="374"/></proof>
   </goal>
   <goal name="push&#39;vc.23" expl="n.car := v">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.122820" steps="374"/></proof>
   </goal>
   <goal name="push&#39;vc.24" expl="n.car := v">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.697200" steps="2420"/></proof>
   </goal>
   <goal name="push&#39;vc.25" expl="tmp := self.head">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.589347" steps="2597"/></proof>
   </goal>
   <goal name="push&#39;vc.26" expl="n.cdr := tmp">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.103575" steps="408"/></proof>
   </goal>
   <goal name="push&#39;vc.27" expl="n.cdr := tmp">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.244986" steps="1242"/></proof>
   </goal>
   <goal name="push&#39;vc.28" expl="n.cdr := tmp">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.358697" steps="15734"/></proof>
   </goal>
   <goal name="push&#39;vc.29" expl="self.head := n">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.109203" steps="438"/></proof>
   </goal>
   <goal name="push&#39;vc.30" expl="self.head := n">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.097400" steps="4630"/></proof>
   </goal>
   <goal name="push&#39;vc.31" expl="self.head := n">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.229733" steps="1393"/></proof>
   </goal>
   <goal name="push&#39;vc.32" expl="sz := self.size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.700815" steps="3336"/></proof>
   </goal>
   <goal name="push&#39;vc.33" expl="sz := self.size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.727142" steps="3367"/></proof>
   </goal>
   <goal name="push&#39;vc.34" expl="self.size := sz + 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.139226" steps="476"/></proof>
   </goal>
   <goal name="push&#39;vc.35" expl="self.size := sz + 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.890588" steps="3463"/></proof>
   </goal>
   <goal name="push&#39;vc.36" expl="self.size := sz + 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.155865" steps="506"/></proof>
   </goal>
   <goal name="push&#39;vc.37" expl="self.size := sz + 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.486557" steps="5829"/></proof>
   </goal>
   <goal name="push&#39;vc.38" expl="rep := self.rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.911452" steps="4073"/></proof>
   </goal>
   <goal name="push&#39;vc.39" expl="rep := self.rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.926942" steps="4098"/></proof>
   </goal>
   <goal name="push&#39;vc.40" expl="self.rep := rep union {v}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.113425" steps="544"/></proof>
   </goal>
   <goal name="push&#39;vc.41" expl="self.rep := rep union {v}">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.235679" steps="4199"/></proof>
   </goal>
   <goal name="push&#39;vc.42" expl="self.rep := rep union {v}">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.202763" steps="25189"/></proof>
   </goal>
   <goal name="push&#39;vc.43" expl="self.rep := rep union {v} union {n}">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.111813" steps="582"/></proof>
   </goal>
   <goal name="push&#39;vc.44" expl="self.rep := rep union {v} union {n}">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.568590" steps="7193"/></proof>
   </goal>
   <goal name="push&#39;vc.45" expl="self.rep := rep union {v} union {n}">
+  <proof prover="0" obsolete="true"><result status="valid" time="9.462116" steps="35198"/></proof>
   </goal>
   <goal name="push&#39;vc.46" expl="contents := self.contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.570269" steps="4984"/></proof>
   </goal>
   <goal name="push&#39;vc.47" expl="contents := self.contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.229433" steps="5006"/></proof>
   </goal>
   <goal name="push&#39;vc.48" expl="self.contents := cons(k,contents)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.148030" steps="620"/></proof>
   </goal>
   <goal name="push&#39;vc.49" expl="self.contents := cons(k,contents)">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.217996" steps="5122"/></proof>
   </goal>
   <goal name="push&#39;vc.50" expl="self.contents := cons(k,contents)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.130612" steps="650"/></proof>
   </goal>
   <goal name="push&#39;vc.51" expl="self.contents := cons(k,contents)">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.522285" steps="7636"/></proof>
   </goal>
   <goal name="push&#39;vc.52" expl="wr ({self} union {self}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.500643" steps="27873"/></proof>
   </goal>
   <goal name="push&#39;vc.53" expl="wr {self}`rep`slots">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.950010" steps="31675"/></proof>
   </goal>
   <goal name="push&#39;vc.54" expl="wr ({self} union {self}`rep)`arr">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.531288" steps="25507"/></proof>
   </goal>
   <goal name="push&#39;vc.55" expl="wr ({self} union {self}`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="5.759118" steps="25637"/></proof>
   </goal>
   <goal name="push&#39;vc.56" expl="wr {self}`rep`cell_rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="7.949587" steps="36254"/></proof>
   </goal>
   <goal name="push&#39;vc.57" expl="wr ({self} union {self}`rep)`top">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.359018" steps="25665"/></proof>
   </goal>
   <goal name="push&#39;vc.58" expl="wr ({self} union {self}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.355916" steps="28114"/></proof>
   </goal>
   <goal name="push&#39;vc.59" expl="wr {self}`rep`cell_value">
+  <proof prover="0" obsolete="true"><result status="valid" time="8.249253" steps="36324"/></proof>
   </goal>
   <goal name="push&#39;vc.60" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.004104" steps="11761"/></proof>
   </goal>
   <goal name="push&#39;vc.61" expl="wr ({self} union {self}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="5.809507" steps="25915"/></proof>
   </goal>
   <goal name="push&#39;vc.62" expl="wr ({self} union {self}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.282233" steps="28413"/></proof>
   </goal>
   <goal name="push&#39;vc.63" expl="wr {self}`rep`cdr">
+  <proof prover="0" obsolete="true"><result status="valid" time="30.545779" steps="123929"/></proof>
   </goal>
   <goal name="push&#39;vc.64" expl="wr {self}`rep`car">
+  <proof prover="0" obsolete="true"><result status="valid" time="30.734992" steps="121530"/></proof>
   </goal>
   <goal name="push&#39;vc.65" expl="wr ({self} union {self}`rep)`rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="5.799231" steps="26354"/></proof>
   </goal>
   <goal name="push&#39;vc.66" expl="wr {self}`rep`cell_rep">
+  <proof prover="0" obsolete="true"><result status="valid" time="8.624821" steps="40270"/></proof>
   </goal>
   <goal name="push&#39;vc.67" expl="wr ({self} union {self}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="5.826891" steps="26075"/></proof>
   </goal>
   <goal name="push&#39;vc.68" expl="wr {self}`rep`cell_value">
+  <proof prover="0" obsolete="true"><result status="valid" time="8.810464" steps="39877"/></proof>
   </goal>
   <goal name="push&#39;vc.69" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.059403" steps="27500"/></proof>
   </goal>
   <goal name="push&#39;vc.70" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="806558"/></proof>
   </goal>
   <goal name="push&#39;vc.71" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="779716"/></proof>
   </goal>
   <goal name="push&#39;vc.72" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="825869"/></proof>
   </goal>
   <goal name="push&#39;vc.73" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.160647" steps="740"/></proof>
   </goal>
   <goal name="push&#39;vc.74" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.200362" steps="740"/></proof>
   </goal>
   <goal name="push&#39;vc.75" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.456719" steps="2765"/></proof>
   </goal>
   <goal name="push&#39;vc.76" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.495985" steps="2769"/></proof>
   </goal>
   <goal name="push&#39;vc.77" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.154503" steps="748"/></proof>
   </goal>
   <goal name="push&#39;vc.78" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="760759"/></proof>
   </goal>
   <goal name="push&#39;vc.79" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.129222" steps="752"/></proof>
   </goal>
  </transf>
  </goal>
  <goal name="pop&#39;vc" expl="VC for pop">
  <transf name="split_vc" >
-  <goal name="pop&#39;vc.0" expl="a := self.arr" proved="true">
-  <proof prover="0"><result status="valid" time="0.202083" steps="271"/></proof>
+  <goal name="pop&#39;vc.0" expl="a := self.arr">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.202083" steps="271"/></proof>
   </goal>
-  <goal name="pop&#39;vc.1" expl="t := self.top" proved="true">
-  <proof prover="0"><result status="valid" time="0.206695" steps="276"/></proof>
+  <goal name="pop&#39;vc.1" expl="m := self.top">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.206695" steps="276"/></proof>
   </goal>
-  <goal name="pop&#39;vc.2" expl="tmp := self.head" proved="true">
-  <proof prover="0"><result status="valid" time="0.163361" steps="283"/></proof>
+  <goal name="pop&#39;vc.2" expl="tmp := self.head">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.163361" steps="283"/></proof>
   </goal>
   <goal name="pop&#39;vc.3" expl="assertion">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="567859"/></proof>
+  <proof prover="0" obsolete="true"><result status="valid" time="4.004589" steps="18797"/></proof>
   </goal>
   <goal name="pop&#39;vc.4" expl="assertion">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="578558"/></proof>
+  <proof prover="0" obsolete="true"><result status="valid" time="0.585898" steps="2884"/></proof>
   </goal>
-  <goal name="pop&#39;vc.5" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.143451" steps="70"/></proof>
+  <goal name="pop&#39;vc.5" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.083542" steps="70"/></proof>
   </goal>
-  <goal name="pop&#39;vc.6" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.506491" steps="1076"/></proof>
+  <goal name="pop&#39;vc.6" expl="precondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.283735" steps="1077"/></proof>
   </goal>
-  <goal name="pop&#39;vc.7" expl="result := a.{t} ( index is in bounds)" proved="true">
-  <proof prover="0"><result status="valid" time="0.349157" steps="906"/></proof>
+  <goal name="pop&#39;vc.7" expl="result := a.{m} ( index is in bounds)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.191651" steps="906"/></proof>
   </goal>
-  <goal name="pop&#39;vc.8" expl="result := tmp.car" proved="true">
-  <proof prover="0"><result status="valid" time="0.424686" steps="1117"/></proof>
+  <goal name="pop&#39;vc.8" expl="result := tmp.car">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.275523" steps="1121"/></proof>
   </goal>
-  <goal name="pop&#39;vc.9" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.083542" steps="76"/></proof>
+  <goal name="pop&#39;vc.9" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.143451" steps="76"/></proof>
   </goal>
-  <goal name="pop&#39;vc.10" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.197202" steps="366"/></proof>
+  <goal name="pop&#39;vc.10" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.197202" steps="366"/></proof>
   </goal>
-  <goal name="pop&#39;vc.11" expl="self.top := t - 1" proved="true">
-  <proof prover="0"><result status="valid" time="0.082693" steps="78"/></proof>
+  <goal name="pop&#39;vc.11" expl="self.top := m - 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.087880" steps="78"/></proof>
   </goal>
-  <goal name="pop&#39;vc.12" expl="self.top := t - 1" proved="true">
-  <proof prover="0"><result status="valid" time="0.087880" steps="78"/></proof>
+  <goal name="pop&#39;vc.12" expl="self.top := m - 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.082693" steps="78"/></proof>
   </goal>
-  <goal name="pop&#39;vc.13" expl="nxt := tmp.cdr" proved="true">
-  <proof prover="0"><result status="valid" time="0.512705" steps="1798"/></proof>
+  <goal name="pop&#39;vc.13" expl="nxt := tmp.cdr">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.512705" steps="1805"/></proof>
   </goal>
-  <goal name="pop&#39;vc.14" expl="self.head := nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.089161" steps="112"/></proof>
+  <goal name="pop&#39;vc.14" expl="self.head := nxt">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.089161" steps="112"/></proof>
   </goal>
-  <goal name="pop&#39;vc.15" expl="self.head := nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.095554" steps="112"/></proof>
+  <goal name="pop&#39;vc.15" expl="self.head := nxt">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.095554" steps="112"/></proof>
   </goal>
-  <goal name="pop&#39;vc.16" expl="self.head := nxt" proved="true">
-  <proof prover="0"><result status="valid" time="0.768820" steps="2890"/></proof>
+  <goal name="pop&#39;vc.16" expl="self.head := nxt">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.768820" steps="2901"/></proof>
   </goal>
-  <goal name="pop&#39;vc.17" expl="sz := self.size" proved="true">
-  <proof prover="0"><result status="valid" time="0.229652" steps="526"/></proof>
+  <goal name="pop&#39;vc.17" expl="sz := self.size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.229652" steps="526"/></proof>
   </goal>
-  <goal name="pop&#39;vc.18" expl="sz := self.size" proved="true">
-  <proof prover="0"><result status="valid" time="0.202703" steps="547"/></proof>
+  <goal name="pop&#39;vc.18" expl="sz := self.size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.202703" steps="547"/></proof>
   </goal>
-  <goal name="pop&#39;vc.19" expl="self.size := sz - 1" proved="true">
-  <proof prover="0"><result status="valid" time="0.086037" steps="150"/></proof>
+  <goal name="pop&#39;vc.19" expl="self.size := sz - 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.086037" steps="150"/></proof>
   </goal>
-  <goal name="pop&#39;vc.20" expl="self.size := sz - 1" proved="true">
-  <proof prover="0"><result status="valid" time="0.138199" steps="451"/></proof>
+  <goal name="pop&#39;vc.20" expl="self.size := sz - 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.138199" steps="451"/></proof>
   </goal>
-  <goal name="pop&#39;vc.21" expl="self.size := sz - 1" proved="true">
-  <proof prover="0"><result status="valid" time="0.111959" steps="180"/></proof>
+  <goal name="pop&#39;vc.21" expl="self.size := sz - 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.111959" steps="180"/></proof>
   </goal>
-  <goal name="pop&#39;vc.22" expl="self.size := sz - 1" proved="true">
-  <proof prover="0"><result status="valid" time="0.168218" steps="518"/></proof>
+  <goal name="pop&#39;vc.22" expl="self.size := sz - 1">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.168218" steps="518"/></proof>
   </goal>
-  <goal name="pop&#39;vc.23" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.132364" steps="249"/></proof>
+  <goal name="pop&#39;vc.23" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.132364" steps="249"/></proof>
   </goal>
-  <goal name="pop&#39;vc.24" expl="contents := self.contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.285064" steps="835"/></proof>
+  <goal name="pop&#39;vc.24" expl="contents := self.contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.285064" steps="835"/></proof>
   </goal>
-  <goal name="pop&#39;vc.25" expl="contents := self.contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.316551" steps="848"/></proof>
+  <goal name="pop&#39;vc.25" expl="contents := self.contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.316551" steps="848"/></proof>
   </goal>
-  <goal name="pop&#39;vc.26" expl="self.contents := tl(contents)" proved="true">
-  <proof prover="0"><result status="valid" time="0.095533" steps="220"/></proof>
+  <goal name="pop&#39;vc.26" expl="self.contents := tl(contents)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.095533" steps="220"/></proof>
   </goal>
-  <goal name="pop&#39;vc.27" expl="self.contents := tl(contents)" proved="true">
-  <proof prover="0"><result status="valid" time="0.169292" steps="602"/></proof>
+  <goal name="pop&#39;vc.27" expl="self.contents := tl(contents)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.169292" steps="602"/></proof>
   </goal>
-  <goal name="pop&#39;vc.28" expl="self.contents := tl(contents)" proved="true">
-  <proof prover="0"><result status="valid" time="0.106006" steps="250"/></proof>
+  <goal name="pop&#39;vc.28" expl="self.contents := tl(contents)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.106006" steps="250"/></proof>
   </goal>
-  <goal name="pop&#39;vc.29" expl="self.contents := tl(contents)" proved="true">
-  <proof prover="0"><result status="valid" time="0.175483" steps="666"/></proof>
+  <goal name="pop&#39;vc.29" expl="self.contents := tl(contents)">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.175483" steps="666"/></proof>
   </goal>
-  <goal name="pop&#39;vc.30" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="2.636042" steps="8786"/></proof>
+  <goal name="pop&#39;vc.30" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.832149" steps="8883"/></proof>
   </goal>
-  <goal name="pop&#39;vc.31" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="2.269440" steps="7566"/></proof>
+  <goal name="pop&#39;vc.31" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.564559" steps="7585"/></proof>
   </goal>
-  <goal name="pop&#39;vc.32" expl="wr ({self} union {self}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="1.267008" steps="3798"/></proof>
+  <goal name="pop&#39;vc.32" expl="wr ({self} union {self}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.874324" steps="3795"/></proof>
   </goal>
-  <goal name="pop&#39;vc.33" expl="wr ({self} union {self}`rep)`top" proved="true">
-  <proof prover="0"><result status="valid" time="1.130260" steps="3836"/></proof>
+  <goal name="pop&#39;vc.33" expl="wr ({self} union {self}`rep)`top">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.843621" steps="3838"/></proof>
   </goal>
-  <goal name="pop&#39;vc.34" expl="wr ({self} union {self}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="1.010397" steps="3858"/></proof>
+  <goal name="pop&#39;vc.34" expl="wr ({self} union {self}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="1.010397" steps="3855"/></proof>
   </goal>
-  <goal name="pop&#39;vc.35" expl="wr ({self} union {self}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="1.222564" steps="3921"/></proof>
+  <goal name="pop&#39;vc.35" expl="wr ({self} union {self}`rep)`contents">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.877780" steps="3920"/></proof>
   </goal>
-  <goal name="pop&#39;vc.36" expl="wr ({self} union {self}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="1.404259" steps="3949"/></proof>
+  <goal name="pop&#39;vc.36" expl="wr ({self} union {self}`rep)`head">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.852046" steps="3943"/></proof>
   </goal>
-  <goal name="pop&#39;vc.37" expl="wr ({self} union {self}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="1.440093" steps="3963"/></proof>
+  <goal name="pop&#39;vc.37" expl="wr ({self} union {self}`rep)`size">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.855386" steps="3963"/></proof>
   </goal>
-  <goal name="pop&#39;vc.38" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="4.453665" steps="14065"/></proof>
+  <goal name="pop&#39;vc.38" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="3.310964" steps="14022"/></proof>
   </goal>
-  <goal name="pop&#39;vc.39" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="14.744723" steps="42843"/></proof>
+  <goal name="pop&#39;vc.39" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="10.513829" steps="43002"/></proof>
   </goal>
   <goal name="pop&#39;vc.40" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="611632"/></proof>
+  <proof prover="0" obsolete="true"><result status="valid" time="12.248014" steps="55554"/></proof>
   </goal>
   <goal name="pop&#39;vc.41" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1262395"/></proof>
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1272358"/></proof>
   </goal>
-  <goal name="pop&#39;vc.42" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.115091" steps="318"/></proof>
+  <goal name="pop&#39;vc.42" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.115091" steps="318"/></proof>
   </goal>
-  <goal name="pop&#39;vc.43" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.130959" steps="318"/></proof>
+  <goal name="pop&#39;vc.43" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.130959" steps="318"/></proof>
   </goal>
-  <goal name="pop&#39;vc.44" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.120300" steps="320"/></proof>
+  <goal name="pop&#39;vc.44" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.120300" steps="320"/></proof>
   </goal>
-  <goal name="pop&#39;vc.45" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.281850" steps="905"/></proof>
+  <goal name="pop&#39;vc.45" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.281850" steps="905"/></proof>
   </goal>
-  <goal name="pop&#39;vc.46" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="8.591502" steps="30243"/></proof>
+  <goal name="pop&#39;vc.46" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="6.391769" steps="30228"/></proof>
   </goal>
-  <goal name="pop&#39;vc.47" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.200662" steps="649"/></proof>
+  <goal name="pop&#39;vc.47" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.200662" steps="649"/></proof>
   </goal>
   <goal name="pop&#39;vc.48" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1285517"/></proof>
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1394356"/></proof>
   </goal>
   <goal name="pop&#39;vc.49" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1341524"/></proof>
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1512273"/></proof>
   </goal>
  </transf>
  </goal>
- <goal name="getCellValue&#39;vc" expl="VC for getCellValue" proved="true">
- <transf name="split_vc" proved="true" >
-  <goal name="getCellValue&#39;vc.0" expl="result := c.cell_value" proved="true">
-  <proof prover="0"><result status="valid" time="0.141271" steps="141"/></proof>
+ <goal name="getCellValue&#39;vc" expl="VC for getCellValue">
+ <transf name="split_vc" >
+  <goal name="getCellValue&#39;vc.0" expl="result := c.cell_value">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.141271" steps="141"/></proof>
   </goal>
-  <goal name="getCellValue&#39;vc.1" expl="result := c.cell_value" proved="true">
-  <proof prover="0"><result status="valid" time="0.191987" steps="149"/></proof>
+  <goal name="getCellValue&#39;vc.1" expl="result := c.cell_value">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.191987" steps="149"/></proof>
   </goal>
-  <goal name="getCellValue&#39;vc.2" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.124299" steps="36"/></proof>
+  <goal name="getCellValue&#39;vc.2" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.124299" steps="36"/></proof>
   </goal>
-  <goal name="getCellValue&#39;vc.3" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.133939" steps="36"/></proof>
+  <goal name="getCellValue&#39;vc.3" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.133939" steps="36"/></proof>
   </goal>
-  <goal name="getCellValue&#39;vc.4" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.110160" steps="36"/></proof>
+  <goal name="getCellValue&#39;vc.4" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.110160" steps="36"/></proof>
   </goal>
-  <goal name="getCellValue&#39;vc.5" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.135041" steps="141"/></proof>
+  <goal name="getCellValue&#39;vc.5" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.135041" steps="141"/></proof>
   </goal>
  </transf>
  </goal>
- <goal name="boundary_frames_coupling_REL_STACK" proved="true">
- <transf name="split_vc" proved="true" >
-  <goal name="boundary_frames_coupling_REL_STACK.0" proved="true">
-  <proof prover="0"><result status="valid" time="13.927628" steps="45821"/></proof>
+ <goal name="boundary_frames_coupling_REL_STACK">
+ <transf name="split_vc" >
+  <goal name="boundary_frames_coupling_REL_STACK.0">
+  <proof prover="0" obsolete="true"><result status="valid" time="13.927628" steps="45821"/></proof>
   </goal>
  </transf>
  </goal>

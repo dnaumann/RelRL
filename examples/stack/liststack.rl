@@ -5,18 +5,15 @@ module ListStack : STACK =
   class Stack { rep: rgn; size: int; ghost contents: intList; head: Node; }
 
   /* predicate nodeNth (n: Node, i: int, c: Cell) = true */
+  
   /* NOTE: REPLACED by script replacements.py */
-
-  inductive stackRep (xs: intList, n: Node) =
-    | nil_stack : stackRep(nil, null)
-    | cons_stack : forall m: Node, l: intList.
-      let nxt = m.cdr in stackRep(l, nxt) -> let new_cell = m.car in let v = new_cell.cell_value in stackRep(cons(v, l), m)
+  predicate stackRep (xs: intList, n: Node) = true
  
   private invariant listStackPriv =
-    stackPub () /\ forall s:Stack in pool.
-      let rep = s.rep in
-      let head = s.head in
-      let stk = s.contents in
+    stackPub () /\ forall st:Stack in pool.
+      let rep = st.rep in
+      let head = st.head in
+      let stk = st.contents in
       null in rep /\ head in rep /\
       rep`cdr subset rep /\
       (forall n:Node in rep. let c = n.car in c in rep) /\
@@ -59,7 +56,7 @@ module ListStack : STACK =
     var nxt: Node in
     var sz: int in
     var ghost contents: intList in
-    { let stk = self.contents in exists h:int, t:intList. stk = cons(h,t) };
+    { let stk = self.contents in exists h:int, m:intList. stk = cons(h,m) };
     tmp := self.head; { tmp <> null };
     result := tmp.car;
     nxt := tmp.cdr;

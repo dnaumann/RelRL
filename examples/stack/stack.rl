@@ -23,7 +23,6 @@ interface STACK =
   extern listNth(int,intList) : int
   extern listLength(intList) : int
 
-  /* TODO: rename size to numElements, maxSize to capacity? */
   class Stack { rep: rgn; size: int; ghost contents: intList; }
   
   ghost pool : rgn
@@ -34,13 +33,13 @@ interface STACK =
   public invariant stackPub =
     maxSize > 0 /\
     Type(pool, Stack | Cell) /\
-    (forall s:Stack in pool.
-      let sz = s.size in let xs = s.contents in 
+    (forall st1:Stack in pool.
+      let sz = st1.size in let xs = st1.contents in 
       sz = listLength(xs) /\ 0 <= sz /\ sz <= maxSize) /\
-    (forall s:Stack in pool, t: Stack in pool.
-      let srep = s.rep in
-      let trep = t.rep in
-      s <> t -> srep # trep)
+    (forall st1:Stack in pool, st2: Stack in pool.
+      let srep = st1.rep in
+      let trep = st2.rep in
+      st1 <> st2 -> srep # trep)
 
   meth Stack(self:Stack) : unit
     requires { ~(self in pool) }
@@ -73,7 +72,7 @@ interface STACK =
     requires { let sz = self.size in sz > 0 }
     ensures  { let osz = old(self.size) in self.size = osz - 1 }
     ensures  { let oxs = old(self.contents) in
-               let t = hd(oxs) in result.cell_value = t }
+               let m = hd(oxs) in result.cell_value = m }
     ensures  { let ostk = old(self.contents) in self.contents = tl(ostk) }
     /* result is part of the rep */
     ensures  { let rep = self.rep in result in rep }

@@ -5,12 +5,12 @@ module ArrayStack : STACK =
                 arr: CellArray; top: int; }
 
   private invariant arrayStackPriv =
-    (forall s:Stack in pool.
-      let arr = s.arr in
-      let stk = s.contents in
-      let siz = s.size in
-      let top = s.top in
-      let rep = s.rep in
+    (forall st:Stack in pool.
+      let arr = st.arr in
+      let stk = st.contents in
+      let siz = st.size in
+      let top = st.top in
+      let rep = st.rep in
       Type(rep, CellArray | Cell) /\
       arr <> null /\ arr.length = maxSize /\ arr in rep /\
       /* all the Cell's up to top are nonnull and in rep */
@@ -42,18 +42,18 @@ module ArrayStack : STACK =
 
   meth push (self:Stack, k:int) : unit
   = var a: CellArray in
-    var t: int in
+    var m: int in
     var v: Cell in
     var sz: int in
     var rep: rgn in
     var ghost contents: intList in
     a := self.arr;
-    t := self.top;
-    self.top := t+1;
+    m := self.top;
+    self.top := m+1;
     v := new Cell;
     v.cell_value := k;
     v.cell_rep := {v};
-    a[t+1] := v;
+    a[m+1] := v;
     self.arr := a;
     sz := self.size; self.size := sz+1;
     rep := self.rep; self.rep := rep union {v};
@@ -67,12 +67,12 @@ module ArrayStack : STACK =
 
   meth pop (self:Stack) : Cell
   = var a: CellArray in
-    var t: int in
+    var m: int in
     var sz: int in
     var ghost contents: intList in
-    a := self.arr; t := self.top;
-    result := a[t];
-    self.top := t-1;
+    a := self.arr; m := self.top;
+    result := a[m];
+    self.top := m-1;
     sz := self.size; self.size := sz-1;
     contents := self.contents; self.contents := tl(contents);
 

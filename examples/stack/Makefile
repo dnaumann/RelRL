@@ -8,6 +8,7 @@ all: prog.mlw
 
 prog.mlw: $(FILES)
 	$(WHYREL) -margin 136 -o $@ $^
+	python3 add_lemmas.py $@
 
 
 ide: prog.mlw
