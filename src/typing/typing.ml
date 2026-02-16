@@ -382,13 +382,14 @@ let disallowed_ident_names = [
 
 (* Prefixes that should not be used by users *)
 let generated_id_prefixes = [
-  "init_";     (* constructor functions *)
+ "init_";     (* constructor functions *)
   "mk_";       (* allocation functions *)
   "img_";      (* image functions *)
   "set_";      (* setter functions *)
   "get_";      (* getter functions (reserved) *)
   "l_";        (* left variant in relational code *)
   "r_";        (* right variant in relational code *)
+   
 ]
 
 (* Suffixes that should not be used by users *)
@@ -403,7 +404,6 @@ let generated_id_names = [
   "pre";              (* pre-state identifier *)
   "post";             (* post-state identifier *)
   "s";                (* default state variable name; generates l_s, r_s in relational code *)
-  "t";                (* auxiliary variable name used in some translations *)
   "coupling";         (* coupling relation *)
   "reftype";          (* reference type *)
   "left_state";       (* left state in relational code *)
