@@ -27,7 +27,7 @@ interface MAP =
 
 
 /*  ∀k w v. {k ↦Map w} set(k,v) {k ↦Map v} */ 
-  meth set_val (self: Map, k: int, v: int) : unit
+  meth setval (self: Map, k: int, v: int) : unit
     requires {let sz = self.sz in 0 <= k /\ k < sz}
     requires {map_inv (self)}
     ensures {let old_sz = old(self.sz) in self.sz = old_sz}
@@ -36,15 +36,15 @@ interface MAP =
     effects {rd self, v, k; rw {self}`any}
     
     /*  ∀k w v. {k ↦Map v} get(k,v) {r. r = v ∧ k ↦Map v} */
-    meth get_val (self:Map, k: int) : int
+    meth getval (self:Map, k: int) : int
       requires {map_inv (self)}
       requires {let sz = self.sz in 0 <= k /\ k < sz}
       ensures {map_inv (self)}
       ensures { let l = self.contents in result = listNth(k, l)}
       effects {rd self, {self}`any }
 
-  /* ∀k w. {k ↦Map w} set_by_user(k) {∃v. k ↦Map v} */
-  meth set_by_user (self: Map, k:int): unit
+  /* ∀k w. {k ↦Map w} setbyuser(k) {∃v. k ↦Map v} */
+  meth setbyuser (self: Map, k:int): unit
     requires {let sz = self.sz in 0 <= k /\ k < sz}
     requires { map_inv (self)}
     ensures {let old_sz = old(self.sz) in self.sz = old_sz}
@@ -74,7 +74,7 @@ module Map_Array : MAP =
     self.contents := create_list(sz, 0);
     self.sz := sz;
   
-  meth set_val (self: Map, k:int, v: int) : unit 
+  meth setval (self: Map, k:int, v: int) : unit 
         requires { map_array_priv (self) }
         ensures { map_array_priv (self) }
         
@@ -88,7 +88,7 @@ module Map_Array : MAP =
     self.contents := upd_list(k, v, temp_intlist);
 
     
-  meth get_val (self: Map, k: int) : int 
+  meth getval (self: Map, k: int) : int 
     requires {map_array_priv (self)}
     =
     var temp_intarray: int array in
@@ -98,13 +98,13 @@ module Map_Array : MAP =
     result := get(temp_intarray, k);
    
     
-  meth set_by_user (self: Map, k: int) : unit 
+  meth setbyuser (self: Map, k: int) : unit 
           requires { map_array_priv (self) }
         ensures { map_array_priv (self) }
   =
     var v:int in 
     havoc v;
-    set_val(self, k, v);
+    setval(self, k, v);
 
 end
 
@@ -114,11 +114,11 @@ module Map_Fun : MAP =
   extern type int_fun with default = empty_fun
   extern const empty_fun : int_fun
   extern add_mapping(int, int, int_fun) : int_fun
-  extern get_fn_val(int, int_fun): int
+  extern getfnval(int, int_fun): int
 
   class Map { sz  : int; ghost contents: intList; data_fn: int_fun; }
 
-    predicate map_fn_priv (self: Map) = let sz = self.sz in forall i: int. (0 <= i /\ i < sz) -> let fn = self.data_fn in let l = self.contents in get_fn_val(i, fn) = listNth(i, l)
+    predicate map_fn_priv (self: Map) = let sz = self.sz in forall i: int. (0 <= i /\ i < sz) -> let fn = self.data_fn in let l = self.contents in getfnval(i, fn) = listNth(i, l)
 
   meth Map (self: Map, sz: int) :  unit 
     ensures {map_fn_priv (self)}
@@ -127,7 +127,7 @@ module Map_Fun : MAP =
     self.contents := create_list(sz, 0);
     self.sz  := sz;
     
-  meth set_val (self: Map, k:int, v: int) : unit 
+  meth setval (self: Map, k:int, v: int) : unit 
     requires {map_fn_priv (self)}
     ensures {map_fn_priv (self)}
     =
@@ -140,23 +140,23 @@ module Map_Fun : MAP =
     temp_intlist := self.contents;
     self.contents := upd_list(k, v, temp_intlist);
     
-  meth get_val (self: Map, k: int) : int 
+  meth getval (self: Map, k: int) : int 
     requires {map_fn_priv (self)}
     ensures {map_fn_priv (self)}
     =
     var temp_fn: int_fun in
     
     temp_fn := self.data_fn;
-    result := get_fn_val(k, temp_fn)
+    result := getfnval(k, temp_fn)
     
     
-  meth set_by_user (self: Map, k: int) : unit 
+  meth setbyuser (self: Map, k: int) : unit 
     requires {map_fn_priv (self)}
     ensures {map_fn_priv (self)}
   =
     var v:int in 
     havoc v;
-    set_val(self, k, v);
+    setval(self, k, v);
 
 end
 
@@ -175,7 +175,7 @@ bimodule MAP_REL ( Map_Array | Map_Fun ) =
     |_ self.contents := create_list(sz, 0) _|;
     |_ self.sz := sz _|;
 
-  meth set_val (self: Map, k: int, v: int | self:Map, k:int, v: int) : (unit | unit)
+  meth setval (self: Map, k: int, v: int | self:Map, k:int, v: int) : (unit | unit)
     requires {let sz | sz = self.sz | self.sz in sz =:= sz}
     requires {let l | l = self.contents | self.contents in l =:= l}
     requires { k =:= k /\ v =:= v}
@@ -198,7 +198,7 @@ bimodule MAP_REL ( Map_Array | Map_Fun ) =
     |_ temp_intlist := self.contents _|;
     |_ self.contents := upd_list(k, v, temp_intlist) _|;
     
-  meth get_val (self: Map, k: int | self: Map, k: int) : (int | int)
+  meth getval (self: Map, k: int | self: Map, k: int) : (int | int)
     requires {Both (map_inv (self))}
     requires {Both (let sz = self.sz in 0 <= k /\ k < sz)}
     requires { <| map_array_priv (self) <] }
@@ -211,9 +211,9 @@ bimodule MAP_REL ( Map_Array | Map_Fun ) =
 
     (temp_intarray := self.data | temp_fn := self.data_fn);
 
-    (result := get(temp_intarray, k) | result := get_fn_val(k, temp_fn));
+    (result := get(temp_intarray, k) | result := getfnval(k, temp_fn));
 
-  meth set_by_user (self: Map, k:int | self: Map, k:int): (unit | unit)
+  meth setbyuser (self: Map, k:int | self: Map, k:int): (unit | unit)
     requires {Both (let sz = self.sz in 0 <= k /\ k < sz)}
     requires { k =:= k }
     requires {Both (map_inv (self))}
@@ -227,7 +227,7 @@ bimodule MAP_REL ( Map_Array | Map_Fun ) =
       Var v:int | v:int in 
       (havoc v | skip);
       HavocR v { v =:= v };
-      |_ set_val(self, k, v) _|;  
+      |_ setval(self, k, v) _|;  
 
 
 end
