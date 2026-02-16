@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.3.1" timelimit="30" steplimit="0" memlimit="12000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="swap.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <proof prover="0"><result status="valid" time="0.03" steps="65"/></proof>
+ </goal>
+</theory>
+<theory name="A0" proved="true">
+ <goal name="f&#39;vc" expl="VC for f" proved="true">
+ <proof prover="0"><result status="valid" time="0.08" steps="477"/></proof>
+ </goal>
+ <goal name="g&#39;vc" expl="VC for g" proved="true">
+ <proof prover="0"><result status="valid" time="0.11" steps="777"/></proof>
+ </goal>
+ <goal name="m&#39;vc" expl="VC for m" proved="true">
+ <proof prover="0"><result status="valid" time="0.15" steps="1196"/></proof>
+ </goal>
+</theory>
+<theory name="A1" proved="true">
+ <goal name="f&#39;vc" expl="VC for f" proved="true">
+ <proof prover="0"><result status="valid" time="0.08" steps="477"/></proof>
+ </goal>
+ <goal name="g&#39;vc" expl="VC for g" proved="true">
+ <proof prover="0"><result status="valid" time="0.12" steps="777"/></proof>
+ </goal>
+ <goal name="m&#39;vc" expl="VC for m" proved="true">
+ <proof prover="0"><result status="valid" time="0.15" steps="1196"/></proof>
+ </goal>
+</theory>
+<theory name="A_REL" proved="true">
+ <goal name="f&#39;vc" expl="VC for f" proved="true">
+ <proof prover="0"><result status="valid" time="0.81" steps="5783"/></proof>
+ </goal>
+ <goal name="g&#39;vc" expl="VC for g" proved="true">
+ <proof prover="0"><result status="valid" time="0.80" steps="6088"/></proof>
+ </goal>
+ <goal name="m&#39;vc" expl="VC for m" proved="true">
+ <proof prover="0"><result status="valid" time="2.16" steps="14891"/></proof>
+ </goal>
+ <goal name="m2&#39;vc" expl="VC for m2" proved="true">
+ <proof prover="0"><result status="valid" time="5.09" steps="30948"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

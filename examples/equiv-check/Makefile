@@ -7,7 +7,6 @@ all: example.mlw
 
 example.mlw: example.rl
 	$(WHYREL) -margin 136 -o $@ $^
-	sed -f $(POST_PROCESS) -i $@
 
 ide: example.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) $<

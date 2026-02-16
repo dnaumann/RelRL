@@ -454,12 +454,12 @@ let wf_ident loc id : (unit, string) result =
                        used in source programs."
          (string_of_ident id))
       loc
-  else if matches_generated_pattern name
+   else if matches_generated_pattern name
   then error_out
       (Printf.sprintf "Identifier %s is reserved for code generation \
                        and cannot be used in source programs."
          (string_of_ident id))
-      loc
+      loc 
   else ok ()
 
 let wf_ident_opt loc id : (unit, string) result =

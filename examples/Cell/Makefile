@@ -7,7 +7,6 @@ all: cell.mlw
 
 cell.mlw: cell.rl
 	$(WHYREL) -margin 136 -o $@ $^
-	sed -f $(POST_PROCESS) -i $@
 
 ide: cell.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) $<

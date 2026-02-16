@@ -8,7 +8,6 @@ all: ex.mlw
 
 ex.mlw: $(FILES)
 	$(WHYREL) -margin 136 -o $@ $^
-	sed -f $(POST_PROCESS) -i $@
 
 ide: ex.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^

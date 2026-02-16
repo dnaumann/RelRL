@@ -7,7 +7,6 @@ all: swap.mlw
 
 swap.mlw: swap.rl
 	$(WHYREL) -margin 136 -o $@ $^
-	sed -f $(POST_PROCESS) -i $@
 
 ide: swap.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) $^

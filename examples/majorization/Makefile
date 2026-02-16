@@ -4,10 +4,7 @@ WHYREL_STDLIB=../../stdlib
 
 all: majorization.mlw
 
-majorization.mlw: premajorization.mlw
-	python3 post-process.py $< > $@
-
-premajorization.mlw: major.rl
+majorization.mlw: major.rl
 	$(WHYREL) -margin 158 -o $@ $^
 
 ide: majorization.mlw
@@ -15,6 +12,5 @@ ide: majorization.mlw
 
 .PHONY: clean
 clean:
-	rm -f premajorization.mlw
 	rm -f majorization.mlw
 
