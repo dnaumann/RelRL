@@ -3313,6 +3313,11 @@ let rec compile_bicommand bi_ctxt (cc: T.bicommand) : Ptree.expr =
     let inner = Ptree.Eif (ft, else_then', else_else') in
     let mid = Ptree.Eif (tf, then_else', mk_expr inner) in
     mk_expr (Ptree.Eif (tt, then_then', mk_expr mid))
+  | Biwhile (lg, rg, (lf,rf), rinv, cc) when is_false_exp lg && is_false_ag lf ->
+      compile_sided_biwhile bi_ctxt false rg rinv cc
+  | Biwhile (lg, rg, (lf,rf), rinv, cc) when is_false_exp rg && is_false_ag rf ->
+      compile_sided_biwhile bi_ctxt true lg rinv cc
+  
   | Biwhile (lg, rg, (lf,rf), rinv, cc) when is_false_ag lf && is_false_ag rf ->
     compile_lockstep_biwhile bi_ctxt lg rg rinv cc
   | Biwhile (lg, rg, (lf,rf), rinv, cc) ->
@@ -3320,6 +3325,11 @@ let rec compile_bicommand bi_ctxt (cc: T.bicommand) : Ptree.expr =
 
 and is_false_ag (f: T.rformula) = match f with
   | Rleft Ffalse | Rright Ffalse | Rboth Ffalse -> true
+  | _ -> false
+
+and is_false_exp (e: T.exp T.t) =
+  match e.T.node with
+  | T.Econst { T.node = T.Ebool false; _ } -> true
   | _ -> false
 
 and compile_bivardecl bi_ctxt ldecl rdecl body =
