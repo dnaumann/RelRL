@@ -22,14 +22,7 @@
 </theory>
 <theory name="B" proved="true">
  <goal name="test&#39;vc" expl="VC for test" proved="true">
- <transf name="split_vc" proved="true" >
-  <goal name="test&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.019773" steps="8"/></proof>
-  </goal>
-  <goal name="test&#39;vc.1" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.021274" steps="8"/></proof>
-  </goal>
- </transf>
+ <proof prover="0"><result status="valid" time="0.053823" steps="13"/></proof>
  </goal>
 </theory>
 <theory name="AB" proved="true">

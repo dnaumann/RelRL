@@ -44,9 +44,8 @@ module ListStack : STACK =
     self.head := n;
     sz := self.size; self.size := sz+1;
     rep := self.rep; self.rep := rep union {v} union {n};
-    { let h = self.head in let n = h.cdr in let rep = self.rep in n in rep };
-    { let rep = self.rep in rep`cdr subset rep };
     { let h = self.head in let c = h.cdr in let rep = self.rep in c in rep };
+    { let rep = self.rep in rep`cdr subset rep };
     { let rep = self.rep in forall n:Node in rep. let c = n.car in c in rep };
     contents := self.contents; self.contents := cons(k,contents);
     { let h = self.head in let stk = self.contents in stackRep(stk,h) }

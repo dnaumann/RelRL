@@ -37,7 +37,7 @@
   <proof prover="0"><result status="valid" time="0.021413" steps="30"/></proof>
   </goal>
   <goal name="prog&#39;vc.7" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.019982" steps="647"/></proof>
+  <proof prover="0"><result status="valid" time="0.147690" steps="647"/></proof>
   </goal>
   <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.022572" steps="45"/></proof>

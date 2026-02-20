@@ -117,6 +117,7 @@ def add_lemmas(file_path):
       hasNodeType s2 m1 ->
       (* The definition requires the head cell to be allocated to access its value *)
       isAllocated s2 s2.car[m1] -> 
+      hasCellType s2 s2.car[m1] ->
       (let nxt2 = s2.cdr[m1] in
        let new_cell1 = s2.car[m1] in
        let v2 = s2.cell_value[new_cell1] in
@@ -140,7 +141,7 @@ def add_lemmas(file_path):
       (old_s.car)[x] = (s.car)[x] /\ (old_s.cdr)[x] = (s.cdr)[x]) ->
     
     (* 4. Data Preservation: cell_value matches for old Cells *)
-    (forall x: reference. isAllocated old_s x -> (* implicitly hasCellType *)
+    (forall x: reference. isAllocated old_s x -> hasCellType old_s x ->
       (old_s.cell_value)[x] = (s.cell_value)[x]) ->
       
     (* Conclusion: The stack is valid in the new state *)

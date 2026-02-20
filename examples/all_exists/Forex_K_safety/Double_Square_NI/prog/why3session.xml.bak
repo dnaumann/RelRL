@@ -14,6 +14,36 @@
  </transf>
  </goal>
 </theory>
+<theory name="A" proved="true">
+ <goal name="prog&#39;vc" expl="VC for prog" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.114812" steps="32"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.117185" steps="72"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.098909" steps="24"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="B" proved="true">
+ <goal name="prog&#39;vc" expl="VC for prog" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.083368" steps="31"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.105848" steps="71"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.077506" steps="32"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
 <theory name="FREL" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
  <transf name="split_vc" proved="true" >
