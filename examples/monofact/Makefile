@@ -10,6 +10,10 @@ fact.mlw: fact.rl
 ide: fact.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) $<
 
+replay:  fact/why3session.xml
+	$(WHY3) replay -L . -L $(WHYREL_STDLIB) fact
+	
+
 .PHONY: clean
 clean:
 	rm -f fact.mlw

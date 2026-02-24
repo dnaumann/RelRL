@@ -1,7 +1,6 @@
 WHY3=why3
 WHYREL=../../bin/whyrel
 WHYREL_STDLIB=../../stdlib
-POST_PROCESS=../../util/post-process.sed
 FILES=tiling.rl 
 EXTERN_FILES_DIR=.
 
@@ -14,7 +13,8 @@ ide: prog.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) -L $(EXTERN_FILES_DIR) $<
 
 # 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
-
+replay:  $(PROG)/why3session.xml
+	$(WHY3) replay -L . -L $(WHYREL_STDLIB) prog
 
 .PHONY: clean
 clean:

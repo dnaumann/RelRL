@@ -17,7 +17,7 @@
 </theory>
 <theory name="FREL" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
- <proof prover="0" obsolete="true"><result status="valid" time="0.046688" steps="293"/></proof>
+ <proof prover="0"><result status="valid" time="0.326102" steps="4470"/></proof>
  <transf name="split_vc" proved="true" >
   <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.019255" steps="23"/></proof>

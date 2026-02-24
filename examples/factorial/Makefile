@@ -2,15 +2,15 @@ WHY3=why3
 WHYREL=../../bin/whyrel
 WHYREL_STDLIB=../../stdlib
 
-all: fact.mlw
+all: prog.mlw
 
 
-fact.mlw: fact.rl
+prog.mlw: prog.rl
 	$(WHYREL) -margin 136 -o $@ $^
 
-ide: fact.mlw
+ide: prog.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) $<
 
 .PHONY: clean
 clean:
-	rm -f fact.mlw
+	rm -f prog.mlw

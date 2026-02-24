@@ -12,6 +12,12 @@ all: $(EXAMPLES)
 		$(MAKE) -C $$dir; \
 	done
 
+
+replay: $(EXAMPLES)
+	for dir in $(dir $(EXAMPLES)); do \
+		$(MAKE) -C $$dir replay; \
+	done
+
 .PHONY: all $(EXAMPLES)
 clean:
 	for dir in $(dir $(EXAMPLES)); do \

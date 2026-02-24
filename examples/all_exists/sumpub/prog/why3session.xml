@@ -62,10 +62,6 @@
   <proof prover="0"><result status="valid" time="0.219138" steps="1165"/></proof>
   </goal>
  </transf>
- <transf name="split_vc" >
-  <goal name="listpub_unique.0">
-  </goal>
- </transf>
  </goal>
  <goal name="listpub_nexists" proved="true">
  <transf name="introduce_premises" proved="true" >

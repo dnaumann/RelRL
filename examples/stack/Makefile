@@ -1,7 +1,6 @@
 WHY3=why3
 WHYREL=../../bin/whyrel
 WHYREL_STDLIB=../../stdlib
-POST_PROCESS=../../util/post-process.sed
 FILES=stack.rl arraystack.rl liststack.rl relstack.rl client.rl
 
 all: prog.mlw
@@ -13,6 +12,9 @@ prog.mlw: $(FILES)
 
 ide: prog.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
+
+replay:  $(PROG)/why3session.xml
+	$(WHY3) replay -L . -L $(WHYREL_STDLIB) prog
 
 type: $(FILES)
 	$(WHYREL) -debug -type-check $^

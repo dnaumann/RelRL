@@ -17,37 +17,37 @@
 </theory>
 <theory name="FREL" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
- <proof prover="0"><result status="valid" time="0.175841" steps="2780"/></proof>
- <transf name="split_vc" >
-  <goal name="prog&#39;vc.0" expl="h := h mod 2">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.019567" steps="8"/></proof>
+ <proof prover="0" obsolete="true"><result status="valid" time="0.175841" steps="2780"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="prog&#39;vc.0" expl="h := h mod 2" proved="true">
+  <proof prover="0"><result status="valid" time="0.019567" steps="10"/></proof>
   </goal>
-  <goal name="prog&#39;vc.1" expl="h := h mod 2">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.019613" steps="14"/></proof>
+  <goal name="prog&#39;vc.1" expl="h := h mod 2" proved="true">
+  <proof prover="0"><result status="valid" time="0.019613" steps="16"/></proof>
   </goal>
-  <goal name="prog&#39;vc.2" expl="postcondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.057572" steps="724"/></proof>
+  <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.057572" steps="745"/></proof>
   </goal>
-  <goal name="prog&#39;vc.3" expl="postcondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.021530" steps="50"/></proof>
+  <goal name="prog&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.021530" steps="51"/></proof>
   </goal>
-  <goal name="prog&#39;vc.4" expl="postcondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.066668" steps="838"/></proof>
+  <goal name="prog&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.066668" steps="36"/></proof>
   </goal>
-  <goal name="prog&#39;vc.5" expl="postcondition">
-  <proof prover="0" obsolete="true"><undone/></proof>
+  <goal name="prog&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049818" steps="36"/></proof>
   </goal>
-  <goal name="prog&#39;vc.6" expl="postcondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.080754" steps="840"/></proof>
+  <goal name="prog&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.080754" steps="36"/></proof>
   </goal>
-  <goal name="prog&#39;vc.7" expl="postcondition">
-  <proof prover="0" obsolete="true"><undone/></proof>
+  <goal name="prog&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.045118" steps="36"/></proof>
   </goal>
-  <goal name="prog&#39;vc.8" expl="postcondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.082121" steps="991"/></proof>
+  <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.082121" steps="994"/></proof>
   </goal>
-  <goal name="prog&#39;vc.9" expl="postcondition">
-  <proof prover="0" obsolete="true"><result status="valid" time="0.020286" steps="51"/></proof>
+  <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.020286" steps="51"/></proof>
   </goal>
  </transf>
  </goal>

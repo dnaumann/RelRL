@@ -2,7 +2,6 @@ WHY3=why3
 WHYREL=../../bin/whyrel
 WHYREL_STDLIB=../../stdlib
 THEORY_DIR=.
-POST_PROCESS=../../util/post-process.sed
 
 all: sumpub.mlw
 
