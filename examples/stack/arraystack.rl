@@ -51,8 +51,7 @@ module ArrayStack : STACK =
     m := self.top;
     self.top := m+1;
     v := new Cell;
-    v.cell_value := k;
-    v.cell_rep := {v};
+    Cell(v, k);
     a[m+1] := v;
     self.arr := a;
     sz := self.size; self.size := sz+1;

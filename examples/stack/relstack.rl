@@ -39,8 +39,8 @@ bimodule REL_STACK (ArrayStack | ListStack) =
                let self0 | self0 = old({self}) | old({self}) in
                Agree (((alloc diff s_alloc) union self0) 
                   diff (pool union pool`rep))`any }
-    effects  { rw {self}`any, alloc, pool; rd self, maxSize
-             | rw {self}`any, alloc, pool; rd self, maxSize }
+    effects  { rw {self}`any, {self}`rep`any, alloc, pool; rd self, maxSize
+             | rw {self}`any, {self}`rep`any, alloc, pool; rd self, maxSize }
   = Var arr: CellArray| in
     Var rep: rgn| in
     ( self.rep := {}; | self.rep := {null}; self.head := null );
@@ -100,8 +100,7 @@ bimodule REL_STACK (ArrayStack | ListStack) =
     ( a := self.arr; m := self.top; self.top := m+1 | skip );
     |_ v := new Cell _|;
     Link v with v; /* update current refperm */
-    /* TODO: Update ArrayStack -- use Cell constructor */
-    ( v.cell_value := k; v.cell_rep := {v}
+    (Cell(v, k)
     | Cell(v,k) );
     ( a[m+1] := v; self.arr := a | skip );
     ( skip 

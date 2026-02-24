@@ -140,9 +140,11 @@ bimodule CLIENT_REL (Client1 | Client2) =
     While (i < n) | (i < n) . do
       invariant { Both (0 <= i) /\ Both(i <= n) /\ Both(stk in pool) }
       invariant { Agree i /\ Agree n /\ Both(0 <= n) /\ Both(n < maxSize) }
+      invariant { Agree stk }
       invariant { let xs|xs = stk.contents|stk.contents in Agree xs }
       invariant { Both(let sz=stk.size in sz=i) }
       invariant { Both(stackPub()) }
+      invariant { <| (arrayStackPriv()) <] /\ [> listStackPriv() |> }
       invariant { Both(let oa=old(alloc) in (({stk} union {stk}`rep) diff {null}) subset (alloc diff oa)) }
       effects { rw alloc, {stk}`any, {stk}`rep`any
               | rw alloc, {stk}`any, {stk}`rep`any }
@@ -153,10 +155,12 @@ bimodule CLIENT_REL (Client1 | Client2) =
     While (i < n) | (i < n) . do
       invariant { Both (0 <= i) /\ Both (i <= n) }
       invariant { Agree i /\ Agree n }
+      invariant { Agree stk }
       invariant { Both(stk in pool) /\ Both(0 <= n) /\ Both(n < maxSize) }
       invariant { Both(let sz = stk.size in sz = n-i) }
       invariant { Both(c = null \/ let rep = stk.rep in c in rep) }
       invariant { Both(stackPub()) }
+      invariant { <| (arrayStackPriv()) <] /\ [> listStackPriv() |> }
       invariant { let xs|xs = stk.contents|stk.contents in Agree xs }
       invariant { Agree result }
       invariant { Both(let oa = init(alloc) in (({stk} union {stk}`rep) diff {null}) subset (alloc diff oa))}

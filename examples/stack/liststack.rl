@@ -4,11 +4,36 @@ module ListStack : STACK =
   class Node { car: Cell; cdr: Node; }
   class Stack { rep: rgn; size: int; ghost contents: intList; head: Node; }
 
-  /* predicate nodeNth (n: Node, i: int, c: Cell) = true */
-  
   /* NOTE: REPLACED by script replacements.py */
   predicate stackRep (xs: intList, n: Node) = true
  
+/* The following may be used a whyrel definition of stackRep avoiding the use of the add_lemma script. However, status quo is kept as this might effect stackRep_mono lemma etc if whyrel translation changes and feels risky to decouple. 
+
+  inductive stackRep (xs: intList, n: Node) = 
+    | nil_stack : stackRep (nil, null)
+    | cons_stack : 
+        forall n:Node , l: intList.
+        let nxt = n.cdr in
+        let new_cell = n.car in
+        let v = new_cell.cell_value in
+        stackRep(l, nxt) -> 
+        stackRep(cons(v, l), n)
+The whyrel stackRep definition is translated into the whyml def below
+  inductive stackRep (s: state) (xs: intList) (n: reference) = 
+
+     nil_stack : 
+        forall s : state. stackRep s STACK.nil null 
+    | cons_stack : 
+        forall s : state. forall  n1 : reference, l : intList.\
+        (isAllocated s n1) -> 
+        (hasNodeType s n1) -> 
+        (let nxt = s.cdr[n1] in 
+        let new_cell = s.car[n1] in 
+        let v = s.cell_value[new_cell] in 
+        (stackRep s l nxt) -> 
+        (stackRep s (STACK.cons v l) n1))
+*/
+
   private invariant listStackPriv =
     stackPub () /\ forall st:Stack in pool.
       let rep = st.rep in

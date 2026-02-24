@@ -249,6 +249,8 @@ module A_REL
     
     ensures { [@expl:wr {self}`a] (wr_frame_a (old r_s) r_s (r_self.singleton)) }
     
+    ensures { PreRefperm.extends (old pi) pi }
+    
     ensures { okRefperm l_s r_s pi }
     
     ensures { ((agree_a l_s r_s pi (l_self.singleton)) /\ (agree_a r_s l_s (pi.PreRefperm.invert) (r_self.singleton))) }
@@ -280,6 +282,8 @@ module A_REL
     ensures { [@expl:wr {self}`b] (wr_frame_b (old l_s) l_s (l_self.singleton)) }
     
     ensures { [@expl:wr {self}`b] (wr_frame_b (old r_s) r_s (r_self.singleton)) }
+    
+    ensures { PreRefperm.extends (old pi1) pi1 }
     
     ensures { okRefperm l_s r_s pi1 }
     
@@ -316,6 +320,8 @@ module A_REL
     ensures { [@expl:wr {self}`a] (wr_frame_a (old r_s) r_s (r_self.singleton)) }
     
     ensures { [@expl:wr {self}`b] (wr_frame_b (old r_s) r_s (r_self.singleton)) }
+    
+    ensures { PreRefperm.extends (old pi) pi }
     
     ensures { okRefperm l_s r_s pi }
     
@@ -357,6 +363,8 @@ module A_REL
     
     ensures { [@expl:wr {self}`b] (wr_frame_b (old r_s) r_s (r_self.singleton)) }
     
+    ensures { PreRefperm.extends (old pi2) pi2 }
+    
     ensures { okRefperm l_s r_s pi2 }
     
     ensures { ((agree_a l_s r_s pi2 (l_self.singleton)) /\ (agree_a r_s l_s (pi2.PreRefperm.invert) (r_self.singleton)))
@@ -395,10 +403,12 @@ module A_REL_biinterface
     requires { okRefperm l_s r_s pi }
     requires { (l_k = r_k) }
     requires { PreRefperm.idRef pi l_self r_self }
-    writes { l_s.a, r_s.a }
+    writes { pi, l_s.a, r_s.a }
     ensures { [@expl:wr {self}`a] (wr_frame_a (old l_s) l_s (l_self.singleton)) }
     
     ensures { [@expl:wr {self}`a] (wr_frame_a (old r_s) r_s (r_self.singleton)) }
+    
+    ensures { PreRefperm.extends (old pi) pi }
     
     ensures { okRefperm l_s r_s pi }
     
@@ -417,10 +427,12 @@ module A_REL_biinterface
     requires { okRefperm l_s r_s pi3 }
     requires { (l_k = r_k) }
     requires { PreRefperm.idRef pi3 l_self r_self }
-    writes { l_s.b, r_s.b }
+    writes { pi3, l_s.b, r_s.b }
     ensures { [@expl:wr {self}`b] (wr_frame_b (old l_s) l_s (l_self.singleton)) }
     
     ensures { [@expl:wr {self}`b] (wr_frame_b (old r_s) r_s (r_self.singleton)) }
+    
+    ensures { PreRefperm.extends (old pi3) pi3 }
     
     ensures { okRefperm l_s r_s pi3 }
     
@@ -439,7 +451,7 @@ module A_REL_biinterface
     requires { okRefperm l_s r_s pi }
     requires { (l_k = r_k) }
     requires { PreRefperm.idRef pi l_self r_self }
-    writes { l_s.a, l_s.b, r_s.a, r_s.b }
+    writes { pi, l_s.a, l_s.b, r_s.a, r_s.b }
     ensures { [@expl:wr {self}`a] (wr_frame_a (old l_s) l_s (l_self.singleton)) }
     
     ensures { [@expl:wr {self}`b] (wr_frame_b (old l_s) l_s (l_self.singleton)) }
@@ -447,6 +459,8 @@ module A_REL_biinterface
     ensures { [@expl:wr {self}`a] (wr_frame_a (old r_s) r_s (r_self.singleton)) }
     
     ensures { [@expl:wr {self}`b] (wr_frame_b (old r_s) r_s (r_self.singleton)) }
+    
+    ensures { PreRefperm.extends (old pi) pi }
     
     ensures { okRefperm l_s r_s pi }
     

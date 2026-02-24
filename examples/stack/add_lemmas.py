@@ -123,7 +123,7 @@ def add_lemmas(file_path):
        let v2 = s2.cell_value[new_cell1] in
        stackRep s2 l1 nxt2 -> 
        stackRep s2 (Cons v2 l1) m1)
-
+  
 
   lemma stackRep_mono :
     forall s old_s: state, l: list int, p: reference.
@@ -147,30 +147,25 @@ def add_lemmas(file_path):
     (* Conclusion: The stack is valid in the new state *)
     stackRep s l p
 
-    lemma stackRep_agree :
-    forall s1 s2: state, l: list int, p: reference, r: rgn.
-    (* Precondition: The stack is valid in s1 *)
-    stackRep s1 l p ->
-    
-    (* 1. Footprint: The head p is either null or inside the region r *)
-    (p = null \/ Rgn.mem p r) ->
-    
-    (* 2. Closure: The region r is closed under cdr and car in s1 *)
-    (forall x. Rgn.mem x r -> hasNodeType s1 x -> Rgn.mem ((s1.cdr)[x]) r) ->
-    (forall x. Rgn.mem x r -> hasNodeType s1 x -> Rgn.mem ((s1.car)[x]) r) ->
-    
-    (* 3. Agreement: s1 and s2 agree on everything inside r *)
-    (forall x. Rgn.mem x r ->
-      isAllocated s2 x /\
-      (hasNodeType s1 x -> hasNodeType s2 x) /\
-      (* Nodes in r have same links *)
-      (hasNodeType s1 x -> (s1.car)[x] = (s2.car)[x] /\ (s1.cdr)[x] = (s2.cdr)[x]) /\
-      (* Cells in r have same values *)
-      ((not hasNodeType s1 x) -> (s1.cell_value)[x] = (s2.cell_value)[x])
-    ) ->
-    
-    (* Conclusion *)
-    stackRep s2 l p
+    let rec lemma stackRep_agree (s1 s2: state) (l: list int) (p: reference) (r:  rgn)
+    requires { stackRep s1 l p }
+    requires { p = null \/ Rgn.mem p r }
+    requires { forall x. Rgn.mem x r -> isAllocated s1 x -> hasNodeType s1 x -> Rgn.mem (s1.cdr)[x] r }
+    requires { forall x. Rgn.mem x r -> isAllocated s1 x -> hasNodeType s1 x -> Rgn.mem (s1.car)[x] r }
+    requires { forall x. Rgn.mem x r -> 
+                (x = null \/ 
+                    (isAllocated s2 x /\ 
+                    (hasNodeType s1 x -> hasNodeType s2 x) /\ 
+                    (hasNodeType s1 x -> (s1.car)[x] = (s2.car)[x] /\ (s1.cdr)[x] = (s2.cdr)[x]) /\ 
+                    (hasCellType s1 x -> (s1.cell_value)[x] = (s2.cell_value)[x]))) }
+    ensures  { stackRep s2 l p }
+    variant  { l }
+    = match l with
+    | Nil -> () 
+    | Cons _ tail ->
+        let nxt = (s1.cdr)[p] in
+        stackRep_agree s1 s2 tail nxt r
+    end
 
 '''
     
