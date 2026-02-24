@@ -3172,7 +3172,15 @@ let rec compile_bispec bi_ctxt bispec =
   let lctxt, lstate = bi_ctxt.left_ctxt, bi_ctxt.left_state in
   let rctxt, rstate = bi_ctxt.right_ctxt, bi_ctxt.right_state in
   let ok_refperm = Build_State.ok_refperm lstate rstate bi_ctxt.refperm in
-  let pre = ok_refperm :: pre and post = mk_ensures ok_refperm :: post in
+
+  (* Build the expression: PreRefperm.extends (old pi) pi *)
+  let old_pi = mk_old_term (mk_qvar bi_ctxt.refperm) in
+  let curr_pi = mk_qvar bi_ctxt.refperm in
+  let extends_term = extends_refperm <*> [old_pi; curr_pi] in
+  let extends_post = mk_ensures extends_term in
+
+  let pre = ok_refperm :: pre in
+  let post = extends_post :: mk_ensures ok_refperm :: post in
   let lconds = mk_biwr_frame_condition lctxt lstate leffs Biwr_left in
   let rconds = mk_biwr_frame_condition rctxt rstate reffs Biwr_right in
   let lwrites = compile_writes lctxt lstate leffs in
@@ -3741,9 +3749,13 @@ let rec compile_bimethod bi_ctxt bimethod : bi_ctxt * Ptree.decl =
       else bispec in
     let extra_post = bimeth_spec_extra_post bi_ctxt bimdecl.result_ty in
     let bispec = {bispec with sp_post = extra_post @ bispec.sp_post } in
+    
+    let wrs = QualidS.add bi_ctxt.refperm (specified_writes bispec) in
+    let sp_wrs = terms_of_fields_written wrs in
+    let bispec = {bispec with sp_writes = sp_wrs} in
+    
     let e = mk_abstract_expr params ret_ty bispec in
     let meth_qualid = qualid_of_ident meth_name in
-    let wrs = specified_writes bispec in
     let lwrs, rwrs = split_fields_left_right wrs in
     let bimethods =
       M.add bimdecl.bimeth_name (meth_qualid, lwrs, rwrs) bi_ctxt.bimethods in
