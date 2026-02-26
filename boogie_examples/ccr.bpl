@@ -1,6 +1,6 @@
 /*
 
-From 2023 CCR POPL paper.
+From figure 1 in 2023 CCR POPL paper.
 
 (* module I Map *)
   private data := NULL
@@ -42,7 +42,7 @@ From 2023 CCR POPL paper.
 */
 
 
-// >>> I_Map definition >>>
+// >>> S_Map definition >>>
 var map_I : [int]int;
 
 procedure init_I(sz:int);
@@ -62,7 +62,7 @@ procedure set_by_user_I(k:int);
   modifies map_I;
   ensures (exists v :int :: map_I[k] == v);
 
-// <<< I_Map definition <<<
+// <<< S_Map definition <<<
 
 
 // >>> A_Map definition >>>
@@ -112,7 +112,7 @@ procedure set_by_user_A(k:int)
 // <<< A_Map definition <<<
 
 
-// >>> A_Map refines I_Map >>>
+// >>> A_Map refines S_Map >>>
 
 
 procedure A_refines_I(sz: int)
@@ -137,6 +137,6 @@ procedure A_refines_I(sz: int)
     }
 }
 
-// <<< A_Map refines I_Map <<<
+// <<< A_Map refines S_Map <<<
 
 
