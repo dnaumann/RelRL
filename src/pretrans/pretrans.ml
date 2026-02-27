@@ -787,6 +787,10 @@ end = struct
       let reff = refine_effect reff rwrs in
       let wspec = {wspec with biwframe = (leff, reff)} in
       Biwhile (e, e', ag, wspec, refine_bicommand bi_ctxt cc)
+      
+      (* Framework frame (biwframe) is part of the loop specification and should NOT be refined.
+         Only method postcondition effects are refined based on actual body writes. *) 
+      (* Biwhile (e, e', ag, wspec, refine_bicommand bi_ctxt cc) *)
 
   let dest_bimeth_def = function Bimethod (decl, cc) -> (decl, cc)
 
