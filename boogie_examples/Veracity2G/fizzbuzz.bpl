@@ -28,7 +28,7 @@ procedure sumbi (n: int, n': int) returns (total, total': int)
 
   total := 0; total' := 0;
 
-  //12
+  //A; B
 
   i := 0;
   while (i < n div 2)
@@ -57,7 +57,7 @@ procedure sumbi (n: int, n': int) returns (total, total': int)
     i := i + 1;
   }
 
-  //21
+  //B; A
 
   i' := n div 2;
   while (i' < n)

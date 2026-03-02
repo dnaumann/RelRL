@@ -26,3 +26,6 @@ bin/whyrel
 tools/
 *code-workspace
 test/*
+
+!fizzbuzz_theory.mlw
+!map_theory.mlw
