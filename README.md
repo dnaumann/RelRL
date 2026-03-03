@@ -42,7 +42,7 @@ The recommended way of installing dependencies is by using an
 
 ```
 opam switch create whyrel 5.1.1
-opam install why3.1.7.2 ocamlbuild
+opam install why3.1.7.2 ocamlbuild 
 ```
 
 You may also consider installing the `why-ide` package.
@@ -68,6 +68,10 @@ discharge VCs.  These include Alt-Ergo, Z3, CVC3, and CVC4.  Please refer to the
 Why3 installation documentation for instructions on how to install these and
 other supported provers.
 
+Current proofs were done with following provers:
+
+- alt-ergo 2.6.2 
+- Z3 version 4.15.3 - 64 bit
 
 ## Usage
 
