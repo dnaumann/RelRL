@@ -1,5 +1,10 @@
 # Boogie example catalog
 
+## Veracity2G
+
+- fizzbuzz
+- simple_vector
+
 ## Hypa
 
 - asynch_gni
@@ -26,6 +31,8 @@
   - same as ti_gni_hff
 - ts_gni_hft
 - ti_gni_htt
+- unnotransformed
+  - paper_gni using tigger variables.
 
 ## RHLE
 
