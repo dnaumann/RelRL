@@ -35,7 +35,7 @@ of WhyRel can be found [here](http://arxiv.org/abs/1910.14560).
 The dependencies for WhyRel are:
 
 - Why3 1.7.2
-- OCamlbuild 0.14.3
+- OCamlbuild 0.16.1 
 
 The recommended way of installing dependencies is by using an
 [opam](https://opam.ocaml.org) switch.
