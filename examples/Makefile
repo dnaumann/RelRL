@@ -6,7 +6,8 @@
 # 1. Setup Directories
 # mindepth to avoid this makefile
 MAKEFILES := $(shell find . -mindepth 2 -name Makefile)
-SUBDIRS   := $(sort $(dir $(MAKEFILES)))
+# Clean up SUBDIRS: remove ./ and trailing /
+SUBDIRS   := $(patsubst %/,%,$(patsubst ./%,%,$(sort $(dir $(MAKEFILES)))))
 RESULT_DIR := .build_results
 
 # Define Colors
@@ -19,24 +20,31 @@ NC     := \033[0m # No Color
 # Define a prefix for the standard build to avoid file conflicts
 BUILD_TARGETS := $(addprefix build-,$(SUBDIRS))
 
-.PHONY: all replay clean $(SUBDIRS) $(BUILD_TARGETS) summary
+# Define the replay targets based on subdirectories
+REPLAY_TARGETS := $(addprefix replay-,$(SUBDIRS))
+
+
+.PHONY: all replay clean summary $(BUILD_TARGETS) $(REPLAY_TARGETS)
 
 # The 'all' target now calls specific build-prefix targets
 all: $(BUILD_TARGETS)
 
 # --- Rules ---
 
+# The top-level replay target
+replay: $(REPLAY_TARGETS)
+
 # This rule uses the 'build-' prefix to stay unique
-build-%:
+$(BUILD_TARGETS): build-%:
 	@echo "== Building $* =="
 	@$(MAKE) -C $*
 
 
 # Replay with Banners and Result Tracking
-%.replay:
+$(REPLAY_TARGETS): replay-%:
 	@mkdir -p $(RESULT_DIR)
 	@printf '%s\n' '------------------------------------------'
-	@printf '$(YELLOW)--- Replaying: %s$(NC)\n' "$*"
+	@printf '$(YELLOW)   Replaying: %s$(NC)\n' "$*"
 	@printf '%s\n' '------------------------------------------'
 	@if $(MAKE) -C $* replay; then \
 		printf "$* : $(GREEN)SUCCESS$(NC)\n" > $(RESULT_DIR)/$(subst /,_,$*).res; \
@@ -61,10 +69,14 @@ summary:
 	fi
 	@echo "=========================================="
 
-clean: $(addsuffix .clean,$(SUBDIRS))
+# Clean targets
+CLEAN_TARGETS := $(addprefix clean-,$(SUBDIRS))
+.PHONY: $(CLEAN_TARGETS)
+
+clean: $(CLEAN_TARGETS)
 	@rm -rf $(RESULT_DIR)
 
-%.clean:
+$(CLEAN_TARGETS): clean-%:
 	@$(MAKE) -C $* clean
 
 

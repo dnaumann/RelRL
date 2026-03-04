@@ -1,7 +1,9 @@
 ## Examples
 
 This directory contains examples used to evaluate WhyRel.  Why3 session files
-are included.  To replay an example, it should be sufficient to `cd' to its
+are included.  
+
+To replay an example, it should be sufficient to `cd' to its
 directory and run:
 
 ```
@@ -12,6 +14,8 @@ make ide
 Please consult the `Makefile` in each directory to learn about any additional
 options.  Replaying the examples may require the following SMT solvers to be
 installed on your system: Alt-Ergo, Z3, CVC3, and CVC4.
+
+There is a master makefile present in the directory which will run make replay on all the examples and output a summary. Run `make replay` in this directory.
 
 Included examples are:
 
@@ -42,5 +46,8 @@ Included examples are:
 - **tiling**: Loop tiling compiler optimization example.  Taken from
     [*Relational Logic with Framing and Hypotheses: Technical
     Report*](https://arxiv.org/abs/1611.08992), Banerjee et al.
-
-- **all_exists**: contains forall exists examples.
+- **Veracity2g**: Contains veracity2G challenge problem that were not verifiable
+  using veracity framework. They deal with commutativity checking. See
+  https://github.com/veracity-lang/veracity/
+- **all_exists**: contains forall exists examples taken from a variety of
+  benchmarks.

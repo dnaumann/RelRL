@@ -73,6 +73,8 @@ Current proofs were done with following provers:
 - alt-ergo 2.6.2 
 - Z3 version 4.15.3 - 64 bit
 
+Run `why3 config detect` to make these available to why3 for VC discharge.
+
 ## Usage
 
 At its present state, WhyRel can be used to translate a series of source files

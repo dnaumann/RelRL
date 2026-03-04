@@ -368,7 +368,7 @@ bimodule SumCommutes_Seq (SumAB | SumBA) =
   = Var i:int | i:int in
     Var v:int | v:int in
     |_ result := 0 _|;
-    /* Phase 1: left sums [0,n/2), right sums [n/2,n) */
+    /* left sums both halves  */
     ( i := 0 | skip);
     (while (i < n / 2) do
       invariant {  0 <= i /\ i <= n / 2  }
@@ -392,8 +392,9 @@ bimodule SumCommutes_Seq (SumAB | SumBA) =
   
       i := i + 1 ;
     done | skip);
-      
-      (skip | i := n / 2); 
+    
+    /* right sums both halves  */
+    (skip | i := n / 2); 
     WhileR (i < n) do
       invariant { [> n / 2 <= i /\ i <= n |> }
       invariant { [> result = count(hmap, n / 2, i) |> }
