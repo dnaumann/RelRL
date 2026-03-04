@@ -8,11 +8,11 @@ all: prog.mlw
 prog.mlw: $(FILES)
 	$(WHYREL) -margin 136 -o $@ $^
 
+
 ide: prog.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 
-
-replay:  $(PROG)/why3session.xml
+replay: prog.mlw $(PROG)/why3session.xml
 	$(WHY3) replay -L . -L $(WHYREL_STDLIB) prog
 
 .PHONY: clean

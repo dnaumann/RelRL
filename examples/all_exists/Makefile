@@ -14,6 +14,9 @@ all: $(EXAMPLES)
 
 
 replay: $(EXAMPLES)
+		printf '%s\n' '-----------------' ; \
+		printf '%s\n' "--- $$dir" ; \
+		printf '%s\n\n' '-----------------' ; \	
 	for dir in $(dir $(EXAMPLES)); do \
 		$(MAKE) -C $$dir replay; \
 	done
