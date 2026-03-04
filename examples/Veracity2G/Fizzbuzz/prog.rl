@@ -147,6 +147,102 @@ bimodule FizzBuzzCommutes (Fizzbuzz35 | Fizzbuzz53) =
     done;
 end
 
+
+bimodule FizzBuzzCommutes_Seq (Fizzbuzz35 | Fizzbuzz53) =
+  meth fizzbuzz (n:int | n:int) : (unit | unit)
+    requires { n =:= n }
+    requires { Both (n > 0) }
+    requires { Both (forall i:int. getfnval(i, hmap) = 0) }
+    ensures { forall i:int | i:int. Both (0 <= i /\ i < n) -> (i =:= i) -> getfnval(i, hmap) =:= getfnval(i, hmap) }
+    effects  { rw hmap | rw hmap }
+  = Var i:int | i:int in
+    Var one:int | one:int in
+    |_ one := 1 _|;
+ /* 35 order, on left */
+    (i := 0;
+     while (i < n) do
+      invariant { 0 <= i /\ i <= n }
+      invariant { forall j:int. 0 <= j /\ j < n /\ ~(j mod 3 = 0)
+                  -> getfnval(j, hmap) = 0 }
+      invariant { forall j:int. 0 <= j /\ j < i
+                  -> (j mod 3 = 0 <-> getfnval(j, hmap) = 1) }
+      if (i mod 3 = 0) then
+        hmap := add_mapping(i, one, hmap);
+      end;
+      i := i + 1;
+    done;
+    assert { forall j:int. 0 <= j /\ j < n /\ j mod 3 = 0
+      -> getfnval(j, hmap) = 1 } | skip);
+    (i := 0;
+    while (i < n) do
+      invariant { 0 <= i /\ i <= n }
+      invariant { forall j:int. 0 <= j /\ j < n /\ j mod 3 = 0
+                  -> getfnval(j, hmap) = 1 }
+      invariant { forall j:int. 0 <= j /\ j < i /\ j mod 5 = 0
+                  -> getfnval(j, hmap) = 1 }
+      invariant { forall j:int. 0 <= j /\ j < n /\ ~(j mod 3 = 0 \/ j mod 5 = 0)
+                  -> getfnval(j, hmap) = 0 }
+      if (i mod 5 = 0) then
+        hmap := add_mapping(i, one, hmap);
+      end;
+      i := i + 1;
+    done;
+    | skip );
+
+    Assert { <| forall j:int. 0 <= j /\ j < n /\ j mod 3 = 0
+                  -> getfnval(j, hmap) = 1 <] };
+    Assert { <| forall j:int. 0 <= j /\ j < i /\ j mod 5 = 0
+                  -> getfnval(j, hmap) = 1 <] };
+    Assert { <| forall j:int. 0 <= j /\ j < n /\ ~(j mod 3 = 0 \/ j mod 5 = 0)
+                  -> getfnval(j, hmap) = 0 <] };
+
+   /* 35 order, on right, preserving left conditions */ 
+   (skip | i := 0);
+    WhileR (i < n) do
+      invariant { [> 0 <= i /\ i <= n |> }
+      invariant { [> forall j:int. 0 <= j /\ j < n /\ ~(j mod 5 = 0)
+                  -> getfnval(j, hmap) = 0 |> }
+      invariant { [> forall j:int. 0 <= j /\ j < i /\ j mod 5 = 0
+                  -> getfnval(j, hmap) = 1 |> }
+      invariant { <| forall j:int. 0 <= j /\ j < n /\ j mod 3 = 0
+                  -> getfnval(j, hmap) = 1 <] }
+      invariant { <| forall j:int. 0 <= j /\ j < i /\ j mod 5 = 0
+                  -> getfnval(j, hmap) = 1 <] }
+      invariant { <| forall j:int. 0 <= j /\ j < n /\ ~(j mod 3 = 0 \/ j mod 5 = 0)
+                  -> getfnval(j, hmap) = 0 <] }
+      (skip| if (i mod 5 = 0) then
+        hmap := add_mapping(i, one, hmap);
+      end); 
+      (skip| i := i + 1); 
+    done;
+
+    Assert { <| forall j:int. 0 <= j /\ j < n /\ j mod 3 = 0
+                  -> getfnval(j, hmap) = 1 <] };
+    Assert { <| forall j:int. 0 <= j /\ j < i /\ j mod 5 = 0
+                  -> getfnval(j, hmap) = 1 <] };
+    Assert { <| forall j:int. 0 <= j /\ j < n /\ ~(j mod 3 = 0 \/ j mod 5 = 0)
+                  -> getfnval(j, hmap) = 0 <] };
+
+    Assert { [> forall j:int. 0 <= j /\ j < n /\ j mod 5 = 0
+                -> getfnval(j, hmap) = 1 |> };
+
+    ( skip | i := 0);
+    WhileR (i < n) do
+      invariant { [> 0 <= i /\ i <= n |> }
+      invariant { [> forall j:int. 0 <= j /\ j < n /\ j mod 5 = 0
+                  -> getfnval(j, hmap) = 1 |> }
+      invariant { [> forall j:int. 0 <= j /\ j < i /\ j mod 3 = 0
+                  -> getfnval(j, hmap) = 1 |> }
+      invariant { [> forall j:int. 0 <= j /\ j < n /\ ~(j mod 3 = 0 \/ j mod 5 = 0)
+                  -> getfnval(j, hmap) = 0 |> }
+      (skip | if (i mod 3 = 0) then
+        hmap := add_mapping(i, one, hmap);
+      end);
+      (skip | i := i + 1);
+    done;
+end
+
+
 /* Sum commutativity: summing in order [0,n/2) [n/2,n)
    vs [n/2,n) [0,n/2) yields the same total. */
 
@@ -258,3 +354,73 @@ bimodule SumCommutes (SumAB | SumBA) =
     done;
     Assert { Both (result = count(hmap, 0, n)) };
 end
+
+
+
+bimodule SumCommutes_Seq (SumAB | SumBA) =
+  meth sum (n:int | n:int) : (int | int)
+    requires { n =:= n }
+    requires { Both (n > 0) }
+    requires { forall i:int | i:int. Both (0 <= i /\ i < n)
+               -> getfnval(i, hmap) =:= getfnval(i, hmap) }
+    ensures  { result =:= result }
+    effects  { rd hmap | rd hmap }
+  = Var i:int | i:int in
+    Var v:int | v:int in
+    |_ result := 0 _|;
+    /* Phase 1: left sums [0,n/2), right sums [n/2,n) */
+    ( i := 0 | skip);
+    (while (i < n / 2) do
+      invariant {  0 <= i /\ i <= n / 2  }
+      invariant {  result = count(hmap, 0, i)  }
+      v := getfnval(i, hmap) ;
+      if (v = 1)  then
+        result := result + 1;
+      end;
+  
+      i := i + 1 ;
+    done | skip);
+      
+    ( i := n / 2 | skip);
+    (while (i < n) do
+    invariant {  n / 2 <= i /\ i <= n  }
+    invariant { result = count(hmap, 0, n / 2) + count(hmap, n / 2, i) }
+      v := getfnval(i, hmap) ;
+      if (v = 1)  then
+        result := result + 1;
+      end;
+  
+      i := i + 1 ;
+    done | skip);
+      
+      (skip | i := n / 2); 
+    WhileR (i < n) do
+      invariant { [> n / 2 <= i /\ i <= n |> }
+      invariant { [> result = count(hmap, n / 2, i) |> }
+      invariant { <| result = count(hmap, 0, n / 2) + count(hmap, n / 2, i) <] }
+      (skip | v := getfnval(i, hmap)) ;
+      (skip | if (v = 1)  then
+            result := result + 1;
+            end);
+      
+      (skip | i := i + 1);
+    done;
+    
+      (skip | i := 0); 
+  WhileR (i < n / 2) do
+    invariant { <| result = count(hmap, 0, n / 2) + count(hmap, n / 2, i) <] }
+    invariant { [> 0 <= i /\ i <= n / 2 |> }
+    invariant { [> result = count(hmap, n / 2, n) + count(hmap, 0, i) |> }
+    (skip | v := getfnval(i, hmap)) ;
+      (skip | if (v = 1)  then
+        result := result + 1;
+      end);
+        
+      (skip | i := i + 1);
+    done;
+
+
+    Assert { Both (result = count(hmap, 0, n)) };
+  
+  end
+    
