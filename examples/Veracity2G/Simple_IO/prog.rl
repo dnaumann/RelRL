@@ -214,7 +214,7 @@ bimodule COMMUTE (M0 | M1) =
         k := k + 1;
       done
     );
-    /* Guide the relational proof by case-splitting on f */
+
     Assert { Both (let ofs = old(fs) in
               forall f:int, l:int. f <> fname_2 /\ f <> fname_4 ->
                 content(fs, f, l) = content(ofs, f, l)) };
@@ -225,4 +225,71 @@ bimodule COMMUTE (M0 | M1) =
     Assert { Both (let ofs = old(fs) in
               forall l:int. l <> 0 ->
                 content(fs, fname_4, l) = content(ofs, fname_4, l)) };
+end
+
+
+bimodule COMMUTE_Lockstep (M0 | M1) =
+
+  meth simpleio (fname_1:int, fname_2:int, fname_3:int, fname_4:int
+                | fname_1:int, fname_2:int, fname_3:int, fname_4:int) : (unit | unit)
+    requires { Agree fs }
+    requires { fname_1 =:= fname_1 /\ fname_2 =:= fname_2 }
+    requires { fname_3 =:= fname_3 /\ fname_4 =:= fname_4 }
+    requires { Both (fname_2 <> fname_3 /\ fname_1 <> fname_4 /\ fname_2 <> fname_4) }
+    /* requires { Both (fname_3 <> fname_4) } */
+    ensures  { forall f:int, l:int | f:int, l:int. (f =:= f) -> (l =:= l) ->
+                 content(fs, f, l) =:= content(fs, f, l) }
+    effects  { rw fs | rw fs }
+  = Var k: int | k: int in
+    Var z: int | z: int in
+    Var temp: int | temp: int in
+    Var zero: int | zero: int in
+    |_ zero := 0 _|;
+    ( /* Left: f1 then f2 */
+      k := 0;
+      while (k < 20) do
+        invariant { 0 <= k /\ k <= 20 }
+        invariant { let ofs = old(fs) in
+                    forall f:int, l:int. f <> fname_2 ->
+                      content(fs, f, l) = content(ofs, f, l) }
+        invariant { let ofs = old(fs) in
+                    forall l:int. content(fs, fname_1, l) = content(ofs, fname_1, l) }
+        invariant { let ofs = old(fs) in
+                    k > 0 -> forall l:int.
+                      content(fs, fname_2, l) = content(ofs, fname_1, l) }
+        fs := cp_file(fname_1, fname_2, fs);
+        k := k + 1;
+      done | skip);
+      |_ z := 0 _|;
+      While (z < 10) | (z < 10) . <| false <] | [> false |> do
+        invariant { Agree z }
+        invariant { <| let ofs = old(fs) in
+                    forall l:int. content(fs, fname_1, l) = content(ofs, fname_1, l) <] }
+        invariant { Both (let ofs = old(fs) in
+                    forall l:int. content(fs, fname_1, l) = content(ofs, fname_1, l)) }
+        invariant { <| let ofs = old(fs) in
+                      forall l:int.
+                      content(fs, fname_2, l) = content(ofs, fname_1, l) <] }
+        invariant { forall f:int, l:int | f:int, l:int. (f =:= f) -> (l =:= l) -> Both (f <> fname_2) ->
+                 content(fs, f, l) =:= content(fs, f, l) }
+        |_ temp := content(fs, fname_3, zero) _|;
+        |_ fs := write_at(fname_4, zero, temp, fs) _|;
+        |_ z := z + 1 _|;
+      done;
+    (skip | k := 0);
+    WhileR (k < 20) do
+        invariant { [> 0 <= k /\ k <= 20 |> }
+        invariant { forall f:int, l:int | f:int, l:int. (f =:= f) -> (l =:= l) -> Both (f <> fname_2) ->
+                 content(fs, f, l) =:= content(fs, f, l) }
+        invariant { Both (let ofs = old(fs) in
+                    forall l:int. content(fs, fname_1, l) = content(ofs, fname_1, l)) }
+        invariant { <| let ofs = old(fs) in
+                      forall l:int.
+                      content(fs, fname_2, l) = content(ofs, fname_1, l) <] }
+        invariant {[> let ofs = old(fs) in
+                    k > 0 -> forall l:int.
+                      content(fs, fname_2, l) = content(ofs, fname_1, l) |> }
+        (skip | fs := cp_file(fname_1, fname_2, fs));
+        (skip | k := k + 1);
+      done;
 end

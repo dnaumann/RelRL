@@ -212,22 +212,105 @@ procedure commutativity_check(fname_1: int, fname_2: int, fname_3: int, fname_4:
   requires fname_2 != fname_4;
   modifies file_system, file_system', open_files, open_files', file_pointers, file_pointers';
 {
+    var z, z': int;
+    var temp, temp': int;
+    var k, k': int;
+
     // Assume identical initial file system states
     assume (forall f: int, line: int :: file_system[f][line] == file_system'[f][line]);
-    
+
     assume (forall f: int :: open_files[f] == open_files'[f]);
     assume (!open_files[fname_1] && !open_files[fname_2] && !open_files[fname_3] && !open_files[fname_4]);
 
     assume (forall f: int :: file_pointers[f] == file_pointers'[f]);
 
 
-    // Left execution: f1(fname_1, fname_2); f2(fname_3, fname_4)
-    call f1(fname_1, fname_2);
-    call f2(fname_3, fname_4);
+    // Left execution
+    // f1; f2
 
-    // Right execution: f2(fname_3, fname_4); f1(fname_1, fname_2)
-    call f2_primed(fname_3, fname_4);
-    call f1_primed(fname_1, fname_2);
+    k := 0;
+    while (k < 20)
+      invariant (forall f: int :: f != fname_2 ==> file_system[f] == old(file_system[f]));
+      invariant file_system[fname_1] == old(file_system[fname_1]);
+      invariant k > 0 ==> file_system[fname_2] == old(file_system[fname_1]);
+    {
+        k := k + 1;
+        file_system := file_system[fname_2 := file_system[fname_1]];
+    }
+
+    z := 0;
+    while (z < 10)
+      invariant !open_files[fname_3] && !open_files[fname_4];
+      invariant (forall f: int :: f != fname_3 && f != fname_4 ==> open_files[f] == old(open_files[f]));
+      invariant (forall f: int :: f != fname_4 && f != fname_2 ==> file_system[f] == old(file_system[f]));
+      invariant file_system[fname_2] == old(file_system[fname_1]);
+      invariant z > 0 ==> file_system[fname_4][0] == old(file_system[fname_3][0]);
+      invariant (forall line: int :: line != 0 ==> file_system[fname_4][line] == old(file_system[fname_4][line]));
+    {
+        z := z + 1;
+
+        open_files[fname_3] := true;
+        file_pointers[fname_3] := 0;
+
+        open_files[fname_4] := true;
+        file_pointers[fname_4] := 0;
+
+        assert open_files[fname_3];
+        temp := file_system[fname_3][file_pointers[fname_3]];
+        file_pointers[fname_3] := file_pointers[fname_3] + 1;
+
+        assert open_files[fname_4];
+        file_system := file_system[fname_4 := file_system[fname_4][file_pointers[fname_4] := temp]];
+        file_pointers[fname_4] := file_pointers[fname_4] + 1;
+
+        open_files[fname_3] := false;
+
+        open_files[fname_4] := false;
+    }
+
+    // Right execution
+    // f2 ; f1
+
+    z' := 0;
+    while (z' < 10)
+      invariant !open_files'[fname_3] && !open_files'[fname_4];
+      invariant (forall f: int :: f != fname_3 && f != fname_4 ==> open_files'[f] == old(open_files'[f]));
+      invariant (forall f: int :: f != fname_4 ==> file_system'[f] == old(file_system'[f]));
+      invariant z' > 0 ==> file_system'[fname_4][0] == old(file_system'[fname_3][0]);
+      invariant (forall line: int :: line != 0 ==> file_system'[fname_4][line] == old(file_system'[fname_4][line]));
+    {
+        z' := z' + 1;
+
+        open_files'[fname_3] := true;
+        file_pointers'[fname_3] := 0;
+
+        open_files'[fname_4] := true;
+        file_pointers'[fname_4] := 0;
+
+        assert open_files'[fname_3];
+        temp' := file_system'[fname_3][file_pointers'[fname_3]];
+        file_pointers'[fname_3] := file_pointers'[fname_3] + 1;
+
+        assert open_files'[fname_4];
+        file_system' := file_system'[fname_4 := file_system'[fname_4][file_pointers'[fname_4] := temp']];
+        file_pointers'[fname_4] := file_pointers'[fname_4] + 1;
+
+        open_files'[fname_3] := false;
+
+        open_files'[fname_4] := false;
+    }
+
+    k' := 0;
+    while (k' < 20)
+      invariant (forall f: int :: f != fname_2 && f != fname_4 ==> file_system'[f] == old(file_system'[f]));
+      invariant file_system'[fname_4][0] == old(file_system'[fname_3][0]);
+      invariant (forall line: int :: line != 0 ==> file_system'[fname_4][line] == old(file_system'[fname_4][line]));
+      invariant file_system'[fname_1] == old(file_system'[fname_1]);
+      invariant k' > 0 ==> file_system'[fname_2] == old(file_system'[fname_1]);
+    {
+        k' := k' + 1;
+        file_system' := file_system'[fname_2 := file_system'[fname_1]];
+    }
 
     // Assert both executions produce the same final file system state
     assert (forall f: int, line: int :: file_system[f][line] == file_system'[f][line]);
