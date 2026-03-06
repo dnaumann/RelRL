@@ -4,6 +4,7 @@
 
 - fizzbuzz
 - simple_vector
+- simple_io
 
 ## Hypa
 
