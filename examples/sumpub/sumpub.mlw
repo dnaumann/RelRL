@@ -486,6 +486,8 @@ module BiList
                    /\
                    (l_ls = r_ls)
     }
+    ensures { PreRefperm.extends (old pi) pi }
+    
     ensures { okRefperm l_s r_s pi }
     
     ensures { match result with
@@ -591,6 +593,8 @@ module BiList
                    /\
                    (l_ls = r_ls)
     }
+    ensures { PreRefperm.extends (old pi5) pi5 }
+    
     ensures { okRefperm l_s r_s pi5 }
     
     ensures { match result with
@@ -722,6 +726,9 @@ module BiList_biinterface
                    /\
                    (l_ls = r_ls)
     }
+    writes { pi }
+    ensures { PreRefperm.extends (old pi) pi }
+    
     ensures { okRefperm l_s r_s pi }
     
     ensures { match result with
