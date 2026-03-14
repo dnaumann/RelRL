@@ -1,0 +1,90 @@
+module Fizzbuzz_Theory
+  use int.Int
+  use export list.List
+  use list.Length
+  use export list.Nth
+  use option.Option
+  use list.NthLength
+
+  type intList = list int
+  constant nil : intList
+  axiom nil_ax : nil = Nil
+
+  let function hd (l:intList) : int
+    requires { exists h,t. l = Cons h t } =
+    match l with
+    | Cons h _ -> h
+    end
+  
+  let function tl (l:intList) : intList =
+    match l with
+    | Nil -> Nil
+    | Cons _ t -> t
+    end
+  
+  let function listLength (l:intList) : int = length(l)
+  
+  let function cons (h:int) (t:intList) : intList = Cons h t
+
+  let function listNth (n:int) (xs:intList) : int
+    requires { 0 <= n < listLength(xs) } =
+    match nth n xs with
+    | Some v -> v
+    end
+
+  lemma listNth_0_Cons : forall h t.
+    listNth 0 (Cons h t) = h
+
+  lemma listNth_pos_Cons : forall n h t.
+    0 < n <= listLength t -> listNth n (Cons h t) = listNth (n-1) t
+
+  let rec function upd_list  (k: int) (v: int) (xs:intList) : intList
+    requires { 0 <= k < listLength(xs) } 
+    variant {k} = 
+      if (k = 0) then (Cons v (tl xs)) else Cons (hd xs) (upd_list (k - 1) v (tl xs)) 
+    
+
+  lemma upd_list_diff : forall k v xs i.  
+    0 <= k < listLength(xs) /\  0 <= i < listLength(xs) ->   
+      i <> k -> listNth i (upd_list k v xs) = listNth i xs
+  
+  lemma upd_list_same : forall k v xs i.
+    0 <= k < listLength(xs) /\  0 <= i < listLength(xs) ->   
+      i = k -> listNth i (upd_list k v xs) = v
+
+  type int_fun = int -> int
+  let function empty_fun (i: int) : int = 0 
+  (* constant empty_fun: *)
+
+  let function add_mapping  (k: int) (v: int) (map: int_fun): int_fun =
+     fun x -> if x = k then v else (map x)
+
+  let function getfnval (k: int) (map: int_fun): int = map(k)
+
+  let rec function create_list (n: int) (default: int): intList 
+    requires { n >= 0 }
+    variant {n}
+    =
+    if n > 0 then  Cons default (create_list (n) default) else Nil
+
+  lemma upd_list_length : forall k v xs.
+        0 <= k < listLength(xs) ->   
+       listLength(upd_list k v xs) = listLength(xs)
+
+
+  let rec function count (a: int_fun) (lo: int) (hi: int): int 
+    variant {hi - lo}
+    =
+    if lo >= hi then 0 else
+      let k = if (getfnval (hi - 1) a) = 1 then 1 else 0 in
+      (count a lo (hi - 1)) + k
+  
+  lemma count_mid : forall a lo mid hi.
+    lo <= mid /\ mid <= hi ->  count a lo hi = count a lo mid + count a mid hi
+
+  lemma count_congruence: forall a b lo hi.
+    (forall k. lo <= k /\ k < hi -> getfnval k a = getfnval k b) -> count a lo hi = count b lo hi
+
+end
+
+
