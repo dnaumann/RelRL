@@ -68,7 +68,7 @@ procedure Unno_possNI (high: int, low: int, high': int, low': int) returns (r: i
          trigvar := x - x';
          assert (exists v:int :: v == trigvar); // inserted by chk
          havoc b'; assume b' == x - x'; // HavocR b
-         assert b' < bsnap'; // variant decrease inserted by chk
+         assert 0 <= b' < bsnap'; // variant decrease inserted by chk
       }
    }
    else if (high == 0 && high' != 0) { 
@@ -135,7 +135,7 @@ procedure Unno_possNIalt (high: int, low: int, high': int, low': int) returns (x
          assert inst(x - x');
          assert (exists v:int :: {inst(v)} v == x - x'); // added by chk
          havoc b'; assume b' == x - x'; 
-         assert b' < bsnap'; // added by chk
+         assert 0 <= b' < bsnap'; // added by chk
       }
    }
    else if (high == 0 && high' != 0) { 

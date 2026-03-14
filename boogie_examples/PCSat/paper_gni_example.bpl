@@ -77,7 +77,7 @@ procedure Unno_possNI (high: int, low: int, high': int, low': int) returns (r: i
          x' := x' + 1; 
    //        HavocR b { [> b >] = [< x <] - [> x >] }
          havoc b'; assume b' == x - x';
-         assert b' < bsnap'; // variant decrease
+         assert 0 <= b' && b' < bsnap'; // variant decrease
       }
 
     assert x == x'; 
