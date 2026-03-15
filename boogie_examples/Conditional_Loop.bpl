@@ -87,7 +87,7 @@ procedure loop (x1: int, n1: int, x2: int, n2: int)
     // snapshot variant [> (n - w) mod n >] (added by chk)
     vnt := (n2 - w2) mod n2;
     // snapshot RO condition (added by chk)
-    ro := (y2 > 0 && w2 != 0);
+    ro := (y2 > 0 && w2 != 0) && !(y1 > 0 && w1 != 0);
 
     // left-only condition
     if (y1 > 0 && w1 != 0)
@@ -104,7 +104,7 @@ procedure loop (x1: int, n1: int, x2: int, n2: int)
          assume z1 == z2;    
          y2 := y2 - 1; 
        }
-         w2 := (w2 + 1) mod n2;         
+       w2 := (w2 + 1) mod n2;         
      }
      else 
      { // an alignment of body
