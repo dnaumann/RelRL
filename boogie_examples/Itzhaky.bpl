@@ -27,6 +27,7 @@ procedure p (A1: [int] int, A2: [int] int, n1: int, n2: int)
           ensures b2 < 0 && sum1 == sum2; 
 { 
   var i1: int; var i2: int;  var y1: int; var y2: int;
+  var vsnap: int;
 
   sum1 := 0;
   havoc b1;
@@ -37,10 +38,16 @@ procedure p (A1: [int] int, A2: [int] int, n1: int, n2: int)
   if (b1 > 0 && b2 > 0) { // unreachable 
     i1 := 0;
     while (i1 < n1 - 1)
-    { sum1 := sum1 + A1[i1]; i1 := i1 + 1; }
+    { 
+      
+      sum1 := sum1 + A1[i1]; i1 := i1 + 1; }
     i2 := 0;
     while (i2 < n2 - 2)
-    { sum2 := sum2 + A2[i2]; i2 := i2 + 1; }
+    { 
+      vsnap := i2; // variant i2
+      sum2 := sum2 + A2[i2]; i2 := i2 + 1; 
+      assert (0 <= i2 && i2 < vsnap); // variant decreases
+    }
   } else {
   if (b1 > 0 && b2 <= 0) { 
     i1 := 0; i2 := 1;
@@ -65,8 +72,12 @@ procedure p (A1: [int] int, A2: [int] int, n1: int, n2: int)
     { havoc y1; sum1 := sum1 + A1[i1] + y1; i1 := i1 + 1; } 
     i2 := 0;
     while (i2 < n2 - 2)
-    { sum2 := sum2 + A2[i2]; i2 := i2 + 1; }
-  } else { // (b1 <= 0 && b2 > 0) 
+    { 
+      vsnap := i2; // variant i2
+      sum2 := sum2 + A2[i2]; i2 := i2 + 1;
+      assert (0 <= i2 && i2 < vsnap); // variant decreases
+    }
+  } else { // (b1 <= 0 && b2 <= 0) 
     i1 := 1; i2 := 1;
     while (i1 < n1 && i2 < n2)
       invariant i1 < n1 <==> i2 < n2;

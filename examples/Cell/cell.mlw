@@ -469,6 +469,8 @@ module CELL_REL
     
     ensures { [@expl:wr {self}`value] (wr_frame_value (old r_s) r_s (r_self.singleton)) }
     
+    ensures { PreRefperm.extends (old pi) pi }
+    
     ensures { okRefperm l_s r_s pi }
     
     ensures { cellC l_s r_s pi }
@@ -534,6 +536,8 @@ module CELL_REL
     
     ensures { [@expl:wr {self}`value] (wr_frame_value (old r_s) r_s (r_self.singleton)) }
     
+    ensures { PreRefperm.extends (old pi2) pi2 }
+    
     ensures { okRefperm l_s r_s pi2 }
     
     ensures { cellC l_s r_s pi2 }
@@ -587,6 +591,8 @@ module CELL_REL
     requires { ((l_s.ACell.CELL.cellP) /\ (r_s.BCell.CELL.cellP)) }
     requires { ((Rgn.mem l_self l_s.pool) /\ (Rgn.mem r_self r_s.pool)) }
     requires { cellC l_s r_s pi }
+    ensures { PreRefperm.extends (old pi) pi }
+    
     ensures { okRefperm l_s r_s pi }
     
     ensures { cellC l_s r_s pi }
@@ -680,7 +686,7 @@ module CELL_REL_biinterface
     requires { (((l_s.rep[l_self]) = emptyRgn) /\ ((r_s.rep[r_self]) = emptyRgn)) }
     requires { ((not (Rgn.mem l_self l_s.pool)) /\ (not (Rgn.mem r_self r_s.pool))) }
     requires { (true /\ true) }
-    writes { l_s.rep, l_s.value, l_s.alloct, l_s.pool, r_s.rep, r_s.value, r_s.alloct, r_s.pool }
+    writes { pi, l_s.alloct, l_s.pool, l_s.rep, l_s.value, r_s.alloct, r_s.pool, r_s.rep, r_s.value }
     ensures { [@expl:wr {self}`rep] (wr_frame_rep (old l_s) l_s (l_self.singleton)) }
     
     ensures { [@expl:wr {self}`value] (wr_frame_value (old l_s) l_s (l_self.singleton)) }
@@ -692,6 +698,8 @@ module CELL_REL_biinterface
     ensures { [@expl:wr {self}`value] (wr_frame_value (old r_s) r_s (r_self.singleton)) }
     
     ensures { alloc_does_not_shrink (old r_s) r_s }
+    
+    ensures { PreRefperm.extends (old pi) pi }
     
     ensures { okRefperm l_s r_s pi }
     
@@ -734,7 +742,7 @@ module CELL_REL_biinterface
     requires { ((l_s.ACell.CELL.cellP) /\ (r_s.BCell.CELL.cellP)) }
     requires { ((Rgn.mem l_self l_s.pool) /\ (Rgn.mem r_self r_s.pool)) }
     requires { (true /\ true) }
-    writes { l_s.rep, l_s.value, l_s.alloct, l_s.pool, r_s.rep, r_s.value, r_s.alloct, r_s.pool }
+    writes { pi6, l_s.alloct, l_s.pool, l_s.rep, l_s.value, r_s.alloct, r_s.pool, r_s.rep, r_s.value }
     ensures { [@expl:wr {self}`rep] (wr_frame_rep (old l_s) l_s (l_self.singleton)) }
     
     ensures { [@expl:wr {self}`value] (wr_frame_value (old l_s) l_s (l_self.singleton)) }
@@ -746,6 +754,8 @@ module CELL_REL_biinterface
     ensures { [@expl:wr {self}`value] (wr_frame_value (old r_s) r_s (r_self.singleton)) }
     
     ensures { alloc_does_not_shrink (old r_s) r_s }
+    
+    ensures { PreRefperm.extends (old pi6) pi6 }
     
     ensures { okRefperm l_s r_s pi6 }
     
@@ -788,7 +798,7 @@ module CELL_REL_biinterface
     requires { ((l_s.ACell.CELL.cellP) /\ (r_s.BCell.CELL.cellP)) }
     requires { ((Rgn.mem l_self l_s.pool) /\ (Rgn.mem r_self r_s.pool)) }
     requires { (true /\ true) }
-    writes { l_s.rep, l_s.value, l_s.alloct, l_s.pool, r_s.rep, r_s.value, r_s.alloct, r_s.pool }
+    writes { pi, l_s.alloct, l_s.pool, l_s.rep, l_s.value, r_s.alloct, r_s.pool, r_s.rep, r_s.value }
     ensures { [@expl:wr {self}`rep] (wr_frame_rep (old l_s) l_s (l_self.singleton)) }
     
     ensures { [@expl:wr {self}`value] (wr_frame_value (old l_s) l_s (l_self.singleton)) }
@@ -800,6 +810,8 @@ module CELL_REL_biinterface
     ensures { [@expl:wr {self}`value] (wr_frame_value (old r_s) r_s (r_self.singleton)) }
     
     ensures { alloc_does_not_shrink (old r_s) r_s }
+    
+    ensures { PreRefperm.extends (old pi) pi }
     
     ensures { okRefperm l_s r_s pi }
     
@@ -897,10 +909,12 @@ module Main_Link
     requires { (l_x = r_x) }
     requires { ((l_x >= 0) /\ (r_x >= 0)) }
     requires { ((l_s.pool = emptyRgn) /\ (r_s.pool = emptyRgn)) }
-    writes { l_s.alloct, l_s.pool, r_s.alloct, r_s.pool }
+    writes { pi, l_s.alloct, l_s.pool, r_s.alloct, r_s.pool }
     ensures { alloc_does_not_shrink (old l_s) l_s }
     
     ensures { alloc_does_not_shrink (old r_s) r_s }
+    
+    ensures { PreRefperm.extends (old pi) pi }
     
     ensures { okRefperm l_s r_s pi }
     

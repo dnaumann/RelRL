@@ -57,7 +57,7 @@ bimodule FREL (A | A) =
     thenThen
       |_ i := 0 _|;
 
-      (while (i < n - 1) do variant {  i  }
+      (while (i < n - 1) do
          temp := get(a, i);
          sum := sum + temp;
          i := i + 1;
