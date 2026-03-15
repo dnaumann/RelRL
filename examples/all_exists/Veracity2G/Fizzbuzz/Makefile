@@ -1,11 +1,12 @@
 WHY3=why3
-WHYREL=../../../bin/whyrel
-WHYREL_STDLIB=../../../stdlib
+WHYREL=../../../../bin/whyrel
+WHYREL_STDLIB=../../../../stdlib
+PROG=prog
 
 all: prog.mlw
 
-prog.mlw: prog.rl
-	$(WHYREL) -all-exists -margin 136 -o $@ $^
+$(PROG).mlw: $(PROG).rl
+	$(WHYREL) -debug -all-exists -margin 80 -o $@ $^
 
 ide: prog.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
