@@ -21,7 +21,7 @@ module ArrayStack : STACK =
       (forall i:int. 0 <= i /\ i <= top ->
          let c = arr[i] in
 	 let v = c.cell_value in
-	 v = listNth(top-i, stk))) /\ stackPub()
+	 v = listNth(top-i, stk)))
 
   meth Stack (self:Stack) : unit
   = var arr: CellArray in
@@ -64,7 +64,7 @@ module ArrayStack : STACK =
         let box = arr[i] in
         box.cell_value = listNth(top-i,stk) }
 
-  meth pop (self:Stack) : Cell
+  meth pop (self:Stack) : int
   = var a: CellArray in
     var m: int in
     var sz: int in

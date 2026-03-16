@@ -3144,92 +3144,116 @@
   <goal name="prog&#39;vc.16" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
   <proof prover="0"><result status="valid" time="4.222461" steps="21870"/></proof>
   </goal>
-  <goal name="prog&#39;vc.17" expl="wr ({stk} union {stk}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="4.819790" steps="21874"/></proof>
+  <goal name="prog&#39;vc.17" expl="wr {stk}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.387749" steps="1406"/></proof>
   </goal>
-  <goal name="prog&#39;vc.18" expl="wr {stk}`rep`cdr" proved="true">
-  <proof prover="0"><result status="valid" time="0.720322" steps="1406"/></proof>
+  <goal name="prog&#39;vc.18" expl="wr ({stk} union {stk}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="3.685960" steps="21887"/></proof>
   </goal>
-  <goal name="prog&#39;vc.19" expl="wr {stk}`rep`car" proved="true">
-  <proof prover="0"><result status="valid" time="0.532071" steps="1409"/></proof>
+  <goal name="prog&#39;vc.19" expl="wr {stk}`rep`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="0.418229" steps="1409"/></proof>
   </goal>
-  <goal name="prog&#39;vc.20" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
-  <proof prover="0"><result status="valid" time="5.156375" steps="21922"/></proof>
+  <goal name="prog&#39;vc.20" expl="wr ({stk} union {stk}`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="3.732847" steps="21898"/></proof>
   </goal>
-  <goal name="prog&#39;vc.21" expl="wr {stk}`rep`cell_rep" proved="true">
-  <proof prover="0"><result status="valid" time="0.538913" steps="1416"/></proof>
+  <goal name="prog&#39;vc.21" expl="wr {stk}`rep`car" proved="true">
+  <proof prover="0"><result status="valid" time="0.532071" steps="1415"/></proof>
   </goal>
-  <goal name="prog&#39;vc.22" expl="wr ({stk} union {stk}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="4.517058" steps="21920"/></proof>
+  <goal name="prog&#39;vc.22" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="3.726816" steps="21936"/></proof>
   </goal>
-  <goal name="prog&#39;vc.23" expl="wr {stk}`rep`cell_value" proved="true">
-  <proof prover="0"><result status="valid" time="0.671939" steps="1426"/></proof>
+  <goal name="prog&#39;vc.23" expl="wr {stk}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.538913" steps="1421"/></proof>
   </goal>
-  <goal name="prog&#39;vc.24" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.641327" steps="1474"/></proof>
+  <goal name="prog&#39;vc.24" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="3.677657" steps="21939"/></proof>
   </goal>
-  <goal name="prog&#39;vc.25" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="4.159255" steps="21927"/></proof>
+  <goal name="prog&#39;vc.25" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="3.698636" steps="21962"/></proof>
   </goal>
-  <goal name="prog&#39;vc.26" expl="wr ({stk} union {stk}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="5.215286" steps="21934"/></proof>
+  <goal name="prog&#39;vc.26" expl="wr {stk}`rep`length" proved="true">
+  <proof prover="0"><result status="valid" time="0.542366" steps="1438"/></proof>
   </goal>
-  <goal name="prog&#39;vc.27" expl="wr {stk}`rep`cdr" proved="true">
-  <proof prover="0"><result status="valid" time="0.413548" steps="1433"/></proof>
+  <goal name="prog&#39;vc.27" expl="wr {stk}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="0.671939" steps="1440"/></proof>
   </goal>
-  <goal name="prog&#39;vc.28" expl="wr {stk}`rep`car" proved="true">
-  <proof prover="0"><result status="valid" time="0.545009" steps="1436"/></proof>
+  <goal name="prog&#39;vc.28" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.641327" steps="1488"/></proof>
   </goal>
-  <goal name="prog&#39;vc.29" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
-  <proof prover="0"><result status="valid" time="5.244589" steps="21971"/></proof>
+  <goal name="prog&#39;vc.29" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="3.618228" steps="21952"/></proof>
   </goal>
-  <goal name="prog&#39;vc.30" expl="wr {stk}`rep`cell_rep" proved="true">
-  <proof prover="0"><result status="valid" time="0.673465" steps="1442"/></proof>
+  <goal name="prog&#39;vc.30" expl="wr {stk}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.394414" steps="1445"/></proof>
   </goal>
-  <goal name="prog&#39;vc.31" expl="wr ({stk} union {stk}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="4.369220" steps="21984"/></proof>
+  <goal name="prog&#39;vc.31" expl="wr ({stk} union {stk}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="3.554748" steps="21969"/></proof>
   </goal>
-  <goal name="prog&#39;vc.32" expl="wr {stk}`rep`cell_value" proved="true">
-  <proof prover="0"><result status="valid" time="0.551342" steps="1453"/></proof>
+  <goal name="prog&#39;vc.32" expl="wr {stk}`rep`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="0.413548" steps="1449"/></proof>
   </goal>
-  <goal name="prog&#39;vc.33" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.610051" steps="1499"/></proof>
+  <goal name="prog&#39;vc.33" expl="wr ({stk} union {stk}`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="3.555101" steps="21987"/></proof>
   </goal>
-  <goal name="prog&#39;vc.34" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.087723" steps="256"/></proof>
+  <goal name="prog&#39;vc.34" expl="wr {stk}`rep`car" proved="true">
+  <proof prover="0"><result status="valid" time="0.545009" steps="1453"/></proof>
   </goal>
-  <goal name="prog&#39;vc.35" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.862895" steps="3743"/></proof>
+  <goal name="prog&#39;vc.35" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="3.703242" steps="22018"/></proof>
   </goal>
-  <goal name="prog&#39;vc.36" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.091798" steps="261"/></proof>
+  <goal name="prog&#39;vc.36" expl="wr {stk}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.398317" steps="1458"/></proof>
   </goal>
-  <goal name="prog&#39;vc.37" expl="loop invariant init" proved="true">
+  <goal name="prog&#39;vc.37" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="3.570590" steps="22029"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.38" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="4.369220" steps="22043"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.39" expl="wr {stk}`rep`length" proved="true">
+  <proof prover="0"><result status="valid" time="0.405332" steps="1478"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.40" expl="wr {stk}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="0.551342" steps="1479"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.41" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.610051" steps="1527"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.42" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.087723" steps="272"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.43" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.862895" steps="3780"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.44" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.091798" steps="277"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.45" expl="loop invariant init" proved="true">
   <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1179362"/></proof>
   <transf name="inline_goal" proved="true" >
-   <goal name="prog&#39;vc.37.0" expl="loop invariant init" proved="true">
+   <goal name="prog&#39;vc.45.0" expl="loop invariant init" proved="true">
    <transf name="split_vc" proved="true" >
-    <goal name="prog&#39;vc.37.0.0" expl="loop invariant init" proved="true">
+    <goal name="prog&#39;vc.45.0.0" expl="loop invariant init" proved="true">
     <transf name="right" proved="true" >
-     <goal name="prog&#39;vc.37.0.0.0" expl="right case" proved="true">
+     <goal name="prog&#39;vc.45.0.0.0" expl="right case" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.37.0.0.0.0" expl="right case" proved="true">
-      <proof prover="0"><result status="valid" time="0.086440" steps="251"/></proof>
+      <goal name="prog&#39;vc.45.0.0.0.0" expl="right case" proved="true">
+      <proof prover="0"><result status="valid" time="0.086440" steps="267"/></proof>
       </goal>
-      <goal name="prog&#39;vc.37.0.0.0.1" expl="right case" proved="true">
-      <proof prover="0"><result status="valid" time="0.087229" steps="251"/></proof>
+      <goal name="prog&#39;vc.45.0.0.0.1" expl="right case" proved="true">
+      <proof prover="0"><result status="valid" time="0.087229" steps="267"/></proof>
       </goal>
-      <goal name="prog&#39;vc.37.0.0.0.2" expl="right case" proved="true">
+      <goal name="prog&#39;vc.45.0.0.0.2" expl="right case" proved="true">
       <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1553505"/></proof>
       <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="LoopInvariant">
-       <goal name="prog&#39;vc.37.0.0.0.2.0" expl="right case" proved="true">
-       <proof prover="0"><result status="valid" time="0.466416" steps="1373"/></proof>
+       <goal name="prog&#39;vc.45.0.0.0.2.0" expl="right case" proved="true">
+       <proof prover="0"><result status="valid" time="0.466416" steps="1396"/></proof>
        <proof prover="1" obsolete="true"><result status="outofmemory" time="39.038974"/></proof>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.37.0.0.0.3" expl="right case" proved="true">
-      <proof prover="0"><result status="valid" time="0.493263" steps="1368"/></proof>
+      <goal name="prog&#39;vc.45.0.0.0.3" expl="right case" proved="true">
+      <proof prover="0"><result status="valid" time="0.493263" steps="1394"/></proof>
       </goal>
      </transf>
      </goal>
@@ -3239,462 +3263,477 @@
    </goal>
   </transf>
   </goal>
-  <goal name="prog&#39;vc.38" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.089857" steps="265"/></proof>
+  <goal name="prog&#39;vc.46" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.089857" steps="281"/></proof>
   </goal>
-  <goal name="prog&#39;vc.39" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.086962" steps="266"/></proof>
+  <goal name="prog&#39;vc.47" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.086962" steps="282"/></proof>
   </goal>
-  <goal name="prog&#39;vc.40" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.090473" steps="266"/></proof>
+  <goal name="prog&#39;vc.48" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.090473" steps="282"/></proof>
   </goal>
-  <goal name="prog&#39;vc.41" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="222.787123" steps="1413328"/></proof>
+  <goal name="prog&#39;vc.49" expl="loop invariant init">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="978122"/></proof>
   </goal>
-  <goal name="prog&#39;vc.42" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.116109" steps="270"/></proof>
+  <goal name="prog&#39;vc.50" expl="loop invariant init">
+  <proof prover="0"><result status="timeout" time="400.000000" steps="2431100"/></proof>
+  <transf name="inline_goal" >
+   <goal name="prog&#39;vc.50.0" expl="loop invariant init">
+   <transf name="split_vc" >
+    <goal name="prog&#39;vc.50.0.0" expl="loop invariant init">
+    <proof prover="0"><undone/></proof>
+    </goal>
+    <goal name="prog&#39;vc.50.0.1" expl="loop invariant init">
+    <proof prover="0"><undone/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
-  <goal name="prog&#39;vc.43" expl="push(stk,i)" proved="true">
-  <proof prover="0"><result status="valid" time="0.104003" steps="306"/></proof>
+  <goal name="prog&#39;vc.51" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.116109" steps="290"/></proof>
   </goal>
-  <goal name="prog&#39;vc.44" expl="push(stk,i)" proved="true">
-  <proof prover="0"><result status="valid" time="0.135344" steps="306"/></proof>
+  <goal name="prog&#39;vc.52" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.104003" steps="326"/></proof>
   </goal>
-  <goal name="prog&#39;vc.45" expl="push(stk,i)" proved="true">
-  <proof prover="0"><result status="valid" time="0.101192" steps="306"/></proof>
+  <goal name="prog&#39;vc.53" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.135344" steps="326"/></proof>
   </goal>
-  <goal name="prog&#39;vc.46" expl="push(stk,i)" proved="true">
-  <proof prover="0"><result status="valid" time="0.134701" steps="306"/></proof>
+  <goal name="prog&#39;vc.54" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.101192" steps="326"/></proof>
   </goal>
-  <goal name="prog&#39;vc.47" expl="push(stk,i)" proved="true">
-  <proof prover="0"><result status="valid" time="0.103760" steps="306"/></proof>
+  <goal name="prog&#39;vc.55" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.134701" steps="326"/></proof>
   </goal>
-  <goal name="prog&#39;vc.48" expl="push(stk,i)" proved="true">
-  <proof prover="0"><result status="valid" time="0.116116" steps="306"/></proof>
+  <goal name="prog&#39;vc.56" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.103760" steps="326"/></proof>
   </goal>
-  <goal name="prog&#39;vc.49" expl="push(stk,i)" proved="true">
+  <goal name="prog&#39;vc.57" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.116116" steps="326"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.58" expl="push(stk,i)" proved="true">
   <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="933933"/></proof>
   <transf name="inline_goal" proved="true" >
-   <goal name="prog&#39;vc.49.0" expl="push(stk,i)" proved="true">
+   <goal name="prog&#39;vc.58.0" expl="push(stk,i)" proved="true">
    <transf name="split_vc" proved="true" >
-    <goal name="prog&#39;vc.49.0.0" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="78.446280" steps="401011"/></proof>
+    <goal name="prog&#39;vc.58.0.0" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="67.069689" steps="456932"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.1" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="79.778994" steps="411366"/></proof>
+    <goal name="prog&#39;vc.58.0.1" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="69.321230" steps="466762"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.2" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="70.623540" steps="401910"/></proof>
+    <goal name="prog&#39;vc.58.0.2" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="60.199053" steps="428596"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.3" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="65.223336" steps="377745"/></proof>
+    <goal name="prog&#39;vc.58.0.3" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="65.223336" steps="456212"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.4" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="81.122890" steps="399976"/></proof>
+    <goal name="prog&#39;vc.58.0.4" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="62.610893" steps="453085"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.5" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="70.969498" steps="391769"/></proof>
+    <goal name="prog&#39;vc.58.0.5" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="56.861265" steps="429316"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.6" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="74.538774" steps="383425"/></proof>
+    <goal name="prog&#39;vc.58.0.6" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="59.271339" steps="438338"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.7" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="66.984127" steps="383011"/></proof>
+    <goal name="prog&#39;vc.58.0.7" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="66.984127" steps="477802"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.8" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="71.350571" steps="391682"/></proof>
+    <goal name="prog&#39;vc.58.0.8" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="59.027861" steps="437595"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.9" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="74.892993" steps="416748"/></proof>
+    <goal name="prog&#39;vc.58.0.9" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="74.892993" steps="474388"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.10" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="64.695286" steps="378826"/></proof>
+    <goal name="prog&#39;vc.58.0.10" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="64.695286" steps="471186"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.11" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="62.504625" steps="382309"/></proof>
+    <goal name="prog&#39;vc.58.0.11" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="62.504625" steps="472734"/></proof>
     </goal>
-    <goal name="prog&#39;vc.49.0.12" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.12" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1281431"/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.12.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.12.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.12.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.12.0.0" expl="push(stk,i)" proved="true">
       <proof prover="0" obsolete="true"><result status="valid" time="118.573865" steps="1004220"/></proof>
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.12.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.12.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.12.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.619578" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.12.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.619578" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.12.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.780070" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.12.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.529449" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.12.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="17.467757" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.12.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="11.705061" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.12.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="14.746834" steps="73400"/></proof>
+      <goal name="prog&#39;vc.58.0.12.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="11.222819" steps="75192"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.12.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="14.628116" steps="73324"/></proof>
+      <goal name="prog&#39;vc.58.0.12.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="12.255148" steps="75066"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.13" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.13" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1284082"/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.13.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.13.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.13.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.13.0.0" expl="push(stk,i)" proved="true">
       <proof prover="0" obsolete="true"><result status="valid" time="126.536615" steps="1004220"/></proof>
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.13.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.13.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.13.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.475847" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.13.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.475847" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.13.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.683878" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.13.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.683878" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.13.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="11.804584" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.13.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="11.804584" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.13.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="13.966205" steps="73400"/></proof>
+      <goal name="prog&#39;vc.58.0.13.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="11.252173" steps="75192"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.13.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="12.912213" steps="73471"/></proof>
+      <goal name="prog&#39;vc.58.0.13.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="11.160250" steps="75229"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.14" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.14" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1288192"/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.14.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.14.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.14.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.14.0.0" expl="push(stk,i)" proved="true">
       <proof prover="0" obsolete="true"><undone/></proof>
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.14.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.14.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.14.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.510334" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.14.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.510334" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.14.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.509028" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.14.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.509028" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.14.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="12.640135" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.14.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="12.640135" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.14.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="11.526439" steps="73432"/></proof>
+      <goal name="prog&#39;vc.58.0.14.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="11.526439" steps="75124"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.14.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="11.723854" steps="73334"/></proof>
+      <goal name="prog&#39;vc.58.0.14.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="11.723854" steps="75068"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.15" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.15" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1291000"/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.15.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.15.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.15.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.15.0.0" expl="push(stk,i)" proved="true">
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.15.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.15.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.15.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.487759" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.15.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.487759" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.15.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.495380" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.15.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.495380" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.15.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="13.681619" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.15.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="11.646270" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.15.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="10.797805" steps="73432"/></proof>
+      <goal name="prog&#39;vc.58.0.15.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="10.797805" steps="75124"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.15.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="12.527452" steps="73447"/></proof>
+      <goal name="prog&#39;vc.58.0.15.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="12.527452" steps="75189"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.16" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.16" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1284907"/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.16.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.16.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.16.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.16.0.0" expl="push(stk,i)" proved="true">
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.16.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.16.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.16.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.529427" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.16.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.529427" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.16.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.540610" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.16.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.540610" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.16.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="15.914218" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.16.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="13.245583" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.16.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="16.088608" steps="73441"/></proof>
+      <goal name="prog&#39;vc.58.0.16.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="11.389644" steps="75142"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.16.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="16.636129" steps="73336"/></proof>
+      <goal name="prog&#39;vc.58.0.16.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="11.498692" steps="75097"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.17" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.17" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1290940"/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.17.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.17.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.17.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.17.0.0" expl="push(stk,i)" proved="true">
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.17.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.17.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.17.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.813154" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.17.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.521051" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.17.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.494998" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.17.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.494998" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.17.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="17.537502" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.17.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="11.958456" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.17.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="15.956551" steps="73441"/></proof>
+      <goal name="prog&#39;vc.58.0.17.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="11.870709" steps="75142"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.17.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="15.353539" steps="73336"/></proof>
+      <goal name="prog&#39;vc.58.0.17.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="11.643502" steps="75073"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.18" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.18" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1299478"/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.18.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.18.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.18.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.18.0.0" expl="push(stk,i)" proved="true">
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.18.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.18.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.18.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.676946" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.18.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.676946" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.18.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.852464" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.18.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.636094" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.18.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="14.994527" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.18.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="13.084548" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.18.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="14.422881" steps="73523"/></proof>
+      <goal name="prog&#39;vc.58.0.18.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="11.335440" steps="75246"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.18.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="13.777973" steps="73318"/></proof>
+      <goal name="prog&#39;vc.58.0.18.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="11.353771" steps="75120"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.19" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.19" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1291002"/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.19.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.19.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.19.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.19.0.0" expl="push(stk,i)" proved="true">
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.19.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.19.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.19.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.509235" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.19.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.509235" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.19.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.499468" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.19.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.499468" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.19.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="13.524296" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.19.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="11.306798" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.19.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="14.028029" steps="73523"/></proof>
+      <goal name="prog&#39;vc.58.0.19.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="10.936715" steps="75246"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.19.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="12.076903" steps="73483"/></proof>
+      <goal name="prog&#39;vc.58.0.19.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="12.076903" steps="75311"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.20" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.20" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1291318"/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.20.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.20.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.20.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.20.0.0" expl="push(stk,i)" proved="true">
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.20.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.20.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.20.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.532871" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.20.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.532871" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.20.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.530969" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.20.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.530969" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.20.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="11.826922" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.20.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="11.826922" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.20.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="11.304173" steps="73523"/></proof>
+      <goal name="prog&#39;vc.58.0.20.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="11.304173" steps="75246"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.20.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="11.840237" steps="73321"/></proof>
+      <goal name="prog&#39;vc.58.0.20.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="11.840237" steps="75164"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.21" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.21" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1293339"/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.21.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.21.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.21.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.21.0.0" expl="push(stk,i)" proved="true">
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.21.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.21.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.21.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.660251" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.21.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.660251" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.21.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.511460" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.21.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.511460" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.21.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="12.288576" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.21.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="12.288576" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.21.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="11.430486" steps="73523"/></proof>
+      <goal name="prog&#39;vc.58.0.21.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="11.430486" steps="75246"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.21.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="11.961433" steps="74087"/></proof>
+      <goal name="prog&#39;vc.58.0.21.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="11.961433" steps="75825"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.22" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.22" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.22.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.22.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.22.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.22.0.0" expl="push(stk,i)" proved="true">
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.22.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.22.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.22.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.771692" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.22.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.505267" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.22.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.503395" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.22.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.503395" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.22.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="11.746155" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.22.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="11.746155" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.22.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="11.321967" steps="73523"/></proof>
+      <goal name="prog&#39;vc.58.0.22.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="11.321967" steps="75246"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.22.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="11.400052" steps="73388"/></proof>
+      <goal name="prog&#39;vc.58.0.22.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="11.400052" steps="75660"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.49.0.23" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.58.0.23" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.49.0.23.0" expl="push(stk,i)" proved="true">
+     <goal name="prog&#39;vc.58.0.23.0" expl="push(stk,i)" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.49.0.23.0.0" expl="push(stk,i)" proved="true">
+      <goal name="prog&#39;vc.58.0.23.0.0" expl="push(stk,i)" proved="true">
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.49.0.23.0.0.0" expl="push(stk,i)" proved="true">
+       <goal name="prog&#39;vc.58.0.23.0.0.0" expl="push(stk,i)" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.49.0.23.0.0.0.0" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.593067" steps="1743"/></proof>
+        <goal name="prog&#39;vc.58.0.23.0.0.0.0" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.593067" steps="1776"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.23.0.0.0.1" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="0.586067" steps="1750"/></proof>
+        <goal name="prog&#39;vc.58.0.23.0.0.0.1" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="0.586067" steps="1783"/></proof>
         </goal>
-        <goal name="prog&#39;vc.49.0.23.0.0.0.2" expl="push(stk,i)" proved="true">
-        <proof prover="0"><result status="valid" time="11.802038" steps="66988"/></proof>
+        <goal name="prog&#39;vc.58.0.23.0.0.0.2" expl="push(stk,i)" proved="true">
+        <proof prover="0"><result status="valid" time="11.802038" steps="68756"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.49.0.23.0.1" expl="push(stk,i)" proved="true">
-      <proof prover="0"><result status="valid" time="11.239883" steps="73523"/></proof>
+      <goal name="prog&#39;vc.58.0.23.0.1" expl="push(stk,i)" proved="true">
+      <proof prover="0"><result status="valid" time="11.239883" steps="75246"/></proof>
       </goal>
-      <goal name="prog&#39;vc.49.0.23.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="12.548025" steps="73358"/></proof>
+      <goal name="prog&#39;vc.58.0.23.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="11.154974" steps="75726"/></proof>
       </goal>
      </transf>
      </goal>
@@ -3704,35 +3743,35 @@
    </goal>
   </transf>
   </goal>
-  <goal name="prog&#39;vc.50" expl="push(stk,i)" proved="true">
+  <goal name="prog&#39;vc.59" expl="push(stk,i)" proved="true">
   <proof prover="0" obsolete="true"><undone/></proof>
   <transf name="inline_goal" proved="true" >
-   <goal name="prog&#39;vc.50.0" expl="push(stk,i)" proved="true">
+   <goal name="prog&#39;vc.59.0" expl="push(stk,i)" proved="true">
    <transf name="split_vc" proved="true" >
-    <goal name="prog&#39;vc.50.0.0" expl="push(stk,i)" proved="true">
+    <goal name="prog&#39;vc.59.0.0" expl="push(stk,i)" proved="true">
     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1131349"/></proof>
     <transf name="right" proved="true" >
-     <goal name="prog&#39;vc.50.0.0.0" expl="right case" proved="true">
+     <goal name="prog&#39;vc.59.0.0.0" expl="right case" proved="true">
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.50.0.0.0.0" expl="right case" proved="true">
-      <proof prover="0"><result status="valid" time="0.103982" steps="294"/></proof>
+      <goal name="prog&#39;vc.59.0.0.0.0" expl="right case" proved="true">
+      <proof prover="0"><result status="valid" time="0.103982" steps="314"/></proof>
       </goal>
-      <goal name="prog&#39;vc.50.0.0.0.1" expl="right case" proved="true">
-      <proof prover="0"><result status="valid" time="0.094856" steps="294"/></proof>
+      <goal name="prog&#39;vc.59.0.0.0.1" expl="right case" proved="true">
+      <proof prover="0"><result status="valid" time="0.094856" steps="314"/></proof>
       </goal>
-      <goal name="prog&#39;vc.50.0.0.0.2" expl="right case" proved="true">
+      <goal name="prog&#39;vc.59.0.0.0.2" expl="right case" proved="true">
       <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1073902"/></proof>
       <transf name="inline_all" proved="true" >
-       <goal name="prog&#39;vc.50.0.0.0.2.0" expl="right case" proved="true">
+       <goal name="prog&#39;vc.59.0.0.0.2.0" expl="right case" proved="true">
        <proof prover="0" obsolete="true"><result status="timeout" time="200.000000"/></proof>
        <transf name="case" proved="true" arg1="(mem l_stk (pi.lor.to_fmap.domain))">
-        <goal name="prog&#39;vc.50.0.0.0.2.0.0" expl="right case (true case)" proved="true">
+        <goal name="prog&#39;vc.59.0.0.0.2.0.0" expl="right case (true case)" proved="true">
         <proof prover="0"><result status="valid" time="0.556035" steps="168"/></proof>
         </goal>
-        <goal name="prog&#39;vc.50.0.0.0.2.0.1" expl="right case (false case)" proved="true">
+        <goal name="prog&#39;vc.59.0.0.0.2.0.1" expl="right case (false case)" proved="true">
         <proof prover="0" obsolete="true"><result status="timeout" time="200.000000"/></proof>
         <transf name="compute_in_goal" proved="true" >
-         <goal name="prog&#39;vc.50.0.0.0.2.0.1.0" expl="right case (false case)" proved="true">
+         <goal name="prog&#39;vc.59.0.0.0.2.0.1.0" expl="right case (false case)" proved="true">
          <proof prover="0"><result status="valid" time="0.472451" steps="168"/></proof>
          <proof prover="1" obsolete="true"><result status="outofmemory" time="106.995208"/></proof>
          </goal>
@@ -3742,163 +3781,190 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.50.0.0.0.3" expl="right case" proved="true">
-      <proof prover="0"><result status="valid" time="0.171405" steps="298"/></proof>
+      <goal name="prog&#39;vc.59.0.0.0.3" expl="right case" proved="true">
+      <proof prover="0"><result status="valid" time="0.171405" steps="316"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.50.0.1" expl="push(stk,i)" proved="true">
-    <proof prover="0"><result status="valid" time="0.104862" steps="294"/></proof>
+    <goal name="prog&#39;vc.59.0.1" expl="push(stk,i)" proved="true">
+    <proof prover="0"><result status="valid" time="0.104862" steps="314"/></proof>
     </goal>
    </transf>
    </goal>
   </transf>
   </goal>
-  <goal name="prog&#39;vc.51" expl="push(stk,i)" proved="true">
-  <proof prover="0"><result status="valid" time="0.096149" steps="310"/></proof>
+  <goal name="prog&#39;vc.60" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.096149" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.52" expl="push(stk,i)" proved="true">
-  <proof prover="0"><result status="valid" time="0.107170" steps="314"/></proof>
+  <goal name="prog&#39;vc.61" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.107170" steps="334"/></proof>
   </goal>
-  <goal name="prog&#39;vc.53" expl="push(stk,i)" proved="true">
-  <proof prover="0"><result status="valid" time="0.111086" steps="314"/></proof>
+  <goal name="prog&#39;vc.62" expl="push(stk,i)" proved="true">
+  <proof prover="0"><result status="valid" time="0.111086" steps="334"/></proof>
   </goal>
-  <goal name="prog&#39;vc.54" expl="locals type invariant left" proved="true">
-  <proof prover="0"><result status="valid" time="1.184892" steps="3307"/></proof>
+  <goal name="prog&#39;vc.63" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.851141" steps="3345"/></proof>
   </goal>
-  <goal name="prog&#39;vc.55" expl="locals type invariant right" proved="true">
-  <proof prover="0"><result status="valid" time="1.037246" steps="3314"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.56" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="159.353417" steps="824023"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.57" expl="wr ({stk} union {stk}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="163.768290" steps="857083"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.58" expl="wr {stk}`rep`cdr" proved="true">
-  <proof prover="0"><result status="valid" time="150.342537" steps="856478"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.59" expl="wr {stk}`rep`car" proved="true">
-  <proof prover="0"><result status="valid" time="155.850408" steps="838071"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.60" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
-  <proof prover="0"><result status="valid" time="158.884175" steps="836510"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.61" expl="wr {stk}`rep`cell_rep" proved="true">
-  <proof prover="0"><result status="valid" time="161.597014" steps="879069"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.62" expl="wr ({stk} union {stk}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="166.361149" steps="867359"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.63" expl="wr {stk}`rep`cell_value" proved="true">
-  <proof prover="0"><result status="valid" time="140.995111" steps="836308"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.64" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.854389" steps="3077"/></proof>
+  <goal name="prog&#39;vc.64" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="1.037246" steps="3349"/></proof>
   </goal>
   <goal name="prog&#39;vc.65" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="154.222112" steps="843428"/></proof>
+  <proof prover="0"><result status="valid" time="188.070415" steps="983866"/></proof>
   </goal>
-  <goal name="prog&#39;vc.66" expl="wr ({stk} union {stk}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="169.952530" steps="887374"/></proof>
+  <goal name="prog&#39;vc.66" expl="wr {stk}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="187.801235" steps="975571"/></proof>
   </goal>
-  <goal name="prog&#39;vc.67" expl="wr {stk}`rep`cdr" proved="true">
-  <proof prover="0"><result status="valid" time="153.807735" steps="876891"/></proof>
+  <goal name="prog&#39;vc.67" expl="wr ({stk} union {stk}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="163.768290" steps="952551"/></proof>
   </goal>
-  <goal name="prog&#39;vc.68" expl="wr {stk}`rep`car" proved="true">
-  <proof prover="0"><result status="valid" time="150.746309" steps="859934"/></proof>
+  <goal name="prog&#39;vc.68" expl="wr {stk}`rep`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="177.767293" steps="950810"/></proof>
   </goal>
-  <goal name="prog&#39;vc.69" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
-  <proof prover="0"><result status="valid" time="187.953807" steps="884641"/></proof>
+  <goal name="prog&#39;vc.69" expl="wr ({stk} union {stk}`rep)`arr">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="925393"/></proof>
   </goal>
-  <goal name="prog&#39;vc.70" expl="wr {stk}`rep`cell_rep" proved="true">
-  <proof prover="0"><result status="valid" time="190.094777" steps="843111"/></proof>
+  <goal name="prog&#39;vc.70" expl="wr {stk}`rep`car" proved="true">
+  <proof prover="0"><result status="valid" time="197.802097" steps="978506"/></proof>
   </goal>
-  <goal name="prog&#39;vc.71" expl="wr ({stk} union {stk}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="187.004461" steps="881982"/></proof>
+  <goal name="prog&#39;vc.71" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="198.203362" steps="979236"/></proof>
   </goal>
-  <goal name="prog&#39;vc.72" expl="wr {stk}`rep`cell_value" proved="true">
-  <proof prover="0"><result status="valid" time="176.047736" steps="855999"/></proof>
+  <goal name="prog&#39;vc.72" expl="wr {stk}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="195.225266" steps="970525"/></proof>
   </goal>
-  <goal name="prog&#39;vc.73" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.821523" steps="3107"/></proof>
+  <goal name="prog&#39;vc.73" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="194.144397" steps="975974"/></proof>
   </goal>
-  <goal name="prog&#39;vc.74" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.130489" steps="450"/></proof>
+  <goal name="prog&#39;vc.74" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="234.256481" steps="1045946"/></proof>
   </goal>
-  <goal name="prog&#39;vc.75" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.125266" steps="450"/></proof>
+  <goal name="prog&#39;vc.75" expl="wr {stk}`rep`length" proved="true">
+  <proof prover="0"><result status="valid" time="9.309238" steps="39327"/></proof>
   </goal>
-  <goal name="prog&#39;vc.76" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.128557" steps="456"/></proof>
+  <goal name="prog&#39;vc.76" expl="wr {stk}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="191.281909" steps="985689"/></proof>
   </goal>
   <goal name="prog&#39;vc.77" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.854389" steps="3129"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.78" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="182.543716" steps="991486"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.79" expl="wr {stk}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="183.087609" steps="1016248"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.80" expl="wr ({stk} union {stk}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="199.416310" steps="1166902"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.81" expl="wr {stk}`rep`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="153.807735" steps="945427"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.82" expl="wr ({stk} union {stk}`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="188.659963" steps="1009925"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.83" expl="wr {stk}`rep`car" proved="true">
+  <proof prover="0"><result status="valid" time="171.086654" steps="972637"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.84" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="187.953807" steps="1004257"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.85" expl="wr {stk}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="190.094777" steps="986606"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.86" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="181.276045" steps="990635"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.87" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="187.004461" steps="989283"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.88" expl="wr {stk}`rep`length" proved="true">
+  <proof prover="0"><result status="valid" time="8.270744" steps="39429"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.89" expl="wr {stk}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="176.047736" steps="969247"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.90" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.821523" steps="3170"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.91" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.130489" steps="486"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.92" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.125266" steps="486"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.93" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.128557" steps="492"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.94" expl="loop invariant preservation" proved="true">
   <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1079199"/></proof>
   <transf name="inline_goal" proved="true" >
-   <goal name="prog&#39;vc.77.0" expl="loop invariant preservation" proved="true">
-   <proof prover="0"><result status="valid" time="0.926680" steps="3123"/></proof>
+   <goal name="prog&#39;vc.94.0" expl="loop invariant preservation" proved="true">
+   <proof prover="0"><result status="valid" time="0.926680" steps="3180"/></proof>
    </goal>
   </transf>
   </goal>
-  <goal name="prog&#39;vc.78" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.120847" steps="461"/></proof>
+  <goal name="prog&#39;vc.95" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.120847" steps="497"/></proof>
   </goal>
-  <goal name="prog&#39;vc.79" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.131055" steps="462"/></proof>
+  <goal name="prog&#39;vc.96" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.131055" steps="498"/></proof>
   </goal>
-  <goal name="prog&#39;vc.80" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.135060" steps="464"/></proof>
+  <goal name="prog&#39;vc.97" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.135060" steps="500"/></proof>
   </goal>
-  <goal name="prog&#39;vc.81" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="998705"/></proof>
+  <goal name="prog&#39;vc.98" expl="loop invariant preservation">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1057264"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.99" expl="loop invariant preservation" proved="true">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="998705"/></proof>
   <transf name="split_vc" proved="true" >
-   <goal name="prog&#39;vc.81.0" expl="loop invariant preservation" proved="true">
-   <proof prover="0"><result status="timeout" time="200.000000" steps="1013007"/></proof>
+   <goal name="prog&#39;vc.99.0" expl="loop invariant preservation" proved="true">
+   <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1013007"/></proof>
    <transf name="inline_goal" proved="true" >
-    <goal name="prog&#39;vc.81.0.0" expl="loop invariant preservation" proved="true">
+    <goal name="prog&#39;vc.99.0.0" expl="loop invariant preservation" proved="true">
     <transf name="split_vc" proved="true" >
-     <goal name="prog&#39;vc.81.0.0.0" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="934617"/></proof>
+     <goal name="prog&#39;vc.99.0.0.0" expl="loop invariant preservation" proved="true">
+     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="934617"/></proof>
      <transf name="assert" proved="true" arg1="( x &lt;&gt; null )">
-      <goal name="prog&#39;vc.81.0.0.0.0" expl="asserted formula" proved="true">
-      <proof prover="0"><result status="valid" time="1.048202" steps="2961"/></proof>
+      <goal name="prog&#39;vc.99.0.0.0.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="1.048202" steps="3027"/></proof>
       </goal>
-      <goal name="prog&#39;vc.81.0.0.0.1" expl="loop invariant preservation" proved="true">
-      <proof prover="0"><result status="valid" time="161.992549" steps="866324"/></proof>
+      <goal name="prog&#39;vc.99.0.0.0.1" expl="loop invariant preservation" proved="true">
+      <proof prover="0" obsolete="true"><result status="valid" time="161.992549" steps="866324"/></proof>
       <transf name="assert" proved="true" arg1="( x = l_stk \/ mem1 x (l_s.rep)[l_stk] )">
-       <goal name="prog&#39;vc.81.0.0.0.1.0" expl="asserted formula" proved="true">
-       <proof prover="0"><result status="valid" time="3.684262" steps="13332"/></proof>
+       <goal name="prog&#39;vc.99.0.0.0.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="4.515379" steps="13953"/></proof>
        </goal>
-       <goal name="prog&#39;vc.81.0.0.0.1.1" expl="loop invariant preservation" proved="true">
-       <proof prover="0"><result status="valid" time="173.747173" steps="897267"/></proof>
+       <goal name="prog&#39;vc.99.0.0.0.1.1" expl="loop invariant preservation" proved="true">
+       <proof prover="0" obsolete="true"><result status="valid" time="173.747173" steps="897267"/></proof>
        <transf name="destruct" proved="true" arg1="h">
-        <goal name="prog&#39;vc.81.0.0.0.1.1.0" expl="loop invariant preservation" proved="true">
-        <proof prover="0"><result status="valid" time="1.098573" steps="3026"/></proof>
+        <goal name="prog&#39;vc.99.0.0.0.1.1.0" expl="loop invariant preservation" proved="true">
+        <proof prover="0"><result status="valid" time="1.098573" steps="3093"/></proof>
         </goal>
-        <goal name="prog&#39;vc.81.0.0.0.1.1.1" expl="loop invariant preservation" proved="true">
-        <proof prover="0"><result status="valid" time="149.329154" steps="821515"/></proof>
+        <goal name="prog&#39;vc.99.0.0.0.1.1.1" expl="loop invariant preservation" proved="true">
+        <proof prover="0" obsolete="true"><result status="valid" time="149.329154" steps="821515"/></proof>
         <transf name="assert" proved="true" arg1="(mem1 x (l_s1.rep)[l_stk] \/ mem1 x (diff (l_s.alloct.to_fmap.domain) (l_s1.alloct.to_fmap.domain)))">
-         <goal name="prog&#39;vc.81.0.0.0.1.1.1.0" expl="asserted formula" proved="true">
-         <proof prover="0"><result status="valid" time="4.833407" steps="13350"/></proof>
+         <goal name="prog&#39;vc.99.0.0.0.1.1.1.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="4.833407" steps="13977"/></proof>
          </goal>
-         <goal name="prog&#39;vc.81.0.0.0.1.1.1.1" expl="loop invariant preservation" proved="true">
-         <proof prover="0"><result status="valid" time="174.237480" steps="899629"/></proof>
+         <goal name="prog&#39;vc.99.0.0.0.1.1.1.1" expl="loop invariant preservation" proved="true">
+         <proof prover="0" obsolete="true"><result status="valid" time="174.237480" steps="899629"/></proof>
          <transf name="case" proved="true" arg1="(mem1 x (l_s1.rep)[l_stk])">
-          <goal name="prog&#39;vc.81.0.0.0.1.1.1.1.0" expl="true case (loop invariant preservation)" proved="true">
-          <proof prover="0"><result status="valid" time="152.629574" steps="867281"/></proof>
+          <goal name="prog&#39;vc.99.0.0.0.1.1.1.1.0" expl="true case (loop invariant preservation)" proved="true">
+          <proof prover="0" obsolete="true"><result status="valid" time="152.629574" steps="867281"/></proof>
           <transf name="assert" proved="true" arg1="(mem1 x (diff (union (singleton l_stk) (l_s1.rep)[l_stk]) (singleton null)))">
-           <goal name="prog&#39;vc.81.0.0.0.1.1.1.1.0.0" expl="asserted formula" proved="true">
-           <proof prover="0"><result status="valid" time="0.988038" steps="2984"/></proof>
+           <goal name="prog&#39;vc.99.0.0.0.1.1.1.1.0.0" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="valid" time="0.988038" steps="3051"/></proof>
            </goal>
-           <goal name="prog&#39;vc.81.0.0.0.1.1.1.1.0.1" expl="true case (loop invariant preservation)" proved="true">
-           <proof prover="0"><result status="valid" time="4.101221" steps="13479"/></proof>
+           <goal name="prog&#39;vc.99.0.0.0.1.1.1.1.0.1" expl="true case (loop invariant preservation)" proved="true">
+           <proof prover="0"><result status="valid" time="3.584907" steps="14100"/></proof>
            </goal>
           </transf>
           </goal>
-          <goal name="prog&#39;vc.81.0.0.0.1.1.1.1.1" expl="false case (loop invariant preservation)" proved="true">
-          <proof prover="0"><result status="valid" time="4.853298" steps="13507"/></proof>
+          <goal name="prog&#39;vc.99.0.0.0.1.1.1.1.1" expl="false case (loop invariant preservation)" proved="true">
+          <proof prover="0"><result status="valid" time="3.949148" steps="14128"/></proof>
           </goal>
          </transf>
          </goal>
@@ -3914,56 +3980,56 @@
     </goal>
    </transf>
    </goal>
-   <goal name="prog&#39;vc.81.1" expl="loop invariant preservation" proved="true">
-   <proof prover="0"><result status="timeout" time="200.000000" steps="913886"/></proof>
+   <goal name="prog&#39;vc.99.1" expl="loop invariant preservation" proved="true">
+   <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="913886"/></proof>
    <transf name="assert" proved="true" arg1="( alloc_does_not_shrink r_s4 r_s1 /\ alloc_does_not_shrink r_s1 r_s )">
-    <goal name="prog&#39;vc.81.1.0" expl="asserted formula" proved="true">
-    <proof prover="0"><result status="valid" time="0.144626" steps="444"/></proof>
+    <goal name="prog&#39;vc.99.1.0" expl="asserted formula" proved="true">
+    <proof prover="0"><result status="valid" time="0.144626" steps="484"/></proof>
     </goal>
-    <goal name="prog&#39;vc.81.1.1" expl="loop invariant preservation" proved="true">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="1075595"/></proof>
+    <goal name="prog&#39;vc.99.1.1" expl="loop invariant preservation" proved="true">
+    <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1075595"/></proof>
     <transf name="assert" proved="true" arg1="( subset (r_s4.alloct.to_fmap.domain) (r_s1.alloct.to_fmap.domain) /\ subset (r_s1.alloct.to_fmap.domain) (r_s.alloct.to_fmap.domain) )">
-     <goal name="prog&#39;vc.81.1.1.0" expl="asserted formula" proved="true">
-     <proof prover="0"><result status="valid" time="65.850307" steps="343277"/></proof>
+     <goal name="prog&#39;vc.99.1.1.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="65.850307" steps="354690"/></proof>
      </goal>
-     <goal name="prog&#39;vc.81.1.1.1" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="1052610"/></proof>
+     <goal name="prog&#39;vc.99.1.1.1" expl="loop invariant preservation" proved="true">
+     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1052610"/></proof>
      <transf name="assert" proved="true" arg1="( subset (diff (r_s1.alloct.to_fmap.domain) (r_s4.alloct.to_fmap.domain)) (diff (r_s.alloct.to_fmap.domain) (r_s4.alloct.to_fmap.domain)) )">
-      <goal name="prog&#39;vc.81.1.1.1.0" expl="asserted formula" proved="true">
-      <proof prover="0"><result status="valid" time="4.176485" steps="13241"/></proof>
+      <goal name="prog&#39;vc.99.1.1.1.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="4.885381" steps="13871"/></proof>
       </goal>
-      <goal name="prog&#39;vc.81.1.1.1.1" expl="loop invariant preservation" proved="true">
-      <proof prover="0"><result status="valid" time="147.564532" steps="871345"/></proof>
+      <goal name="prog&#39;vc.99.1.1.1.1" expl="loop invariant preservation" proved="true">
+      <proof prover="0" obsolete="true"><result status="valid" time="147.564532" steps="871345"/></proof>
       <transf name="assert" proved="true" arg1="( subset (diff (r_s.alloct.to_fmap.domain) (r_s1.alloct.to_fmap.domain)) (diff (r_s.alloct.to_fmap.domain) (r_s4.alloct.to_fmap.domain)) )">
-       <goal name="prog&#39;vc.81.1.1.1.1.0" expl="asserted formula" proved="true">
-       <proof prover="0"><result status="valid" time="3.740692" steps="13370"/></proof>
+       <goal name="prog&#39;vc.99.1.1.1.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="5.348506" steps="13991"/></proof>
        </goal>
-       <goal name="prog&#39;vc.81.1.1.1.1.1" expl="loop invariant preservation" proved="true">
-       <proof prover="0"><result status="valid" time="123.588081" steps="836350"/></proof>
+       <goal name="prog&#39;vc.99.1.1.1.1.1" expl="loop invariant preservation" proved="true">
+       <proof prover="0" obsolete="true"><result status="valid" time="123.588081" steps="836350"/></proof>
        <transf name="assert" proved="true" arg1="( subset (diff (union (singleton r_stk) (r_s1.rep)[r_stk]) (singleton null)) (diff (r_s1.alloct.to_fmap.domain) (r_s4.alloct.to_fmap.domain)) )">
-        <goal name="prog&#39;vc.81.1.1.1.1.1.0" expl="asserted formula" proved="true">
-        <proof prover="0"><result status="valid" time="0.131750" steps="452"/></proof>
+        <goal name="prog&#39;vc.99.1.1.1.1.1.0" expl="asserted formula" proved="true">
+        <proof prover="0"><result status="valid" time="0.131750" steps="492"/></proof>
         </goal>
-        <goal name="prog&#39;vc.81.1.1.1.1.1.1" expl="loop invariant preservation" proved="true">
-        <proof prover="0"><result status="valid" time="144.719432" steps="872514"/></proof>
+        <goal name="prog&#39;vc.99.1.1.1.1.1.1" expl="loop invariant preservation" proved="true">
+        <proof prover="0" obsolete="true"><result status="valid" time="144.719432" steps="872514"/></proof>
         <transf name="assert" proved="true" arg1="( subset (diff (union (singleton r_stk) (r_s1.rep)[r_stk]) (singleton null)) (diff (r_s.alloct.to_fmap.domain) (r_s4.alloct.to_fmap.domain)) )">
-         <goal name="prog&#39;vc.81.1.1.1.1.1.1.0" expl="asserted formula" proved="true">
-         <proof prover="0"><result status="valid" time="0.238746" steps="467"/></proof>
+         <goal name="prog&#39;vc.99.1.1.1.1.1.1.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="0.369994" steps="494"/></proof>
          </goal>
-         <goal name="prog&#39;vc.81.1.1.1.1.1.1.1" expl="loop invariant preservation" proved="true">
-         <proof prover="0"><result status="valid" time="145.827062" steps="858258"/></proof>
+         <goal name="prog&#39;vc.99.1.1.1.1.1.1.1" expl="loop invariant preservation" proved="true">
+         <proof prover="0" obsolete="true"><result status="valid" time="145.827062" steps="858258"/></proof>
          <transf name="assert" proved="true" arg1="( subset (r_s.rep)[r_stk] (union (r_s1.rep)[r_stk] (diff (r_s.alloct.to_fmap.domain) (r_s1.alloct.to_fmap.domain))) )">
-          <goal name="prog&#39;vc.81.1.1.1.1.1.1.1.0" expl="asserted formula" proved="true">
-          <proof prover="0"><result status="valid" time="0.141576" steps="454"/></proof>
+          <goal name="prog&#39;vc.99.1.1.1.1.1.1.1.0" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="valid" time="0.141576" steps="494"/></proof>
           </goal>
-          <goal name="prog&#39;vc.81.1.1.1.1.1.1.1.1" expl="loop invariant preservation" proved="true">
-          <proof prover="0"><result status="valid" time="145.320123" steps="858059"/></proof>
+          <goal name="prog&#39;vc.99.1.1.1.1.1.1.1.1" expl="loop invariant preservation" proved="true">
+          <proof prover="0" obsolete="true"><result status="valid" time="145.320123" steps="858059"/></proof>
           <transf name="assert" proved="true" arg1="( subset (union (singleton r_stk) (r_s.rep)[r_stk]) (union (union (singleton r_stk) (r_s1.rep)[r_stk]) (diff (r_s.alloct.to_fmap.domain) (r_s1.alloct.to_fmap.domain))) )">
-           <goal name="prog&#39;vc.81.1.1.1.1.1.1.1.1.0" expl="asserted formula" proved="true">
-           <proof prover="0"><result status="valid" time="3.505805" steps="13811"/></proof>
+           <goal name="prog&#39;vc.99.1.1.1.1.1.1.1.1.0" expl="asserted formula" proved="true">
+           <proof prover="0"><result status="valid" time="4.915550" steps="14519"/></proof>
            </goal>
-           <goal name="prog&#39;vc.81.1.1.1.1.1.1.1.1.1" expl="loop invariant preservation" proved="true">
-           <proof prover="0"><result status="valid" time="24.523257" steps="133625"/></proof>
+           <goal name="prog&#39;vc.99.1.1.1.1.1.1.1.1.1" expl="loop invariant preservation" proved="true">
+           <proof prover="0"><result status="valid" time="24.523257" steps="140550"/></proof>
            </goal>
           </transf>
           </goal>
@@ -3980,399 +4046,447 @@
     </transf>
     </goal>
    </transf>
-   <transf name="inline_goal" >
-    <goal name="prog&#39;vc.81.1.0" expl="loop invariant preservation">
-    <transf name="split_vc" >
-     <goal name="prog&#39;vc.81.1.0.0" expl="loop invariant preservation">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="959733"/></proof>
-     </goal>
-    </transf>
-    </goal>
-   </transf>
    </goal>
   </transf>
   </goal>
-  <goal name="prog&#39;vc.82" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.121181" steps="468"/></proof>
+  <goal name="prog&#39;vc.100" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.121181" steps="508"/></proof>
   </goal>
-  <goal name="prog&#39;vc.83" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.107197" steps="310"/></proof>
+  <goal name="prog&#39;vc.101" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.107197" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.84" expl="locals type invariant left" proved="true">
-  <proof prover="0"><result status="valid" time="0.104053" steps="310"/></proof>
+  <goal name="prog&#39;vc.102" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.104053" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.85" expl="locals type invariant right" proved="true">
-  <proof prover="0"><result status="valid" time="0.098290" steps="310"/></proof>
+  <goal name="prog&#39;vc.103" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.098290" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.86" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.095026" steps="310"/></proof>
+  <goal name="prog&#39;vc.104" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.095026" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.87" expl="wr ({stk} union {stk}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="0.100637" steps="310"/></proof>
+  <goal name="prog&#39;vc.105" expl="wr {stk}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.132007" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.88" expl="wr ({stk} union {stk}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="0.099664" steps="310"/></proof>
+  <goal name="prog&#39;vc.106" expl="wr ({stk} union {stk}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="0.100637" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.89" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.111500" steps="310"/></proof>
+  <goal name="prog&#39;vc.107" expl="wr {stk}`rep`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="0.152539" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.90" expl="wr ({stk} union {stk}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="0.105534" steps="310"/></proof>
+  <goal name="prog&#39;vc.108" expl="wr ({stk} union {stk}`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="0.131259" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.91" expl="wr ({stk} union {stk}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="0.098302" steps="310"/></proof>
+  <goal name="prog&#39;vc.109" expl="wr {stk}`rep`car" proved="true">
+  <proof prover="0"><result status="valid" time="0.133899" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.92" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.089987" steps="310"/></proof>
+  <goal name="prog&#39;vc.110" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.132544" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.93" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.100695" steps="310"/></proof>
+  <goal name="prog&#39;vc.111" expl="wr {stk}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.146821" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.94" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.109297" steps="314"/></proof>
+  <goal name="prog&#39;vc.112" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="0.148023" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.95" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.100624" steps="315"/></proof>
+  <goal name="prog&#39;vc.113" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="0.099664" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.96" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.108427" steps="315"/></proof>
+  <goal name="prog&#39;vc.114" expl="wr {stk}`rep`length" proved="true">
+  <proof prover="0"><result status="valid" time="0.127124" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.97" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.114885" steps="315"/></proof>
+  <goal name="prog&#39;vc.115" expl="wr {stk}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="0.148517" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.98" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.112481" steps="317"/></proof>
+  <goal name="prog&#39;vc.116" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="0.111500" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.99" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.110146" steps="317"/></proof>
+  <goal name="prog&#39;vc.117" expl="wr {stk}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.106661" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.100" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.103543" steps="317"/></proof>
+  <goal name="prog&#39;vc.118" expl="wr ({stk} union {stk}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="0.105534" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.101" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.098763" steps="317"/></proof>
+  <goal name="prog&#39;vc.119" expl="wr {stk}`rep`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="0.121392" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.102" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.104997" steps="317"/></proof>
+  <goal name="prog&#39;vc.120" expl="wr ({stk} union {stk}`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="0.140580" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.103" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.111697" steps="317"/></proof>
+  <goal name="prog&#39;vc.121" expl="wr {stk}`rep`car" proved="true">
+  <proof prover="0"><result status="valid" time="0.127208" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.104" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.117212" steps="384"/></proof>
+  <goal name="prog&#39;vc.122" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.134422" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.105" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.122236" steps="384"/></proof>
+  <goal name="prog&#39;vc.123" expl="wr {stk}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="0.132888" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.106" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.117071" steps="384"/></proof>
+  <goal name="prog&#39;vc.124" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="0.146090" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.107" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.125688" steps="384"/></proof>
+  <goal name="prog&#39;vc.125" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="0.098302" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.108" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.113773" steps="384"/></proof>
+  <goal name="prog&#39;vc.126" expl="wr {stk}`rep`length" proved="true">
+  <proof prover="0"><result status="valid" time="0.151612" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.109" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.115758" steps="384"/></proof>
+  <goal name="prog&#39;vc.127" expl="wr {stk}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="0.122972" steps="330"/></proof>
   </goal>
-  <goal name="prog&#39;vc.110" expl="precondition" proved="true">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="924297"/></proof>
+  <goal name="prog&#39;vc.128" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.089987" steps="330"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.129" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.100695" steps="330"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.130" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.109297" steps="334"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.131" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.100624" steps="335"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.132" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.108427" steps="335"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.133" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.114885" steps="335"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.134" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.112481" steps="337"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.135" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.110146" steps="337"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.136" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.141100" steps="337"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.137" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.103543" steps="337"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.138" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.098763" steps="337"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.139" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.104997" steps="337"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.140" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.111697" steps="337"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.141" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.117212" steps="444"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.142" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.122236" steps="444"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.143" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.117071" steps="444"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.144" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.125688" steps="444"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.145" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.113773" steps="444"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.146" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.115758" steps="444"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.147" expl="precondition" proved="true">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="924297"/></proof>
   <transf name="inline_goal" proved="true" >
-   <goal name="prog&#39;vc.110.0" expl="precondition" proved="true">
+   <goal name="prog&#39;vc.147.0" expl="precondition" proved="true">
    <transf name="split_vc" proved="true" >
-    <goal name="prog&#39;vc.110.0.0" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.0" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.0.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.0.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.0.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.138491" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.0.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.138491" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.0.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.765553" steps="99537"/></proof>
+      <goal name="prog&#39;vc.147.0.0.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="17.484314" steps="103998"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.0.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="20.157435" steps="102886"/></proof>
+      <goal name="prog&#39;vc.147.0.0.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="20.157435" steps="107179"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.1" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.1" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.1.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.1.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.1.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.112091" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.1.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.112091" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.1.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.459389" steps="99537"/></proof>
+      <goal name="prog&#39;vc.147.0.1.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="19.459389" steps="103998"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.1.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="20.688127" steps="103826"/></proof>
+      <goal name="prog&#39;vc.147.0.1.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="20.688127" steps="108276"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.2" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.2" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.2.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.2.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.2.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.131742" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.2.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.131742" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.2.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="21.915075" steps="99581"/></proof>
+      <goal name="prog&#39;vc.147.0.2.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="17.572607" steps="104182"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.2.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="20.689471" steps="103404"/></proof>
+      <goal name="prog&#39;vc.147.0.2.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="20.689471" steps="107745"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.3" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.3" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.3.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.3.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.3.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.126245" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.3.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.126245" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.3.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.675251" steps="99581"/></proof>
+      <goal name="prog&#39;vc.147.0.3.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="17.046229" steps="104182"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.3.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="20.102878" steps="102413"/></proof>
+      <goal name="prog&#39;vc.147.0.3.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="17.634125" steps="107690"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.4" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.4" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.4.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.4.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.4.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.138572" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.4.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.138572" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.4.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.955945" steps="99455"/></proof>
+      <goal name="prog&#39;vc.147.0.4.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="16.901980" steps="103981"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.4.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="22.583361" steps="112733"/></proof>
+      <goal name="prog&#39;vc.147.0.4.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="19.389450" steps="117096"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.5" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.5" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.5.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.5.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.5.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.124497" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.5.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.124497" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.5.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.962827" steps="99455"/></proof>
+      <goal name="prog&#39;vc.147.0.5.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="16.742943" steps="103981"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.5.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="23.046691" steps="112774"/></proof>
+      <goal name="prog&#39;vc.147.0.5.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="19.976441" steps="117067"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.6" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.6" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.6.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.6.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.6.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.152033" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.6.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.152033" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.6.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.326968" steps="99723"/></proof>
+      <goal name="prog&#39;vc.147.0.6.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="19.326968" steps="104173"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.6.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="22.309609" steps="112828"/></proof>
+      <goal name="prog&#39;vc.147.0.6.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="22.309609" steps="117194"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.7" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.7" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.7.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.7.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.7.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.188306" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.7.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.188306" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.7.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.301695" steps="99723"/></proof>
+      <goal name="prog&#39;vc.147.0.7.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="19.301695" steps="104173"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.7.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="20.178420" steps="103833"/></proof>
+      <goal name="prog&#39;vc.147.0.7.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="20.178420" steps="108241"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.8" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.8" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.8.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.8.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.8.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.111226" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.8.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.111226" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.8.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.595990" steps="99723"/></proof>
+      <goal name="prog&#39;vc.147.0.8.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="19.595990" steps="104173"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.8.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="20.087085" steps="103211"/></proof>
+      <goal name="prog&#39;vc.147.0.8.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="22.260264" steps="107302"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.9" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.9" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.9.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.9.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.9.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.147989" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.9.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.147989" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.9.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.021766" steps="99723"/></proof>
+      <goal name="prog&#39;vc.147.0.9.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="19.021766" steps="104173"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.9.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="19.725922" steps="104360"/></proof>
+      <goal name="prog&#39;vc.147.0.9.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="19.725922" steps="108528"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.10" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.10" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.10.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.10.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.10.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.134188" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.10.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.254490" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.10.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.325801" steps="99723"/></proof>
+      <goal name="prog&#39;vc.147.0.10.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="19.325801" steps="104173"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.10.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="19.710884" steps="102998"/></proof>
+      <goal name="prog&#39;vc.147.0.10.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="17.590508" steps="107350"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.11" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.11" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.11.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.11.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.11.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="0.147574" steps="364"/></proof>
+      <goal name="prog&#39;vc.147.0.11.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="0.147574" steps="424"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.11.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="19.149810" steps="99723"/></proof>
+      <goal name="prog&#39;vc.147.0.11.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="16.900879" steps="104173"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.11.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="22.023464" steps="112937"/></proof>
+      <goal name="prog&#39;vc.147.0.11.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="22.023464" steps="117284"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.12" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.12" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.12.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.12.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.12.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="1074667"/></proof>
+      <goal name="prog&#39;vc.147.0.12.0.0" expl="precondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1074667"/></proof>
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.110.0.12.0.0.0" expl="precondition" proved="true">
+       <goal name="prog&#39;vc.147.0.12.0.0.0" expl="precondition" proved="true">
        <transf name="split_vc" proved="true" >
-        <goal name="prog&#39;vc.110.0.12.0.0.0.0" expl="precondition" proved="true">
-        <proof prover="0"><result status="valid" time="0.952614" steps="2270"/></proof>
+        <goal name="prog&#39;vc.147.0.12.0.0.0.0" expl="precondition" proved="true">
+        <proof prover="0"><result status="valid" time="0.691960" steps="2372"/></proof>
         </goal>
-        <goal name="prog&#39;vc.110.0.12.0.0.0.1" expl="precondition" proved="true">
-        <proof prover="0"><result status="valid" time="0.853374" steps="2277"/></proof>
+        <goal name="prog&#39;vc.147.0.12.0.0.0.1" expl="precondition" proved="true">
+        <proof prover="0"><result status="valid" time="0.853374" steps="2379"/></proof>
         </goal>
-        <goal name="prog&#39;vc.110.0.12.0.0.0.2" expl="precondition" proved="true">
-        <proof prover="0"><result status="valid" time="18.968131" steps="91638"/></proof>
+        <goal name="prog&#39;vc.147.0.12.0.0.0.2" expl="precondition" proved="true">
+        <proof prover="0"><result status="valid" time="18.968131" steps="96122"/></proof>
         </goal>
        </transf>
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.12.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="20.990094" steps="100006"/></proof>
+      <goal name="prog&#39;vc.147.0.12.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="17.407694" steps="104217"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.12.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="22.070421" steps="103110"/></proof>
+      <goal name="prog&#39;vc.147.0.12.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="19.499510" steps="107262"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.13" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.13" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.13.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.13.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.13.0.0" expl="precondition" proved="true">
+      <goal name="prog&#39;vc.147.0.13.0.0" expl="precondition" proved="true">
       <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1065710"/></proof>
-      <transf name="assert" arg1="( (invert pi).lor = pi.rol /\ (invert pi).rol = pi.lor )">
-       <goal name="prog&#39;vc.110.0.13.0.0.0" expl="asserted formula">
-       <proof prover="0" obsolete="true"><result status="valid" time="0.203617" steps="391"/></proof>
+      <transf name="assert" proved="true" arg1="( (invert pi).lor = pi.rol /\ (invert pi).rol = pi.lor )">
+       <goal name="prog&#39;vc.147.0.13.0.0.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="0.203617" steps="428"/></proof>
        </goal>
-       <goal name="prog&#39;vc.110.0.13.0.0.1" expl="precondition" proved="true">
-       <proof prover="0"><result status="valid" time="74.800635" steps="491671"/></proof>
+       <goal name="prog&#39;vc.147.0.13.0.0.1" expl="precondition" proved="true">
+       <proof prover="0"><result status="valid" time="126.293389" steps="625629"/></proof>
        </goal>
       </transf>
       <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="Requires">
-       <goal name="prog&#39;vc.110.0.13.0.0.0" expl="precondition" proved="true">
-       <proof prover="0"><result status="valid" time="175.302791" steps="1274835"/></proof>
+       <goal name="prog&#39;vc.147.0.13.0.0.0" expl="precondition" proved="true">
+       <proof prover="0" obsolete="true"><result status="valid" time="175.302791" steps="1274835"/></proof>
        <transf name="inline_goal" proved="true" >
-        <goal name="prog&#39;vc.110.0.13.0.0.0.0" expl="precondition" proved="true">
+        <goal name="prog&#39;vc.147.0.13.0.0.0.0" expl="precondition" proved="true">
         <transf name="split_vc" proved="true" >
-         <goal name="prog&#39;vc.110.0.13.0.0.0.0.0" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.205981" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.13.0.0.0.0.0" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.205981" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.13.0.0.0.0.1" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.213351" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.13.0.0.0.0.1" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.213351" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.13.0.0.0.0.2" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="17.289902" steps="91596"/></proof>
+         <goal name="prog&#39;vc.147.0.13.0.0.0.0.2" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="17.289902" steps="96179"/></proof>
          </goal>
         </transf>
         </goal>
@@ -4380,37 +4494,37 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.13.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="21.860548" steps="100006"/></proof>
+      <goal name="prog&#39;vc.147.0.13.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="17.359762" steps="104217"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.13.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="22.897289" steps="103963"/></proof>
+      <goal name="prog&#39;vc.147.0.13.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="18.573285" steps="108432"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.14" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.14" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.14.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.14.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.14.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="1037316"/></proof>
+      <goal name="prog&#39;vc.147.0.14.0.0" expl="precondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1037316"/></proof>
       <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="Requires">
-       <goal name="prog&#39;vc.110.0.14.0.0.0" expl="precondition" proved="true">
+       <goal name="prog&#39;vc.147.0.14.0.0.0" expl="precondition" proved="true">
        <transf name="inline_goal" proved="true" >
-        <goal name="prog&#39;vc.110.0.14.0.0.0.0" expl="precondition" proved="true">
+        <goal name="prog&#39;vc.147.0.14.0.0.0.0" expl="precondition" proved="true">
         <transf name="split_vc" proved="true" >
-         <goal name="prog&#39;vc.110.0.14.0.0.0.0.0" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.243409" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.14.0.0.0.0.0" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.243409" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.14.0.0.0.0.1" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.253439" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.14.0.0.0.0.1" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.253439" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.14.0.0.0.0.2" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="16.345657" steps="91596"/></proof>
+         <goal name="prog&#39;vc.147.0.14.0.0.0.0.2" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="21.786940" steps="96179"/></proof>
          </goal>
         </transf>
         </goal>
@@ -4418,37 +4532,37 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.14.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="21.751389" steps="100105"/></proof>
+      <goal name="prog&#39;vc.147.0.14.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="21.751389" steps="104464"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.14.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="22.566172" steps="103527"/></proof>
+      <goal name="prog&#39;vc.147.0.14.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="22.566172" steps="107764"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.15" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.15" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.15.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.15.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.15.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="1037671"/></proof>
+      <goal name="prog&#39;vc.147.0.15.0.0" expl="precondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1037671"/></proof>
       <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="Requires">
-       <goal name="prog&#39;vc.110.0.15.0.0.0" expl="precondition" proved="true">
+       <goal name="prog&#39;vc.147.0.15.0.0.0" expl="precondition" proved="true">
        <transf name="inline_goal" proved="true" >
-        <goal name="prog&#39;vc.110.0.15.0.0.0.0" expl="precondition" proved="true">
+        <goal name="prog&#39;vc.147.0.15.0.0.0.0" expl="precondition" proved="true">
         <transf name="split_vc" proved="true" >
-         <goal name="prog&#39;vc.110.0.15.0.0.0.0.0" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.291420" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.15.0.0.0.0.0" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.291420" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.15.0.0.0.0.1" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.280488" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.15.0.0.0.0.1" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.280488" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.15.0.0.0.0.2" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="16.444928" steps="91596"/></proof>
+         <goal name="prog&#39;vc.147.0.15.0.0.0.0.2" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="21.897936" steps="96179"/></proof>
          </goal>
         </transf>
         </goal>
@@ -4456,37 +4570,37 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.15.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="21.808933" steps="100105"/></proof>
+      <goal name="prog&#39;vc.147.0.15.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="21.808933" steps="104464"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.15.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="22.028750" steps="103526"/></proof>
+      <goal name="prog&#39;vc.147.0.15.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="22.028750" steps="107827"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.16" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.16" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.16.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.16.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.16.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="989535"/></proof>
+      <goal name="prog&#39;vc.147.0.16.0.0" expl="precondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="989535"/></proof>
       <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="Requires">
-       <goal name="prog&#39;vc.110.0.16.0.0.0" expl="precondition" proved="true">
+       <goal name="prog&#39;vc.147.0.16.0.0.0" expl="precondition" proved="true">
        <transf name="inline_goal" proved="true" >
-        <goal name="prog&#39;vc.110.0.16.0.0.0.0" expl="precondition" proved="true">
+        <goal name="prog&#39;vc.147.0.16.0.0.0.0" expl="precondition" proved="true">
         <transf name="split_vc" proved="true" >
-         <goal name="prog&#39;vc.110.0.16.0.0.0.0.0" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.260135" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.16.0.0.0.0.0" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.260135" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.16.0.0.0.0.1" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.293540" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.16.0.0.0.0.1" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.293540" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.16.0.0.0.0.2" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="16.086580" steps="91596"/></proof>
+         <goal name="prog&#39;vc.147.0.16.0.0.0.0.2" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="19.343949" steps="96179"/></proof>
          </goal>
         </transf>
         </goal>
@@ -4494,37 +4608,37 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.16.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="18.720259" steps="100102"/></proof>
+      <goal name="prog&#39;vc.147.0.16.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="18.720259" steps="104313"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.16.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="22.605937" steps="112979"/></proof>
+      <goal name="prog&#39;vc.147.0.16.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="22.605937" steps="117280"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.17" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.17" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.17.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.17.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.17.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="951925"/></proof>
+      <goal name="prog&#39;vc.147.0.17.0.0" expl="precondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="951925"/></proof>
       <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="Requires">
-       <goal name="prog&#39;vc.110.0.17.0.0.0" expl="precondition" proved="true">
+       <goal name="prog&#39;vc.147.0.17.0.0.0" expl="precondition" proved="true">
        <transf name="inline_goal" proved="true" >
-        <goal name="prog&#39;vc.110.0.17.0.0.0.0" expl="precondition" proved="true">
+        <goal name="prog&#39;vc.147.0.17.0.0.0.0" expl="precondition" proved="true">
         <transf name="split_vc" proved="true" >
-         <goal name="prog&#39;vc.110.0.17.0.0.0.0.0" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.294006" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.17.0.0.0.0.0" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.294006" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.17.0.0.0.0.1" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.308527" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.17.0.0.0.0.1" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.308527" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.17.0.0.0.0.2" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="14.749343" steps="91596"/></proof>
+         <goal name="prog&#39;vc.147.0.17.0.0.0.0.2" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="19.060948" steps="96179"/></proof>
          </goal>
         </transf>
         </goal>
@@ -4532,37 +4646,37 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.17.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="25.707489" steps="100102"/></proof>
+      <goal name="prog&#39;vc.147.0.17.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="22.963842" steps="104313"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.17.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="24.947933" steps="112974"/></proof>
+      <goal name="prog&#39;vc.147.0.17.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="24.947933" steps="117359"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.18" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.18" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.18.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.18.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.18.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="912042"/></proof>
+      <goal name="prog&#39;vc.147.0.18.0.0" expl="precondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="912042"/></proof>
       <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="Requires">
-       <goal name="prog&#39;vc.110.0.18.0.0.0" expl="precondition" proved="true">
+       <goal name="prog&#39;vc.147.0.18.0.0.0" expl="precondition" proved="true">
        <transf name="inline_goal" proved="true" >
-        <goal name="prog&#39;vc.110.0.18.0.0.0.0" expl="precondition" proved="true">
+        <goal name="prog&#39;vc.147.0.18.0.0.0.0" expl="precondition" proved="true">
         <transf name="split_vc" proved="true" >
-         <goal name="prog&#39;vc.110.0.18.0.0.0.0.0" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.285276" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.18.0.0.0.0.0" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.285276" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.18.0.0.0.0.1" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.298855" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.18.0.0.0.0.1" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.298855" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.18.0.0.0.0.2" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="16.365184" steps="91596"/></proof>
+         <goal name="prog&#39;vc.147.0.18.0.0.0.0.2" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="23.429557" steps="96179"/></proof>
          </goal>
         </transf>
         </goal>
@@ -4570,37 +4684,37 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.18.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="26.041138" steps="100256"/></proof>
+      <goal name="prog&#39;vc.147.0.18.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="26.041138" steps="104365"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.18.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="27.904073" steps="113055"/></proof>
+      <goal name="prog&#39;vc.147.0.18.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="27.904073" steps="117424"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.19" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.19" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.19.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.19.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.19.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="911611"/></proof>
+      <goal name="prog&#39;vc.147.0.19.0.0" expl="precondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="911611"/></proof>
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.110.0.19.0.0.0" expl="precondition" proved="true">
+       <goal name="prog&#39;vc.147.0.19.0.0.0" expl="precondition" proved="true">
        <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="Requires">
-        <goal name="prog&#39;vc.110.0.19.0.0.0.0" expl="precondition" proved="true">
+        <goal name="prog&#39;vc.147.0.19.0.0.0.0" expl="precondition" proved="true">
         <transf name="split_vc" proved="true" >
-         <goal name="prog&#39;vc.110.0.19.0.0.0.0.0" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.210365" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.19.0.0.0.0.0" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.210365" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.19.0.0.0.0.1" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.222118" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.19.0.0.0.0.1" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.222118" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.19.0.0.0.0.2" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="15.208489" steps="91596"/></proof>
+         <goal name="prog&#39;vc.147.0.19.0.0.0.0.2" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="22.918776" steps="96179"/></proof>
          </goal>
         </transf>
         </goal>
@@ -4608,37 +4722,37 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.19.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="26.077271" steps="100256"/></proof>
+      <goal name="prog&#39;vc.147.0.19.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="22.622482" steps="104365"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.19.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="26.735424" steps="103990"/></proof>
+      <goal name="prog&#39;vc.147.0.19.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="23.931791" steps="108491"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.20" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.20" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.20.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.20.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.20.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="961876"/></proof>
+      <goal name="prog&#39;vc.147.0.20.0.0" expl="precondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="961876"/></proof>
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.110.0.20.0.0.0" expl="precondition" proved="true">
+       <goal name="prog&#39;vc.147.0.20.0.0.0" expl="precondition" proved="true">
        <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="Requires">
-        <goal name="prog&#39;vc.110.0.20.0.0.0.0" expl="precondition" proved="true">
+        <goal name="prog&#39;vc.147.0.20.0.0.0.0" expl="precondition" proved="true">
         <transf name="split_vc" proved="true" >
-         <goal name="prog&#39;vc.110.0.20.0.0.0.0.0" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.198530" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.20.0.0.0.0.0" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.348494" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.20.0.0.0.0.1" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.197792" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.20.0.0.0.0.1" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.197792" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.20.0.0.0.0.2" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="15.550319" steps="91596"/></proof>
+         <goal name="prog&#39;vc.147.0.20.0.0.0.0.2" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="24.220816" steps="96179"/></proof>
          </goal>
         </transf>
         </goal>
@@ -4646,37 +4760,37 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.20.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="21.694551" steps="100256"/></proof>
+      <goal name="prog&#39;vc.147.0.20.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="21.694551" steps="104365"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.20.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="21.896034" steps="103251"/></proof>
+      <goal name="prog&#39;vc.147.0.20.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="21.896034" steps="107470"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.21" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.21" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.21.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.21.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.21.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="1095653"/></proof>
+      <goal name="prog&#39;vc.147.0.21.0.0" expl="precondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1095653"/></proof>
       <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="Requires">
-       <goal name="prog&#39;vc.110.0.21.0.0.0" expl="precondition" proved="true">
+       <goal name="prog&#39;vc.147.0.21.0.0.0" expl="precondition" proved="true">
        <transf name="inline_goal" proved="true" >
-        <goal name="prog&#39;vc.110.0.21.0.0.0.0" expl="precondition" proved="true">
+        <goal name="prog&#39;vc.147.0.21.0.0.0.0" expl="precondition" proved="true">
         <transf name="split_vc" proved="true" >
-         <goal name="prog&#39;vc.110.0.21.0.0.0.0.0" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.213688" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.21.0.0.0.0.0" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.394092" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.21.0.0.0.0.1" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.232569" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.21.0.0.0.0.1" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.232569" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.21.0.0.0.0.2" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="14.847636" steps="91596"/></proof>
+         <goal name="prog&#39;vc.147.0.21.0.0.0.0.2" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="22.605236" steps="96179"/></proof>
          </goal>
         </transf>
         </goal>
@@ -4684,37 +4798,37 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.21.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="20.690384" steps="100256"/></proof>
+      <goal name="prog&#39;vc.147.0.21.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="20.690384" steps="104365"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.21.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="21.628135" steps="104491"/></proof>
+      <goal name="prog&#39;vc.147.0.21.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="21.628135" steps="108703"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.22" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.22" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.22.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.22.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.22.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="1174992"/></proof>
+      <goal name="prog&#39;vc.147.0.22.0.0" expl="precondition" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1174992"/></proof>
       <transf name="inline_goal" proved="true" >
-       <goal name="prog&#39;vc.110.0.22.0.0.0" expl="precondition" proved="true">
+       <goal name="prog&#39;vc.147.0.22.0.0.0" expl="precondition" proved="true">
        <transf name="unfold" proved="true" arg1="okRefperm" arg2="in" arg3="Requires">
-        <goal name="prog&#39;vc.110.0.22.0.0.0.0" expl="precondition" proved="true">
+        <goal name="prog&#39;vc.147.0.22.0.0.0.0" expl="precondition" proved="true">
         <transf name="split_vc" proved="true" >
-         <goal name="prog&#39;vc.110.0.22.0.0.0.0.0" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.252980" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.22.0.0.0.0.0" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.252980" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.22.0.0.0.0.1" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="0.252789" steps="433"/></proof>
+         <goal name="prog&#39;vc.147.0.22.0.0.0.0.1" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="0.252789" steps="472"/></proof>
          </goal>
-         <goal name="prog&#39;vc.110.0.22.0.0.0.0.2" expl="precondition" proved="true">
-         <proof prover="0"><result status="valid" time="15.048199" steps="91596"/></proof>
+         <goal name="prog&#39;vc.147.0.22.0.0.0.0.2" expl="precondition" proved="true">
+         <proof prover="0"><result status="valid" time="22.983630" steps="96179"/></proof>
          </goal>
         </transf>
         </goal>
@@ -4722,30 +4836,30 @@
        </goal>
       </transf>
       </goal>
-      <goal name="prog&#39;vc.110.0.22.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="21.275737" steps="100256"/></proof>
+      <goal name="prog&#39;vc.147.0.22.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="21.275737" steps="104365"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.22.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="21.135645" steps="103245"/></proof>
+      <goal name="prog&#39;vc.147.0.22.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="24.472475" steps="108641"/></proof>
       </goal>
      </transf>
      </goal>
     </transf>
     </goal>
-    <goal name="prog&#39;vc.110.0.23" expl="precondition" proved="true">
-    <proof prover="0"><undone/></proof>
+    <goal name="prog&#39;vc.147.0.23" expl="precondition" proved="true">
+    <proof prover="0" obsolete="true"><undone/></proof>
     <transf name="inline_goal" proved="true" >
-     <goal name="prog&#39;vc.110.0.23.0" expl="precondition" proved="true">
-     <proof prover="0"><undone/></proof>
+     <goal name="prog&#39;vc.147.0.23.0" expl="precondition" proved="true">
+     <proof prover="0" obsolete="true"><undone/></proof>
      <transf name="split_vc" proved="true" >
-      <goal name="prog&#39;vc.110.0.23.0.0" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="187.805634" steps="1183657"/></proof>
+      <goal name="prog&#39;vc.147.0.23.0.0" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="127.270400" steps="605118"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.23.0.1" expl="precondition" proved="true">
-      <proof prover="0"><result status="valid" time="21.131331" steps="100256"/></proof>
+      <goal name="prog&#39;vc.147.0.23.0.1" expl="precondition" proved="true">
+      <proof prover="0"><result status="valid" time="21.131331" steps="104365"/></proof>
       </goal>
-      <goal name="prog&#39;vc.110.0.23.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-      <proof prover="0"><result status="valid" time="23.096792" steps="112988"/></proof>
+      <goal name="prog&#39;vc.147.0.23.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
+      <proof prover="0"><result status="valid" time="23.096792" steps="117557"/></proof>
       </goal>
      </transf>
      </goal>
@@ -4755,158 +4869,215 @@
    </goal>
   </transf>
   </goal>
-  <goal name="prog&#39;vc.111" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.116437" steps="388"/></proof>
+  <goal name="prog&#39;vc.148" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.116437" steps="448"/></proof>
   </goal>
-  <goal name="prog&#39;vc.112" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.126051" steps="388"/></proof>
+  <goal name="prog&#39;vc.149" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.126051" steps="448"/></proof>
   </goal>
-  <goal name="prog&#39;vc.113" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.136851" steps="388"/></proof>
+  <goal name="prog&#39;vc.150" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.136851" steps="448"/></proof>
   </goal>
-  <goal name="prog&#39;vc.114" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.128587" steps="390"/></proof>
+  <goal name="prog&#39;vc.151" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.128587" steps="450"/></proof>
   </goal>
-  <goal name="prog&#39;vc.115" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.141792" steps="493"/></proof>
+  <goal name="prog&#39;vc.152" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.141792" steps="553"/></proof>
   </goal>
-  <goal name="prog&#39;vc.116" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.144057" steps="493"/></proof>
+  <goal name="prog&#39;vc.153" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.144057" steps="553"/></proof>
   </goal>
-  <goal name="prog&#39;vc.117" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.147436" steps="493"/></proof>
+  <goal name="prog&#39;vc.154" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.147436" steps="553"/></proof>
   </goal>
-  <goal name="prog&#39;vc.118" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.157122" steps="493"/></proof>
+  <goal name="prog&#39;vc.155" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.157122" steps="553"/></proof>
   </goal>
-  <goal name="prog&#39;vc.119" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.179650" steps="493"/></proof>
+  <goal name="prog&#39;vc.156" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.179650" steps="553"/></proof>
   </goal>
-  <goal name="prog&#39;vc.120" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.172051" steps="493"/></proof>
+  <goal name="prog&#39;vc.157" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.172051" steps="553"/></proof>
   </goal>
-  <goal name="prog&#39;vc.121" expl="precondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.169941" steps="493"/></proof>
+  <goal name="prog&#39;vc.158" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.169941" steps="553"/></proof>
   </goal>
-  <goal name="prog&#39;vc.122" expl="locals type invariant left" proved="true">
-  <proof prover="0"><result status="valid" time="0.469585" steps="1824"/></proof>
+  <goal name="prog&#39;vc.159" expl="locals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.469585" steps="1944"/></proof>
   </goal>
-  <goal name="prog&#39;vc.123" expl="locals type invariant right" proved="true">
-  <proof prover="0"><result status="valid" time="0.443649" steps="1830"/></proof>
+  <goal name="prog&#39;vc.160" expl="locals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.443649" steps="1950"/></proof>
   </goal>
-  <goal name="prog&#39;vc.124" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="17.241085" steps="77376"/></proof>
+  <goal name="prog&#39;vc.161" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="19.923441" steps="79819"/></proof>
   </goal>
-  <goal name="prog&#39;vc.125" expl="wr ({stk} union {stk}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="16.638463" steps="77284"/></proof>
+  <goal name="prog&#39;vc.162" expl="wr {stk}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="20.066775" steps="79655"/></proof>
   </goal>
-  <goal name="prog&#39;vc.126" expl="wr ({stk} union {stk}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="16.900940" steps="77350"/></proof>
+  <goal name="prog&#39;vc.163" expl="wr ({stk} union {stk}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="18.847574" steps="79874"/></proof>
   </goal>
-  <goal name="prog&#39;vc.127" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="16.876021" steps="77335"/></proof>
+  <goal name="prog&#39;vc.164" expl="wr {stk}`rep`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="18.814763" steps="79673"/></proof>
   </goal>
-  <goal name="prog&#39;vc.128" expl="wr ({stk} union {stk}`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="16.343523" steps="77458"/></proof>
+  <goal name="prog&#39;vc.165" expl="wr ({stk} union {stk}`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="19.944100" steps="79899"/></proof>
   </goal>
-  <goal name="prog&#39;vc.129" expl="wr ({stk} union {stk}`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="16.755868" steps="77512"/></proof>
+  <goal name="prog&#39;vc.166" expl="wr {stk}`rep`car" proved="true">
+  <proof prover="0"><result status="valid" time="19.953958" steps="79718"/></proof>
   </goal>
-  <goal name="prog&#39;vc.130" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.200262" steps="531"/></proof>
+  <goal name="prog&#39;vc.167" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="19.174142" steps="79958"/></proof>
   </goal>
-  <goal name="prog&#39;vc.131" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.195890" steps="531"/></proof>
+  <goal name="prog&#39;vc.168" expl="wr {stk}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="19.368706" steps="79796"/></proof>
   </goal>
-  <goal name="prog&#39;vc.132" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.187091" steps="535"/></proof>
+  <goal name="prog&#39;vc.169" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="19.091387" steps="80024"/></proof>
   </goal>
-  <goal name="prog&#39;vc.133" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="1.181078" steps="3720"/></proof>
+  <goal name="prog&#39;vc.170" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="19.494407" steps="80064"/></proof>
   </goal>
-  <goal name="prog&#39;vc.134" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.167501" steps="538"/></proof>
+  <goal name="prog&#39;vc.171" expl="wr {stk}`rep`length" proved="true">
+  <proof prover="0"><result status="valid" time="19.869149" steps="79887"/></proof>
   </goal>
-  <goal name="prog&#39;vc.135" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.156874" steps="542"/></proof>
+  <goal name="prog&#39;vc.172" expl="wr {stk}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="19.985270" steps="79905"/></proof>
   </goal>
-  <goal name="prog&#39;vc.136" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.156818" steps="544"/></proof>
+  <goal name="prog&#39;vc.173" expl="wr ({stk} union {stk}`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="20.481903" steps="80169"/></proof>
   </goal>
-  <goal name="prog&#39;vc.137" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.153217" steps="544"/></proof>
+  <goal name="prog&#39;vc.174" expl="wr {stk}`rep`slots" proved="true">
+  <proof prover="0"><result status="valid" time="20.954487" steps="79910"/></proof>
   </goal>
-  <goal name="prog&#39;vc.138" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.175404" steps="544"/></proof>
+  <goal name="prog&#39;vc.175" expl="wr ({stk} union {stk}`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="20.545561" steps="80212"/></proof>
   </goal>
-  <goal name="prog&#39;vc.139" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.207790" steps="545"/></proof>
+  <goal name="prog&#39;vc.176" expl="wr {stk}`rep`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="19.784067" steps="79950"/></proof>
   </goal>
-  <goal name="prog&#39;vc.140" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.165531" steps="546"/></proof>
+  <goal name="prog&#39;vc.177" expl="wr ({stk} union {stk}`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="21.286237" steps="80263"/></proof>
   </goal>
-  <goal name="prog&#39;vc.141" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.170254" steps="548"/></proof>
+  <goal name="prog&#39;vc.178" expl="wr {stk}`rep`car" proved="true">
+  <proof prover="0"><result status="valid" time="20.943766" steps="79972"/></proof>
   </goal>
-  <goal name="prog&#39;vc.142" expl="wr (pool union pool`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="102.093303" steps="509065"/></proof>
+  <goal name="prog&#39;vc.179" expl="wr ({stk} union {stk}`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="21.896797" steps="80311"/></proof>
   </goal>
-  <goal name="prog&#39;vc.143" expl="wr (pool union pool`rep)`slots">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1010952"/></proof>
+  <goal name="prog&#39;vc.180" expl="wr {stk}`rep`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="20.783002" steps="80031"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.181" expl="wr ({stk} union {stk}`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="21.630706" steps="80367"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.182" expl="wr ({stk} union {stk}`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="20.054671" steps="80414"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.183" expl="wr {stk}`rep`length" proved="true">
+  <proof prover="0"><result status="valid" time="20.106968" steps="80141"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.184" expl="wr {stk}`rep`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="19.598256" steps="80165"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.185" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.200262" steps="627"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.186" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.195890" steps="627"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.187" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.187091" steps="631"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.188" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="1.181078" steps="3918"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.189" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.167501" steps="634"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.190" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.156874" steps="638"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.191" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.156818" steps="640"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.192" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.153217" steps="640"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.193" expl="loop invariant preservation">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="876311"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.194" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.175404" steps="644"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.195" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.207790" steps="645"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.196" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.165531" steps="646"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.197" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.170254" steps="648"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.198" expl="wr (pool union pool`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="129.488700" steps="600361"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.199" expl="wr (pool union pool`rep)`slots" proved="true">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1010952"/></proof>
   <transf name="assert" arg1="( l_s.pool = l_s1.pool /\ l_s.pool = union emptyRgn (singleton l_stk))">
-   <goal name="prog&#39;vc.143.0" expl="asserted formula" proved="true">
-   <proof prover="0"><result status="valid" time="0.101977" steps="386"/></proof>
+   <goal name="prog&#39;vc.199.0" expl="asserted formula" proved="true">
+   <proof prover="0"><result status="valid" time="0.101977" steps="446"/></proof>
    </goal>
-   <goal name="prog&#39;vc.143.1" expl="wr (pool union pool`rep)`slots">
-   <proof prover="0"><result status="timeout" time="200.000000" steps="1036865"/></proof>
+   <goal name="prog&#39;vc.199.1" expl="wr (pool union pool`rep)`slots">
+   <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1036865"/></proof>
    <transf name="assert" arg1="( l_s.pool = singleton l_stk )">
-    <goal name="prog&#39;vc.143.1.0" expl="asserted formula" proved="true">
-    <proof prover="0"><result status="valid" time="0.242401" steps="459"/></proof>
+    <goal name="prog&#39;vc.199.1.0" expl="asserted formula" proved="true">
+    <proof prover="0"><result status="valid" time="0.370930" steps="496"/></proof>
     </goal>
-    <goal name="prog&#39;vc.143.1.1" expl="wr (pool union pool`rep)`slots">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="950788"/></proof>
+    <goal name="prog&#39;vc.199.1.1" expl="wr (pool union pool`rep)`slots">
+    <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="950788"/></proof>
     <transf name="assert" arg1="( (img_rep @ l_s) @ (singleton l_stk) = (l_s.rep)[l_stk] )">
-     <goal name="prog&#39;vc.143.1.1.0" expl="asserted formula">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="937432"/></proof>
+     <goal name="prog&#39;vc.199.1.1.0" expl="asserted formula">
+     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="937432"/></proof>
      <transf name="assert" arg1="( mem1 l_stk (singleton l_stk) )">
-      <goal name="prog&#39;vc.143.1.1.0.0" expl="asserted formula" proved="true">
-      <proof prover="0"><result status="valid" time="0.144513" steps="389"/></proof>
+      <goal name="prog&#39;vc.199.1.1.0.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="0.144513" steps="449"/></proof>
       </goal>
-      <goal name="prog&#39;vc.143.1.1.0.1" expl="asserted formula">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="996144"/></proof>
+      <goal name="prog&#39;vc.199.1.1.0.1" expl="asserted formula">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="996144"/></proof>
       <transf name="assert" arg1="( forall r:reference. mem1 r (singleton l_stk) &lt;-&gt; r = l_stk )">
-       <goal name="prog&#39;vc.143.1.1.0.1.0" expl="asserted formula" proved="true">
-       <proof prover="0"><result status="valid" time="1.271590" steps="5826"/></proof>
+       <goal name="prog&#39;vc.199.1.1.0.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="2.118251" steps="5982"/></proof>
        </goal>
-       <goal name="prog&#39;vc.143.1.1.0.1.1" expl="asserted formula">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="971221"/></proof>
-       <proof prover="1"><result status="outofmemory" time="43.062282"/></proof>
-       <proof prover="2"><result status="timeout" time="200.000000" steps="1596909"/></proof>
+       <goal name="prog&#39;vc.199.1.1.0.1.1" expl="asserted formula">
+       <proof prover="0"><result status="timeout" time="200.000000" steps="1074928"/></proof>
+       <proof prover="1" obsolete="true"><result status="outofmemory" time="43.062282"/></proof>
+       <proof prover="2" obsolete="true"><result status="timeout" time="200.000000" steps="1596909"/></proof>
        </goal>
       </transf>
       </goal>
      </transf>
      </goal>
-     <goal name="prog&#39;vc.143.1.1.1" expl="wr (pool union pool`rep)`slots">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="924457"/></proof>
+     <goal name="prog&#39;vc.199.1.1.1" expl="wr (pool union pool`rep)`slots">
+     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="924457"/></proof>
      <transf name="assert" arg1="( (img_rep @ l_s) @ l_s.pool = (l_s.rep)[l_stk] )">
-      <goal name="prog&#39;vc.143.1.1.1.0" expl="asserted formula" proved="true">
-      <proof prover="0"><result status="valid" time="0.136519" steps="391"/></proof>
+      <goal name="prog&#39;vc.199.1.1.1.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="0.136519" steps="451"/></proof>
       </goal>
-      <goal name="prog&#39;vc.143.1.1.1.1" expl="wr (pool union pool`rep)`slots">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="1257592"/></proof>
+      <goal name="prog&#39;vc.199.1.1.1.1" expl="wr (pool union pool`rep)`slots">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1257592"/></proof>
       <transf name="assert" arg1="( union (l_s.pool) ((img_rep @ l_s) @ l_s.pool) = union (singleton l_stk) (l_s.rep)[l_stk] )">
-       <goal name="prog&#39;vc.143.1.1.1.1.0" expl="asserted formula" proved="true">
-       <proof prover="0"><result status="valid" time="0.115774" steps="392"/></proof>
+       <goal name="prog&#39;vc.199.1.1.1.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="0.115774" steps="452"/></proof>
        </goal>
-       <goal name="prog&#39;vc.143.1.1.1.1.1" expl="wr (pool union pool`rep)`slots">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="1121992"/></proof>
+       <goal name="prog&#39;vc.199.1.1.1.1.1" expl="wr (pool union pool`rep)`slots">
+       <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1121992"/></proof>
        <transf name="assert" arg1="( l_s.slots = l_s1.slots /\ l_s1.slots = l_s2.slots )">
-        <goal name="prog&#39;vc.143.1.1.1.1.1.0" expl="asserted formula">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="952945"/></proof>
+        <goal name="prog&#39;vc.199.1.1.1.1.1.0" expl="asserted formula">
+        <proof prover="0"><result status="timeout" time="200.000000" steps="1097084"/></proof>
         </goal>
-        <goal name="prog&#39;vc.143.1.1.1.1.1.1" expl="wr (pool union pool`rep)`slots">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="1057869"/></proof>
+        <goal name="prog&#39;vc.199.1.1.1.1.1.1" expl="wr (pool union pool`rep)`slots" proved="true">
+        <proof prover="0"><result status="valid" time="1.005311" steps="2811"/></proof>
         </goal>
        </transf>
        </goal>
@@ -4919,47 +5090,47 @@
    </transf>
    </goal>
   </transf>
-  <transf name="inline_goal" >
-   <goal name="prog&#39;vc.143.0" expl="wr (pool union pool`rep)`slots">
-   <transf name="split_vc" >
-    <goal name="prog&#39;vc.143.0.0" expl="wr (pool union pool`rep)`slots">
-    <proof prover="0"><result status="timeout" time="200.000000" steps="1060026"/></proof>
-    <transf name="assert" arg1="( mem p (l_s3.alloct.to_fmap) /\ p &lt;&gt; null )">
-     <goal name="prog&#39;vc.143.0.0.0" expl="asserted formula" proved="true">
-     <proof prover="0"><result status="valid" time="0.295650" steps="450"/></proof>
+  <transf name="inline_goal" proved="true" >
+   <goal name="prog&#39;vc.199.0" expl="wr (pool union pool`rep)`slots" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="prog&#39;vc.199.0.0" expl="wr (pool union pool`rep)`slots" proved="true">
+    <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1060026"/></proof>
+    <transf name="assert" proved="true" arg1="( mem p (l_s3.alloct.to_fmap) /\ p &lt;&gt; null )">
+     <goal name="prog&#39;vc.199.0.0.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="0.295650" steps="489"/></proof>
      </goal>
-     <goal name="prog&#39;vc.143.0.0.1" expl="wr (pool union pool`rep)`slots">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="968858"/></proof>
-     <transf name="assert" arg1="( not mem1 p (diff (l_s2.alloct.to_fmap.domain) (l_s3.alloct.to_fmap.domain)) )">
-      <goal name="prog&#39;vc.143.0.0.1.0" expl="asserted formula" proved="true">
-      <proof prover="0"><result status="valid" time="0.242542" steps="414"/></proof>
+     <goal name="prog&#39;vc.199.0.0.1" expl="wr (pool union pool`rep)`slots" proved="true">
+     <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="968858"/></proof>
+     <transf name="assert" proved="true" arg1="( not mem1 p (diff (l_s2.alloct.to_fmap.domain) (l_s3.alloct.to_fmap.domain)) )">
+      <goal name="prog&#39;vc.199.0.0.1.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="0.242542" steps="451"/></proof>
       </goal>
-      <goal name="prog&#39;vc.143.0.0.1.1" expl="wr (pool union pool`rep)`slots">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="1019098"/></proof>
-      <transf name="assert" arg1="( not mem1 p (l_s2.rep)[l_stk] )">
-       <goal name="prog&#39;vc.143.0.0.1.1.0" expl="asserted formula" proved="true">
-       <proof prover="0"><result status="valid" time="16.902367" steps="93592"/></proof>
+      <goal name="prog&#39;vc.199.0.0.1.1" expl="wr (pool union pool`rep)`slots" proved="true">
+      <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1019098"/></proof>
+      <transf name="assert" proved="true" arg1="( not mem1 p (l_s2.rep)[l_stk] )">
+       <goal name="prog&#39;vc.199.0.0.1.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="22.670740" steps="98946"/></proof>
        </goal>
-       <goal name="prog&#39;vc.143.0.0.1.1.1" expl="wr (pool union pool`rep)`slots">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="989653"/></proof>
-       <transf name="assert" arg1="( (l_s2.slots)[p] = (l_s3.slots)[p] )">
-        <goal name="prog&#39;vc.143.0.0.1.1.1.0" expl="asserted formula" proved="true">
-        <proof prover="0"><result status="valid" time="0.953705" steps="2588"/></proof>
+       <goal name="prog&#39;vc.199.0.0.1.1.1" expl="wr (pool union pool`rep)`slots" proved="true">
+       <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="989653"/></proof>
+       <transf name="assert" proved="true" arg1="( (l_s2.slots)[p] = (l_s3.slots)[p] )">
+        <goal name="prog&#39;vc.199.0.0.1.1.1.0" expl="asserted formula" proved="true">
+        <proof prover="0"><result status="valid" time="0.953705" steps="2699"/></proof>
         </goal>
-        <goal name="prog&#39;vc.143.0.0.1.1.1.1" expl="wr (pool union pool`rep)`slots">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="929022"/></proof>
-        <transf name="assert" arg1="( (l_s3.slots)[p] = (l_s4.slots)[p] )">
-         <goal name="prog&#39;vc.143.0.0.1.1.1.1.0" expl="asserted formula" proved="true">
-         <proof prover="0"><result status="valid" time="0.165889" steps="382"/></proof>
+        <goal name="prog&#39;vc.199.0.0.1.1.1.1" expl="wr (pool union pool`rep)`slots" proved="true">
+        <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="929022"/></proof>
+        <transf name="assert" proved="true" arg1="( (l_s3.slots)[p] = (l_s4.slots)[p] )">
+         <goal name="prog&#39;vc.199.0.0.1.1.1.1.0" expl="asserted formula" proved="true">
+         <proof prover="0"><result status="valid" time="0.165889" steps="442"/></proof>
          </goal>
-         <goal name="prog&#39;vc.143.0.0.1.1.1.1.1" expl="wr (pool union pool`rep)`slots">
-         <proof prover="0"><result status="timeout" time="200.000000" steps="983938"/></proof>
-         <transf name="assert" arg1="( (l_s.slots)[p] = (l_s2.slots)[p] )">
-          <goal name="prog&#39;vc.143.0.0.1.1.1.1.1.0" expl="asserted formula">
-          <proof prover="0"><result status="timeout" time="200.000000" steps="1020662"/></proof>
+         <goal name="prog&#39;vc.199.0.0.1.1.1.1.1" expl="wr (pool union pool`rep)`slots" proved="true">
+         <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="983938"/></proof>
+         <transf name="assert" proved="true" arg1="( (l_s.slots)[p] = (l_s2.slots)[p] )">
+          <goal name="prog&#39;vc.199.0.0.1.1.1.1.1.0" expl="asserted formula" proved="true">
+          <proof prover="0"><result status="valid" time="6.231702" steps="18725"/></proof>
           </goal>
-          <goal name="prog&#39;vc.143.0.0.1.1.1.1.1.1" expl="wr (pool union pool`rep)`slots" proved="true">
-          <proof prover="0"><result status="valid" time="0.158511" steps="385"/></proof>
+          <goal name="prog&#39;vc.199.0.0.1.1.1.1.1.1" expl="wr (pool union pool`rep)`slots" proved="true">
+          <proof prover="0"><result status="valid" time="0.158511" steps="445"/></proof>
           </goal>
          </transf>
          </goal>
@@ -4977,86 +5148,86 @@
    </goal>
   </transf>
   </goal>
-  <goal name="prog&#39;vc.144" expl="wr (pool union pool`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="112.950913" steps="537883"/></proof>
+  <goal name="prog&#39;vc.200" expl="wr (pool union pool`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="136.478631" steps="658463"/></proof>
   </goal>
-  <goal name="prog&#39;vc.145" expl="wr (pool union pool`rep)`cdr">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1003716"/></proof>
+  <goal name="prog&#39;vc.201" expl="wr (pool union pool`rep)`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="133.168080" steps="662903"/></proof>
   </goal>
-  <goal name="prog&#39;vc.146" expl="wr (pool union pool`rep)`arr">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1001021"/></proof>
+  <goal name="prog&#39;vc.202" expl="wr (pool union pool`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="122.660899" steps="649841"/></proof>
   </goal>
-  <goal name="prog&#39;vc.147" expl="wr (pool union pool`rep)`car">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1004518"/></proof>
+  <goal name="prog&#39;vc.203" expl="wr (pool union pool`rep)`car" proved="true">
+  <proof prover="0"><result status="valid" time="113.869415" steps="636342"/></proof>
   </goal>
-  <goal name="prog&#39;vc.148" expl="wr (pool union pool`rep)`rep">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="931068"/></proof>
+  <goal name="prog&#39;vc.204" expl="wr (pool union pool`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="106.610361" steps="602133"/></proof>
   </goal>
-  <goal name="prog&#39;vc.149" expl="wr (pool union pool`rep)`cell_rep">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="874405"/></proof>
+  <goal name="prog&#39;vc.205" expl="wr (pool union pool`rep)`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="126.653188" steps="657917"/></proof>
   </goal>
-  <goal name="prog&#39;vc.150" expl="wr (pool union pool`rep)`top">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="816585"/></proof>
+  <goal name="prog&#39;vc.206" expl="wr (pool union pool`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="115.636591" steps="631114"/></proof>
   </goal>
-  <goal name="prog&#39;vc.151" expl="wr (pool union pool`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="123.513064" steps="541990"/></proof>
+  <goal name="prog&#39;vc.207" expl="wr (pool union pool`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="123.513064" steps="619696"/></proof>
   </goal>
-  <goal name="prog&#39;vc.152" expl="wr (pool union pool`rep)`length" proved="true">
-  <proof prover="0"><result status="valid" time="21.430028" steps="98171"/></proof>
+  <goal name="prog&#39;vc.208" expl="wr (pool union pool`rep)`length" proved="true">
+  <proof prover="0"><result status="valid" time="21.430028" steps="102548"/></proof>
   </goal>
-  <goal name="prog&#39;vc.153" expl="wr (pool union pool`rep)`cell_value">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="883226"/></proof>
+  <goal name="prog&#39;vc.209" expl="wr (pool union pool`rep)`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="131.468027" steps="672456"/></proof>
   </goal>
-  <goal name="prog&#39;vc.154" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="9.387092" steps="34666"/></proof>
+  <goal name="prog&#39;vc.210" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="8.277174" steps="35757"/></proof>
   </goal>
-  <goal name="prog&#39;vc.155" expl="wr (pool union pool`rep)`contents" proved="true">
-  <proof prover="0"><result status="valid" time="121.146351" steps="549914"/></proof>
+  <goal name="prog&#39;vc.211" expl="wr (pool union pool`rep)`contents" proved="true">
+  <proof prover="0"><result status="valid" time="121.146351" steps="688684"/></proof>
   </goal>
-  <goal name="prog&#39;vc.156" expl="wr (pool union pool`rep)`slots">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="838352"/></proof>
+  <goal name="prog&#39;vc.212" expl="wr (pool union pool`rep)`slots" proved="true">
+  <proof prover="0"><result status="valid" time="130.354638" steps="689772"/></proof>
   </goal>
-  <goal name="prog&#39;vc.157" expl="wr (pool union pool`rep)`head" proved="true">
-  <proof prover="0"><result status="valid" time="130.232262" steps="595063"/></proof>
+  <goal name="prog&#39;vc.213" expl="wr (pool union pool`rep)`head" proved="true">
+  <proof prover="0"><result status="valid" time="130.232262" steps="701804"/></proof>
   </goal>
-  <goal name="prog&#39;vc.158" expl="wr (pool union pool`rep)`cdr">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="903586"/></proof>
+  <goal name="prog&#39;vc.214" expl="wr (pool union pool`rep)`cdr" proved="true">
+  <proof prover="0"><result status="valid" time="126.500907" steps="702947"/></proof>
   </goal>
-  <goal name="prog&#39;vc.159" expl="wr (pool union pool`rep)`arr">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="927093"/></proof>
+  <goal name="prog&#39;vc.215" expl="wr (pool union pool`rep)`arr" proved="true">
+  <proof prover="0"><result status="valid" time="113.617062" steps="656930"/></proof>
   </goal>
-  <goal name="prog&#39;vc.160" expl="wr (pool union pool`rep)`car">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="841971"/></proof>
+  <goal name="prog&#39;vc.216" expl="wr (pool union pool`rep)`car" proved="true">
+  <proof prover="0"><result status="valid" time="122.036383" steps="742184"/></proof>
   </goal>
-  <goal name="prog&#39;vc.161" expl="wr (pool union pool`rep)`rep">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="815469"/></proof>
+  <goal name="prog&#39;vc.217" expl="wr (pool union pool`rep)`rep" proved="true">
+  <proof prover="0"><result status="valid" time="114.101371" steps="677103"/></proof>
   </goal>
-  <goal name="prog&#39;vc.162" expl="wr (pool union pool`rep)`cell_rep">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="821273"/></proof>
+  <goal name="prog&#39;vc.218" expl="wr (pool union pool`rep)`cell_rep" proved="true">
+  <proof prover="0"><result status="valid" time="113.060130" steps="672280"/></proof>
   </goal>
-  <goal name="prog&#39;vc.163" expl="wr (pool union pool`rep)`top">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="810593"/></proof>
+  <goal name="prog&#39;vc.219" expl="wr (pool union pool`rep)`top" proved="true">
+  <proof prover="0"><result status="valid" time="115.373628" steps="684512"/></proof>
   </goal>
-  <goal name="prog&#39;vc.164" expl="wr (pool union pool`rep)`size" proved="true">
-  <proof prover="0"><result status="valid" time="118.959463" steps="538275"/></proof>
+  <goal name="prog&#39;vc.220" expl="wr (pool union pool`rep)`size" proved="true">
+  <proof prover="0"><result status="valid" time="118.959463" steps="692548"/></proof>
   </goal>
-  <goal name="prog&#39;vc.165" expl="wr (pool union pool`rep)`length" proved="true">
-  <proof prover="0"><result status="valid" time="24.126890" steps="106872"/></proof>
+  <goal name="prog&#39;vc.221" expl="wr (pool union pool`rep)`length" proved="true">
+  <proof prover="0"><result status="valid" time="17.844695" steps="111335"/></proof>
   </goal>
-  <goal name="prog&#39;vc.166" expl="wr (pool union pool`rep)`cell_value">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="801579"/></proof>
+  <goal name="prog&#39;vc.222" expl="wr (pool union pool`rep)`cell_value" proved="true">
+  <proof prover="0"><result status="valid" time="113.171953" steps="676042"/></proof>
   </goal>
-  <goal name="prog&#39;vc.167" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="9.678006" steps="37282"/></proof>
+  <goal name="prog&#39;vc.223" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="9.678006" steps="38386"/></proof>
   </goal>
-  <goal name="prog&#39;vc.168" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="854881"/></proof>
+  <goal name="prog&#39;vc.224" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="200.000000" steps="1445217"/></proof>
   </goal>
-  <goal name="prog&#39;vc.169" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.161513" steps="438"/></proof>
+  <goal name="prog&#39;vc.225" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.161513" steps="498"/></proof>
   </goal>
-  <goal name="prog&#39;vc.170" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.148364" steps="438"/></proof>
+  <goal name="prog&#39;vc.226" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.148364" steps="498"/></proof>
   </goal>
  </transf>
  </goal>

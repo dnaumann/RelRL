@@ -47,14 +47,13 @@ interface STACK =
     ensures  { self.contents = nil }
     ensures  { let opool = old(pool) in pool = opool union {self} }
     ensures  { let oa = old(alloc) in ({self}`rep diff {null}) subset (alloc diff oa) }
-    effects  { rw {self}`any /*, {self}`rep`any */, alloc, pool; rd self, maxSize }
+    effects  { rw {self}`any , alloc, pool; rd self, maxSize }
 
   meth isEmpty(self:Stack) : bool
     requires { self in pool }
     ensures  { result <-> self.size = 0 }
     effects  { rd self, {self}`any }
 
-  /* TODO: consider version with k:Cell as parameter */
   meth push(self:Stack, k:int) : unit
     requires { self in pool }
     requires { let sz = self.size in sz < maxSize }

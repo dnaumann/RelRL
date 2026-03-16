@@ -1,45 +1,6 @@
 interface CLIENT =
 end
 
-/* interface TEST_CLIENT = import STACK end
-module TestClient : TEST_CLIENT =
-  meth prog (n: int) : int
-    requires { maxSize > n /\ n >= 0 }
-    requires { pool = {} }
-    effects  { rw alloc, pool, pool`any, pool`rep`any, result; rd n, maxSize }
-  = var stk: Stack in
-    var i: int in
-    var c: Cell in
-    stk := new Stack; Stack(stk); assert { stk in pool };
-    while (i < n) do
-      invariant { 0 <= i /\ i <= n }
-      invariant { stk in pool /\ 0 <= n /\ n < maxSize }
-      invariant { let sz = stk.size in sz = i }
-      invariant { stackPub() }
-      invariant { let oa = old(alloc) in 
-                  (({stk} union {stk}`rep) diff {null}) subset (alloc diff oa) }
-      effects { rw alloc, {stk}`any, {stk}`rep`any }
-      push(stk, i);
-      i := i+1;
-    done;
-    i := 0;
-    while (i < n) do
-      invariant { 0 <= i /\ i <= n }
-      invariant { stk in pool /\ 0 <= n /\ n < maxSize }
-      invariant { let sz = stk.size in sz = n-i }
-      invariant { stackPub() }
-      invariant { c = null \/ let rep = stk.rep in c in rep }
-      invariant { let oa = init(alloc) in 
-                  (({stk} union {stk}`rep) diff {null}) subset (alloc diff oa) }
-      effects { rw {stk}`any, {stk}`rep`any }
-      c := pop(stk);
-      var v: int in v := getCellValue(c);
-      result := result + v;
-      i := i+1;
-    done;
-end 
-*/
-
 /* Version of client linked against ArrayStack */
 module Client1 : CLIENT =
   import ArrayStack
@@ -55,7 +16,7 @@ module Client1 : CLIENT =
       invariant { 0 <= i /\ i <= n }
       invariant { stk in pool /\ 0 <= n /\ n < maxSize }
       invariant { let sz = stk.size in sz = i }
-      invariant { stackPub() /\ arrayStackPriv () }
+      invariant { stackPub()}
       /* stk and all objects in stk.rep are fresh */
       invariant { let oa = old(alloc) in 
                   (({stk} union {stk}`rep) diff {null}) subset (alloc diff oa) }
@@ -69,7 +30,7 @@ module Client1 : CLIENT =
       invariant { 0 <= i /\ i <= n }
       invariant { stk in pool /\ 0 <= n /\ n < maxSize }
       invariant { let sz = stk.size in sz = n-i }
-      invariant { stackPub() /\ arrayStackPriv () }
+      invariant { stackPub() }
       invariant { c = null \/ let rep = stk.rep in c in rep }
       invariant { let oa = init(alloc) in 
                   (({stk} union {stk}`rep) diff {null}) subset (alloc diff oa) }
