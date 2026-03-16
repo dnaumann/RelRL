@@ -4,7 +4,7 @@
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
 <prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
-<file format="whyml">
+<file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
  <goal name="state&#39;vc" expl="VC for state" proved="true">
@@ -276,9 +276,9 @@
  </transf>
  </goal>
 </theory>
-<theory name="COMMUTE">
- <goal name="main&#39;vc" expl="VC for main">
- <transf name="split_vc" >
+<theory name="COMMUTE" proved="true">
+ <goal name="main&#39;vc" expl="VC for main" proved="true">
+ <transf name="split_vc" proved="true" >
   <goal name="main&#39;vc.0" expl="globals type invariant" proved="true">
   <proof prover="0"><result status="valid" time="0.046767" steps="70"/></proof>
   </goal>
@@ -532,11 +532,11 @@
   <goal name="main&#39;vc.83" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.058934" steps="192"/></proof>
   </goal>
-  <goal name="main&#39;vc.84" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="2097864"/></proof>
+  <goal name="main&#39;vc.84" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.082509" steps="243"/></proof>
   </goal>
-  <goal name="main&#39;vc.85" expl="postcondition">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="2338343"/></proof>
+  <goal name="main&#39;vc.85" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.073801" steps="265"/></proof>
   </goal>
   <goal name="main&#39;vc.86" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.064156" steps="192"/></proof>
