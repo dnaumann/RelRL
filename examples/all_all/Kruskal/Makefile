@@ -1,6 +1,6 @@
 WHY3=why3
-WHYREL=../../bin/whyrel
-WHYREL_STDLIB=../../stdlib
+WHYREL=../../../bin/whyrel
+WHYREL_STDLIB=../../../stdlib
 POST_PROCESS=../../util/post-process.sed
 FILES=uf.rl quickfind.rl quickunion.rl kruskal.rl ufrel.rl
 

@@ -1,6 +1,6 @@
 WHY3=why3
-WHYREL=../../bin/whyrel
-WHYREL_STDLIB=../../stdlib
+WHYREL=../../../bin/whyrel
+WHYREL_STDLIB=../../../stdlib
 FILES=tiling.rl 
 EXTERN_FILES_DIR=.
 
