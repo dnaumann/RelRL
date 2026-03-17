@@ -16,8 +16,10 @@ procedure loop1 (x1: int, n1: int, x2: int, n2: int)
   y1 := x1; y2 := x2; 
   z1 := 0;  z2 := 0;  
   w1 := 0;  w2 := 0;  
+  sum1 := 0; sum2 := 0;
 
   while (y1 > 0 && y2 > 0)
+  invariant w1 == 0 <==> w2 == 0; 
   {
        if (w1 == 0)
        { havoc z1; y1 := y1 - 1; }

@@ -63,7 +63,7 @@ procedure loop1 (x1: int, n1: int, x2: int, n2: int)
   w1 := 0;  w2 := 0;  // |_ w := 0 _|
 
   // While (y > 0) | (y > 0) . <| w <> 0 <] | [> w <> 0 |> do
-  while (y1 > 0 || y2 > 0)
+  while (y1 > 0 && y2 > 0)
     // y =:= y
     invariant y1 == y2;
 
@@ -129,7 +129,6 @@ procedure loop1 (x1: int, n1: int, x2: int, n2: int)
        // |_ w := (w + 1) mod n _|
        w1 := (w1 + 1) mod n1; w2 := (w2 + 1) mod n2;
      } 
-
     // variant decreases and lower bounded on RO (added by chk)
     assert ro ==> (0 <= ((n2 - w2) mod n2));
     assert ro ==> ((n2 - w2) mod n2) < vnt; // NOTE: fails without NOTE above

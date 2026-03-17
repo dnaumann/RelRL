@@ -1,5 +1,9 @@
 # Boogie example catalog
 
+## Hypra
+
+- lowError
+
 ## Veracity2G
 
 - fizzbuzz
