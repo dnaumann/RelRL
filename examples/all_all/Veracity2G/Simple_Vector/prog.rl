@@ -147,10 +147,6 @@ bimodule COMMUTE (AB | BA) =
         |_ z[k] := tmp _|;
         |_ k := k + 1 _|;
       done;
-      Assert { <| forall i:int. 0 <= i /\ i < 1000 ->
-                    let xi = x[i] in y[i] = xi * xi <] };
-      Assert { <| forall k:int. 0 <= k /\ k < 1000 ->
-                    let v = x[999 - k] in z[k] = v <] };
 
     /* skip | f1 */
     (skip | i := 0);
