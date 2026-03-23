@@ -1,3 +1,5 @@
+/*  https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/smaller.txt */
+
 interface I =
   meth smaller (time: int) : int
     effects { rd time }

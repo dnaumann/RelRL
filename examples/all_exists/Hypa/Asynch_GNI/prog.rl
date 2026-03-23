@@ -1,3 +1,5 @@
+/* https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/asynch_gni.txt */
+
 interface I =
   meth prog (n:int) : int
     effects { rd n }

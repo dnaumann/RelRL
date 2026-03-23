@@ -147,7 +147,7 @@
   <proof prover="0"><result status="valid" time="0.019869" steps="79"/></proof>
   </goal>
   <goal name="m&#39;vc.43" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.057210" steps="2171"/></proof>
+  <proof prover="0"><result status="valid" time="0.177359" steps="2171"/></proof>
   </goal>
   <goal name="m&#39;vc.44" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.026387" steps="84"/></proof>
@@ -186,10 +186,13 @@
   <proof prover="0"><result status="valid" time="0.020926" steps="51"/></proof>
   </goal>
   <goal name="m&#39;vc.56" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.021843" steps="59"/></proof>
+  <proof prover="0"><result status="valid" time="0.064014" steps="66"/></proof>
   </goal>
   <goal name="m&#39;vc.57" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.020318" steps="59"/></proof>
+  <proof prover="0"><result status="valid" time="0.021843" steps="61"/></proof>
+  </goal>
+  <goal name="m&#39;vc.58" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.020318" steps="61"/></proof>
   </goal>
  </transf>
  </goal>

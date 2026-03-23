@@ -1,39 +1,18 @@
-/*
+/* https://github.com/hiroshi-unno/coar/blob/299e979bfce7d9b0532586bfc42b449fd0451531/benchmarks/pfwnCSP/cav2021rel/TS_GNI_hFF.clp
 
-[forall]
-int l;
-int h;
-int x;
-bool a;
-
-x = l;
-a = *;
-while(a) {
-    x = x + 1;
-    a = *;
+if (high) {
+  x = *; // needs to depend on the return value of the other copy
+  if (x >= low) { return x; } else { while (1) { } }
+} else {
+  x = low;
+  while ( * ) { x++; }
+  return x;
 }
 
+Copy 1 is scheduled demonically
+Copy 2 is scheduled angelically
 
-[exists]
-int l;
-int h;
-int x;
-bool a;
-
-x = l;
-a = *;
-while(a) {
-    x = x + 1;
-    a = *;
-}
-
-
-[pre]
-l_0 == l_1
-
-[post]
-x_0 == x_1
-
+specialized with !high1 and !high2
 */
 
 // same as ti_gni_hff.bpl

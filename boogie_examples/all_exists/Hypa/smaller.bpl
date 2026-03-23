@@ -1,37 +1,5 @@
-// [forall]
-// int x;
-// int time; 
-
-// x = 0;
-// while (time > 0) {
-//     time = time - 1;
-//     if * {
-//         x = x + 1;
-//     } else {
-//         x = x + 3;
-//     }
-// }
-
-
-// [exists]
-// int x;
-// int time; 
-
-// x = 0;
-// while (time > 0) {
-//     time = time - 1;
-//     if * {
-//         x = x + 1;
-//     } else {
-//         x = x + 3;
-//     }
-// }
-
-// [pre]
-// time_0 == time_1
-
-// [post]
-// x_1 <= x_0
+// https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/smaller.txt
+// verifies
 
 procedure example (time1: int, time2: int) returns (x1: int, x2: int)
     requires (time1 == time2);

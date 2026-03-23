@@ -3,6 +3,7 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<prover id="1" name="Alt-Ergo" version="2.6.2" alternative="BV" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
@@ -72,7 +73,7 @@
   <proof prover="0"><result status="valid" time="0.098950" steps="49"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.13" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.222978" steps="321"/></proof>
+  <proof prover="0"><result status="valid" time="0.093163" steps="321"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.14" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.132549" steps="198"/></proof>
@@ -121,10 +122,10 @@
   <proof prover="0"><result status="valid" time="0.090802" steps="48"/></proof>
   </goal>
   <goal name="setval&#39;vc.12" expl="wr {self}`data" proved="true">
-  <proof prover="0"><result status="valid" time="0.358564" steps="928"/></proof>
+  <proof prover="0"><result status="valid" time="0.183379" steps="928"/></proof>
   </goal>
   <goal name="setval&#39;vc.13" expl="wr {self}`contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.342356" steps="930"/></proof>
+  <proof prover="0"><result status="valid" time="0.188490" steps="930"/></proof>
   </goal>
   <goal name="setval&#39;vc.14" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.089287" steps="52"/></proof>
@@ -208,7 +209,7 @@
 </theory>
 <theory name="Map_Fun" proved="true">
  <goal name="init_Map&#39;vc" expl="VC for init_Map" proved="true">
- <proof prover="0" obsolete="true"><result status="valid" time="1.760869" steps="7911"/></proof>
+ <proof prover="0"><result status="valid" time="1.112320" steps="7291"/></proof>
  <transf name="split_vc" proved="true" >
   <goal name="init_Map&#39;vc.0" expl="self.data_fn := empty_fun" proved="true">
   <proof prover="0"><result status="valid" time="0.068571" steps="8"/></proof>
@@ -290,7 +291,7 @@
   <proof prover="0"><result status="valid" time="0.099661" steps="42"/></proof>
   </goal>
   <goal name="setval&#39;vc.10" expl="wr {self}`contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.275641" steps="694"/></proof>
+  <proof prover="0"><result status="valid" time="0.145218" steps="694"/></proof>
   </goal>
   <goal name="setval&#39;vc.11" expl="wr {self}`data_fn" proved="true">
   <proof prover="0"><result status="valid" time="0.262666" steps="715"/></proof>
@@ -384,34 +385,37 @@
   <proof prover="0"><result status="valid" time="0.275531" steps="809"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.16" expl="wr {self}`contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.298863" steps="822"/></proof>
+  <proof prover="0"><result status="valid" time="0.168339" steps="822"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.17" expl="wr {self}`data" proved="true">
-  <proof prover="0"><result status="valid" time="0.320293" steps="832"/></proof>
+  <proof prover="0"><result status="valid" time="0.167027" steps="832"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.18" expl="wr {self}`data_fn" proved="true">
-  <proof prover="0"><result status="valid" time="0.351725" steps="869"/></proof>
+  <proof prover="0"><result status="valid" time="0.178131" steps="869"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.19" expl="wr {self}`sz" proved="true">
-  <proof prover="0"><result status="valid" time="0.349566" steps="859"/></proof>
+  <proof prover="0"><result status="valid" time="0.176486" steps="859"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.20" expl="wr {self}`contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.338786" steps="872"/></proof>
+  <proof prover="0"><result status="valid" time="0.175298" steps="872"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.21" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.480246" steps="2533"/></proof>
+  <proof prover="0"><result status="valid" time="0.068877" steps="109"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.22" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.220893" steps="426"/></proof>
+  <proof prover="0"><result status="valid" time="0.480246" steps="2535"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.23" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.141291" steps="115"/></proof>
+  <proof prover="0"><result status="valid" time="0.220893" steps="428"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.24" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.328819" steps="1626"/></proof>
+  <proof prover="0"><result status="valid" time="0.141291" steps="117"/></proof>
   </goal>
   <goal name="init_Map&#39;vc.25" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.105695" steps="104"/></proof>
+  <proof prover="0"><result status="valid" time="0.328819" steps="1635"/></proof>
+  </goal>
+  <goal name="init_Map&#39;vc.26" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.105695" steps="106"/></proof>
   </goal>
  </transf>
  </goal>
@@ -473,37 +477,40 @@
   <proof prover="0"><result status="valid" time="0.126324" steps="231"/></proof>
   </goal>
   <goal name="setval&#39;vc.16" expl="wr {self}`contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.325250" steps="979"/></proof>
+  <proof prover="0"><result status="valid" time="0.190263" steps="979"/></proof>
   </goal>
   <goal name="setval&#39;vc.17" expl="wr {self}`data" proved="true">
   <proof prover="0"><result status="valid" time="0.251601" steps="988"/></proof>
   </goal>
   <goal name="setval&#39;vc.18" expl="wr {self}`data_fn" proved="true">
-  <proof prover="0"><result status="valid" time="0.353579" steps="1041"/></proof>
+  <proof prover="0"><result status="valid" time="0.212426" steps="1041"/></proof>
   </goal>
   <goal name="setval&#39;vc.19" expl="wr {self}`contents" proved="true">
   <proof prover="0"><result status="valid" time="0.211975" steps="1033"/></proof>
   </goal>
   <goal name="setval&#39;vc.20" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.385496" steps="2369"/></proof>
+  <proof prover="0"><result status="valid" time="0.081292" steps="139"/></proof>
   </goal>
   <goal name="setval&#39;vc.21" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.338405" steps="1444"/></proof>
+  <proof prover="0"><result status="valid" time="0.385496" steps="2675"/></proof>
   </goal>
   <goal name="setval&#39;vc.22" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.118852" steps="116"/></proof>
+  <proof prover="0"><result status="valid" time="0.338405" steps="1494"/></proof>
   </goal>
   <goal name="setval&#39;vc.23" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.084809" steps="154"/></proof>
+  <proof prover="0"><result status="valid" time="0.118852" steps="118"/></proof>
   </goal>
   <goal name="setval&#39;vc.24" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.648622" steps="3598"/></proof>
+  <proof prover="0"><result status="valid" time="0.084809" steps="156"/></proof>
   </goal>
   <goal name="setval&#39;vc.25" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.305031" steps="1698"/></proof>
+  <proof prover="0"><result status="valid" time="0.648622" steps="3604"/></proof>
   </goal>
   <goal name="setval&#39;vc.26" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.118972" steps="123"/></proof>
+  <proof prover="0"><result status="valid" time="0.305031" steps="1708"/></proof>
+  </goal>
+  <goal name="setval&#39;vc.27" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.118972" steps="125"/></proof>
   </goal>
  </transf>
  </goal>
@@ -522,10 +529,13 @@
   <proof prover="0"><result status="valid" time="0.070855" steps="62"/></proof>
   </goal>
   <goal name="getval&#39;vc.4" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.072504" steps="51"/></proof>
+  <proof prover="0"><result status="valid" time="0.060242" steps="53"/></proof>
   </goal>
   <goal name="getval&#39;vc.5" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.090984" steps="153"/></proof>
+  <proof prover="0"><result status="valid" time="0.072504" steps="53"/></proof>
+  </goal>
+  <goal name="getval&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.090984" steps="157"/></proof>
   </goal>
  </transf>
  </goal>
@@ -533,66 +543,90 @@
  <transf name="split_vc" proved="true" >
   <goal name="setbyuser&#39;vc.0" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.094712" steps="35"/></proof>
+  <proof prover="1"><result status="valid" time="0.048083" steps="35"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.1" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.111759" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.047626" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.2" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.098081" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.047988" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.3" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.115123" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.049187" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.4" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.107234" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.052188" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.5" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.083158" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.047530" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.6" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.051057" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.050028" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.7" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.069818" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.054002" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.8" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.101234" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.044749" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.9" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.055174" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.048462" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.10" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.050473" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.045343" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.11" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.114038" steps="37"/></proof>
+  <proof prover="1"><result status="valid" time="0.048701" steps="37"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.12" expl="setval(self,k,v)" proved="true">
   <proof prover="0"><result status="valid" time="0.097186" steps="41"/></proof>
+  <proof prover="1"><result status="valid" time="0.054816" steps="41"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.13" expl="wr {self}`contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.116131" steps="71"/></proof>
+  <proof prover="0"><result status="valid" time="0.116131" steps="73"/></proof>
+  <proof prover="1"><result status="valid" time="0.049966" steps="73"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.14" expl="wr {self}`data" proved="true">
-  <proof prover="0"><result status="valid" time="0.135833" steps="71"/></proof>
+  <proof prover="0"><result status="valid" time="0.135833" steps="73"/></proof>
+  <proof prover="1"><result status="valid" time="0.045428" steps="73"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.15" expl="wr {self}`data_fn" proved="true">
-  <proof prover="0"><result status="valid" time="0.136998" steps="71"/></proof>
+  <proof prover="0"><result status="valid" time="0.136998" steps="73"/></proof>
+  <proof prover="1"><result status="valid" time="0.051045" steps="73"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.16" expl="wr {self}`contents" proved="true">
-  <proof prover="0"><result status="valid" time="0.115175" steps="71"/></proof>
+  <proof prover="0"><result status="valid" time="0.115175" steps="73"/></proof>
+  <proof prover="1"><result status="valid" time="0.049615" steps="73"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.17" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.143018" steps="71"/></proof>
+  <proof prover="1"><result status="valid" time="0.048129" steps="73"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.18" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.104789" steps="71"/></proof>
+  <proof prover="0"><result status="valid" time="0.143018" steps="73"/></proof>
+  <proof prover="1"><result status="valid" time="0.047960" steps="73"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.19" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.081849" steps="71"/></proof>
+  <proof prover="0"><result status="valid" time="0.104789" steps="73"/></proof>
+  <proof prover="1"><result status="valid" time="0.045194" steps="73"/></proof>
   </goal>
   <goal name="setbyuser&#39;vc.20" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.107565" steps="73"/></proof>
+  <proof prover="0"><result status="valid" time="0.081849" steps="73"/></proof>
+  <proof prover="1"><result status="valid" time="0.051213" steps="73"/></proof>
+  </goal>
+  <goal name="setbyuser&#39;vc.21" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.107565" steps="75"/></proof>
+  <proof prover="1"><result status="valid" time="0.051701" steps="75"/></proof>
   </goal>
  </transf>
  </goal>

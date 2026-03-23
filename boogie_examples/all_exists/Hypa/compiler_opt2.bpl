@@ -1,39 +1,4 @@
-// [forall]
-// int o;
-// int time;
-// int t;
-// int s;
-
-// o = 0;
-// while (time > 0) {
-//     time = time - 1;
-//     t = *;
-//     while (t > 0) {
-//         t = t - 1;
-//         s = *;
-//         o = o + s;
-//     }
-// }
-
-// [exists]
-// int o;
-// int time;
-// int s;
-
-// o = 0;
-// while (time > 0) {
-//     time = time - 1;
-//     s = *;
-//     o = o + s;
-// }
-
-
-// [pre]
-// time_0 == time_1
-
-// [post]
-// o_0 == o_1
-
+// https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/compiler_opt2.txt
 
 
 procedure compiler_opt_2 (time1: int, time2: int) returns (o1: int, o2: int)

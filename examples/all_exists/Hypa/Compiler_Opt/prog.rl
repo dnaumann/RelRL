@@ -1,3 +1,5 @@
+/* https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/compiler_opt.txt */
+
 interface I =
   meth compiler_opt(n:int) : int
       effects {rd n}  

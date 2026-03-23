@@ -1,20 +1,5 @@
 /*
-
-// A simple deterministic program that does not use its parameter at all.
-
-expected: valid;
-
-forall: unused[1];
-exists: unused[2];
-
-pre:  (not (= unused!1!param unused!2!param));
-post: (= unused!1!ret   unused!2!ret);
-
-fun unused(param) {
-  ret := 5;
-  return ret;
-}
-
+https://github.com/rcdickerson/rhle-benchmarks/blob/main/param-usage/det-unused.imp
 */
 
 // verifies

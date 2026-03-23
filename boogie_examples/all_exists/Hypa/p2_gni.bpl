@@ -1,37 +1,5 @@
 /*
-
-[forall]
-int h;
-int o;
-int l;
-int b;
-
-if (h > 0) {
-    o = l + b;
-} else {
-    o = l + b;
-}
-
-[exists]
-int h;
-int o;
-int l;
-int b;
-
-if (h > 0) {
-    o = l + b;
-} else {
-    o = l + b;
-}
-
-[pre]
-l_0 == l_1 
-&& 
-b_0 == b_1
-
-[post]
-o_0 == o_1
-
+https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/p2_gni.txt
 */
 
 

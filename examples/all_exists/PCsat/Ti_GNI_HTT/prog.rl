@@ -1,3 +1,21 @@
+/* https://github.com/hiroshi-unno/coar/blob/299e979bfce7d9b0532586bfc42b449fd0451531/benchmarks/pfwnCSP/cav2021rel/TI_GNI_hTT.clp 
+
+if (high) {
+  x = *; // needs to depend on the return value of the other copy
+  if (x >= low) { return x; } else { return low; }
+} else {
+  x = low;
+  while ( * ) { x++; }
+  return x;
+}
+
+Copy 1 is scheduled demonically
+Copy 2 is scheduled angelically
+
+specialized with high1 and high2
+
+*/
+
 interface I =
   meth prog (n:int) : int
     effects { rd n }
@@ -5,21 +23,6 @@ end
 
 module A : I =
   meth prog (n: int) : int
-/*
-  =
-int l;
-int h;
-int x;
-
-x = *;
-x = if (x <= l) then l else x;
-
-[pre]
-l_0 == l_1
-
-[post]
-x_0 == x_1
-*/
 end
 
 

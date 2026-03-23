@@ -1,6 +1,6 @@
 /*
 
-From figure 1 in 2023 CCR POPL paper.
+From figure 1 in 2023 CCR POPL paper. https://doi.org/10.1145/3571232
 
 (* module I Map *)
   private data := NULL

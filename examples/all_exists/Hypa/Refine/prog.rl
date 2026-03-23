@@ -1,3 +1,4 @@
+/*  https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/refine.txt */
 interface REFINE =
 
   class Cell {c: int; x: int; }

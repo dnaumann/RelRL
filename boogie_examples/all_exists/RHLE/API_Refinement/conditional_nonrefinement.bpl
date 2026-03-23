@@ -1,45 +1,5 @@
 // An invalid refinement involving a simple conditional.
-/*
-expected: invalid;
-
-forall: refinement;
-exists: original;
-
-pre:  true;
-post: (= original!ret refinement!ret);
-
-aspecs:
-  flipCoin() {
-    pre: true;
-    post: (or (= ret! 0) (= ret! 1));
-  }
-
-especs:
-  flipCoin() {
-    choiceVars: n;
-    pre: (or (= n 0) (= n 1));
-    post: (= ret! n);
-  }
-
-fun original() {
-  r := flipCoin();
-  if (r == 0) then
-    ret := 10;
-  else
-    ret := 20;
-  endif
-  return ret;
-}
-
-fun refinement() {
-  r := flipCoin();
-  if (r == 0) then
-    ret := 10;
-  else
-    ret := 30;
-  endif
-  return ret;
-}
+/* https://github.com/rcdickerson/rhle-benchmarks/blob/main/api-refinement/conditional-nonrefinement.imp
 
 */
 

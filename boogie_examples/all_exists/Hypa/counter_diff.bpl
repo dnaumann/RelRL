@@ -1,32 +1,4 @@
-// [forall]
-// int a;
-// int x;
-// int t;
-
-// a = 0;
-// x = *;
-// while (t > 0) {
-//     t = t - 1;
-//     a = a + x;
-// }
-
-// [exists]
-// int a;
-// int x;
-// int t;
-
-// a = 0;
-// x = *;
-// while (t > 0) {
-//     t = t - 1;
-//     a = a + x;
-// }
-
-// [pre]
-// t_0 == t_1
-
-// [post]
-// a_0 == -a_1
+// https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/counter_diff.txt
 
 procedure counter_diff(t1: int, t2: int) returns (a1: int, a2: int)
     requires (t1 == t2);

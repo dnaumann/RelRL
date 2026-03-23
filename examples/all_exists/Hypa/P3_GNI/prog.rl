@@ -1,3 +1,5 @@
+/* https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/p3_gni.txt */
+
 interface I =
   meth p3_gni () : int
 end

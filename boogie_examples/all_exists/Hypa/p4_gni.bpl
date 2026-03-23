@@ -1,48 +1,5 @@
 /*
-
-[forall]
-int o;
-int h;
-
-if (h > 0) {
-    if * {
-        o = 1;
-    } else {
-        o = 2;
-    }
-} else {
-    if * {
-        o = 2;
-    } else {
-        o = 1;
-    }
-}
-
-
-[exists]
-int o;
-int h;
-
-if (h > 0) {
-    if * {
-        o = 1;
-    } else {
-        o = 2;
-    }
-} else {
-    if * {
-        o = 2;
-    } else {
-        o = 1;
-    }
-}
-
-[pre]
-true
-
-[post]
-o_0 == o_1
-
+https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/p4_gni.txt
 */
 
 procedure gni () returns (o1: int, o2: int)

@@ -1,26 +1,18 @@
-/*
-[forall]
-int l;
-int h;
-int x;
+/* https://github.com/hiroshi-unno/coar/blob/299e979bfce7d9b0532586bfc42b449fd0451531/benchmarks/pfwnCSP/cav2021rel/TI_GNI_hTT.clp
 
-x = *;
-x = if (x <= l) then l else x;
+if (high) {
+  x = *; // needs to depend on the return value of the other copy
+  if (x >= low) { return x; } else { return low; }
+} else {
+  x = low;
+  while ( * ) { x++; }
+  return x;
+}
 
-[exists]
-int l;
-int h;
-int x;
+Copy 1 is scheduled demonically
+Copy 2 is scheduled angelically
 
-x = *;
-x = if (x <= l) then l else x;
-
-[pre]
-l_0 == l_1
-
-[post]
-x_0 == x_1
-
+specialized with high1 and high2
 */
 
 

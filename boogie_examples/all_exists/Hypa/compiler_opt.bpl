@@ -1,36 +1,5 @@
-/* Code from https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/compiler_opt.txt */
+/* https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/compiler_opt.txt */
 
-// [forall]
-// int o;
-// int x;
-
-// o = 0;
-// while (x > 0) {
-//     x = x - 1;
-//     if * {
-//         o = o + 1;
-//     } else {
-//         skip;
-//     }
-// }
-
-// [exists]
-// int o;
-// int x;
-// int s;
-
-// o = 0;
-// while (x > 0) {
-//     x = x - 1;
-//     s = *;
-//     o = o + s;
-// }
-
-// [pre]
-// x_0 == x_1
-
-// [post]
-// o_0 == o_1
 
 
 procedure example (n1: int, n2: int) returns (o1: int, o2: int)

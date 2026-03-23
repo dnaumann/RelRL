@@ -3,7 +3,6 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
@@ -58,8 +57,11 @@
   <proof prover="0"><result status="valid" time="0.017779" steps="35"/></proof>
   </goal>
   <goal name="refine&#39;vc.10" expl="assertion" proved="true">
-  <proof prover="0"><undone/></proof>
-  <proof prover="1"><result status="valid" time="0.006624" steps="18167"/></proof>
+  <transf name="exists" proved="true" arg1="(not l_b)">
+   <goal name="refine&#39;vc.10.0" proved="true">
+   <proof prover="0"><result status="valid" time="0.052466" steps="26"/></proof>
+   </goal>
+  </transf>
   </goal>
   <goal name="refine&#39;vc.11" expl="locals type invariant" proved="true">
   <proof prover="0"><result status="valid" time="0.021801" steps="32"/></proof>
@@ -440,8 +442,11 @@
   <proof prover="0"><result status="valid" time="0.022727" steps="30"/></proof>
   </goal>
   <goal name="refine&#39;vc.137" expl="assertion" proved="true">
-  <proof prover="0"><undone/></proof>
-  <proof prover="1"><result status="valid" time="0.006990" steps="18137"/></proof>
+  <transf name="exists" proved="true" arg1="(not l_b)">
+   <goal name="refine&#39;vc.137.0" proved="true">
+   <proof prover="0"><result status="valid" time="0.032976" steps="26"/></proof>
+   </goal>
+  </transf>
   </goal>
   <goal name="refine&#39;vc.138" expl="locals type invariant" proved="true">
   <proof prover="0"><result status="valid" time="0.021033" steps="32"/></proof>
@@ -796,30 +801,6 @@
   </goal>
   <goal name="refine&#39;vc.255" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.025179" steps="38"/></proof>
-  </goal>
-  <goal name="refine&#39;vc.199" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
-  </goal>
-  <goal name="refine&#39;vc.70" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
-  </goal>
-  <goal name="refine&#39;vc.204" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
-  </goal>
-  <goal name="refine&#39;vc.75" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
-  </goal>
-  <goal name="refine&#39;vc.142" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
-  </goal>
-  <goal name="refine&#39;vc.11" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
-  </goal>
-  <goal name="refine&#39;vc.16" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
-  </goal>
-  <goal name="refine&#39;vc.147" expl="locals type invariant left">
-  <proof prover="0"><undone/></proof>
   </goal>
  </transf>
  </goal>

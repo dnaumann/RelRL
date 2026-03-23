@@ -1,3 +1,4 @@
+/* https://github.com/rcdickerson/rhle-benchmarks/blob/main/gni/simple-leak.imp */
 interface I =
 
   public low : int

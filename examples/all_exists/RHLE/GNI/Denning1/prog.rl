@@ -1,3 +1,4 @@
+/* https://github.com/rcdickerson/rhle-benchmarks/blob/main/gni/denning1.imp */
 interface I =
 
   public f1_l : int

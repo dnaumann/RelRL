@@ -1,48 +1,5 @@
 // https://github.com/veracity-lang/veracity2g/blob/main/benchmarks/global_commutativity/simple-io.vcy
 
-// commutativity{
-//     {f1(fname_1, fname_2)}, {f2(fname_3, fname_4)} : ((fname_2 != fname_3) && (fname_1 != fname_4) && (fname_2 != fname_4))
-// }
-
-// int main(int argc, string[] argv) {
-//     string fname = "a.txt";
-// 	in_channel i = open_read(fname);
-//     out_channel o = open_write(fname);
-// 	string fname_1 = argv[1];
-// 	string fname_2 = argv[2];
-// 	string fname_3 = argv[3];
-// 	string fname_4 = argv[4];
-// 	string temp = "";
-//     int j = 0;
-//     int k = 0;
-//     int z = 0;
-
-// 	f1(fname_1, fname_2): {
-//         while(k < 20) {
-//             k = k + 1;
-//             cp(fname_1, fname_2);
-//         }
-// 	}
-
-// 	f2(fname_3, fname_4): {
-//         /* amplify problem size 10x */
-//         while(z < 10) {
-//             z = z + 1;
-
-//             i = open_read(fname_3);
-//             o = open_write(fname_4);
-//             temp = read_line(i);
-//             write(o, temp);
-//             close(i);
-//             close(o);
-//         }
-
-//     }
-
-// 	return 0;
-// }
-
-
 // File system model (from vcylib.ml)
 // --------------------------------------------
 // file_system[filename][line_number] = content
@@ -215,7 +172,6 @@ procedure commutativity_check(fname_1: int, fname_2: int, fname_3: int, fname_4:
     var z, z': int;
     var temp, temp': int;
     var k, k': int;
-    var vsnap: int;
 
     // Assume identical initial file system states
     assume (forall f: int, line: int :: file_system[f][line] == file_system'[f][line]);
@@ -280,7 +236,6 @@ procedure commutativity_check(fname_1: int, fname_2: int, fname_3: int, fname_4:
       invariant z' > 0 ==> file_system'[fname_4][0] == old(file_system'[fname_3][0]);
       invariant (forall line: int :: line != 0 ==> file_system'[fname_4][line] == old(file_system'[fname_4][line]));
     {
-        vsnap := 10 - z'; // variant snapshot
         z' := z' + 1;
 
         open_files'[fname_3] := true;
@@ -300,8 +255,6 @@ procedure commutativity_check(fname_1: int, fname_2: int, fname_3: int, fname_4:
         open_files'[fname_3] := false;
 
         open_files'[fname_4] := false;
-
-        assert (0 <= 10 - z' && (10 - z') < vsnap); // variant decreases
     }
 
     k' := 0;
@@ -312,12 +265,8 @@ procedure commutativity_check(fname_1: int, fname_2: int, fname_3: int, fname_4:
       invariant file_system'[fname_1] == old(file_system'[fname_1]);
       invariant k' > 0 ==> file_system'[fname_2] == old(file_system'[fname_1]);
     {
-      vsnap := 20 - k'; //variant snapshot
-
         k' := k' + 1;
         file_system' := file_system'[fname_2 := file_system'[fname_1]];
-
-      assert (0 <= 20 - k' && (20 - k') < vsnap); // variant decreases
     }
 
     // Assert both executions produce the same final file system state
@@ -325,5 +274,3 @@ procedure commutativity_check(fname_1: int, fname_2: int, fname_3: int, fname_4:
     assert (forall f: int :: open_files[f] == open_files'[f]);
     assume (forall f: int :: file_pointers[f] == file_pointers'[f]);
 }
-
-

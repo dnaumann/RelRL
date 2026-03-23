@@ -1,4 +1,4 @@
-/* figure 1 examples is adapted to show refinement of arr based map against function maps
+/* Conditional Contextual Refinement POPL 2023 figure 1 examples is adapted to show refinement of arr based map against function maps https://doi.org/10.1145/3571232
 */
 
 interface MAP =

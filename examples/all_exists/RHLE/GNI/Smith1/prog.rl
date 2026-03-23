@@ -1,3 +1,4 @@
+/* https://github.com/rcdickerson/rhle-benchmarks/blob/main/gni/smith1.imp */
 interface I =
 
   meth prog (secret: int) : int

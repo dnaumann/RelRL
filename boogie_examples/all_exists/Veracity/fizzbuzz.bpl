@@ -1,3 +1,5 @@
+// https://github.com/veracity-lang/veracity/blob/main/benchmarks/manual/ht-fizz-buzz.vcy
+
 var $hmap : [int] int;
 var $hmap' : [int] int;
 
@@ -25,6 +27,7 @@ procedure sumbi (n: int, n': int) returns (total, total': int)
   ensures total == total';
 {
   var i : int; var i' : int;
+  var vsnap: int;
 
   total := 0; total' := 0;
 
@@ -64,12 +67,16 @@ procedure sumbi (n: int, n': int) returns (total, total': int)
     invariant n div 2 <= i' && i' <= n;
     invariant total' == count($hmap', n div 2, i');
   {
+    vsnap := n - i'; // variant 
+
     if ($hmap'[i'] == 1)
     {
       total' := total' + 1;
     }
 
     i' := i' + 1;
+
+    assert (0 <= (n - i') && (n - i') < vsnap); // variant decreases
   }
 
   i' := 0;
@@ -77,12 +84,16 @@ procedure sumbi (n: int, n': int) returns (total, total': int)
     invariant 0 <= i' && i' <= n div 2;
     invariant total' == count($hmap', n div 2, n) + count($hmap', 0, i');
   {
+    vsnap := (n div 2) - i'; // variant 
+
     if ($hmap'[i'] == 1)
     {
       total' := total' + 1;
     }
 
     i' := i' + 1;
+
+    assert (0 <= ((n div 2) - i') && ((n div 2) - i') < vsnap); // variant decreases
   }
 
   assert total == count($hmap, 0, n div 2) + count($hmap, n div 2, n);
@@ -103,6 +114,8 @@ procedure bi (n: int, n': int) returns ()
   modifies $hmap, $hmap';
 {
   var i: int; var i': int;
+  var vsnap: int;
+
   // Program 1
   i := 0;
   while (i < n)
@@ -132,10 +145,14 @@ procedure bi (n: int, n': int) returns ()
     invariant (forall j': int :: 0 <= j' && j' < n' && !(j' mod 5 == 0) ==> $hmap'[j'] == 0);
     invariant (forall j': int :: 0 <= j' && j' < i' && j' mod 5 == 0 ==> $hmap'[j'] == 1);
   {
+    vsnap := n' - i'; // variant
+
     if (i' mod 5 == 0) {
       $hmap'[i'] := 1;
     }
     i' := i' + 1;
+
+    assert (0 <= (n' - i') && (n' - i') < vsnap); // variant decreases
   }
   assert (forall j': int :: 0 <= j' && j' < n' && j' mod 5 == 0 ==> $hmap'[j'] == 1);
   i' := 0;
@@ -145,10 +162,14 @@ procedure bi (n: int, n': int) returns ()
     invariant (forall j': int :: 0 <= j' && j' < i' && j' mod 3 == 0 ==> $hmap'[j'] == 1);
     invariant (forall j': int :: 0 <= j' && j' < n' && !(j' mod 3 == 0 || j' mod 5 == 0) ==> $hmap'[j'] == 0);
   {
+    vsnap := n' - i'; // variant 
+    
     if (i' mod 3 == 0) {
       $hmap'[i'] := 1;
     }
     i' := i' + 1;
+
+    assert (0 <= (n' - i') && (n' - i') < vsnap); // variant decreases
   }
   assert (forall j: int :: 0 <= j && j < n && !(j mod 3 == 0 || j mod 5 == 0) ==> $hmap[j] == 0);
   assert (forall j: int :: 0 <= j && j < n && (j mod 3 == 0 || j mod 5 == 0) ==> $hmap[j] == 1);

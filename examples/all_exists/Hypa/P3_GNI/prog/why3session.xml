@@ -3,7 +3,6 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
@@ -25,8 +24,11 @@
  <goal name="p3_gni&#39;vc" expl="VC for p3_gni" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="p3_gni&#39;vc.0" expl="assertion" proved="true">
-  <proof prover="0"><undone/></proof>
-  <proof prover="1"><result status="valid" time="0.005062" steps="11894"/></proof>
+  <transf name="exists" proved="true" arg1="l_x">
+   <goal name="p3_gni&#39;vc.0.0" proved="true">
+   <proof prover="0"><result status="valid" time="0.047284" steps="10"/></proof>
+   </goal>
+  </transf>
   </goal>
   <goal name="p3_gni&#39;vc.1" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.016896" steps="18"/></proof>
@@ -41,8 +43,11 @@
   <proof prover="0"><result status="valid" time="0.019802" steps="16"/></proof>
   </goal>
   <goal name="p3_gni&#39;vc.5" expl="assertion" proved="true">
-  <proof prover="0"><undone/></proof>
-  <proof prover="1"><result status="valid" time="0.007102" steps="11898"/></proof>
+  <transf name="exists" proved="true" arg1="l_x">
+   <goal name="p3_gni&#39;vc.5.0" proved="true">
+   <proof prover="0"><result status="valid" time="0.042649" steps="10"/></proof>
+   </goal>
+  </transf>
   </goal>
   <goal name="p3_gni&#39;vc.6" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.022430" steps="16"/></proof>

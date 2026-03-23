@@ -1,3 +1,4 @@
+/* https://github.com/rcdickerson/rhle-benchmarks/blob/main/api-refinement/loop-refinement2.imp */
 interface I =
   meth prog () : int
     effects {  }

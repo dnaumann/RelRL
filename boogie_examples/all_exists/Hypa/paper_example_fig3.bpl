@@ -1,38 +1,5 @@
-// [forall]
-// int x;
-// bool t;
-// int y;
-// int a;
-
-// x = *;
-// t = *;
-// while (t) {
-//     t = *;
-//     x = x + 1;
-// }
-// y = x;
-// while (y > 0) {
-//     y = y - 1;
-//     a = a + x;
-// }
-
-// [exists]
-// int x;
-// int y;
-// int a;
-
-// x = *;
-// y = x;
-// while (y > 0) {
-//     y = y - 1;
-//     a = a + x;
-// }
-
-// [pre]
-// a_0 == a_1
-
-// [post]
-// y_0 == y_1 // essentially 0 == 0.
+// https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/paper_example_fig3.txt
+// verifies
 
 procedure example(a1: int, a2: int) returns (y1: int, y2: int)
     requires (a1 == a2);

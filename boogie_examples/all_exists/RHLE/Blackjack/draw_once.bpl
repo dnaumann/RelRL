@@ -1,30 +1,5 @@
 /*
-
-// A blackjack strategy that always draws once then stays.
-// This strategy does not guarantee the possibility of 21
-// for every possible starting hand.
-
-expected: invalid;
-
-exists: play;
-
-pre: (and
-       (>= play!handValue 2)
-       (<= play!handValue 20));
-post: (= play!handValue 21);
-
-especs:
-  draw() {
-    choiceVars: c;
-    pre: (and (>= c 1) (<= c 10));
-    post: (= ret! c);
-  }
-
-fun play() {
-  card := draw();
-  handValue := handValue + card;
-  return handValue;
-}
+https://github.com/rcdickerson/rhle-benchmarks/blob/main/blackjack/draw-once.imp
 
 */
 

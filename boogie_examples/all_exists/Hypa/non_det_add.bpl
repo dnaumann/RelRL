@@ -1,38 +1,4 @@
-/*
-
-[forall]
-int o;
-int x;
-
-o = 0;
-while (x > 0) {
-    x = x - 1;
-    if * {
-        o = o + 1;
-    } else {
-        o = o + 2;
-    }
-}
-
-[exists]
-int o;
-int x;
-int s;
-
-o = 0;
-while (x > 0) {
-    x = x - 1;
-    s = *;
-    o = o + s;
-}
-
-[pre]
-x_0 == x_1
-
-[post]
-o_0 == o_1
-
-*/
+/* https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/non_det_add.txt */
 
 /* Hack to trigger instantiation. */
 function inst<a>(x: a) : bool { true }  

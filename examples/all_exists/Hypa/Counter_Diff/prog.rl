@@ -1,3 +1,5 @@
+/* https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/counter_diff.txt */
+
 interface I =
   meth counter_diff(t: int) : int
     effects { rd t }

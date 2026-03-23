@@ -1,18 +1,6 @@
 /*
 
-expected: invalid;
-
-forall: used[1];
-exists: used[2];
-
-pre:  (not (= used!1!param used!2!param));
-post: (= used!1!ret used!2!ret);
-
-fun used(param) {
-  ret := param % 2;
-  return ret;
-}
-
+https://github.com/rcdickerson/rhle-benchmarks/blob/main/param-usage/even-odd.imp
 */
 
 

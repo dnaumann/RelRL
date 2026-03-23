@@ -1,53 +1,5 @@
 // https://github.com/veracity-lang/veracity2g/blob/main/benchmarks/global_commutativity/simple-vector.vcy
 
-// commutativity {
-//     {f1}, {f2}: (true)
-// }
-
-// int[] x = new int[1000];
-// int[] y = new int[1000];
-// int[] z = new int[1000];
-// int sum = 0;
-// int l = 0;
-// int i = 0;
-// int j = 0;
-// int k = 0;
-// /*string[] argv = new string[5];*/
-
-// int main(int argc, string[] argv) {
-//     int scalingfactor = int_of_string(argv[1]);
-
-//     while(l < 1000) {
-//         x[l] = random(-256, 256);
-//         if(l == 999) {x[l] = 1;}
-//         l = l + 1;
-//     }
-
-//     f1:{ 
-//         while(i < 1000) {
-//             y[i] = x[i] * x[i];
-//             i = i + 1;
-//             busy_wait(scalingfactor);
-//         }
-//     }
-    
-//     while(j < 1000) {
-//         sum = sum + y[j];
-//         j = j + 1;
-//         /* busy_wait(scalingfactor); */
-//     }
-
-//     f2:{ 
-//         while(k < 1000) {
-//             z[k] = x[999-k];
-//             k = k + 1;
-//             busy_wait(scalingfactor);
-//         }
-//     }
-    
-//     return z[0];
-// }
-    
 
 var x, x': [int]int;
 var y, y': [int]int;
@@ -114,6 +66,7 @@ procedure commutativity_check()
 {
   var i, i': int;
   var k, k': int;
+  var vsnap: int;
 
   // assume x = x'
   assume (forall m: int :: x[m] == x'[m]);
@@ -146,8 +99,12 @@ procedure commutativity_check()
     invariant 0 <= k' && k' <= 1000;
     invariant (forall m: int :: 0 <= m && m < k' ==> z'[m] == x'[999 - m]);
   {
+    vsnap := 1000 - k'; // variant
+
     z'[k'] := x'[999 - k'];
     k' := k' + 1;
+
+    assert (0 <= 1000 - k' && 1000 - k' < vsnap); // variant decreases
   }
 
   i' := 0;
@@ -156,8 +113,73 @@ procedure commutativity_check()
     invariant (forall m: int :: 0 <= m && m < i' ==> y'[m] == x'[m] * x'[m]);
     invariant (forall m: int :: 0 <= m && m < 1000 ==> z'[m] == x'[999 - m]);
   {
+    vsnap := 1000 - i'; // variant
+
     y'[i'] := x'[i'] * x'[i'];
     i' := i' + 1;
+
+    assert (0 <= 1000 - i' && 1000 - i' < vsnap); // variant decreases
+  }
+
+  // check y equals y' and z equals z'
+  assert (forall m : int :: 0 <= m && m < 1000 ==> y[m] == y'[m] && z[m] == z'[m]);
+  
+}
+
+
+procedure commutativity_check_lockstep()
+  modifies y, z, y', z';
+{
+  var i, i': int;
+  var k, k': int;
+  var vsnap: int;
+
+  // assume x = x'
+  assume (forall m: int :: x[m] == x'[m]);
+
+  // (f1 | skip)  
+
+  i := 0;
+  while (i < 1000)
+    invariant 0 <= i && i <= 1000;
+    invariant (forall m: int :: 0 <= m && m < i ==> y[m] == x[m] * x[m]);
+  {
+    y[i] := x[i] * x[i];
+    i := i + 1;
+  }
+
+
+  // (f2 | f2)
+  k := 0;  k' := 0;
+  while (k < 1000 && k' < 1000)
+    invariant k == k';
+    invariant (forall m: int :: 0 <= m && m < k ==> z[m] == x[999 - m]);
+    invariant (forall m: int :: 0 <= m && m < k' ==> z'[m] == x'[999 - m]);
+    invariant (forall m: int :: 0 <= m && m < 1000 ==> y[m] == x[m] * x[m]);
+    invariant (k < 1000 && k' < 1000) || (k >= 1000 && k' >= 1000); // lockstep
+  {
+    vsnap := 1000 - k'; // variant
+
+    z[k] := x[999 - k]; z'[k'] := x'[999 - k'];
+    k := k + 1; k' := k' + 1;
+
+    assert (0 <= 1000 - k' && 1000 - k' < vsnap); // variant decreases
+  }
+
+  // skip | f1
+
+  i' := 0;
+  while (i' < 1000)
+    invariant 0 <= i' && i' <= 1000;
+    invariant (forall m: int :: 0 <= m && m < i' ==> y'[m] == x'[m] * x'[m]);
+    invariant (forall m: int :: 0 <= m && m < 1000 ==> z'[m] == x'[999 - m]);
+  {
+    vsnap := 1000 - i'; // variant
+
+    y'[i'] := x'[i'] * x'[i'];
+    i' := i' + 1;
+
+    assert (0 <= 1000 - i' && 1000 - i' < vsnap); // variant decreases
   }
 
   // check y equals y' and z equals z'

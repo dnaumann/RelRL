@@ -1,35 +1,5 @@
 /*
-[forall]
-int o;
-int x;
-int s;
-
-o = 0;
-while (x > 0) {
-    x = x - 1;
-    s = *;
-    o = o + s;
-}
-
-[exists]
-int o;
-int x;
-int s;
-int t;
-
-o = 0;
-while (x > 0) {
-    x = x - 1;
-    s = *;
-    t = o + s;
-    o = t;
-}
-
-[pre]
-x_0 == x_1
-
-[post]
-o_0 == o_1
+https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/asynch_gni.txt
 */
 
 procedure biprog (x1: int,  x2: int) returns (o1:int, o2:int)

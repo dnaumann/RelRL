@@ -1,32 +1,4 @@
-/*
-
-[forall]
-int h;
-int o;
-
-if (h > 0) {
-    o = - o;
-} else {
-    o = -o + (h - h);
-}
-
-[exists]
-int h;
-int o;
-
-if (h > 0) {
-    o = - o;
-} else {
-    o = -o + (h - h);
-}
-
-[pre]
-o_0 == o_1
-
-[post]
-o_0 == o_1
-
-*/
+/* https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/p1_gni.txt */
 
 
 procedure biprog (a1: int,  a2: int) returns (o1: int, o2: int)

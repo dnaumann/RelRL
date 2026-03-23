@@ -1,3 +1,5 @@
+/* https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/paper_example_fig3.txt */
+
 interface I =
   meth paper_example_fig3 (a: int) : int
     effects { rd a }

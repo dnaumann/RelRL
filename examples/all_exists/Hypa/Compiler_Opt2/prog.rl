@@ -1,3 +1,5 @@
+/* https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/compiler_opt2.txt */
+
 interface I =
   meth compiler_opt(time:int) : int
     effects { rd time }

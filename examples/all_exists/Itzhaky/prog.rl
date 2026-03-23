@@ -12,7 +12,7 @@ module A : I =
 
   meth itzhaky (a: int array, n: int) : Cell
   /*
-  Fig 5 in Itzhaky et al
+  Fig 5 in Itzhaky et al ESOP 2024
 
 Original code (in boogie syntax)
 
