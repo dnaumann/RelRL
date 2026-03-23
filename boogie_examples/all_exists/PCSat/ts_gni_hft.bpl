@@ -19,19 +19,19 @@ procedure skip () returns ()
           modifies ;
 { }
 
-procedure biprog (l1: int, l2: int) returns (x1: int, x2: int)
-    requires l1 == l2;
+procedure biprog (low1: int, low2: int) returns (x1: int, x2: int)
+    requires low1 == low2;
     ensures x1 == x2;
 {
-    var a1: bool; var a2: bool;
+    var b1: bool; 
 
-    x1 := l1; 
-    havoc a1;
-    while (a1)
-      invariant x1 >= l1;
+    x1 := low1; 
+    havoc b1;
+    while (b1)
+      invariant x1 >= low1;
     {
         x1 := x1 + 1;
-        havoc a1;
+        havoc b1;
     }
 
 
@@ -39,9 +39,9 @@ procedure biprog (l1: int, l2: int) returns (x1: int, x2: int)
     havoc x2;
     assume x2 == x1;
 
-    if (x2 >= l2)
+    if (x2 >= low2)
     {
-        call skip();
+        x2 := x2;
     }
     else
     {        

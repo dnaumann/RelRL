@@ -16,31 +16,31 @@ specialized with !high1 and !high2
 */
 
 
-procedure biprog (l1: int, l2: int) returns (x1: int, x2: int)
-    requires l1 == l2;
+procedure biprog (low1: int, low2: int) returns (x1: int, x2: int)
+    requires low1 == low2;
     ensures x1 == x2;
 {
-    var a1: bool; var a2: bool;
+    var b1: bool; var b2: bool;
 
-    x1 := l1; x2 := l2;
+    x1 := low1; x2 := low2;
 
-    havoc a1;
+    havoc b1;
 
-    assert ( exists v: bool :: v == a1 ); // inserted by chk
-    havoc a2;
-    assume a2 == a1;
+    assert ( exists v: bool :: v == b1 ); // inserted by chk
+    havoc b2;
+    assume b2 == b1;
 
-    while (a1 || a2)
+    while (b1 || b2)
         invariant x1 == x2;
-        invariant a1 <==> a2;
+        invariant b1 <==> b2;
     {
         x1 := x1 + 1; x2 := x2 + 1;
 
-        havoc a1;
+        havoc b1;
 
-        assert ( exists v: bool :: v == a1 ); // inserted by chk
-        havoc a2;
-        assume a2 == a1;
+        assert ( exists v: bool :: v == b1 ); // inserted by chk
+        havoc b2;
+        assume b2 == b1;
 
 
     }

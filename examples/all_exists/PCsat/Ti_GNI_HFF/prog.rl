@@ -18,12 +18,11 @@ specialized with !high1 and !high2
 
 
 interface I =
-  meth prog (n:int) : int
-    effects { rd n }
+  meth prog (low:int) : int
 end
 
 module A : I =
-  meth prog (n: int) : int
+  meth prog (low: int) : int
 
 end
 
@@ -31,26 +30,29 @@ end
 
 
 bimodule FREL (A | A) =
-  meth prog (l: int |  l: int) : (int | int)
-  requires { l =:= l }
+  meth prog (low: int |  low: int) : (int | int)
+  requires { low =:= low }
   ensures { result =:= result }
  =
 
-  Var a: bool | a: bool in
+  Var b: bool | b: bool in
+  Var x: int | x: int in
 
-  |_result := l _|; 
+  |_ x := low _|; 
 
-  (havoc a | skip);
+  (havoc b | skip);
 
-  HavocR a { a =:= a };
+  HavocR b { b =:= b };
 
-  While (a) | (a) . <| false <] | [> false |> do
-      invariant { result =:= result }
+  While (b) | (b) . <| false <] | [> false |> do
+      invariant { x =:= x }
   
-      |_ result := result + 1_|; 
+      |_ x := x + 1_|; 
 
-      (havoc a | skip);
+      (havoc b | skip);
 
-      HavocR a { a =:= a };
+      HavocR b { b =:= b };
   done;
+
+  |_ result := x _|;
 end

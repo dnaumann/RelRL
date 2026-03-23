@@ -16,47 +16,42 @@ specialized with high1 and high2
 */
 
 interface I =
-  meth prog (n:int) : int
-    effects { rd n }
+  meth prog (low:int) : int
 end
 
 module A : I =
-  meth prog (n: int) : int
+  meth prog (low: int) : int
 
 end
 
 bimodule FREL (A | A) =
-  meth prog (l: int |  l: int) : (int | int)
-  requires { l =:= l }
+  meth prog (low: int |  low: int) : (int | int)
+  requires { low =:= low }
   ensures { result =:= result }
  =
+    Var x: int | x: int in
 
-    Var a: bool | a: bool in
-
-    (havoc result | skip);
+    (havoc x | skip);
     
-    (if (result >= l)
+    (if (x >= low)
     then
-        /* call skip();? */
-        skip;
+        x := x;
     else
         while (true) do 
-          /* call skip(); */
           skip;
         done;
     end | skip);
     
-    HavocR result { result =:= result };
+    HavocR x { x =:= x };
     
-    (skip | if (result >= l)
+    (skip | if (x >= low)
             then
-              /*call skip(); */
-              skip;
+              x := x;
             else
         while (true) do variant { 42 }
-           /* call skip(); procedures needed */
            skip;
         done;
             end);
 
+    |_ result := x _|;            
 end
