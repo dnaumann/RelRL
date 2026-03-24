@@ -3,8 +3,6 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="2" name="CVC5" version="1.3.2" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
@@ -422,8 +420,36 @@
   <proof prover="0"><result status="valid" time="0.060396" steps="238"/></proof>
   </goal>
   <goal name="main&#39;vc.47" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="102.867621" steps="1164992"/></proof>
-  <proof prover="1" obsolete="true"><undone/></proof>
+  <transf name="split_vc" proved="true" >
+   <goal name="main&#39;vc.47.0" expl="loop invariant preservation" proved="true">
+   <transf name="inline_goal" proved="true" >
+    <goal name="main&#39;vc.47.0.0" expl="loop invariant preservation" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="main&#39;vc.47.0.0.0" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="2.394523" steps="22693"/></proof>
+     </goal>
+     <goal name="main&#39;vc.47.0.0.1" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="10.761424" steps="118839"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="main&#39;vc.47.1" expl="loop invariant preservation" proved="true">
+   <transf name="inline_goal" proved="true" >
+    <goal name="main&#39;vc.47.1.0" expl="loop invariant preservation" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="main&#39;vc.47.1.0.0" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="50.289029" steps="494970"/></proof>
+     </goal>
+     <goal name="main&#39;vc.47.1.0.1" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="50.029388" steps="495731"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
   <goal name="main&#39;vc.48" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="22.853304" steps="364212"/></proof>
@@ -525,7 +551,6 @@
   <proof prover="0"><result status="valid" time="0.096523" steps="1420"/></proof>
   </goal>
   <goal name="main&#39;vc.81" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="117.000615" steps="1412070"/></proof>
   <transf name="split_vc" proved="true" >
    <goal name="main&#39;vc.81.0" expl="loop invariant preservation" proved="true">
    <transf name="inline_goal" proved="true" >
@@ -723,15 +748,12 @@
   <proof prover="0"><result status="valid" time="0.157492" steps="867"/></proof>
   </goal>
   <goal name="main&#39;vc.46" expl="tmp := x.{999 - k} ( index is in bounds)" proved="true">
-  <proof prover="0" obsolete="true"><undone/></proof>
   <transf name="split_vc" proved="true" >
    <goal name="main&#39;vc.46.0" expl="tmp := x.{999 - k}" proved="true">
    <proof prover="0"><result status="valid" time="0.074805" steps="158"/></proof>
    </goal>
    <goal name="main&#39;vc.46.1" expl="tmp := x.{999 - k}" proved="true">
    <proof prover="0"><result status="valid" time="0.177083" steps="1095"/></proof>
-   <proof prover="1" obsolete="true"><undone/></proof>
-   <proof prover="2" obsolete="true"><undone/></proof>
    </goal>
   </transf>
   </goal>
@@ -862,7 +884,6 @@
   <proof prover="0"><result status="valid" time="0.111044" steps="1442"/></proof>
   </goal>
   <goal name="main&#39;vc.89" expl="loop invariant preservation" proved="true">
-  <proof prover="0" obsolete="true"><result status="valid" time="103.783459" steps="1364312"/></proof>
   <transf name="split_vc" proved="true" >
    <goal name="main&#39;vc.89.0" expl="loop invariant preservation" proved="true">
    <transf name="inline_goal" proved="true" >

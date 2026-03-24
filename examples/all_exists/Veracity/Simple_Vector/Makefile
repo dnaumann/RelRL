@@ -10,7 +10,7 @@ prog.mlw: prog.rl
 ide: prog.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 
-replay: prog.mlw $(PROG)/why3session.xml
+replay: prog.mlw prog/why3session.xml
 	$(WHY3) replay -L . -L $(WHYREL_STDLIB) prog
 
 .PHONY: clean

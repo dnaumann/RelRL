@@ -3,14 +3,13 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
  <goal name="state&#39;vc" expl="VC for state" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="state&#39;vc.0" expl="type invariant" proved="true">
-  <proof prover="0"><result status="valid" time="0.048742" steps="48"/></proof>
+  <proof prover="0"><result status="valid" time="0.092167" steps="48"/></proof>
   </goal>
  </transf>
  </goal>
@@ -19,85 +18,85 @@
  <goal name="simpleio&#39;vc" expl="VC for simpleio" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="simpleio&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.044986" steps="19"/></proof>
+  <proof prover="0"><result status="valid" time="0.089904" steps="19"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.1" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.043898" steps="15"/></proof>
+  <proof prover="0"><result status="valid" time="0.066551" steps="15"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.2" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.042047" steps="18"/></proof>
+  <proof prover="0"><result status="valid" time="0.070910" steps="18"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.3" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.043279" steps="16"/></proof>
+  <proof prover="0"><result status="valid" time="0.072617" steps="16"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.4" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.041118" steps="16"/></proof>
+  <proof prover="0"><result status="valid" time="0.092585" steps="16"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.5" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.046923" steps="51"/></proof>
+  <proof prover="0"><result status="valid" time="0.094901" steps="51"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.6" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.043812" steps="30"/></proof>
+  <proof prover="0"><result status="valid" time="0.072989" steps="30"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.7" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.052396" steps="52"/></proof>
+  <proof prover="0"><result status="valid" time="0.099026" steps="52"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.8" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.054395" steps="103"/></proof>
+  <proof prover="0"><result status="valid" time="0.104783" steps="103"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.9" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.052996" steps="51"/></proof>
+  <proof prover="0"><result status="valid" time="0.120357" steps="51"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.10" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.046022" steps="28"/></proof>
+  <proof prover="0"><result status="valid" time="0.065292" steps="28"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.11" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.044634" steps="28"/></proof>
+  <proof prover="0"><result status="valid" time="0.077958" steps="28"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.12" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.048862" steps="46"/></proof>
+  <proof prover="0"><result status="valid" time="0.107021" steps="46"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.13" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.049278" steps="42"/></proof>
+  <proof prover="0"><result status="valid" time="0.084851" steps="42"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.14" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.048399" steps="30"/></proof>
+  <proof prover="0"><result status="valid" time="0.064729" steps="30"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.15" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.051313" steps="45"/></proof>
+  <proof prover="0"><result status="valid" time="0.087579" steps="45"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.16" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.051977" steps="93"/></proof>
+  <proof prover="0"><result status="valid" time="0.084984" steps="93"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.17" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.044389" steps="51"/></proof>
+  <proof prover="0"><result status="valid" time="0.091023" steps="51"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.18" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.058720" steps="85"/></proof>
+  <proof prover="0"><result status="valid" time="0.083731" steps="85"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.19" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.049241" steps="82"/></proof>
+  <proof prover="0"><result status="valid" time="0.090489" steps="82"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.20" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.058312" steps="87"/></proof>
+  <proof prover="0"><result status="valid" time="0.092181" steps="87"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.21" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.054063" steps="102"/></proof>
+  <proof prover="0"><result status="valid" time="0.104810" steps="102"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.22" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.045383" steps="43"/></proof>
+  <proof prover="0"><result status="valid" time="0.077411" steps="43"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.23" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.048874" steps="63"/></proof>
+  <proof prover="0"><result status="valid" time="0.130549" steps="63"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.24" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.048339" steps="44"/></proof>
+  <proof prover="0"><result status="valid" time="0.119615" steps="44"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.25" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.051995" steps="67"/></proof>
+  <proof prover="0"><result status="valid" time="0.138008" steps="67"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.26" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.046075" steps="64"/></proof>
+  <proof prover="0"><result status="valid" time="0.134390" steps="64"/></proof>
   </goal>
  </transf>
  </goal>
@@ -106,91 +105,91 @@
  <goal name="simpleio&#39;vc" expl="VC for simpleio" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="simpleio&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.046310" steps="19"/></proof>
+  <proof prover="0"><result status="valid" time="0.106966" steps="19"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.1" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.046324" steps="15"/></proof>
+  <proof prover="0"><result status="valid" time="0.107331" steps="15"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.2" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.043495" steps="18"/></proof>
+  <proof prover="0"><result status="valid" time="0.081337" steps="18"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.3" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.046222" steps="16"/></proof>
+  <proof prover="0"><result status="valid" time="0.070627" steps="16"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.4" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.042123" steps="19"/></proof>
+  <proof prover="0"><result status="valid" time="0.103538" steps="19"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.5" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.044591" steps="66"/></proof>
+  <proof prover="0"><result status="valid" time="0.074910" steps="66"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.6" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.045060" steps="34"/></proof>
+  <proof prover="0"><result status="valid" time="0.104734" steps="34"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.7" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.050355" steps="60"/></proof>
+  <proof prover="0"><result status="valid" time="0.125106" steps="60"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.8" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.058486" steps="67"/></proof>
+  <proof prover="0"><result status="valid" time="0.125707" steps="67"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.9" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.053684" steps="81"/></proof>
+  <proof prover="0"><result status="valid" time="0.125890" steps="81"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.10" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.046394" steps="29"/></proof>
+  <proof prover="0"><result status="valid" time="0.126977" steps="29"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.11" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.046226" steps="30"/></proof>
+  <proof prover="0"><result status="valid" time="0.124723" steps="30"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.12" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.049075" steps="51"/></proof>
+  <proof prover="0"><result status="valid" time="0.135014" steps="51"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.13" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.050414" steps="45"/></proof>
+  <proof prover="0"><result status="valid" time="0.136166" steps="45"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.14" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.047701" steps="31"/></proof>
+  <proof prover="0"><result status="valid" time="0.114657" steps="31"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.15" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.051526" steps="31"/></proof>
+  <proof prover="0"><result status="valid" time="0.109321" steps="31"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.16" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.051735" steps="48"/></proof>
+  <proof prover="0"><result status="valid" time="0.103295" steps="48"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.17" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.052478" steps="101"/></proof>
+  <proof prover="0"><result status="valid" time="0.121901" steps="101"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.18" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.046046" steps="51"/></proof>
+  <proof prover="0"><result status="valid" time="0.097611" steps="51"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.19" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.054841" steps="87"/></proof>
+  <proof prover="0"><result status="valid" time="0.132097" steps="87"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.20" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.059066" steps="167"/></proof>
+  <proof prover="0"><result status="valid" time="0.141584" steps="167"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.21" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.051120" steps="85"/></proof>
+  <proof prover="0"><result status="valid" time="0.101097" steps="85"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.22" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.051618" steps="76"/></proof>
+  <proof prover="0"><result status="valid" time="0.118755" steps="76"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.23" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.058539" steps="94"/></proof>
+  <proof prover="0"><result status="valid" time="0.127944" steps="94"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.24" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.046453" steps="47"/></proof>
+  <proof prover="0"><result status="valid" time="0.072967" steps="47"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.25" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.053987" steps="67"/></proof>
+  <proof prover="0"><result status="valid" time="0.115183" steps="67"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.26" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.044305" steps="47"/></proof>
+  <proof prover="0"><result status="valid" time="0.099947" steps="47"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.27" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.053943" steps="71"/></proof>
+  <proof prover="0"><result status="valid" time="0.122277" steps="71"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.28" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.055089" steps="69"/></proof>
+  <proof prover="0"><result status="valid" time="0.119299" steps="69"/></proof>
   </goal>
  </transf>
  </goal>
@@ -199,179 +198,178 @@
  <goal name="simpleio&#39;vc" expl="VC for simpleio" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="simpleio&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.044153" steps="55"/></proof>
+  <proof prover="0"><result status="valid" time="0.089443" steps="55"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.1" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.053242" steps="51"/></proof>
+  <proof prover="0"><result status="valid" time="0.083814" steps="51"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.2" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.043439" steps="54"/></proof>
+  <proof prover="0"><result status="valid" time="0.079391" steps="54"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.3" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.044029" steps="51"/></proof>
+  <proof prover="0"><result status="valid" time="0.068162" steps="51"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.4" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.047841" steps="52"/></proof>
+  <proof prover="0"><result status="valid" time="0.077495" steps="52"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.5" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.052432" steps="97"/></proof>
+  <proof prover="0"><result status="valid" time="0.150067" steps="97"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.6" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.048217" steps="66"/></proof>
+  <proof prover="0"><result status="valid" time="0.095728" steps="66"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.7" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.053289" steps="90"/></proof>
+  <proof prover="0"><result status="valid" time="0.101865" steps="90"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.8" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.059884" steps="153"/></proof>
+  <proof prover="0"><result status="valid" time="0.095517" steps="153"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.9" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.058943" steps="89"/></proof>
+  <proof prover="0"><result status="valid" time="0.084378" steps="89"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.10" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.047021" steps="65"/></proof>
+  <proof prover="0"><result status="valid" time="0.087756" steps="65"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.11" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.048841" steps="65"/></proof>
+  <proof prover="0"><result status="valid" time="0.115070" steps="65"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.12" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.046321" steps="84"/></proof>
+  <proof prover="0"><result status="valid" time="0.132505" steps="84"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.13" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.052156" steps="79"/></proof>
+  <proof prover="0"><result status="valid" time="0.092876" steps="79"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.14" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.045065" steps="66"/></proof>
+  <proof prover="0"><result status="valid" time="0.111536" steps="66"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.15" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.049010" steps="82"/></proof>
+  <proof prover="0"><result status="valid" time="0.124937" steps="82"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.16" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.058359" steps="138"/></proof>
+  <proof prover="0"><result status="valid" time="0.139995" steps="138"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.17" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.049327" steps="88"/></proof>
+  <proof prover="0"><result status="valid" time="0.124235" steps="88"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.18" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.050148" steps="122"/></proof>
+  <proof prover="0"><result status="valid" time="0.106563" steps="122"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.19" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.056556" steps="119"/></proof>
+  <proof prover="0"><result status="valid" time="0.119862" steps="119"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.20" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.058936" steps="126"/></proof>
+  <proof prover="0"><result status="valid" time="0.113632" steps="126"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.21" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.050469" steps="140"/></proof>
+  <proof prover="0"><result status="valid" time="0.132432" steps="140"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.22" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.054581" steps="99"/></proof>
+  <proof prover="0"><result status="valid" time="0.123476" steps="99"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.23" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.044287" steps="85"/></proof>
+  <proof prover="0"><result status="valid" time="0.082726" steps="85"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.24" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.040255" steps="88"/></proof>
+  <proof prover="0"><result status="valid" time="0.086020" steps="88"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.25" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.042714" steps="86"/></proof>
+  <proof prover="0"><result status="valid" time="0.093013" steps="86"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.26" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.051014" steps="90"/></proof>
+  <proof prover="0"><result status="valid" time="0.081672" steps="90"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.27" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.051481" steps="109"/></proof>
+  <proof prover="0"><result status="valid" time="0.078729" steps="109"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.28" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.052355" steps="109"/></proof>
+  <proof prover="0"><result status="valid" time="0.081787" steps="109"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.29" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.060798" steps="203"/></proof>
+  <proof prover="0"><result status="valid" time="0.112991" steps="203"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.30" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.051752" steps="111"/></proof>
+  <proof prover="0"><result status="valid" time="0.123271" steps="111"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.31" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.066118" steps="167"/></proof>
+  <proof prover="0"><result status="valid" time="0.109223" steps="167"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.32" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.061338" steps="186"/></proof>
+  <proof prover="0"><result status="valid" time="0.156165" steps="186"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.33" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.067658" steps="212"/></proof>
+  <proof prover="0"><result status="valid" time="0.112540" steps="212"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.34" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.050290" steps="102"/></proof>
+  <proof prover="0"><result status="valid" time="0.080310" steps="102"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.35" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.051529" steps="102"/></proof>
+  <proof prover="0"><result status="valid" time="0.084582" steps="102"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.36" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.059304" steps="152"/></proof>
+  <proof prover="0"><result status="valid" time="0.102419" steps="152"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.37" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.054662" steps="156"/></proof>
+  <proof prover="0"><result status="valid" time="0.092162" steps="156"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.38" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.047023" steps="104"/></proof>
+  <proof prover="0"><result status="valid" time="0.116462" steps="104"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.39" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.046732" steps="104"/></proof>
+  <proof prover="0"><result status="valid" time="0.102564" steps="104"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.40" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.069039" steps="153"/></proof>
+  <proof prover="0"><result status="valid" time="0.099425" steps="153"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.41" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.057135" steps="127"/></proof>
-  <proof prover="1" obsolete="true"><undone/></proof>
+  <proof prover="0"><result status="valid" time="0.084010" steps="127"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.42" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.058633" steps="127"/></proof>
+  <proof prover="0"><result status="valid" time="0.136969" steps="127"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.43" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.050524" steps="264"/></proof>
+  <proof prover="0"><result status="valid" time="0.110729" steps="264"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.44" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.057560" steps="129"/></proof>
+  <proof prover="0"><result status="valid" time="0.117291" steps="129"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.45" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.053468" steps="209"/></proof>
+  <proof prover="0"><result status="valid" time="0.107619" steps="209"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.46" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.054756" steps="410"/></proof>
+  <proof prover="0"><result status="valid" time="0.131944" steps="410"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.47" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.053196" steps="225"/></proof>
+  <proof prover="0"><result status="valid" time="0.111283" steps="225"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.48" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.059655" steps="191"/></proof>
+  <proof prover="0"><result status="valid" time="0.119565" steps="191"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.49" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.052081" steps="225"/></proof>
+  <proof prover="0"><result status="valid" time="0.115969" steps="225"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.50" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.097317" steps="509"/></proof>
+  <proof prover="0"><result status="valid" time="0.173516" steps="509"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.51" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.091064" steps="541"/></proof>
+  <proof prover="0"><result status="valid" time="0.172997" steps="541"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.52" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.057464" steps="123"/></proof>
+  <proof prover="0"><result status="valid" time="0.097627" steps="123"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.53" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.102896" steps="512"/></proof>
+  <proof prover="0"><result status="valid" time="0.157728" steps="512"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.54" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.069678" steps="162"/></proof>
+  <proof prover="0"><result status="valid" time="0.117004" steps="162"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.55" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.128808" steps="747"/></proof>
+  <proof prover="0"><result status="valid" time="0.207064" steps="747"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.56" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.108411" steps="648"/></proof>
+  <proof prover="0"><result status="valid" time="0.198857" steps="648"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.57" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.052053" steps="131"/></proof>
+  <proof prover="0"><result status="valid" time="0.121749" steps="131"/></proof>
   </goal>
  </transf>
  </goal>
@@ -380,130 +378,130 @@
  <goal name="simpleio&#39;vc" expl="VC for simpleio" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="simpleio&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.050367" steps="48"/></proof>
+  <proof prover="0"><result status="valid" time="0.083596" steps="48"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.1" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.047137" steps="43"/></proof>
+  <proof prover="0"><result status="valid" time="0.090314" steps="43"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.2" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.046542" steps="46"/></proof>
+  <proof prover="0"><result status="valid" time="0.079297" steps="46"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.3" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.043777" steps="44"/></proof>
+  <proof prover="0"><result status="valid" time="0.090242" steps="44"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.4" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.047117" steps="44"/></proof>
+  <proof prover="0"><result status="valid" time="0.110974" steps="44"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.5" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.052560" steps="89"/></proof>
+  <proof prover="0"><result status="valid" time="0.086766" steps="89"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.6" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.052620" steps="59"/></proof>
+  <proof prover="0"><result status="valid" time="0.113628" steps="59"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.7" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.050886" steps="82"/></proof>
+  <proof prover="0"><result status="valid" time="0.085352" steps="82"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.8" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.056949" steps="145"/></proof>
+  <proof prover="0"><result status="valid" time="0.144721" steps="145"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.9" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.048140" steps="82"/></proof>
+  <proof prover="0"><result status="valid" time="0.088063" steps="82"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.10" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.065060" steps="194"/></proof>
+  <proof prover="0"><result status="valid" time="0.118653" steps="194"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.11" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.048378" steps="63"/></proof>
+  <proof prover="0"><result status="valid" time="0.081738" steps="63"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.12" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.054627" steps="76"/></proof>
+  <proof prover="0"><result status="valid" time="0.089855" steps="76"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.13" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.048401" steps="77"/></proof>
+  <proof prover="0"><result status="valid" time="0.121898" steps="77"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.14" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.049098" steps="76"/></proof>
+  <proof prover="0"><result status="valid" time="0.120036" steps="76"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.15" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.056210" steps="93"/></proof>
+  <proof prover="0"><result status="valid" time="0.102779" steps="93"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.16" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.051363" steps="63"/></proof>
+  <proof prover="0"><result status="valid" time="0.124716" steps="63"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.17" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.131959" steps="836"/></proof>
+  <proof prover="0"><result status="valid" time="0.304857" steps="836"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.18" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.049330" steps="97"/></proof>
+  <proof prover="0"><result status="valid" time="0.100676" steps="97"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.19" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.066109" steps="138"/></proof>
+  <proof prover="0"><result status="valid" time="0.165661" steps="138"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.20" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.080357" steps="432"/></proof>
+  <proof prover="0"><result status="valid" time="0.176586" steps="432"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.21" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.058241" steps="143"/></proof>
+  <proof prover="0"><result status="valid" time="0.109235" steps="143"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.22" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="1.529051" steps="12768"/></proof>
+  <proof prover="0"><result status="valid" time="2.553747" steps="12768"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.23" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.058181" steps="99"/></proof>
+  <proof prover="0"><result status="valid" time="0.118580" steps="99"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.24" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.059299" steps="77"/></proof>
+  <proof prover="0"><result status="valid" time="0.102778" steps="77"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.25" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.056402" steps="77"/></proof>
+  <proof prover="0"><result status="valid" time="0.091038" steps="77"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.26" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.067953" steps="105"/></proof>
+  <proof prover="0"><result status="valid" time="0.115287" steps="105"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.27" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.071575" steps="245"/></proof>
+  <proof prover="0"><result status="valid" time="0.119840" steps="245"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.28" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.053067" steps="95"/></proof>
+  <proof prover="0"><result status="valid" time="0.100703" steps="95"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.29" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.052917" steps="78"/></proof>
+  <proof prover="0"><result status="valid" time="0.090455" steps="78"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.30" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.059590" steps="100"/></proof>
+  <proof prover="0"><result status="valid" time="0.099095" steps="100"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.31" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.058147" steps="100"/></proof>
+  <proof prover="0"><result status="valid" time="0.116714" steps="100"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.32" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.098463" steps="479"/></proof>
+  <proof prover="0"><result status="valid" time="0.179565" steps="479"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.33" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.052677" steps="102"/></proof>
+  <proof prover="0"><result status="valid" time="0.112246" steps="102"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.34" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.063541" steps="141"/></proof>
+  <proof prover="0"><result status="valid" time="0.123949" steps="141"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.35" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.092264" steps="465"/></proof>
+  <proof prover="0"><result status="valid" time="0.160502" steps="465"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.36" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.060281" steps="132"/></proof>
+  <proof prover="0"><result status="valid" time="0.107763" steps="132"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.37" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.070787" steps="156"/></proof>
+  <proof prover="0"><result status="valid" time="0.118043" steps="156"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.38" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.064187" steps="103"/></proof>
+  <proof prover="0"><result status="valid" time="0.086892" steps="103"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.39" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.050715" steps="93"/></proof>
+  <proof prover="0"><result status="valid" time="0.087053" steps="93"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.40" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.069504" steps="212"/></proof>
+  <proof prover="0"><result status="valid" time="0.106998" steps="212"/></proof>
   </goal>
   <goal name="simpleio&#39;vc.41" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.047016" steps="93"/></proof>
+  <proof prover="0"><result status="valid" time="0.078043" steps="93"/></proof>
   </goal>
  </transf>
  </goal>

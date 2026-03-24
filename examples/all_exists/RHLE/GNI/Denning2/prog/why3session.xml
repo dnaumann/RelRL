@@ -84,9 +84,12 @@
   <proof prover="0"><undone/></proof>
   </goal>
   <goal name="prog&#39;vc.22" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.054157" steps="711"/></proof>
+  <proof prover="0"><result status="valid" time="0.069035" steps="128"/></proof>
   </goal>
-  <goal name="prog&#39;vc.23" expl="postcondition">
+  <goal name="prog&#39;vc.23" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.174114" steps="1170"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.24" expl="postcondition">
   <proof prover="0"><undone/></proof>
   </goal>
  </transf>

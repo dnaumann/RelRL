@@ -21,10 +21,13 @@
   <proof prover="0"><result status="valid" time="0.021414" steps="12"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.019397" steps="28"/></proof>
+  <proof prover="0"><result status="valid" time="0.056111" steps="40"/></proof>
   </goal>
   <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.020216" steps="28"/></proof>
+  <proof prover="0"><result status="valid" time="0.019397" steps="29"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.020216" steps="29"/></proof>
   </goal>
  </transf>
  </goal>

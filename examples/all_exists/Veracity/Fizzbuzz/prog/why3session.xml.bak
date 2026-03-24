@@ -3,7 +3,7 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<file format="whyml">
+<file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
  <goal name="state&#39;vc" expl="VC for state" proved="true">
@@ -1270,9 +1270,9 @@
  </transf>
  </goal>
 </theory>
-<theory name="SumCommutes_Seq">
- <goal name="sum&#39;vc" expl="VC for sum">
- <transf name="split_vc" >
+<theory name="SumCommutes_Seq" proved="true">
+ <goal name="sum&#39;vc" expl="VC for sum" proved="true">
+ <transf name="split_vc" proved="true" >
   <goal name="sum&#39;vc.0" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.049311" steps="27"/></proof>
   </goal>
@@ -1348,49 +1348,51 @@
   <goal name="sum&#39;vc.24" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.050238" steps="60"/></proof>
   </goal>
-  <goal name="sum&#39;vc.25" expl="assertion">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1166624"/></proof>
-  <transf name="subst_all" >
-   <goal name="sum&#39;vc.25.0" expl="assertion">
+  <goal name="sum&#39;vc.25" expl="assertion" proved="true">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1166624"/></proof>
+  <transf name="subst_all" proved="true" >
+   <goal name="sum&#39;vc.25.0" expl="assertion" proved="true">
+   <proof prover="0"><result status="valid" time="0.046880" steps="30"/></proof>
    </goal>
   </transf>
   </goal>
   <goal name="sum&#39;vc.26" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.077151" steps="88"/></proof>
+  <proof prover="0"><result status="valid" time="0.061023" steps="80"/></proof>
   </goal>
   <goal name="sum&#39;vc.27" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.050969" steps="88"/></proof>
+  <proof prover="0"><result status="valid" time="0.050969" steps="81"/></proof>
   </goal>
   <goal name="sum&#39;vc.28" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.054787" steps="89"/></proof>
+  <proof prover="0"><result status="valid" time="0.054787" steps="82"/></proof>
   </goal>
   <goal name="sum&#39;vc.29" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.071222" steps="179"/></proof>
+  <proof prover="0"><result status="valid" time="0.071222" steps="170"/></proof>
   </goal>
   <goal name="sum&#39;vc.30" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.053285" steps="91"/></proof>
+  <proof prover="0"><result status="valid" time="0.053285" steps="84"/></proof>
   </goal>
-  <goal name="sum&#39;vc.31" expl="assertion">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1179975"/></proof>
-  <transf name="inline_goal" >
-   <goal name="sum&#39;vc.31.0" expl="assertion">
+  <goal name="sum&#39;vc.31" expl="assertion" proved="true">
+  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1179975"/></proof>
+  <transf name="inline_goal" proved="true" >
+   <goal name="sum&#39;vc.31.0" expl="assertion" proved="true">
+   <proof prover="0"><result status="valid" time="0.062544" steps="76"/></proof>
    </goal>
   </transf>
   </goal>
   <goal name="sum&#39;vc.32" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.061023" steps="84"/></proof>
+  <proof prover="0"><result status="valid" time="0.077151" steps="75"/></proof>
   </goal>
   <goal name="sum&#39;vc.33" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.056979" steps="84"/></proof>
+  <proof prover="0"><result status="valid" time="0.056979" steps="76"/></proof>
   </goal>
   <goal name="sum&#39;vc.34" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.048249" steps="84"/></proof>
+  <proof prover="0"><result status="valid" time="0.048249" steps="76"/></proof>
   </goal>
   <goal name="sum&#39;vc.35" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.069782" steps="173"/></proof>
+  <proof prover="0"><result status="valid" time="0.069782" steps="165"/></proof>
   </goal>
   <goal name="sum&#39;vc.36" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.052145" steps="88"/></proof>
+  <proof prover="0"><result status="valid" time="0.052145" steps="80"/></proof>
   </goal>
   <goal name="sum&#39;vc.37" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.052168" steps="71"/></proof>

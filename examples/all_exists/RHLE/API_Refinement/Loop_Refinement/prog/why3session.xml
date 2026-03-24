@@ -39,10 +39,13 @@
   <proof prover="0"><result status="valid" time="0.019440" steps="39"/></proof>
   </goal>
   <goal name="prog&#39;vc.7" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.018988" steps="20"/></proof>
+  <proof prover="0"><result status="valid" time="0.075232" steps="25"/></proof>
   </goal>
   <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.018178" steps="20"/></proof>
+  <proof prover="0"><result status="valid" time="0.018988" steps="22"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.018178" steps="22"/></proof>
   </goal>
  </transf>
  </goal>

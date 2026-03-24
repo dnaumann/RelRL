@@ -62,15 +62,17 @@
 </theory>
 <theory name="FREL">
  <goal name="prog&#39;vc" expl="VC for prog">
- <proof prover="0" obsolete="true"><result status="valid" time="0.273361" steps="1629"/></proof>
  <transf name="split_vc" >
   <goal name="prog&#39;vc.0" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.047197" steps="19"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.042286" steps="33"/></proof>
+  <proof prover="0"><result status="valid" time="0.051346" steps="50"/></proof>
   </goal>
-  <goal name="prog&#39;vc.2" expl="postcondition">
+  <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.042286" steps="35"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.3" expl="postcondition">
   <proof prover="0"><undone/></proof>
   </goal>
  </transf>

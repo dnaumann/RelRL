@@ -3,7 +3,7 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<file format="whyml" proved="true">
+<file format="whyml">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
  <goal name="state&#39;vc" expl="VC for state" proved="true">
@@ -60,9 +60,22 @@
  <proof prover="0"><result status="valid" time="0.076701" steps="147"/></proof>
  </goal>
 </theory>
-<theory name="FREL" proved="true">
- <goal name="prog&#39;vc" expl="VC for prog" proved="true">
- <proof prover="0"><result status="valid" time="0.273361" steps="1629"/></proof>
+<theory name="FREL">
+ <goal name="prog&#39;vc" expl="VC for prog">
+ <transf name="split_vc" >
+  <goal name="prog&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.047197" steps="19"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.051346" steps="50"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.042286" steps="35"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.3" expl="postcondition">
+  <proof prover="0"><undone/></proof>
+  </goal>
+ </transf>
  </goal>
 </theory>
 </file>

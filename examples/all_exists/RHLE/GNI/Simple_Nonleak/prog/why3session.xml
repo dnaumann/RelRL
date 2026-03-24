@@ -14,13 +14,16 @@
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="prog&#39;vc.0" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.020947" steps="19"/></proof>
+  <proof prover="0"><result status="valid" time="0.103962" steps="26"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.019298" steps="19"/></proof>
+  <proof prover="0"><result status="valid" time="0.020947" steps="20"/></proof>
   </goal>
   <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.018770" steps="19"/></proof>
+  <proof prover="0"><result status="valid" time="0.019298" steps="20"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.018770" steps="20"/></proof>
   </goal>
  </transf>
  </goal>

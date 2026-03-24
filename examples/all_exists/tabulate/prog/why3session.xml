@@ -4,7 +4,6 @@
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
 <prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="2" name="Alt-Ergo" version="2.6.2" alternative="BV" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
@@ -235,7 +234,6 @@
   <proof prover="0"><result status="valid" time="0.083499" steps="170"/></proof>
   </goal>
   <goal name="tabulate&#39;vc.42" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="802130"/></proof>
   <transf name="unfold" proved="true" arg1="rep_closed">
    <goal name="tabulate&#39;vc.42.0" expl="VC for tabulate" proved="true">
    <transf name="split_vc" proved="true" >
@@ -486,7 +484,6 @@
   <proof prover="0"><result status="valid" time="0.081825" steps="170"/></proof>
   </goal>
   <goal name="tabulate&#39;vc.42" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="712510"/></proof>
   <transf name="unfold" proved="true" arg1="rep_closed">
    <goal name="tabulate&#39;vc.42.0" expl="VC for tabulate" proved="true">
    <transf name="unfold" proved="true" arg1="rep_closed" arg2="in" arg3="LoopInvariant9">
@@ -497,10 +494,6 @@
      </goal>
      <goal name="tabulate&#39;vc.42.0.0.1" expl="VC for tabulate" proved="true">
      <proof prover="0"><result status="valid" time="174.284833" steps="746129"/></proof>
-     <transf name="subst" arg1="rep1">
-      <goal name="tabulate&#39;vc.42.0.0.1.0" expl="VC for tabulate">
-      </goal>
-     </transf>
      </goal>
      <goal name="tabulate&#39;vc.42.0.0.2" expl="VC for tabulate" proved="true">
      <proof prover="0"><result status="valid" time="0.201982" steps="810"/></proof>
@@ -746,7 +739,6 @@
   <proof prover="0"><result status="valid" time="103.798941" steps="447416"/></proof>
   </goal>
   <goal name="tabulate&#39;vc.66" expl="assertion" proved="true">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="631819"/></proof>
   <transf name="unfold" proved="true" arg1="agree_allfields">
    <goal name="tabulate&#39;vc.66.0" expl="assertion" proved="true">
    <transf name="unfold" proved="true" arg1="agree_allfields" arg2="in" arg3="LoopInvariant2">
@@ -765,7 +757,6 @@
         <proof prover="0"><result status="valid" time="87.892078" steps="334305"/></proof>
         </goal>
         <goal name="tabulate&#39;vc.66.0.0.0.0.0.2" expl="assertion" proved="true">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="655534"/></proof>
         <transf name="inline_goal" proved="true" >
          <goal name="tabulate&#39;vc.66.0.0.0.0.0.2.0" expl="assertion" proved="true">
          <transf name="split_vc" proved="true" >
@@ -792,8 +783,6 @@
         <proof prover="0"><result status="valid" time="110.364962" steps="376209"/></proof>
         </goal>
         <goal name="tabulate&#39;vc.66.0.0.0.0.0.6" expl="assertion" proved="true">
-        <proof prover="0" timelimit="5" memlimit="2000"><result status="timeout" time="5.000000" steps="20935"/></proof>
-        <proof prover="1" timelimit="5" memlimit="2000"><result status="timeout" time="5.000000" steps="7713473"/></proof>
         <transf name="inline_goal" proved="true" >
          <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0" expl="assertion" proved="true">
          <transf name="split_all_full" proved="true" >
@@ -801,12 +790,8 @@
           <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.156915" steps="426946"/></proof>
           </goal>
           <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.1" expl="VC for tabulate" proved="true">
-          <proof prover="0" timelimit="1" memlimit="1000"><result status="timeout" time="1.000000" steps="3553"/></proof>
-          <proof prover="1" timelimit="1" memlimit="1000"><result status="timeout" time="1.000000" steps="1901026"/></proof>
           <transf name="split_vc" proved="true" >
            <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.1.0" expl="VC for tabulate" proved="true">
-           <proof prover="0" timelimit="5" memlimit="2000"><result status="timeout" time="5.000000" steps="15560"/></proof>
-           <proof prover="1" timelimit="5" memlimit="2000"><result status="timeout" time="5.000000" steps="7477201"/></proof>
            <transf name="inline_goal" proved="true" >
             <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.1.0.0" expl="VC for tabulate" proved="true">
             <proof prover="0" timelimit="30" memlimit="4000"><result status="valid" time="19.263483" steps="56221"/></proof>
@@ -816,12 +801,8 @@
           </transf>
           </goal>
           <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-          <proof prover="0" timelimit="1" memlimit="1000"><result status="timeout" time="1.000000" steps="3863"/></proof>
-          <proof prover="1" timelimit="1" memlimit="1000"><result status="timeout" time="1.000000" steps="1899505"/></proof>
           <transf name="split_vc" proved="true" >
            <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0" expl="sl(o) ~ sr(pi(o))" proved="true">
-           <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="84862"/></proof>
-           <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="26.431744" steps="31630825"/></proof>
            <transf name="case" proved="true" arg1="(o = r_p)">
             <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.0" expl="true case (sl(o) ~ sr(pi(o)))" proved="true">
             <transf name="subst" proved="true" arg1="o">
@@ -831,32 +812,10 @@
             </transf>
             </goal>
             <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
-            <proof prover="0"><result status="timeout" time="200.000000" steps="1053109"/></proof>
-            <proof prover="1"><result status="outofmemory" time="36.740410"/></proof>
             <transf name="rewrite" proved="true" arg1="H9">
              <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
              <transf name="rewrite" proved="true" arg1="H13">
               <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
-              <transf name="assert" arg1="(forall z: reference. not(z = o) -&gt; l_s3.value[z] = l_s4.value[z])" arg2="as" arg3="H999">
-               <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0" expl="asserted formula">
-               <transf name="introduce_premises" >
-                <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0" expl="asserted formula">
-                <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="200.000000" steps="807475"/></proof>
-                <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="26.280998" steps="43178933"/></proof>
-                <transf name="congruence" >
-                 <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.0">
-                 <proof prover="0"><result status="timeout" time="200.000000" steps="964480"/></proof>
-                 <proof prover="1"><result status="outofmemory" time="38.319490"/></proof>
-                 </goal>
-                 <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1">
-                 </goal>
-                </transf>
-                </goal>
-               </transf>
-               </goal>
-               <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.1" expl="false case (sl(o) ~ sr(pi(o)))">
-               </goal>
-              </transf>
               <transf name="rewrite" proved="true" arg1="H17">
                <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
                <transf name="rewrite" proved="true" arg1="H21">
@@ -875,38 +834,6 @@
                    <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
                    <transf name="rewrite" proved="true" arg1="H998">
                     <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
-                    <transf name="assert" arg1="(not o = l_p)" arg2="as" arg3="H997">
-                     <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0" expl="asserted formula">
-                     <proof prover="0"><result status="timeout" time="200.000000" steps="980797"/></proof>
-                     <proof prover="1"><result status="outofmemory" time="37.940433"/></proof>
-                     </goal>
-                     <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.1" expl="false case (sl(o) ~ sr(pi(o)))">
-                     </goal>
-                    </transf>
-                    <transf name="case" arg1="(o = l_p)">
-                     <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0" expl="false case (true case. sl(o) ~ sr(pi(o)))">
-                     <transf name="subst" arg1="o">
-                      <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0.0" expl="false case (true case. sl(o) ~ sr(pi(o)))">
-                      <proof prover="0"><result status="timeout" time="200.000000" steps="921245"/></proof>
-                      <proof prover="1"><result status="outofmemory" time="35.312201"/></proof>
-                      <transf name="assert" arg1="false">
-                       <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0.0.0" expl="asserted formula">
-                       <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="200.000000" steps="866784"/></proof>
-                       <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="26.476165" steps="53710106"/></proof>
-                       </goal>
-                       <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0.0.1" expl="false case (true case. sl(o) ~ sr(pi(o)))">
-                       </goal>
-                      </transf>
-                      </goal>
-                     </transf>
-                     </goal>
-                     <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.1" expl="false case (sl(o) ~ sr(pi(o)))">
-                     </goal>
-                    </transf>
-                    <transf name="pose" arg1="l_o" arg2="((pi4.rol)[o])">
-                     <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0" expl="false case (sl(o) ~ sr(pi(o)))">
-                     </goal>
-                    </transf>
                     <transf name="pose" proved="true" arg1="l_o" arg2="(((invert pi4).lor)[o])">
                      <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
                      <transf name="assert" proved="true" arg1="((pi4.rol)[r_p] = l_p)" arg2="as" arg3="H997">
@@ -917,15 +844,11 @@
                       <transf name="assert" proved="true" arg1="(not l_o = l_p)" arg2="as" arg3="H996">
                        <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0.1.0" expl="asserted formula" proved="true">
                        <proof prover="0"><result status="valid" time="10.608336" steps="55497"/></proof>
-                       <proof prover="1"><result status="outofmemory" time="39.435866"/></proof>
                        </goal>
                        <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0.1.1" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
-                       <proof prover="0"><result status="timeout" time="200.000000" steps="909662"/></proof>
-                       <proof prover="1"><result status="outofmemory" time="37.762711"/></proof>
                        <transf name="assert" proved="true" arg1="((l_s2.value)[l_o] = (l_s3.value)[l_o])" arg2="as" arg3="H995">
                         <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0.1.1.0" expl="asserted formula" proved="true">
                         <proof prover="0"><result status="valid" time="22.121124" steps="109287"/></proof>
-                        <proof prover="1"><result status="outofmemory" time="40.315748"/></proof>
                         </goal>
                         <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0.1.1.1" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
                         <proof prover="0"><result status="valid" time="54.578495" steps="263890"/></proof>
@@ -940,7 +863,6 @@
                           </goal>
                           <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.1.0.0.0.0.1.0.1.0.0.1.1.1.1.1" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
                           <proof prover="0"><result status="valid" time="30.047012" steps="142445"/></proof>
-                          <proof prover="1"><result status="outofmemory" time="42.831672"/></proof>
                           </goal>
                          </transf>
                          </goal>
@@ -971,29 +893,6 @@
             </transf>
             </goal>
            </transf>
-           <transf name="remove_unused" >
-            <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.0" expl="sl(o) ~ sr(pi(o))">
-            <transf name="subst_all" >
-             <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.0.0" expl="sl(o) ~ sr(pi(o))">
-             <transf name="case" arg1="(o = r_p)">
-              <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.0.0.0" expl="true case (sl(o) ~ sr(pi(o)))">
-              <transf name="subst" arg1="o">
-               <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.0.0.0.0" expl="true case (sl(o) ~ sr(pi(o)))">
-               <proof prover="0"><result status="timeout" time="200.000000" steps="948472"/></proof>
-               </goal>
-              </transf>
-              <transf name="subst_all" >
-               <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.0.0.0.0" expl="true case (sl(o) ~ sr(pi(o)))">
-               </goal>
-              </transf>
-              </goal>
-              <goal name="tabulate&#39;vc.66.0.0.0.0.0.6.0.2.0.0.0.1" expl="false case (sl(o) ~ sr(pi(o)))">
-              </goal>
-             </transf>
-             </goal>
-            </transf>
-            </goal>
-           </transf>
            </goal>
           </transf>
           </goal>
@@ -1002,8 +901,6 @@
         </transf>
         </goal>
         <goal name="tabulate&#39;vc.66.0.0.0.0.0.7" expl="assertion" proved="true">
-        <proof prover="0" timelimit="5" memlimit="2000"><result status="timeout" time="5.000000" steps="15297"/></proof>
-        <proof prover="1"><result status="outofmemory" time="117.419460"/></proof>
         <transf name="assert" proved="true" arg1="(r_s.rep = r_s4.rep)" arg2="as" arg3="H999">
          <goal name="tabulate&#39;vc.66.0.0.0.0.0.7.0" expl="asserted formula" proved="true">
          <proof prover="0"><result status="valid" time="0.076610" steps="362"/></proof>
@@ -1068,10 +965,8 @@
   <proof prover="0"><result status="valid" time="5.929795" steps="26663"/></proof>
   </goal>
   <goal name="tabulate&#39;vc.75" expl="assertion" proved="true">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="637358"/></proof>
   <transf name="split_vc" proved="true" >
    <goal name="tabulate&#39;vc.75.0" expl="assertion" proved="true">
-   <proof prover="0"><result status="timeout" time="200.000000" steps="806597"/></proof>
    <transf name="inline_goal" proved="true" >
     <goal name="tabulate&#39;vc.75.0.0" expl="assertion" proved="true">
     <transf name="split_vc" proved="true" >
@@ -1108,7 +1003,6 @@
   </transf>
   </goal>
   <goal name="tabulate&#39;vc.76" expl="assertion" proved="true">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="650669"/></proof>
   <transf name="inline_goal" proved="true" >
    <goal name="tabulate&#39;vc.76.0" expl="assertion" proved="true">
    <transf name="split_vc" proved="true" >
@@ -1137,12 +1031,6 @@
     <proof prover="0"><result status="valid" time="24.342971" steps="98019"/></proof>
     </goal>
    </transf>
-   </goal>
-  </transf>
-  <transf name="split_vc" >
-   <goal name="tabulate&#39;vc.76.0" expl="assertion">
-   </goal>
-   <goal name="tabulate&#39;vc.76.1" expl="assertion">
    </goal>
   </transf>
   </goal>
@@ -1201,7 +1089,6 @@
   <proof prover="0"><result status="valid" time="8.395990" steps="29054"/></proof>
   </goal>
   <goal name="tabulate&#39;vc.95" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="751396"/></proof>
   <transf name="inline_goal" proved="true" >
    <goal name="tabulate&#39;vc.95.0" expl="loop invariant preservation" proved="true">
    <transf name="compute_in_goal" proved="true" >
@@ -1217,7 +1104,6 @@
      <proof prover="0"><result status="valid" time="0.893183" steps="2696"/></proof>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.3" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="601249"/></proof>
      <transf name="case" proved="true" arg1="(o = l_p)">
       <goal name="tabulate&#39;vc.95.0.0.3.0" expl="true case (loop invariant preservation)" proved="true">
       <transf name="subst" proved="true" arg1="o">
@@ -1231,7 +1117,6 @@
        <goal name="tabulate&#39;vc.95.0.0.3.1.0" expl="false case (loop invariant preservation)" proved="true">
        <transf name="assert" proved="true" arg1="(mem1 o (pi41.lor.to_fmap.domain))" arg2="as" arg3="H99">
         <goal name="tabulate&#39;vc.95.0.0.3.1.0.0" expl="asserted formula" proved="true">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="914465"/></proof>
         <transf name="assert" proved="true" arg1="(l_s.alloct.to_fmap = add l_p Node (l_s5.alloct.to_fmap))" arg2="as" arg3="H_alloc_map_eq">
          <goal name="tabulate&#39;vc.95.0.0.3.1.0.0.0" expl="asserted formula" proved="true">
          <proof prover="0"><result status="valid" time="0.090603" steps="443"/></proof>
@@ -1272,10 +1157,8 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.4" expl="sl(o) ~ sr(pi(o))" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="601489"/></proof>
      <transf name="assert" proved="true" arg1="(o = l_l)" arg2="as" arg3="H999">
       <goal name="tabulate&#39;vc.95.0.0.4.0" expl="asserted formula" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="973360"/></proof>
       <transf name="assert" proved="true" arg1="(not o = nullConst)" arg2="as" arg3="H998">
        <goal name="tabulate&#39;vc.95.0.0.4.0.0" expl="asserted formula" proved="true">
        <proof prover="0"><result status="valid" time="0.209505" steps="715"/></proof>
@@ -1335,7 +1218,6 @@
      <proof prover="0"><result status="valid" time="1.013142" steps="2696"/></proof>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.8" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="595402"/></proof>
      <transf name="assert" proved="true" arg1="(o = l_p \/ mem1 o (pi41.lor.to_fmap.domain))" arg2="as" arg3="H999">
       <goal name="tabulate&#39;vc.95.0.0.8.0" expl="asserted formula" proved="true">
       <transf name="assert" proved="true" arg1="(not (o = l_p))" arg2="as" arg3="H998">
@@ -1345,7 +1227,6 @@
        <goal name="tabulate&#39;vc.95.0.0.8.0.1" expl="asserted formula" proved="true">
        <transf name="assert" proved="true" arg1="(mem1 o (pi41.lor.to_fmap.domain))" arg2="as" arg3="H998">
         <goal name="tabulate&#39;vc.95.0.0.8.0.1.0" expl="asserted formula" proved="true">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="912948"/></proof>
         <transf name="assert" proved="true" arg1="(mem1 o (diff (l_s5.alloct.to_fmap.domain) (l_s8.alloct.to_fmap.domain)))" arg2="as" arg3="H998">
          <goal name="tabulate&#39;vc.95.0.0.8.0.1.0.0" expl="asserted formula" proved="true">
          <proof prover="0"><result status="valid" time="0.584671" steps="2707"/></proof>
@@ -1368,10 +1249,8 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.9" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="599720"/></proof>
      <transf name="assert" proved="true" arg1="(mem1 x (l_s.rep)[l_l])" arg2="as" arg3="H999">
       <goal name="tabulate&#39;vc.95.0.0.9.0" expl="asserted formula" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="971845"/></proof>
       <transf name="assert" proved="true" arg1="(o = l_l)" arg2="as" arg3="H998">
        <goal name="tabulate&#39;vc.95.0.0.9.0.0" expl="asserted formula" proved="true">
        <transf name="assert" proved="true" arg1="(o = l_p \/ mem1 o (l_s5.alloct.to_fmap.domain))" arg2="as" arg3="H997">
@@ -1393,7 +1272,6 @@
         </transf>
         </goal>
         <goal name="tabulate&#39;vc.95.0.0.9.0.0.1" expl="asserted formula" proved="true">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="904560"/></proof>
         <transf name="assert" proved="true" arg1="(not mem1 o (l_s5.rep)[l_l])" arg2="as" arg3="H994">
          <goal name="tabulate&#39;vc.95.0.0.9.0.0.1.0" expl="asserted formula" proved="true">
          <proof prover="0"><result status="valid" time="35.504687" steps="161200"/></proof>
@@ -1416,7 +1294,6 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.10" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="595588"/></proof>
      <transf name="assert" proved="true" arg1="(o = l_l)" arg2="as" arg3="H999">
       <goal name="tabulate&#39;vc.95.0.0.10.0" expl="asserted formula" proved="true">
       <transf name="assert" proved="true" arg1="(o = l_p \/ mem1 o (l_s5.alloct.to_fmap.domain))" arg2="as" arg3="H998">
@@ -1448,16 +1325,13 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.11" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="635339"/></proof>
      <transf name="assert" proved="true" arg1="(o = l_l)" arg2="as" arg3="H999">
       <goal name="tabulate&#39;vc.95.0.0.11.0" expl="asserted formula" proved="true">
-      <proof prover="0"><result status="timeout" time="200.000000" steps="982578"/></proof>
       <transf name="assert" proved="true" arg1="(not o = l_p)" arg2="as" arg3="H998">
        <goal name="tabulate&#39;vc.95.0.0.11.0.0" expl="asserted formula" proved="true">
        <proof prover="0"><result status="valid" time="0.215146" steps="727"/></proof>
        </goal>
        <goal name="tabulate&#39;vc.95.0.0.11.0.1" expl="asserted formula" proved="true">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="962498"/></proof>
        <transf name="assert" proved="true" arg1="(o = l_l \/ mem1 o (l_s5.rep)[l_l])" arg2="as" arg3="H997">
         <goal name="tabulate&#39;vc.95.0.0.11.0.1.0" expl="asserted formula" proved="true">
         <proof prover="0"><result status="valid" time="13.786750" steps="66110"/></proof>
@@ -1475,7 +1349,6 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.12" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="598720"/></proof>
      <transf name="assert" proved="true" arg1="(o = l_l)" arg2="as" arg3="H999">
       <goal name="tabulate&#39;vc.95.0.0.12.0" expl="asserted formula" proved="true">
       <transf name="assert" proved="true" arg1="(o = l_p \/ mem1 o (l_s5.alloct.to_fmap.domain))" arg2="as" arg3="H998">
@@ -1497,13 +1370,11 @@
        </transf>
        </goal>
        <goal name="tabulate&#39;vc.95.0.0.12.0.1" expl="asserted formula" proved="true">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="999263"/></proof>
        <transf name="assert" proved="true" arg1="(not o = l_p)" arg2="as" arg3="H997">
         <goal name="tabulate&#39;vc.95.0.0.12.0.1.0" expl="asserted formula" proved="true">
         <proof prover="0"><result status="valid" time="0.216728" steps="728"/></proof>
         </goal>
         <goal name="tabulate&#39;vc.95.0.0.12.0.1.1" expl="asserted formula" proved="true">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="925823"/></proof>
         <transf name="assert" proved="true" arg1="(o = l_l \/ mem1 o (l_s5.rep)[l_l])" arg2="as" arg3="H996">
          <goal name="tabulate&#39;vc.95.0.0.12.0.1.1.0" expl="asserted formula" proved="true">
          <proof prover="0"><result status="valid" time="10.947940" steps="51725"/></proof>
@@ -1523,7 +1394,6 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.13" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="630265"/></proof>
      <transf name="assert" proved="true" arg1="(o = l_l)" arg2="as" arg3="H999">
       <goal name="tabulate&#39;vc.95.0.0.13.0" expl="asserted formula" proved="true">
       <transf name="assert" proved="true" arg1="(o = l_p \/ mem1 o (l_s5.alloct.to_fmap.domain))" arg2="as" arg3="H998">
@@ -1555,7 +1425,6 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.14" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="622402"/></proof>
      <transf name="assert" proved="true" arg1="(o = l_l)" arg2="as" arg3="H999">
       <goal name="tabulate&#39;vc.95.0.0.14.0" expl="asserted formula" proved="true">
       <transf name="assert" proved="true" arg1="(o = l_p \/ mem1 o (l_s5.alloct.to_fmap.domain))" arg2="as" arg3="H998">
@@ -1596,7 +1465,6 @@
      <proof prover="0"><result status="valid" time="0.849863" steps="2696"/></proof>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.18" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="609574"/></proof>
      <transf name="assert" proved="true" arg1="(o = l_p \/ mem1 o (pi41.lor.to_fmap.domain))" arg2="as" arg3="H999">
       <goal name="tabulate&#39;vc.95.0.0.18.0" expl="asserted formula" proved="true">
       <transf name="case" proved="true" arg1="(o = l_p)">
@@ -1604,7 +1472,6 @@
        <proof prover="0"><result status="valid" time="0.088462" steps="443"/></proof>
        </goal>
        <goal name="tabulate&#39;vc.95.0.0.18.0.1" expl="asserted formula (false case)" proved="true">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="947918"/></proof>
        <transf name="assert" proved="true" arg1="(mem1 o (diff (l_s5.alloct.to_fmap.domain) (l_s8.alloct.to_fmap.domain)))" arg2="as" arg3="H998">
         <goal name="tabulate&#39;vc.95.0.0.18.0.1.0" expl="asserted formula" proved="true">
         <proof prover="0"><result status="valid" time="0.579493" steps="2707"/></proof>
@@ -1622,7 +1489,6 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.19" expl="sl(o) ~ sr(pi(o))" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="602262"/></proof>
      <transf name="case" proved="true" arg1="(o = l_p)">
       <goal name="tabulate&#39;vc.95.0.0.19.0" expl="true case (sl(o) ~ sr(pi(o)))" proved="true">
       <proof prover="0"><result status="valid" time="0.081442" steps="443"/></proof>
@@ -1649,7 +1515,6 @@
      <proof prover="0"><result status="valid" time="0.949396" steps="2709"/></proof>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.23" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="576920"/></proof>
      <transf name="case" proved="true" arg1="(o = l_p)">
       <goal name="tabulate&#39;vc.95.0.0.23.0" expl="true case (loop invariant preservation)" proved="true">
       <proof prover="0"><result status="valid" time="0.194129" steps="689"/></proof>
@@ -1667,7 +1532,6 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.24" expl="sl(o) ~ sr(pi(o))" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="675530"/></proof>
      <transf name="case" proved="true" arg1="(o = l_p)">
       <goal name="tabulate&#39;vc.95.0.0.24.0" expl="true case (sl(o) ~ sr(pi(o)))" proved="true">
       <proof prover="0"><result status="valid" time="2.272763" steps="11936"/></proof>
@@ -1685,7 +1549,6 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.25" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="697075"/></proof>
      <transf name="assert" proved="true" arg1="(r_s.alloct.to_fmap = add r_p Node (r_s5.alloct.to_fmap))" arg2="as" arg3="H999">
       <goal name="tabulate&#39;vc.95.0.0.25.0" expl="asserted formula" proved="true">
       <proof prover="0"><result status="valid" time="0.084108" steps="437"/></proof>
@@ -1693,7 +1556,6 @@
       <goal name="tabulate&#39;vc.95.0.0.25.1" expl="loop invariant preservation" proved="true">
       <transf name="rewrite" proved="true" arg1="H999">
        <goal name="tabulate&#39;vc.95.0.0.25.1.0" expl="loop invariant preservation" proved="true">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="871614"/></proof>
        <transf name="compute_in_goal" proved="true" >
         <goal name="tabulate&#39;vc.95.0.0.25.1.0.0" expl="loop invariant preservation" proved="true">
         <transf name="split_vc" proved="true" >
@@ -1707,7 +1569,6 @@
          <proof prover="0"><result status="valid" time="2.450448" steps="11336"/></proof>
          </goal>
          <goal name="tabulate&#39;vc.95.0.0.25.1.0.0.3" expl="VC for tabulate" proved="true">
-         <proof prover="0"><result status="timeout" time="200.000000" steps="881557"/></proof>
          <transf name="assert" proved="true" arg1="(o = r_p \/ mem1 o (pi41.rol.to_fmap.domain))" arg2="as" arg3="H999">
           <goal name="tabulate&#39;vc.95.0.0.25.1.0.0.3.0" expl="asserted formula" proved="true">
           <transf name="assert" proved="true" arg1="(not o = r_p)" arg2="as" arg3="H998">
@@ -1732,7 +1593,6 @@
          </transf>
          </goal>
          <goal name="tabulate&#39;vc.95.0.0.25.1.0.0.4" expl="sl(o) ~ sr(pi(o))" proved="true">
-         <proof prover="0"><result status="timeout" time="200.000000" steps="871635"/></proof>
          <transf name="assert" proved="true" arg1="(o = r_l)" arg2="as" arg3="H999">
           <goal name="tabulate&#39;vc.95.0.0.25.1.0.0.4.0" expl="asserted formula" proved="true">
           <transf name="assert" proved="true" arg1="(o = r_p \/ mem1 o (r_s5.alloct.to_fmap.domain))" arg2="as" arg3="H998">
@@ -1772,7 +1632,6 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.26" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="679125"/></proof>
      <transf name="inline_goal" proved="true" >
       <goal name="tabulate&#39;vc.95.0.0.26.0" expl="loop invariant preservation" proved="true">
       <transf name="split_vc" proved="true" >
@@ -1780,28 +1639,23 @@
        <proof prover="0"><result status="valid" time="0.183728" steps="675"/></proof>
        </goal>
        <goal name="tabulate&#39;vc.95.0.0.26.0.1" expl="loop invariant preservation" proved="true">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="918578"/></proof>
        <transf name="assert" proved="true" arg1="(o = r_p \/ mem1 o (pi41.rol.to_fmap.domain))" arg2="as" arg3="H999">
         <goal name="tabulate&#39;vc.95.0.0.26.0.1.0" expl="asserted formula" proved="true">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="840207"/></proof>
         <transf name="assert" proved="true" arg1="(not o = r_p)" arg2="as" arg3="H998">
          <goal name="tabulate&#39;vc.95.0.0.26.0.1.0.0" expl="asserted formula" proved="true">
          <proof prover="0"><result status="valid" time="0.208281" steps="716"/></proof>
          </goal>
          <goal name="tabulate&#39;vc.95.0.0.26.0.1.0.1" expl="asserted formula" proved="true">
-         <proof prover="0"><result status="timeout" time="200.000000" steps="968556"/></proof>
          <transf name="assert" proved="true" arg1="(o = r_p \/ mem1 o (r_s5.alloct.to_fmap.domain))" arg2="as" arg3="H997">
           <goal name="tabulate&#39;vc.95.0.0.26.0.1.0.1.0" expl="asserted formula" proved="true">
           <proof prover="0"><result status="valid" time="0.613465" steps="2707"/></proof>
           </goal>
           <goal name="tabulate&#39;vc.95.0.0.26.0.1.0.1.1" expl="asserted formula" proved="true">
-          <proof prover="2"><result status="timeout" time="200.000000" steps="891258"/></proof>
           <transf name="assert" proved="true" arg1="(not (mem1 o (r_s8.alloct.to_fmap.domain)))" arg2="as" arg3="H996">
            <goal name="tabulate&#39;vc.95.0.0.26.0.1.0.1.1.0" expl="asserted formula" proved="true">
            <proof prover="0"><result status="valid" time="0.197083" steps="684"/></proof>
            </goal>
            <goal name="tabulate&#39;vc.95.0.0.26.0.1.0.1.1.1" expl="asserted formula" proved="true">
-           <proof prover="0"><result status="timeout" time="200.000000" steps="937203"/></proof>
            <transf name="assert" proved="true" arg1="(mem1 o (diff (r_s5.alloct.to_fmap.domain) (r_s8.alloct.to_fmap.domain)))" arg2="as" arg3="H995">
             <goal name="tabulate&#39;vc.95.0.0.26.0.1.0.1.1.1.0" expl="asserted formula" proved="true">
             <proof prover="0"><result status="valid" time="0.185830" steps="686"/></proof>
@@ -1823,7 +1677,6 @@
        </transf>
        </goal>
        <goal name="tabulate&#39;vc.95.0.0.26.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="887470"/></proof>
        <transf name="assert" proved="true" arg1="(o = r_l)" arg2="as" arg3="H999">
         <goal name="tabulate&#39;vc.95.0.0.26.0.2.0" expl="asserted formula" proved="true">
         <transf name="assert" proved="true" arg1="(r_s.alloct.to_fmap = add r_p Node (r_s5.alloct.to_fmap))" arg2="as" arg3="H998">
@@ -1866,7 +1719,6 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.27" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="685488"/></proof>
      <transf name="inline_goal" proved="true" >
       <goal name="tabulate&#39;vc.95.0.0.27.0" expl="loop invariant preservation" proved="true">
       <transf name="split_vc" proved="true" >
@@ -1874,7 +1726,6 @@
        <proof prover="0"><result status="valid" time="0.182874" steps="675"/></proof>
        </goal>
        <goal name="tabulate&#39;vc.95.0.0.27.0.1" expl="loop invariant preservation" proved="true">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="871640"/></proof>
        <transf name="assert" proved="true" arg1="(mem1 o (pi4.rol.to_fmap.domain))" arg2="as" arg3="H999">
         <goal name="tabulate&#39;vc.95.0.0.27.0.1.0" expl="asserted formula" proved="true">
         <transf name="assert" proved="true" arg1="(o = r_p \/ mem1 o (pi41.rol.to_fmap.domain))" arg2="as" arg3="H998">
@@ -1884,7 +1735,6 @@
           <proof prover="0"><result status="valid" time="0.592892" steps="2706"/></proof>
           </goal>
           <goal name="tabulate&#39;vc.95.0.0.27.0.1.0.0.1" expl="asserted formula" proved="true">
-          <proof prover="0"><result status="timeout" time="200.000000" steps="836225"/></proof>
           <transf name="case" proved="true" arg1="(o = r_p)">
            <goal name="tabulate&#39;vc.95.0.0.27.0.1.0.0.1.0" expl="asserted formula (true case)" proved="true">
            <proof prover="0"><result status="valid" time="0.084848" steps="445"/></proof>
@@ -1914,7 +1764,6 @@
        </transf>
        </goal>
        <goal name="tabulate&#39;vc.95.0.0.27.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="873383"/></proof>
        <transf name="assert" proved="true" arg1="(o = r_p \/ mem1 o (r_s5.alloct.to_fmap.domain))" arg2="as" arg3="H999">
         <goal name="tabulate&#39;vc.95.0.0.27.0.2.0" expl="asserted formula" proved="true">
         <proof prover="0"><result status="valid" time="0.629143" steps="2706"/></proof>
@@ -1925,13 +1774,11 @@
          <proof prover="0"><result status="valid" time="0.257868" steps="732"/></proof>
          </goal>
          <goal name="tabulate&#39;vc.95.0.0.27.0.2.1.1" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
-         <proof prover="0"><result status="timeout" time="200.000000" steps="872195"/></proof>
          <transf name="assert" proved="true" arg1="((r_s.value)[o] = (r_s5.value)[o])" arg2="as" arg3="H998">
           <goal name="tabulate&#39;vc.95.0.0.27.0.2.1.1.0" expl="asserted formula" proved="true">
           <proof prover="0"><result status="valid" time="5.863331" steps="25774"/></proof>
           </goal>
           <goal name="tabulate&#39;vc.95.0.0.27.0.2.1.1.1" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
-          <proof prover="0"><result status="timeout" time="200.000000" steps="836019"/></proof>
           <transf name="assert" proved="true" arg1="((l_s.value)[(pi4.rol)[o]] = (l_s5.value)[(pi41.rol)[o]])" arg2="as" arg3="H997">
            <goal name="tabulate&#39;vc.95.0.0.27.0.2.1.1.1.0" expl="asserted formula" proved="true">
            <proof prover="0"><result status="valid" time="49.799678" steps="195754"/></proof>
@@ -1952,7 +1799,6 @@
      </transf>
      </goal>
      <goal name="tabulate&#39;vc.95.0.0.28" expl="loop invariant preservation" proved="true">
-     <proof prover="0"><result status="timeout" time="200.000000" steps="694527"/></proof>
      <transf name="inline_goal" proved="true" >
       <goal name="tabulate&#39;vc.95.0.0.28.0" expl="loop invariant preservation" proved="true">
       <transf name="split_vc" proved="true" >
@@ -1960,7 +1806,6 @@
        <proof prover="0"><result status="valid" time="0.226896" steps="675"/></proof>
        </goal>
        <goal name="tabulate&#39;vc.95.0.0.28.0.1" expl="loop invariant preservation" proved="true">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="822211"/></proof>
        <transf name="assert" proved="true" arg1="(o = r_p \/ mem1 o (r_s5.alloct.to_fmap.domain))" arg2="as" arg3="H999">
         <goal name="tabulate&#39;vc.95.0.0.28.0.1.0" expl="asserted formula" proved="true">
         <proof prover="0"><result status="valid" time="0.584737" steps="2706"/></proof>
@@ -1985,19 +1830,16 @@
        </transf>
        </goal>
        <goal name="tabulate&#39;vc.95.0.0.28.0.2" expl="sl(o) ~ sr(pi(o))" proved="true">
-       <proof prover="0"><result status="timeout" time="200.000000" steps="842927"/></proof>
        <transf name="case" proved="true" arg1="(o = r_p)">
         <goal name="tabulate&#39;vc.95.0.0.28.0.2.0" expl="true case (sl(o) ~ sr(pi(o)))" proved="true">
         <proof prover="0"><result status="valid" time="2.266586" steps="11945"/></proof>
         </goal>
         <goal name="tabulate&#39;vc.95.0.0.28.0.2.1" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
-        <proof prover="0"><result status="timeout" time="200.000000" steps="842238"/></proof>
         <transf name="assert" proved="true" arg1="((r_s.value)[o] = (r_s5.value)[o])" arg2="as" arg3="H998">
          <goal name="tabulate&#39;vc.95.0.0.28.0.2.1.0" expl="asserted formula" proved="true">
          <proof prover="0"><result status="valid" time="10.830765" steps="53139"/></proof>
          </goal>
          <goal name="tabulate&#39;vc.95.0.0.28.0.2.1.1" expl="false case (sl(o) ~ sr(pi(o)))" proved="true">
-         <proof prover="0"><result status="timeout" time="200.000000" steps="934754"/></proof>
          <transf name="assert" proved="true" arg1="((l_s.value)[(pi4.rol)[o]] = (l_s5.value)[(pi41.rol)[o]])" arg2="as" arg3="H997">
           <goal name="tabulate&#39;vc.95.0.0.28.0.2.1.1.0" expl="asserted formula" proved="true">
           <proof prover="0"><result status="valid" time="51.936972" steps="213397"/></proof>
@@ -2025,7 +1867,6 @@
   <proof prover="0"><result status="valid" time="0.150788" steps="457"/></proof>
   </goal>
   <goal name="tabulate&#39;vc.97" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="770345"/></proof>
   <transf name="split_vc" proved="true" >
    <goal name="tabulate&#39;vc.97.0" expl="loop invariant preservation" proved="true">
    <transf name="inline_goal" proved="true" >
@@ -2055,8 +1896,14 @@
       <proof prover="0"><result status="valid" time="2.359703" steps="11646"/></proof>
       </goal>
       <goal name="tabulate&#39;vc.97.1.0.0.1" expl="loop invariant preservation" proved="true">
-      <proof prover="0" timelimit="30" memlimit="4000"><result status="valid" time="46.386754" steps="182942"/></proof>
-      <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="38713898"/></proof>
+      <transf name="destruct" proved="true" arg1="H999">
+       <goal name="tabulate&#39;vc.97.1.0.0.1.0" expl="loop invariant preservation" proved="true">
+       <proof prover="0"><result status="valid" time="0.081381" steps="445"/></proof>
+       </goal>
+       <goal name="tabulate&#39;vc.97.1.0.0.1.1" expl="loop invariant preservation" proved="true">
+       <proof prover="0"><result status="valid" time="25.245900" steps="137693"/></proof>
+       </goal>
+      </transf>
       </goal>
      </transf>
      </goal>

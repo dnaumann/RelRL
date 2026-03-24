@@ -17,7 +17,6 @@
 </theory>
 <theory name="FREL" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
- <proof prover="0" obsolete="true"><result status="valid" time="0.046688" steps="293"/></proof>
  <transf name="split_vc" proved="true" >
   <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.019255" steps="23"/></proof>
@@ -101,10 +100,13 @@
   <proof prover="0"><result status="valid" time="0.071830" steps="63"/></proof>
   </goal>
   <goal name="prog&#39;vc.27" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.264029" steps="2411"/></proof>
+  <proof prover="0"><result status="valid" time="0.082284" steps="107"/></proof>
   </goal>
   <goal name="prog&#39;vc.28" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.015319" steps="75"/></proof>
+  <proof prover="0"><result status="valid" time="0.264029" steps="2725"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.29" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.015319" steps="77"/></proof>
   </goal>
  </transf>
  </goal>

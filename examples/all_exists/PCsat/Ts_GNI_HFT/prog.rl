@@ -61,7 +61,5 @@ bimodule FREL (A | B) =
         done;
             end);
 
-
     |_ result := x _|;
-
 end
