@@ -46,10 +46,15 @@ $(REPLAY_TARGETS): replay-%:
 	@printf '%s\n' '------------------------------------------'
 	@printf '$(YELLOW)   Replaying: %s$(NC)\n' "$*"
 	@printf '%s\n' '------------------------------------------'
-	@if $(MAKE) -C $* replay; then \
-		printf "$* : $(GREEN)SUCCESS$(NC)\n" > $(RESULT_DIR)/$(subst /,_,$*).res; \
+	@start=$$(date +%s); \
+	if $(MAKE) -C $* replay; then \
+		elapsed=$$(( $$(date +%s) - start )); \
+		printf '$(GREEN)   Time: %ds$(NC)\n' $$elapsed; \
+		printf "$* : $(GREEN)SUCCESS$(NC) [%ds]\n" $$elapsed > $(RESULT_DIR)/$(subst /,_,$*).res; \
 	else \
-		printf "$* : $(RED)FAILED$(NC)\n" > $(RESULT_DIR)/$(subst /,_,$*).res; \
+		elapsed=$$(( $$(date +%s) - start )); \
+		printf '$(RED)   Time: %ds$(NC)\n' $$elapsed; \
+		printf "$* : $(RED)FAILED$(NC) [%ds]\n" $$elapsed > $(RESULT_DIR)/$(subst /,_,$*).res; \
 	fi
 
 # The Summary Reporter
