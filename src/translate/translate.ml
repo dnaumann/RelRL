@@ -110,6 +110,11 @@ type ctxt = {
 
   (* Map from names of fields and globals to names of setters in Why3 *)
   setter_map: Ptree.ident M.t;
+
+  (* Fresh name generator for this compilation unit.  Reset (by replacing with
+     a new Gensym.t) at the start of each top-level compile function so that
+     generated names stay small and readable. *)
+  gensym: Gensym.t;
 }
 
 (* FIXME: inst_map may not be required anymore since we also have meth_wrs. *)
@@ -130,6 +135,7 @@ let ini_ctxt =
     meth_wrs = QualidM.empty;
     current_mdl = None;
     setter_map = M.empty;
+    gensym = Gensym.create ();
   }
 
 type bipred_info =
@@ -215,7 +221,7 @@ let merge_ctxt c c' =
   let setter_map = M.union merge_fn c.setter_map c'.setter_map in
   let current_mdl = c.current_mdl in
   {ctbl; ident_map; field_map; extty_map; inst_map;
-   meth_wrs; current_mdl; setter_map}
+   meth_wrs; current_mdl; setter_map; gensym = c.gensym}
 
 let merge_bi_ctxt c c' =
   let merge_fn _ s _ = Some s in
@@ -305,38 +311,33 @@ let update_id ?msg ctxt state id e : Ptree.expr =
   | exception Not_found -> failwith ("Unknown: " ^ string_of_ident id)
 
 (* To be used by functions that need to generate new identifiers, and
-   not by functions that translate source trees to Why3 parse trees *)
-let reset_fresh_id, mk_fresh_id =
-  let stamp = ref 0 in
-  (fun () -> stamp := 0), (fun str -> incr stamp; str ^ string_of_int !stamp)
+   not by functions that translate source trees to Why3 parse trees.
+   Uses ctxt.gensym so that uniqueness is maintained across all
+   gen_ident/fresh_name calls within the same compilation unit. *)
 
 let gen_ident state ctxt name : Ptree.ident =
   let open M in
   let state_id = (ident_of_qualid state).Ptree.id_str in
-  let rec loop name : Ptree.ident =
+  let taken name =
     let name' = Id name in
-    if mem name' ctxt.ident_map || mem name' ctxt.field_map || name = state_id
-    then loop (mk_fresh_id name)
-    else mk_ident name in
-  loop name
+    mem name' ctxt.ident_map || mem name' ctxt.field_map || name = state_id in
+  mk_ident (Gensym.next_not_in ctxt.gensym taken name)
 
 let gen_ident2 bi_ctxt name : Ptree.ident =
   let open M in
   let lstate = (ident_of_qualid bi_ctxt.left_state).Ptree.id_str in
   let rstate = (ident_of_qualid bi_ctxt.right_state).Ptree.id_str in
   let refperm = (ident_of_qualid bi_ctxt.refperm).Ptree.id_str in
-  let rec loop name : Ptree.ident =
+  let taken name =
     let name' = Id name in
-    if mem name' bi_ctxt.left_ctxt.ident_map
+    mem name' bi_ctxt.left_ctxt.ident_map
     || mem name' bi_ctxt.right_ctxt.ident_map
     || mem name' bi_ctxt.left_ctxt.field_map
     || mem name' bi_ctxt.right_ctxt.field_map
     || mem name' bi_ctxt.bimethods
     || QualidM.mem (qualid_of_ident (mk_ident name)) bi_ctxt.bipreds
-    || name = lstate || name = rstate || name = refperm
-    then loop (mk_fresh_id name)
-    else mk_ident name in
-  loop name
+    || name = lstate || name = rstate || name = refperm in
+  mk_ident (Gensym.next_not_in bi_ctxt.left_ctxt.gensym taken name)
 
 let mk_left_ident bi_ctxt name : Ptree.ident =
   let name = gen_ident2 bi_ctxt name in
@@ -347,12 +348,9 @@ let mk_right_ident bi_ctxt name : Ptree.ident =
   mk_ident ("r_" ^ name.id_str)
 
 let fresh_name ctxt name : string =
-  let rec loop name : Ptree.ident =
-    let name' = Id name in
-    if M.mem name' ctxt.ident_map || M.mem name' ctxt.field_map
-    then loop (mk_fresh_id name)
-    else mk_ident name in
-  (loop name).id_str
+  let taken name =
+    M.mem (Id name) ctxt.ident_map || M.mem (Id name) ctxt.field_map in
+  Gensym.next_not_in ctxt.gensym taken name
 
 let gen_qualid state ctxt name : Ptree.qualid =
   let id = gen_ident state ctxt name in
@@ -2257,7 +2255,7 @@ let compile_axiom_or_lemma ctxt state_ident kind name body : Ptree.decl =
   | `Lemma -> Dprop (Decl.Plemma, name, body)
 
 let compile_named_formula ctxt (nf: T.named_formula) : Ptree.decl =
-  reset_fresh_id ();
+  let ctxt = { ctxt with gensym = Gensym.create () } in
   let name = nf.formula_name in
   let body = nf.body in
   let state_ident = ~. (fresh_name ctxt "s") in
@@ -2287,7 +2285,7 @@ let compile_named_formula ctxt (nf: T.named_formula) : Ptree.decl =
     Dlogic [ldecl]
 
 let compile_inductive_predicate ctxt (ind: T.inductive_predicate) : Ptree.decl =
-  reset_fresh_id ();
+  let ctxt = { ctxt with gensym = Gensym.create () } in
   let name = ind.ind_name in
   let params = map (fun T.{node;ty} -> (node,ty)) ind.ind_params in
   let state_ident = ~. (fresh_name ctxt "s") in
@@ -2341,7 +2339,7 @@ let globals_type_precond ctxt state : Ptree.term list =
    would be -- the call command may use a qualified identifier to
    refer to this method (if it is imported from another module). *)
 let compile_meth_aux ctxt (m: T.meth_decl) : meth_compile_info =
-  reset_fresh_id ();
+  let ctxt = { ctxt with gensym = Gensym.create () } in
   let meth_name =
     let name = m.meth_name.node in
     if Ctbl.class_exists ctxt.ctbl ~classname:name
@@ -3671,6 +3669,11 @@ let bimeth_spec_extra_post bi_ctxt res_ty =
 let rec compile_bimethod bi_ctxt bimethod : bi_ctxt * Ptree.decl =
   let open T in
   let Bimethod (bimdecl, ccopt) = bimethod in
+  (* Fresh gensym shared across both sides of this bimethod compilation *)
+  let g = Gensym.create () in
+  let bi_ctxt = { bi_ctxt with
+    left_ctxt  = { bi_ctxt.left_ctxt  with gensym = g };
+    right_ctxt = { bi_ctxt.right_ctxt with gensym = g } } in
 
   let add_params prefix ctxt params =
     foldr (fun pinfo ctxt ->

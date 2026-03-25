@@ -736,27 +736,15 @@ end = struct
      same name we generate.  To test.
   *)
   let mk_snapshot_ident : exp t -> unit -> ident =
-    let id name = Ast.Id name in
+    let gs = Gensym.create () in
     let create_name e =
       match e.node with
       | Evar {node = Id "alloc"; _} -> "s_alloc"
       | Evar {node = Id name; _} -> name
       | Esingleton {node = Evar {node = Id name; _}; _} -> name
-      | Eimage (g, {node = Id f; _}) -> f
+      | Eimage (_, {node = Id f; _}) -> f
       | _ -> "snap_r" in
-    let stamp = ref 0 in
-    let names = ref [] in
-    fun rgn () -> begin
-        let oldstamp = !stamp in
-        incr stamp;
-        let name = ref (create_name rgn ^ string_of_int oldstamp) in
-        while mem name !names do
-          incr stamp;
-          name := create_name rgn ^ string_of_int !stamp
-        done;
-        names := name :: !names;
-        id !name
-      end
+    fun rgn () -> Ast.Id (Gensym.next gs (create_name rgn))
 
   (* snap e = S
 
@@ -1380,8 +1368,8 @@ let rec projr_bicommand (cc: bicommand) : bicommand =
 let reserved_id_prefix = "q__"
 
 let mk_fresh_id : string -> ident =
-  let c = ref 0 in
-  fun name -> incr c; Id (reserved_id_prefix ^ name ^ Int.to_string !c)
+  let g = Gensym.create () in
+  fun name -> Id (Gensym.next g (reserved_id_prefix ^ name))
 
 let rec all_existify (b: bicommand) : bicommand =
   match b with

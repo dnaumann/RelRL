@@ -261,13 +261,9 @@ end = struct
 
   type bnd_snapshot = (exp t * ident t) list
 
-  let bnd_snap_name, reset =
-    let id name = Ast.Id name in
-    let stamp = ref 0 in
-    (fun r -> incr stamp; id ("bsnap_" ^ r ^ string_of_int !stamp)),
-    (fun () -> stamp := 0)
-
   let bnd_snap (bnd: boundary_decl) : bnd_snapshot =
+    let gs = Gensym.create () in
+    let bnd_snap_name r = Ast.Id (Gensym.next gs ("bsnap_" ^ r)) in
     let rec nameof_rgn e = match e.node with
       | Evar {node=Id name; _} -> name
       | Esingleton {node=Evar {node=Id name; _}; _} -> name
@@ -366,15 +362,12 @@ end = struct
     let bmon = mdl_bnd_post_of_penv penv in
     let step name mdl prog = match mdl with
       | Unary_interface i ->
-        reset ();
         let i' = Unary_interface (extend_interface bmon i) in
         M.add name i' prog
       | Unary_module m ->
-        reset ();
         let m' = Unary_module (extend_module bmon m) in
         M.add name m' prog
       | Relation_module b ->
-        reset ();
         let b' = Relation_module (extend_bimodule bmon b) in
         M.add name b' prog in
     M.fold step penv M.empty
@@ -1117,16 +1110,12 @@ end = struct
     let elts = main.mdl_elts in
     filtermap (function Mdl_mdef(Method(m,_)) -> Some m | _ -> None) elts
 
-  let gen_module_name =
-    let mk_name id n = ident (id_name id ^ string_of_int n) in
-    let stamp = ref 0 in
-    let rec loop name known =
-      let currentstamp = !stamp in
-      if mem name known
-      then (incr stamp; loop (mk_name name currentstamp) known)
-      else name
-    in
-    fun (penv: penv) name -> loop (ident name) (map fst (M.bindings penv))
+  let gen_module_name (penv: penv) name =
+    let g = Gensym.create () in
+    let known = map fst (M.bindings penv) in
+    let taken n = mem (ident n) known in
+    if taken name then ident (Gensym.next_not_in g taken name)
+    else ident name
 
   let build_link_module_methods ctbl penv : bimodule_elt list =
     let meths = methods_in_main penv in

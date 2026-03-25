@@ -17,14 +17,9 @@ module Rename_Locals : sig
   val rename : penv -> penv
 end = struct
 
-  let gen, reset =
-    let stamp = ref 0 in
-    (fun name -> incr stamp; Ast.Id (name ^ string_of_int !stamp)),
-    (fun () -> stamp := 0)
-
-  let gen_ident (i: ident t) : ident t =
+  let gen_ident (g: Gensym.t) (i: ident t) : ident t =
     match i.node with
-    | Id name -> gen name -: i.ty
+    | Id name -> Ast.Id (Gensym.next g name) -: i.ty
     | Qualid _ -> failwith "Qualified identifiers not supported"
 
   let globals penv : ident list =
@@ -145,11 +140,11 @@ end = struct
     | Array_update (a, i, e) -> Array_update (s #! a, subste s i, subste s e)
     | Call (x, m, es) -> Call (s #? x, m, List.map ((#!) s) es)
 
-  let substc (gbls: ident list) (s: vsubst) (c: command) : command =
+  let substc (g: Gensym.t) (gbls: ident list) (s: vsubst) (c: command) : command =
     let rec subst s = function
       | Acommand ac -> Acommand (substac s ac)
       | Vardecl (x, m, ty, c) when List.mem x.node gbls ->
-        let x' = gen_ident x in
+        let x' = gen_ident g x in
         if !pretrans_debug then begin
           let x_name = string_of_ident x.node in
           let x'_name = string_of_ident x'.node in
@@ -172,7 +167,7 @@ end = struct
     let Method (mdecl, com) = mdef in
     match com with
     | None -> Method (mdecl, None)
-    | Some c -> reset (); Method (mdecl, Some (substc gbls M.empty c))
+    | Some c -> Method (mdecl, Some (substc (Gensym.create ()) gbls M.empty c))
 
   let rename_in_module gbls mdl : module_def =
     let mdl_elts = List.fold_right (fun elt rest ->
