@@ -434,8 +434,8 @@ let rec simplify_term (t: Ptree.term) : Ptree.term =
 
 let subst_term (s: (Ptree.qualid * Ptree.term) list) (t: Ptree.term) =
   let open Ptree in
-  let tag = ref 0 in
-  let refresh (s: string) : string = incr tag; s ^ Int.to_string !tag in
+  let g = Gensym.create () in
+  let refresh (s: string) : string = Gensym.next g s in
   let refresh_ident (s: ident) : ident = mk_ident (refresh s.id_str) in
   let warn_unsupported tm =
     Format.fprintf Format.err_formatter
