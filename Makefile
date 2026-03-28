@@ -25,9 +25,40 @@ explain:
 menhir-repl:
 	menhir --interpret --interpret-show-cst --interpret-error $(PARSER)
 
+UNIT_TEST_BIN      = tests/run_unit_tests
+UNIT_TEST_BUILDDIR = tests/_build
+
+.PHONY: test-unit
+test-unit: $(UNIT_TEST_BIN)
+	$(UNIT_TEST_BIN)
+
+# Build unit tests using the .cmo files already produced by ocamlbuild,
+# placing intermediate files in tests/_build to avoid hygiene violations.
+$(UNIT_TEST_BIN): main.byte tests/unit_tests.ml
+	mkdir -p $(UNIT_TEST_BUILDDIR)
+	cd $(UNIT_TEST_BUILDDIR) && \
+	  ocamlfind ocamlc -package ounit2 -linkpkg \
+	    -I ../../_build/src/parser \
+	    -I ../../_build/src/util \
+	    ../../_build/src/parser/ast.cmo \
+	    ../../_build/src/util/lib.cmo \
+	    ../../_build/src/parser/astutil.cmo \
+	    ../../_build/src/util/gensym.cmo \
+	    ../../tests/unit_tests.ml \
+	    -o ../../$(UNIT_TEST_BIN)
+
+.PHONY: test-integration
+test-integration: main.byte
+	bash tests/integration_tests.sh
+
+.PHONY: test
+test: test-unit test-integration
+
 .PHONY: clean
 clean:
 	$(OCB) -clean
+	rm -f $(UNIT_TEST_BIN)
+	rm -rf $(UNIT_TEST_BUILDDIR)
 
 .PHONY: dep-graph
 dep-graph: main.byte

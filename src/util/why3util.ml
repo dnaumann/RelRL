@@ -426,7 +426,6 @@ let rec simplify_term (t: Ptree.term) : Ptree.term =
   | Ttuple ts -> mk_term (Ttuple (map simplify_term ts))
   | Tif (b, t1, t2) ->
     mk_term (Tif (simplify_term b, simplify_term t1, simplify_term t2))
-  | Teps (x, pty, t) -> mk_term (Teps (x, pty, simplify_term t))
   | Tat (t, label) -> mk_term (Tat (simplify_term t, label))
   | Tlet (x, v, t) -> mk_term (Tlet (x, simplify_term v, simplify_term t))
   | Trecord qs -> mk_term (Trecord (map (fun (q,t) -> (q,simplify_term t)) qs))
@@ -512,7 +511,6 @@ let elim_let (trm: Ptree.term) : Ptree.term =
     | Tbinnop (t1, op, t2) -> ret (Tbinnop (aux subs t1, op, aux subs t2))
     | Tnot t -> ret (Tnot (aux subs t))
     | Tif (e, t1, t2) -> ret (Tif (aux subs e, aux subs t1, aux subs t2))
-    | Teps (id, ty, t) -> warn_unsupported trm; ret (Teps (id, ty, aux subs t))
     | Tattr (attr, t) -> ret (Tattr (attr, aux subs t))
     | Tlet (id, e, tm) ->
       failwith "WORKING HERE"
