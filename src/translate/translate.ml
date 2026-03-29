@@ -155,6 +155,8 @@ type bi_ctxt = {
   bimethods: (Ptree.qualid * QualidS.t * QualidS.t) M.t;
   (* Current bimodule *)
   current_bimdl: (ident * ident * ident) option;
+  (* Map from bimethod name to whether it (transitively) does a biupdate *)
+  biupdate_map: bool M.t;
 }
 
 let ini_bi_ctxt =
@@ -165,7 +167,8 @@ let ini_bi_ctxt =
     refperm = mk_qualid [""];
     bipreds = QualidM.empty;
     bimethods = M.empty;
-    current_bimdl = None }
+    current_bimdl = None;
+    biupdate_map = M.empty }
 
 let qualify_ctxt ctxt name =
   let idt_map = ctxt.ident_map in
@@ -227,8 +230,9 @@ let merge_bi_ctxt c c' =
   let bipreds = QualidM.union merge_fn c.bipreds c'.bipreds in
   let bimethods = M.union merge_fn c.bimethods c'.bimethods in
   let current_bimdl = c.current_bimdl in
+  let biupdate_map = M.union merge_fn c.biupdate_map c'.biupdate_map in
   {left_ctxt; right_ctxt; left_state; right_state; refperm; bipreds;
-   bimethods; current_bimdl}
+   bimethods; current_bimdl; biupdate_map}
 
 let ctxt_locals ctxt : (ident * (ity * Ptree.qualid)) list =
   let open M in
@@ -3173,20 +3177,20 @@ let rec compile_bispec bi_ctxt bispec =
   let rctxt, rstate = bi_ctxt.right_ctxt, bi_ctxt.right_state in
   let ok_refperm = Build_State.ok_refperm lstate rstate bi_ctxt.refperm in
 
-  (* Build the expression: PreRefperm.extends (old pi) pi *)
-  let old_pi = mk_old_term (mk_qvar bi_ctxt.refperm) in
-  let curr_pi = mk_qvar bi_ctxt.refperm in
-  let extends_term = extends_refperm <*> [old_pi; curr_pi] in
-  let extends_post = mk_ensures extends_term in
-
   let pre = ok_refperm :: pre in
-  let post = extends_post :: mk_ensures ok_refperm :: post in
+  let post = mk_ensures ok_refperm :: post in
   let lconds = mk_biwr_frame_condition lctxt lstate leffs Biwr_left in
   let rconds = mk_biwr_frame_condition rctxt rstate reffs Biwr_right in
   let lwrites = compile_writes lctxt lstate leffs in
   let rwrites = compile_writes rctxt rstate reffs in
   let writes = lwrites @ rwrites in
   mk_spec pre ((map mk_ensures (lconds @ rconds)) @ post) [] writes
+
+and mk_extends_post bi_ctxt =
+  let old_pi = mk_old_term (mk_qvar bi_ctxt.refperm) in
+  let curr_pi = mk_qvar bi_ctxt.refperm in
+  let extends_term = extends_refperm <*> [old_pi; curr_pi] in
+  mk_ensures extends_term
 
 and compile_bispec_post bi_ctxt post =
   let fvs = T.free_vars_rformula post in
@@ -3668,6 +3672,26 @@ let bimeth_spec_extra_post bi_ctxt res_ty =
     | _ -> [] in
   lcond @ rcond
 
+(* Like Annot.does_biupdate, but also checks whether called bimethods
+   transitively perform a biupdate, using a map built up as bimethods
+   are compiled in order. *)
+let rec does_biupdate_ext biupdate_map (cc: T.bicommand) = match cc with
+  | Biupdate (_, _) -> true
+  | Bisync (Call (_, meth, _)) ->
+    (try M.find meth.node biupdate_map with Not_found -> false)
+  | Bihavoc_right _ | Bisplit _ | Bisync _
+  | Biassume _ | Biassert _ -> false
+  | Bivardecl (_, _, cc) | Biwhile (_, _, _, _, cc) ->
+    does_biupdate_ext biupdate_map cc
+  | Biseq (cc1, cc2) | Biif (_, _, cc1, cc2) ->
+    does_biupdate_ext biupdate_map cc1 ||
+    does_biupdate_ext biupdate_map cc2
+  | Biif4 (_, _, {then_then; then_else; else_then; else_else}) ->
+    does_biupdate_ext biupdate_map then_then ||
+    does_biupdate_ext biupdate_map then_else ||
+    does_biupdate_ext biupdate_map else_then ||
+    does_biupdate_ext biupdate_map else_else
+
 let rec compile_bimethod bi_ctxt bimethod : bi_ctxt * Ptree.decl =
   let open T in
   let Bimethod (bimdecl, ccopt) = bimethod in
@@ -3749,11 +3773,21 @@ let rec compile_bimethod bi_ctxt bimethod : bi_ctxt * Ptree.decl =
       else bispec in
     let extra_post = bimeth_spec_extra_post bi_ctxt bimdecl.result_ty in
     let bispec = {bispec with sp_post = extra_post @ bispec.sp_post } in
-    
-    let wrs = QualidS.add bi_ctxt.refperm (specified_writes bispec) in
+
+    let updates =
+      try M.find bimdecl.bimeth_name bi_ctxt.biupdate_map
+      with Not_found -> false in
+    let bispec =
+      if updates then
+        {bispec with sp_post = mk_extends_post bi_ctxt :: bispec.sp_post}
+      else bispec in
+    let wrs =
+      if updates then
+        QualidS.add bi_ctxt.refperm (specified_writes bispec)
+      else specified_writes bispec in
     let sp_wrs = terms_of_fields_written wrs in
     let bispec = {bispec with sp_writes = sp_wrs} in
-    
+
     let e = mk_abstract_expr params ret_ty bispec in
     let meth_qualid = qualid_of_ident meth_name in
     let lwrs, rwrs = split_fields_left_right wrs in
@@ -3800,11 +3834,16 @@ let rec compile_bimethod bi_ctxt bimethod : bi_ctxt * Ptree.decl =
        easier to read. *)
     let body = simplify_expr @@ reassoc_expr body in
 
-    (* always include writes to the refperm in spec_writes.  Will get removed if
-       updateRefperm is not called in the method body. *)
+    (* Include writes to the refperm in spec_writes if the method body
+       (transitively) calls updateRefperm. *)
 
+    let updates = does_biupdate_ext bi_ctxt.biupdate_map cc in
+    let bispec =
+      if updates then
+        {bispec with sp_post = mk_extends_post bi_ctxt :: bispec.sp_post}
+      else bispec in
     let wrs =
-      if does_biupdate cc then
+      if updates then
         QualidS.add bi_ctxt.refperm (specified_writes bispec)
       else specified_writes bispec in
 
@@ -3822,7 +3861,9 @@ let rec compile_bimethod bi_ctxt bimethod : bi_ctxt * Ptree.decl =
     let lwrs, rwrs = split_fields_left_right wrs in
     let bimethods =
       M.add bimdecl.bimeth_name (meth_qualid, lwrs, rwrs) bi_ctxt.bimethods in
-    let bi_ctxt = {bi_ctxt with bimethods} in
+    let biupdate_map =
+      M.add bimdecl.bimeth_name updates bi_ctxt.biupdate_map in
+    let bi_ctxt = {bi_ctxt with bimethods; biupdate_map} in
 
     bi_ctxt, Dlet (meth_name, false, Expr.RKnone, fundef)
 
@@ -3985,7 +4026,7 @@ let find_compiled_unary_ctxt mlw_map name : ctxt =
   | Compiled (Unary ctxt, _) -> ctxt
   | _ | exception Not_found -> failwith "find_compiled_unary_ctxt"
 
-let rec compile_bimodule mlw_map bi_ctxt bimdl : mlw_map =
+let rec compile_bimodule mlw_map bi_ctxt bimdl : mlw_map * bi_ctxt =
   let open T in
   let lmdl = bimdl.bimdl_left_impl and rmdl = bimdl.bimdl_right_impl in
   let lmlw_map, lctxt =
@@ -4019,7 +4060,7 @@ let rec compile_bimodule mlw_map bi_ctxt bimdl : mlw_map =
     | _ -> decls in
   let mlw_file = Ptree.Modules [mlw_name bimdl.bimdl_name, decls] in
   let update_fn = const (Some (Compiled (Relational bi_ctxt, mlw_file))) in
-  M.update bimdl.bimdl_name update_fn mlw_map
+  M.update bimdl.bimdl_name update_fn mlw_map, bi_ctxt
 
 and compile_bimodule_elt mlw_map bi_ctxt elt
   : bi_ctxt * Ptree.decl option * mlw_map =
@@ -4111,7 +4152,7 @@ let compile_penv ctxt penv =
       (* Pretty print the bimodule definition *)
       (* pp_bimodule_def Format.std_formatter m;  *)
  
-      compile_bimodule mlw_map bi_ctxt m, bi_ctxt
+      compile_bimodule mlw_map bi_ctxt m
     | _ -> assert false in
   let mlw_map, prog, _ = foldl (fun name (mlw_map, mlw_files, bi_ctxt) ->
       if !trans_debug then begin
