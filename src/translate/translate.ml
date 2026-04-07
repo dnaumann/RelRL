@@ -3192,6 +3192,11 @@ and mk_extends_post bi_ctxt =
   let extends_term = extends_refperm <*> [old_pi; curr_pi] in
   mk_ensures extends_term
 
+and mk_extends_invariant bi_ctxt =
+  let init_pi = mk_term (Tat (mk_qvar bi_ctxt.refperm, init_label)) in
+  let curr_pi = mk_qvar bi_ctxt.refperm in
+  extends_refperm <*> [init_pi; curr_pi]
+
 and compile_bispec_post bi_ctxt post =
   let fvs = T.free_vars_rformula post in
   let result = Id "result" in
@@ -3236,6 +3241,26 @@ and mk_biwr_frame_condition ctxt state ?(alloc_cond=false) effects side
   ignore alloc_cond;
   (* alloc_cond @ *) concat_map mk_frame_cond writes
 
+
+(* Like Annot.does_biupdate, but also checks whether called bimethods
+   transitively perform a biupdate, using a map built up as bimethods
+   are compiled in order. *)
+let rec does_biupdate_ext biupdate_map (cc: T.bicommand) = match cc with
+  | Biupdate (_, _) -> true
+  | Bisync (Call (_, meth, _)) ->
+    (try M.find meth.node biupdate_map with Not_found -> false)
+  | Bihavoc_right _ | Bisplit _ | Bisync _
+  | Biassume _ | Biassert _ -> false
+  | Bivardecl (_, _, cc) | Biwhile (_, _, _, _, cc) ->
+    does_biupdate_ext biupdate_map cc
+  | Biseq (cc1, cc2) | Biif (_, _, cc1, cc2) ->
+    does_biupdate_ext biupdate_map cc1 ||
+    does_biupdate_ext biupdate_map cc2
+  | Biif4 (_, _, {then_then; then_else; else_then; else_else}) ->
+    does_biupdate_ext biupdate_map then_then ||
+    does_biupdate_ext biupdate_map then_else ||
+    does_biupdate_ext biupdate_map else_then ||
+    does_biupdate_ext biupdate_map else_else
 
 let rec compile_bicommand bi_ctxt (cc: T.bicommand) : Ptree.expr =
   let { left_state = lstate; right_state = rstate } = bi_ctxt in
@@ -3396,6 +3421,9 @@ and compile_lockstep_biwhile bi_ctxt lg rg {biwinvariants; biwframe} cc =
   let rg' = term_of_exp bi_ctxt.right_ctxt bi_ctxt.right_state rg in
   let rinvs = map (compile_rformula bi_ctxt) biwinvariants in
   let rinvs = mk_ok_refperm bi_ctxt :: rinvs in
+  let extends_inv =
+    if does_biupdate_ext bi_ctxt.biupdate_map cc
+    then [mk_extends_invariant bi_ctxt] else [] in
   let eff_invs =
     let leff, reff = biwframe in
     let lctxt, rctxt = bi_ctxt.left_ctxt, bi_ctxt.right_ctxt in
@@ -3403,7 +3431,7 @@ and compile_lockstep_biwhile bi_ctxt lg rg {biwinvariants; biwframe} cc =
     mk_biwr_frame_condition rctxt bi_ctxt.right_state reff Biwr_right in
   let loc_invs = mk_locals_ty_invariants bi_ctxt in
   let glob_invs = mk_globals_ty_invariants bi_ctxt in
-  let rinvs = glob_invs @ loc_invs @ eff_invs @ rinvs in
+  let rinvs = glob_invs @ loc_invs @ extends_inv @ eff_invs @ rinvs in
   let guard = expr_of_exp bi_ctxt.left_ctxt bi_ctxt.left_state lg in
   let rbody = compile_bicommand bi_ctxt cc in
   let lockstep = explain_term (lg' ==. rg') "lockstep" in
@@ -3427,6 +3455,9 @@ and compile_sided_biwhile bi_ctxt side guard biwspec cc =
   let guard = expr_of_exp ctxt state guard in
   let rinvs = map (compile_rformula bi_ctxt) biwinvariants in
   let rinvs = mk_ok_refperm bi_ctxt :: rinvs in
+  let extends_inv =
+    if does_biupdate_ext bi_ctxt.biupdate_map cc
+    then [mk_extends_invariant bi_ctxt] else [] in
   let eff_invs =
     let leff, reff = biwframe in
     let lctxt, rctxt = bi_ctxt.left_ctxt, bi_ctxt.right_ctxt in
@@ -3434,7 +3465,7 @@ and compile_sided_biwhile bi_ctxt side guard biwspec cc =
     mk_biwr_frame_condition rctxt bi_ctxt.right_state reff Biwr_right in
   let loc_invs = mk_locals_ty_invariants bi_ctxt in
   let glob_invs = mk_globals_ty_invariants bi_ctxt in
-  let rinvs = glob_invs @ loc_invs @ eff_invs @ rinvs in
+  let rinvs = glob_invs @ loc_invs @ extends_inv @ eff_invs @ rinvs in
   let rbody = compile_bicommand bi_ctxt cc in
   mk_expr (Ewhile (guard, rinvs, [], rbody))
 
@@ -3527,6 +3558,9 @@ and compile_biwhile bi_ctxt lg rg lf rf biwspec cc =
   let rinvs' = map (compile_rformula bi_ctxt) biwinvariants in
   let rinvs' = rinvs' @ [align_cond] in
   let rinvs' = mk_ok_refperm bi_ctxt :: rinvs' in
+  let extends_inv =
+    if does_biupdate_ext bi_ctxt.biupdate_map cc
+    then [mk_extends_invariant bi_ctxt] else [] in
   let eff_invs =
     let leff, reff = biwframe in
     let lctxt, rctxt = bi_ctxt.left_ctxt, bi_ctxt.right_ctxt in
@@ -3534,7 +3568,7 @@ and compile_biwhile bi_ctxt lg rg lf rf biwspec cc =
     mk_biwr_frame_condition rctxt bi_ctxt.right_state reff Biwr_right in
   let loc_invs = mk_locals_ty_invariants bi_ctxt in
   let glob_invs = mk_globals_ty_invariants bi_ctxt in
-  let rinvs' = glob_invs @ loc_invs @ eff_invs @ rinvs' in
+  let rinvs' = glob_invs @ loc_invs @ extends_inv @ eff_invs @ rinvs' in
   let while_guard = lg_exp ^| rg_exp in
   let bwhl_guard = lg_exp ^& lf_exp in
   let bwhl_guard = explain_expr bwhl_guard "Left step" in
@@ -3671,26 +3705,6 @@ let bimeth_spec_extra_post bi_ctxt res_ty =
       [mk_ensures cond]
     | _ -> [] in
   lcond @ rcond
-
-(* Like Annot.does_biupdate, but also checks whether called bimethods
-   transitively perform a biupdate, using a map built up as bimethods
-   are compiled in order. *)
-let rec does_biupdate_ext biupdate_map (cc: T.bicommand) = match cc with
-  | Biupdate (_, _) -> true
-  | Bisync (Call (_, meth, _)) ->
-    (try M.find meth.node biupdate_map with Not_found -> false)
-  | Bihavoc_right _ | Bisplit _ | Bisync _
-  | Biassume _ | Biassert _ -> false
-  | Bivardecl (_, _, cc) | Biwhile (_, _, _, _, cc) ->
-    does_biupdate_ext biupdate_map cc
-  | Biseq (cc1, cc2) | Biif (_, _, cc1, cc2) ->
-    does_biupdate_ext biupdate_map cc1 ||
-    does_biupdate_ext biupdate_map cc2
-  | Biif4 (_, _, {then_then; then_else; else_then; else_else}) ->
-    does_biupdate_ext biupdate_map then_then ||
-    does_biupdate_ext biupdate_map then_else ||
-    does_biupdate_ext biupdate_map else_then ||
-    does_biupdate_ext biupdate_map else_else
 
 let rec compile_bimethod bi_ctxt bimethod : bi_ctxt * Ptree.decl =
   let open T in
