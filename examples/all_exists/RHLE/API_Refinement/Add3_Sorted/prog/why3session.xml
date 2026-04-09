@@ -71,7 +71,7 @@
    <proof prover="0"><result status="valid" time="0.037972" steps="21"/></proof>
    </goal>
    <goal name="prog&#39;vc.1.1" expl="apply premises" proved="true">
-   <proof prover="0"><result status="valid" time="0.180680" steps="1104"/></proof>
+   <proof prover="0"><result status="valid" time="0.180680" steps="1234"/></proof>
    </goal>
    <goal name="prog&#39;vc.1.2" expl="apply premises" proved="true">
    <proof prover="0"><result status="valid" time="0.038626" steps="21"/></proof>
@@ -79,13 +79,10 @@
   </transf>
   </goal>
   <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.053686" steps="56"/></proof>
+  <proof prover="0"><result status="valid" time="0.050153" steps="37"/></proof>
   </goal>
   <goal name="prog&#39;vc.3" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.050153" steps="39"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.4" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.046947" steps="39"/></proof>
+  <proof prover="0"><result status="valid" time="0.046947" steps="37"/></proof>
   </goal>
  </transf>
  </goal>

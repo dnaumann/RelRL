@@ -33,22 +33,22 @@
   <proof prover="0"><result status="valid" time="0.017621" steps="16"/></proof>
   </goal>
   <goal name="prog&#39;vc.5" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.044066" steps="28"/></proof>
+  <proof prover="0"><result status="valid" time="0.051456" steps="30"/></proof>
   </goal>
   <goal name="prog&#39;vc.6" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.022098" steps="24"/></proof>
+  <proof prover="0"><result status="valid" time="0.018581" steps="27"/></proof>
   </goal>
   <goal name="prog&#39;vc.7" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.019054" steps="24"/></proof>
+  <proof prover="0"><result status="valid" time="0.018983" steps="27"/></proof>
   </goal>
   <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.051456" steps="24"/></proof>
+  <proof prover="0"><result status="valid" time="0.044066" steps="18"/></proof>
   </goal>
   <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.018581" steps="24"/></proof>
+  <proof prover="0"><result status="valid" time="0.022098" steps="18"/></proof>
   </goal>
   <goal name="prog&#39;vc.10" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.018983" steps="24"/></proof>
+  <proof prover="0"><result status="valid" time="0.019054" steps="18"/></proof>
   </goal>
  </transf>
  </goal>

@@ -16,20 +16,20 @@
 </theory>
 <theory name="A" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
- <proof prover="0"><result status="valid" time="0.063910" steps="274"/></proof>
+ <proof prover="0"><result status="valid" time="0.063910" steps="275"/></proof>
  </goal>
 </theory>
 <theory name="B" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
- <proof prover="0"><result status="valid" time="0.066311" steps="273"/></proof>
+ <proof prover="0"><result status="valid" time="0.191427" steps="274"/></proof>
  </goal>
 </theory>
 <theory name="FREL" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
- <proof prover="0"><result status="valid" time="3.631435" steps="33576"/></proof>
+ <proof prover="0"><result status="valid" time="7.783671" steps="36869"/></proof>
  <transf name="split_vc" proved="true" >
   <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.080589" steps="320"/></proof>
+  <proof prover="0"><result status="valid" time="0.080589" steps="321"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.049432" steps="34"/></proof>
@@ -41,7 +41,7 @@
   <proof prover="0"><result status="valid" time="0.048612" steps="36"/></proof>
   </goal>
   <goal name="prog&#39;vc.4" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.133383" steps="791"/></proof>
+  <proof prover="0"><result status="valid" time="0.345118" steps="793"/></proof>
   </goal>
   <goal name="prog&#39;vc.5" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.051042" steps="85"/></proof>
@@ -50,7 +50,7 @@
   <proof prover="0"><result status="valid" time="0.062091" steps="86"/></proof>
   </goal>
   <goal name="prog&#39;vc.7" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.048112" steps="87"/></proof>
+  <proof prover="0"><result status="valid" time="0.153458" steps="87"/></proof>
   </goal>
   <goal name="prog&#39;vc.8" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.109647" steps="70"/></proof>

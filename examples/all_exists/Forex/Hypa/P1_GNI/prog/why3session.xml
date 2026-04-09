@@ -21,43 +21,31 @@
   <proof prover="0"><result status="valid" time="0.022987" steps="12"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.050930" steps="26"/></proof>
+  <proof prover="0"><result status="valid" time="0.020274" steps="21"/></proof>
   </goal>
   <goal name="prog&#39;vc.2" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.020274" steps="23"/></proof>
+  <proof prover="0"><result status="valid" time="0.023042" steps="21"/></proof>
   </goal>
   <goal name="prog&#39;vc.3" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.023042" steps="23"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.4" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.044643" steps="14"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.5" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.020134" steps="14"/></proof>
   </goal>
-  <goal name="prog&#39;vc.6" expl="postcondition" proved="true">
+  <goal name="prog&#39;vc.4" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.015618" steps="14"/></proof>
   </goal>
-  <goal name="prog&#39;vc.7" expl="assertion" proved="true">
+  <goal name="prog&#39;vc.5" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.020216" steps="12"/></proof>
   </goal>
-  <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.047409" steps="14"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
+  <goal name="prog&#39;vc.6" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.021560" steps="14"/></proof>
   </goal>
-  <goal name="prog&#39;vc.10" expl="postcondition" proved="true">
+  <goal name="prog&#39;vc.7" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.023714" steps="14"/></proof>
   </goal>
-  <goal name="prog&#39;vc.11" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.049793" steps="27"/></proof>
+  <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.016539" steps="21"/></proof>
   </goal>
-  <goal name="prog&#39;vc.12" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.016539" steps="23"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.13" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.018514" steps="23"/></proof>
+  <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.018514" steps="21"/></proof>
   </goal>
  </transf>
  </goal>

@@ -30,7 +30,7 @@
   <proof prover="0"><result status="valid" time="0.020282" steps="24"/></proof>
   </goal>
   <goal name="prog&#39;vc.4" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.041759" steps="401"/></proof>
+  <proof prover="0"><result status="valid" time="0.041759" steps="402"/></proof>
   </goal>
   <goal name="prog&#39;vc.5" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.023519" steps="102"/></proof>
@@ -66,7 +66,7 @@
   <proof prover="0"><result status="valid" time="0.021581" steps="89"/></proof>
   </goal>
   <goal name="prog&#39;vc.16" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.037089" steps="395"/></proof>
+  <proof prover="0"><result status="valid" time="0.037089" steps="396"/></proof>
   </goal>
   <goal name="prog&#39;vc.17" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.030025" steps="97"/></proof>
@@ -84,12 +84,9 @@
   <proof prover="0"><undone/></proof>
   </goal>
   <goal name="prog&#39;vc.22" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.069035" steps="128"/></proof>
+  <proof prover="0"><result status="valid" time="0.174114" steps="713"/></proof>
   </goal>
-  <goal name="prog&#39;vc.23" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.174114" steps="1170"/></proof>
-  </goal>
-  <goal name="prog&#39;vc.24" expl="postcondition">
+  <goal name="prog&#39;vc.23" expl="postcondition">
   <proof prover="0"><undone/></proof>
   </goal>
  </transf>

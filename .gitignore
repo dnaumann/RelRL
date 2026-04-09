@@ -19,7 +19,6 @@ _build/
 bin/whyrel
 
 *notes.md
-*.mlw
 *.dot
 *.png
 *.svg
@@ -27,6 +26,3 @@ tools/
 *code-workspace
 test/*
 *.res
-
-!fizzbuzz_theory.mlw
-!map_theory.mlw

@@ -134,13 +134,10 @@
   <proof prover="0"><result status="valid" time="0.072967" steps="28"/></proof>
   </goal>
   <goal name="main&#39;vc.36" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.055701" steps="33"/></proof>
+  <proof prover="0"><result status="valid" time="0.053923" steps="28"/></proof>
   </goal>
   <goal name="main&#39;vc.37" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.053923" steps="30"/></proof>
-  </goal>
-  <goal name="main&#39;vc.38" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.053113" steps="30"/></proof>
+  <proof prover="0"><result status="valid" time="0.053113" steps="28"/></proof>
   </goal>
  </transf>
  </goal>

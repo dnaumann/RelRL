@@ -13,8 +13,8 @@ ide: prog.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) -L $(EXTERN_FILES_DIR) $<
 
 # 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
-replay: prog.mlw $(PROG)/why3session.xml
-	$(WHY3) replay -L $(WHYREL_STDLIB) prog
+replay: prog.mlw prog/why3session.xml
+	$(WHY3) replay -L $(WHYREL_STDLIB) -L $(EXTERN_FILES_DIR) prog
 
 .PHONY: clean
 clean:

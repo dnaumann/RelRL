@@ -1,53 +1,27 @@
 ## Examples
 
-This directory contains examples used to evaluate WhyRel.  Why3 session files
-are included.  
+This directory contains examples used to evaluate WhyRel.  Each example is
+placed in a directory that includes source files, WhyML files, and Why3 session
+files.  Current proofs were done with following provers:
 
-To replay an example, it should be sufficient to `cd' to its
-directory and run:
+- alt-ergo 2.6.2 
 
-```
-make
-make ide
-```
+Run `why3 config detect` to make why3 aware of the prover.
 
-Please consult the `Makefile` in each directory to learn about any additional
-options.  Replaying the examples may require the following SMT solvers to be
-installed on your system: Alt-Ergo, Z3, CVC3, and CVC4.
+Each example comes with a makefile with the following options
 
-There is a master makefile present in the directory which will run make replay on all the examples and output a summary. Run `make replay` in this directory.
+- `make`: builds whyml file
+- `make ide`: launches why3 ide with current session if it exists else a new one.
+- `make replay`: launches why3 replay for the currently saved session.
 
-Included examples are:
+The sessions are proved solely with Alt-Ergo. Thus installing it with
 
-- **Cell**: Equivalence of two modules implementing boxed integers in
-  different ways.
-- **SSSP**: Establishes equivalence of two priority queue modules with similar
-  internals.  Client program is Dijkstra's single source shortest paths
-  algorithm.
-- **Kruskal**: Equivalence of two union-find implementations; one based on
-  QuickFind and another based on QuickUnion.  Client program is Kruskal's
-  algorithm for computing the minimum spanning tree of a graph.
-- **sumpub**: Information flow case study.  Verifies that a program summing up
-  public elements in a list with public and non-public elements does not leak
-  information about non-public values.
-- **tabulate**: Introductory example that shows how specs in region logic can be
-  formulated.  Shows relational reasoning without encapsulation.
-- **determinism**: Example from [*Modular Product
-  Programs*](https://dl.acm.org/doi/10.1145/3324783), Eilers et al.
-- **equiv-check**: Example from [*Semantic Program Alignment for Equivalence
-    Checking*](https://dl.acm.org/doi/10.1145/3314221.3314596), Churchill et
-    al.
-- **majorization**: Example from [*Thirty-seven years of relational Hoare
-    logic*](https://arxiv.org/abs/2007.06421), D. A. Naumann.
-- **factorial**: Introductory example illustrating biprograms.  Equivalence of
-  two methods that compute factorial.
-- **swap**: Minimal example of program equivalence: commuting two calls to two
-  methods acting on different parts of the heap.
-- **tiling**: Loop tiling compiler optimization example.  Taken from
-    [*Relational Logic with Framing and Hypotheses: Technical
-    Report*](https://arxiv.org/abs/1611.08992), Banerjee et al.
-- **Veracity2g**: Contains veracity2G challenge problem that were not verifiable
-  using veracity framework. They deal with commutativity checking. See
-  https://github.com/veracity-lang/veracity/
-- **all_exists**: contains forall exists examples taken from a variety of
-  benchmarks.
+There is a master makefile present in the directory which allows replay
+on all the examples and outputs a summary. 
+
+- `make replay`: Runs make replay for all examples rooted from this directory.
+- `make replay DIR=path`: Runs make replay for all examples in the listed path.
+- `make summary`: Outputs a summary of all the replays resulting from make replay.
+
+The all_all directory has examples on all all property verification. And
+similarly for all_exists directory.

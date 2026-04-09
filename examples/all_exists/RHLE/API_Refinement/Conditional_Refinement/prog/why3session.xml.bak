@@ -3,7 +3,6 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
@@ -59,7 +58,6 @@
   </goal>
   <goal name="prog&#39;vc.13" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.021314" steps="14"/></proof>
-  <proof prover="1" obsolete="true"><undone/></proof>
   </goal>
  </transf>
  </goal>

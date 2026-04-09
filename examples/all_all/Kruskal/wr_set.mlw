@@ -1,0 +1,131 @@
+theory Set
+  type set 'a
+  predicate mem 'a (set 'a)
+
+  (* ------------------------------------------------------------------------ *)
+  (* The empty set                                                            *)
+
+  constant empty : set 'a
+  predicate isempty (s: set 'a) = forall x: 'a. not (mem x s)
+
+  axiom empty_isempty : isempty (empty: set 'a)
+
+  lemma mem_empty : forall x: 'a. mem x empty <-> false
+
+
+  (* ------------------------------------------------------------------------ *)
+  (* Equality                                                                 *)
+
+  predicate (==) (s1 s2: set 'a) = forall x: 'a. mem x s1 <-> mem x s2
+
+  axiom extensionality : forall s1 s2: set 'a. s1 == s2 -> s1 = s2
+
+  (* (==) is an equivalence relation *)
+
+  lemma eq_reflexivity : forall s: set 'a. s == s
+
+  lemma eq_symmetry : forall s1 s2: set 'a. s1 == s2 -> s2 == s1
+
+  lemma eq_transitivity : forall s1 s2 s3: set 'a.
+    s1 == s2 -> s2 == s3 -> s1 == s3
+
+
+  (* ------------------------------------------------------------------------ *)
+  (* Subset relation                                                          *)
+
+  predicate subset (s1 s2: set 'a) = forall x: 'a. mem x s1 -> mem x s2
+
+  (* subset is an ordering relation *)
+
+  lemma subset_reflexivity : forall s: set 'a. subset s s
+
+  lemma subset_antisymmetry : forall s1 s2: set 'a.
+    subset s1 s2 -> subset s2 s1 -> s1 == s2
+
+  lemma subset_transitivity : forall s1 s2 s3: set 'a.
+    subset s1 s2 -> subset s2 s3 -> subset s1 s3
+
+
+  (* ------------------------------------------------------------------------ *)
+  (* Union                                                                    *)
+
+  function union (set 'a) (set 'a) : set 'a
+
+  axiom union_def : forall s1 s2: set 'a, x: 'a.
+    mem x (union s1 s2) <-> mem x s1 \/ mem x s2
+
+  lemma union_prop : forall s1 s2: set 'a.
+    subset s1 (union s1 s2) /\ subset s2 (union s1 s2)
+
+
+  (* ------------------------------------------------------------------------ *)
+  (* Bigunion                                                                 *)
+
+  function union_onset (set (set 'a)) : set 'a
+
+  axiom union_onset_def : forall c: set (set 'a), x: 'a.
+    mem x (union_onset c) <-> (exists s: set 'a. mem s c /\ mem x s)
+
+  lemma union_onset_prop : forall c: set (set 'a), s: set 'a.
+    mem s c -> subset s (union_onset c)
+
+  lemma empty_collection: forall c: set (set 'a).
+    isempty c -> isempty (union_onset c)
+
+
+  (* ------------------------------------------------------------------------ *)
+  (* Intersection                                                             *)
+
+  function inter (set 'a) (set 'a) : set 'a
+
+  axiom inter_def : forall s1 s2: set 'a, x: 'a.
+    mem x (inter s1 s2) <-> mem x s1 /\ mem x s2
+
+  lemma inter_prop : forall s1 s2: set 'a.
+    subset (inter s1 s2) s1 /\ subset (inter s1 s2) s2
+
+
+  (* ------------------------------------------------------------------------ *)
+  (* Difference                                                               *)
+
+  function diff (set 'a) (set 'a) : set 'a
+
+  axiom diff_def: forall s1 s2: set 'a, x: 'a.
+    mem x (diff s1 s2) <-> mem x s1 /\ not (mem x s2)
+
+  lemma diff_prop : forall s1 s2: set 'a.
+    subset (diff s1 s2) s1 /\ inter (diff s1 s2) s2 == empty
+
+
+  (* ------------------------------------------------------------------------ *)
+  (* Singleton set                                                            *)
+
+  function singleton 'a : set 'a
+
+  axiom singleton_def : forall m: 'a.
+    mem m (singleton m) /\ forall n: 'a. m <> n -> not (mem n (singleton m))
+
+  lemma singleton_mem_invert : forall m: 'a, n: 'a.
+    mem m (singleton n) <-> m = n
+
+  lemma singUnion : forall m n: 'a.
+    mem m (union (singleton m) (singleton n)) /\
+    mem n (union (singleton m) (singleton n))
+end
+
+theory Interval
+  use Set
+  use export int.Int
+
+  function interval int int : set int
+
+  axiom interval_def1 : forall m n: int.
+    m < n ->
+    forall i: int. mem i (interval m n) <-> (m <= i /\ i < n)
+
+  axiom interval_def2 : forall m n: int.
+    m >= n -> interval m n == empty
+
+  lemma diff_interval : forall m n: int.
+    0 < m < n -> interval 0 n == union (interval 0 m) (interval m n)
+end

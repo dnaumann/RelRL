@@ -53,7 +53,7 @@ module Fizzbuzz_Theory
       i = k -> listNth i (upd_list k v xs) = v
 
   type int_fun = int -> int
-  let function empty_fun (i: int) : int = 0 
+  let function empty_fun (_: int) : int = 0 
   (* constant empty_fun: *)
 
   let function add_mapping  (k: int) (v: int) (map: int_fun): int_fun =

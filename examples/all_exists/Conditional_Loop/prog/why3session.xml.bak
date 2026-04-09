@@ -69,7 +69,7 @@
   <proof prover="0"><result status="valid" time="0.024030" steps="51"/></proof>
   </goal>
   <goal name="m&#39;vc.17" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.030349" steps="261"/></proof>
+  <proof prover="0"><result status="valid" time="0.030349" steps="263"/></proof>
   </goal>
   <goal name="m&#39;vc.18" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.024672" steps="55"/></proof>
@@ -111,7 +111,7 @@
   <proof prover="0"><result status="valid" time="0.019451" steps="53"/></proof>
   </goal>
   <goal name="m&#39;vc.31" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.033246" steps="270"/></proof>
+  <proof prover="0"><result status="valid" time="0.033246" steps="267"/></proof>
   </goal>
   <goal name="m&#39;vc.32" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.021120" steps="57"/></proof>
@@ -147,13 +147,13 @@
   <proof prover="0"><result status="valid" time="0.019869" steps="79"/></proof>
   </goal>
   <goal name="m&#39;vc.43" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.057210" steps="2171"/></proof>
+  <proof prover="0"><result status="valid" time="0.177359" steps="2170"/></proof>
   </goal>
   <goal name="m&#39;vc.44" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.026387" steps="84"/></proof>
   </goal>
   <goal name="m&#39;vc.45" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.032179" steps="95"/></proof>
+  <proof prover="0"><result status="valid" time="0.032179" steps="94"/></proof>
   </goal>
   <goal name="m&#39;vc.46" expl="w := (w + 1) mod n" proved="true">
   <proof prover="0"><result status="valid" time="0.021567" steps="51"/></proof>
@@ -186,10 +186,13 @@
   <proof prover="0"><result status="valid" time="0.020926" steps="51"/></proof>
   </goal>
   <goal name="m&#39;vc.56" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.021843" steps="59"/></proof>
+  <proof prover="0"><result status="valid" time="0.064014" steps="66"/></proof>
   </goal>
   <goal name="m&#39;vc.57" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.020318" steps="59"/></proof>
+  <proof prover="0"><result status="valid" time="0.021843" steps="61"/></proof>
+  </goal>
+  <goal name="m&#39;vc.58" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.020318" steps="61"/></proof>
   </goal>
  </transf>
  </goal>

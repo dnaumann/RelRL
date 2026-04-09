@@ -3,7 +3,6 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
@@ -19,8 +18,6 @@
  <goal name="main&#39;vc" expl="VC for main" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="main&#39;vc.0" expl="assertion" proved="true">
-  <proof prover="0"><undone/></proof>
-  <proof prover="1"><result status="valid" time="0.008426" steps="11909"/></proof>
   <transf name="exists" proved="true" arg1="l_h">
    <goal name="main&#39;vc.0.0" proved="true">
    <proof prover="0"><result status="valid" time="0.046469" steps="16"/></proof>
@@ -91,8 +88,6 @@
   <proof prover="0"><result status="valid" time="0.064451" steps="29"/></proof>
   </goal>
   <goal name="main&#39;vc.22" expl="assertion" proved="true">
-  <proof prover="0"><undone/></proof>
-  <proof prover="1"><result status="valid" time="0.014805" steps="12193"/></proof>
   <transf name="exists" proved="true" arg1="l_h">
    <goal name="main&#39;vc.22.0" proved="true">
    <proof prover="0"><result status="valid" time="0.054420" steps="46"/></proof>

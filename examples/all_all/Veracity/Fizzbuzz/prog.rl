@@ -282,8 +282,6 @@ module SumAB : B =
       end;
       i := i + 1;
     done;
-    { result = count(hmap, 0, n / 2) + count(hmap, n / 2, n) };
-    { result = count(hmap, 0, n) };
 end
 
 module SumBA : B =
@@ -304,15 +302,13 @@ module SumBA : B =
     i := 0;
     while (i < n / 2) do
       invariant { 0 <= i /\ i <= n / 2 }
-      invariant { result = count(hmap, n / 2, n) + count(hmap, 0, i) }
+      invariant { result =  count(hmap, 0, i) + count(hmap, n / 2, n) }
       v := getfnval(i, hmap);
       if (v = 1) then
         result := result + 1;
       end;
       i := i + 1;
     done;
-    { result = count(hmap, n / 2, n) + count(hmap, 0, n / 2) };
-    { result = count(hmap, 0, n) };
 end
 
 bimodule SumCommutes (SumAB | SumBA) =

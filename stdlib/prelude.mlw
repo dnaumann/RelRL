@@ -115,6 +115,18 @@ module Prelude
   lemma rgn_disjoint_comm : forall r1 r2: rgn.
     r1 \# r2 -> r2 \# r1
 
+  lemma rgn_disjoint_not_mem_left : forall r1 r2:rgn, x:reference.
+    x <> null ->
+    r1 \# r2 ->
+    Rgn.mem x r1 ->
+    not (Rgn.mem x r2)
+
+  lemma rgn_disjoint_not_mem_right : forall r1 r2:rgn, x:reference.
+    x <> null ->
+    r1 \# r2 ->
+    Rgn.mem x r2 ->
+    not (Rgn.mem x r1)
+
   val function rgnSubK (s: rgn) (m: M.t 'a) (v: 'a) : rgn
     ensures { forall r. Rgn.mem r result <-> (r <> null /\ Rgn.mem r s /\ m[r] = v) }
 
@@ -213,6 +225,21 @@ module PreRefperm
     forall y. y <> null -> Rgn.mem y h -> y \: pi.rol -> Rgn.mem pi.rol[y] g
 
   lemma idRgn_empty : forall pi. idRgn pi emptyRgn emptyRgn
+
+  lemma idRgn_singleton : forall pi:t, x y:reference.
+    x <> null ->
+    y <> null ->
+    idRef pi x y ->
+    idRgn pi (singleton x) (singleton y)
+
+  lemma idRgn_union_singleton : forall pi:t, g h:rgn, x y:reference.
+    x <> null ->
+    y <> null ->
+    idRgn pi g h ->
+    idRef pi x y ->
+    not (Rgn.mem x g) ->
+    not (Rgn.mem y h) ->
+    idRgn pi (Rgn.union g (singleton x)) (Rgn.union h (singleton y))
 
   predicate idRgn_sub (pi: t) (m m': M.t 'a) (v: 'a) (g h: rgn) =
     (forall x. x <> null -> m[x] = v -> Rgn.mem x g -> x \: pi.lor /\ Rgn.mem pi.lor[x] h) /\

@@ -1,0 +1,11 @@
+module HiccupSum_Theory
+
+  use int.Int
+  use bool.Bool
+
+  let function bool2int (x:bool) : int =
+     if x then 1 else 0  
+
+end
+
+

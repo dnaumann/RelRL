@@ -50,13 +50,13 @@
   <proof prover="0"><result status="valid" time="0.024041" steps="27"/></proof>
   </goal>
   <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.053455" steps="25"/></proof>
+  <proof prover="0"><result status="valid" time="0.053455" steps="30"/></proof>
   </goal>
   <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.020814" steps="22"/></proof>
+  <proof prover="0"><result status="valid" time="0.020814" steps="26"/></proof>
   </goal>
   <goal name="prog&#39;vc.10" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.020549" steps="22"/></proof>
+  <proof prover="0"><result status="valid" time="0.020549" steps="26"/></proof>
   </goal>
  </transf>
  </goal>

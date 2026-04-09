@@ -69,7 +69,7 @@
   <proof prover="1" obsolete="true"><result status="valid" time="0.043058" steps="18"/></proof>
   </goal>
   <goal name="compiler_opt&#39;vc.5" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.021113" steps="35"/></proof>
+  <proof prover="0"><result status="valid" time="0.130511" steps="35"/></proof>
   <proof prover="1" obsolete="true"><result status="valid" time="0.050807" steps="35"/></proof>
   </goal>
   <goal name="compiler_opt&#39;vc.6" expl="loop invariant preservation" proved="true">
@@ -101,15 +101,12 @@
   <proof prover="1" obsolete="true"><result status="valid" time="0.043834" steps="39"/></proof>
   </goal>
   <goal name="compiler_opt&#39;vc.13" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.048042" steps="29"/></proof>
+  <proof prover="0"><result status="valid" time="0.019829" steps="24"/></proof>
+  <proof prover="1" obsolete="true"><result status="valid" time="0.045246" steps="26"/></proof>
   </goal>
   <goal name="compiler_opt&#39;vc.14" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.019829" steps="26"/></proof>
-  <proof prover="1" obsolete="true"><result status="valid" time="0.045246" steps="24"/></proof>
-  </goal>
-  <goal name="compiler_opt&#39;vc.15" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.014053" steps="26"/></proof>
-  <proof prover="1" obsolete="true"><result status="valid" time="0.038941" steps="24"/></proof>
+  <proof prover="0"><result status="valid" time="0.014053" steps="24"/></proof>
+  <proof prover="1" obsolete="true"><result status="valid" time="0.038941" steps="26"/></proof>
   </goal>
  </transf>
  </goal>

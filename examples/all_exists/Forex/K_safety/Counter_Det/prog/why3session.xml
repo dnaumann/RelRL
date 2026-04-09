@@ -18,7 +18,7 @@
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.080589" steps="259"/></proof>
+  <proof prover="0"><result status="valid" time="0.080589" steps="261"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.042211" steps="28"/></proof>
@@ -30,7 +30,7 @@
   <proof prover="0"><result status="valid" time="0.046238" steps="30"/></proof>
   </goal>
   <goal name="prog&#39;vc.4" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.109647" steps="540"/></proof>
+  <proof prover="0"><result status="valid" time="0.279781" steps="542"/></proof>
   </goal>
   <goal name="prog&#39;vc.5" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.051042" steps="82"/></proof>

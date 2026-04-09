@@ -2,7 +2,6 @@
 <!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
-<prover id="0" name="Alt-Ergo" version="2.6.2" alternative="BV" timelimit="200" steplimit="0" memlimit="8000"/>
 <prover id="1" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
@@ -13,7 +12,14 @@
 </theory>
 <theory name="FREL" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
- <proof prover="0"><result status="valid" time="0.058845" steps="10"/></proof>
+ <transf name="split_vc" proved="true" >
+  <goal name="prog&#39;vc.0" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.051186" steps="12"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.036099" steps="12"/></proof>
+  </goal>
+ </transf>
  </goal>
 </theory>
 </file>

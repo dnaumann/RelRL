@@ -34,7 +34,7 @@
   <proof prover="0"><result status="valid" time="0.017177" steps="25"/></proof>
   </goal>
   <goal name="prog&#39;vc.5" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.157080" steps="404"/></proof>
+  <proof prover="0"><result status="valid" time="0.157080" steps="405"/></proof>
   </goal>
   <goal name="prog&#39;vc.6" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.029925" steps="105"/></proof>
@@ -79,7 +79,7 @@
   <proof prover="0"><result status="valid" time="0.020462" steps="92"/></proof>
   </goal>
   <goal name="prog&#39;vc.20" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.152205" steps="399"/></proof>
+  <proof prover="0"><result status="valid" time="0.152205" steps="400"/></proof>
   </goal>
   <goal name="prog&#39;vc.21" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.024008" steps="99"/></proof>
@@ -91,7 +91,7 @@
   <proof prover="0"><result status="valid" time="0.097172" steps="100"/></proof>
   </goal>
   <goal name="prog&#39;vc.24" expl="lockstep" proved="true">
-  <proof prover="0"><result status="valid" time="0.020054" steps="103"/></proof>
+  <proof prover="0"><result status="valid" time="0.124086" steps="103"/></proof>
   </goal>
   <goal name="prog&#39;vc.25" expl="precondition" proved="true">
   <proof prover="0"><result status="valid" time="0.090609" steps="53"/></proof>
@@ -103,7 +103,7 @@
   <proof prover="0"><result status="valid" time="0.082284" steps="107"/></proof>
   </goal>
   <goal name="prog&#39;vc.28" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.264029" steps="2725"/></proof>
+  <proof prover="0"><result status="valid" time="0.264029" steps="2726"/></proof>
   </goal>
   <goal name="prog&#39;vc.29" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.015319" steps="77"/></proof>

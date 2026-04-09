@@ -13,7 +13,7 @@
 </theory>
 <theory name="FREL" proved="true">
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
- <proof prover="0"><result status="valid" time="0.058845" steps="2"/></proof>
+ <proof prover="0"><result status="valid" time="0.058845" steps="10"/></proof>
  </goal>
 </theory>
 </file>

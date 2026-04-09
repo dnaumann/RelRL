@@ -1,0 +1,36 @@
+module Graph_theory
+
+  use int.Int
+  use prelude.Prelude
+  
+  constant maxWeightConst : int
+  axiom maxWeight_pos : maxWeightConst > 0
+  
+  val function maxWeight : int
+    ensures { result = maxWeightConst }
+  
+  type edge = { startVertex: int; endVertex: int; weight: int }
+    invariant { 0 <= weight < maxWeight }
+    
+  type graph = { numVertices: int; edges: A.array edge }
+    invariant { numVertices = A.length edges /\
+                forall i: int. 0 <= i < numVertices ->
+                  let e = A.get edges i in
+                  let startv = startVertex e in
+                  let endv = endVertex e in
+                  0 <= startv < numVertices /\ 0 <= endv < numVertices }
+    by { numVertices = 0; edges = A.make 0 (any edge) }
+
+  let emptyGraph = { numVertices = 0; edges = A.make 0 (any edge) }
+
+  let function hasVertex (g: graph) (v: int) = 0 <= v < numVertices g
+
+  lemma graph_edges_within : forall g: graph.
+    let es = edges g in
+    forall i: int. 0 <= i < A.length es ->
+      let e = A.get es i in
+      let sv = startVertex e in
+      let ev = endVertex e in
+      hasVertex g sv /\ hasVertex g ev /\ 0 <= weight e < maxWeight
+
+end

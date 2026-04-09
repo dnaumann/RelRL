@@ -1,4 +1,9 @@
 interface I =
+  import theory Majorization_Theory 
+
+  lemma strict_trans: forall a: int, b: int, c: int. 
+    a > b /\ b > c -> a > c
+
   meth m (x:int) : int
     requires { x >= 4 }
     ensures  { result > 0 }

@@ -3,7 +3,6 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="fact.mlw"/>
 <theory name="State" proved="true">
@@ -88,8 +87,6 @@
   <proof prover="0"><result status="valid" time="0.056536" steps="97"/></proof>
   </goal>
   <goal name="fact&#39;vc.19" expl="loop invariant preservation" proved="true">
-  <proof prover="0" obsolete="true"><result status="timeout" time="200.000000" steps="1262634"/></proof>
-  <proof prover="1" obsolete="true"><result status="timeout" time="200.000000" steps="18957304"/></proof>
   <transf name="split_vc" proved="true" >
    <goal name="fact&#39;vc.19.0" expl="loop invariant preservation" proved="true">
    <proof prover="0"><result status="valid" time="0.058240" steps="95"/></proof>

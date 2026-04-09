@@ -48,7 +48,7 @@
  <goal name="prog&#39;vc" expl="VC for prog" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
-  <proof prover="0"><result status="valid" time="0.167471" steps="331"/></proof>
+  <proof prover="0"><result status="valid" time="0.167471" steps="332"/></proof>
   </goal>
   <goal name="prog&#39;vc.1" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.087435" steps="42"/></proof>
@@ -96,7 +96,7 @@
   <proof prover="0"><result status="valid" time="0.046229" steps="55"/></proof>
   </goal>
   <goal name="prog&#39;vc.16" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.221353" steps="805"/></proof>
+  <proof prover="0"><result status="valid" time="0.221353" steps="807"/></proof>
   </goal>
   <goal name="prog&#39;vc.17" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.092936" steps="109"/></proof>
@@ -108,19 +108,19 @@
   <proof prover="0"><result status="valid" time="0.056376" steps="112"/></proof>
   </goal>
   <goal name="prog&#39;vc.20" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.106600" steps="93"/></proof>
+  <proof prover="0"><result status="valid" time="0.106600" steps="95"/></proof>
   </goal>
   <goal name="prog&#39;vc.21" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.094117" steps="96"/></proof>
+  <proof prover="0"><result status="valid" time="0.094117" steps="98"/></proof>
   </goal>
   <goal name="prog&#39;vc.22" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="valid" time="0.094842" steps="107"/></proof>
+  <proof prover="0"><result status="valid" time="0.094842" steps="106"/></proof>
   </goal>
   <goal name="prog&#39;vc.23" expl="alignment condition" proved="true">
   <proof prover="0"><result status="valid" time="0.050472" steps="104"/></proof>
   </goal>
   <goal name="prog&#39;vc.24" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.157633" steps="377"/></proof>
+  <proof prover="0"><result status="valid" time="0.157633" steps="378"/></proof>
   </goal>
   <goal name="prog&#39;vc.25" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.082204" steps="74"/></proof>

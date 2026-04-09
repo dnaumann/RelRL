@@ -107,10 +107,13 @@
   <proof prover="0"><result status="valid" time="0.024861" steps="42"/></proof>
   </goal>
   <goal name="smaller&#39;vc.22" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.030960" steps="24"/></proof>
+  <proof prover="0"><result status="valid" time="0.052139" steps="28"/></proof>
   </goal>
   <goal name="smaller&#39;vc.23" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.018992" steps="24"/></proof>
+  <proof prover="0"><result status="valid" time="0.030960" steps="26"/></proof>
+  </goal>
+  <goal name="smaller&#39;vc.24" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.018992" steps="26"/></proof>
   </goal>
  </transf>
  </goal>

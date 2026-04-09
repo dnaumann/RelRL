@@ -33,13 +33,13 @@
   <proof prover="0"><result status="valid" time="0.049884" steps="16"/></proof>
   </goal>
   <goal name="prog&#39;vc.5" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.056797" steps="21"/></proof>
+  <proof prover="0"><result status="valid" time="0.056797" steps="30"/></proof>
   </goal>
   <goal name="prog&#39;vc.6" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.047465" steps="21"/></proof>
+  <proof prover="0"><result status="valid" time="0.047465" steps="27"/></proof>
   </goal>
   <goal name="prog&#39;vc.7" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.045263" steps="21"/></proof>
+  <proof prover="0"><result status="valid" time="0.045263" steps="27"/></proof>
   </goal>
   <goal name="prog&#39;vc.8" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.058129" steps="18"/></proof>

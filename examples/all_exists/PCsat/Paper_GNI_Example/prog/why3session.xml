@@ -40,13 +40,13 @@
   <proof prover="0"><result status="valid" time="0.020595" steps="12"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.1" expl="guard agreement" proved="true">
-  <proof prover="0"><result status="valid" time="0.019244" steps="14"/></proof>
+  <proof prover="0"><result status="valid" time="0.129491" steps="14"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.2" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.017457" steps="22"/></proof>
+  <proof prover="0"><result status="valid" time="0.122648" steps="22"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.3" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.019025" steps="22"/></proof>
+  <proof prover="0"><result status="valid" time="0.122156" steps="22"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.4" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.023561" steps="20"/></proof>
@@ -76,7 +76,7 @@
   <proof prover="0"><result status="valid" time="0.021036" steps="34"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.13" expl="assertion" proved="true">
-  <proof prover="0"><result status="valid" time="0.020729" steps="38"/></proof>
+  <proof prover="0"><result status="valid" time="0.130073" steps="38"/></proof>
   </goal>
   <goal name="noninterference&#39;vc.14" expl="assertion" proved="true">
   <proof prover="0"><result status="valid" time="0.025908" steps="38"/></proof>

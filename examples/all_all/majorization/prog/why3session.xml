@@ -3,7 +3,6 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
@@ -11,19 +10,23 @@
  <proof prover="0"><result status="valid" time="0.055320" steps="49"/></proof>
  </goal>
 </theory>
+<theory name="I" proved="true">
+ <goal name="strict_trans" proved="true">
+ <proof prover="0"><result status="valid" time="0.038244" steps="3"/></proof>
+ </goal>
+</theory>
 <theory name="P0" proved="true">
  <goal name="m&#39;vc" expl="VC for m" proved="true">
- <proof prover="0"><result status="valid" time="0.046733" steps="25"/></proof>
+ <proof prover="0"><result status="valid" time="0.046733" steps="26"/></proof>
  </goal>
 </theory>
 <theory name="P1" proved="true">
  <goal name="m&#39;vc" expl="VC for m" proved="true">
- <proof prover="0"><result status="valid" time="0.048127" steps="19"/></proof>
+ <proof prover="0"><result status="valid" time="0.048127" steps="20"/></proof>
  </goal>
 </theory>
 <theory name="PREL" proved="true">
  <goal name="m&#39;vc" expl="VC for m" proved="true">
- <proof prover="0"><result status="timeout" time="200.000000" steps="763016"/></proof>
  <transf name="split_vc" proved="true" >
   <goal name="m&#39;vc.0" expl="loop invariant init" proved="true">
   <proof prover="0"><result status="valid" time="0.057463" steps="27"/></proof>
@@ -38,7 +41,7 @@
   <proof prover="0"><result status="valid" time="0.045796" steps="29"/></proof>
   </goal>
   <goal name="m&#39;vc.4" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.054913" steps="35"/></proof>
+  <proof prover="0"><result status="valid" time="0.054913" steps="36"/></proof>
   </goal>
   <goal name="m&#39;vc.5" expl="precondition" proved="true">
   <proof prover="0"><result status="valid" time="0.070292" steps="36"/></proof>
@@ -110,7 +113,7 @@
   <proof prover="0"><result status="valid" time="0.046088" steps="46"/></proof>
   </goal>
   <goal name="m&#39;vc.28" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.053270" steps="48"/></proof>
+  <proof prover="0"><result status="valid" time="0.053270" steps="49"/></proof>
   </goal>
   <goal name="m&#39;vc.29" expl="guard agreement" proved="true">
   <proof prover="0"><result status="valid" time="0.057913" steps="51"/></proof>
@@ -128,19 +131,39 @@
   <proof prover="0"><result status="valid" time="0.059083" steps="129"/></proof>
   </goal>
   <goal name="m&#39;vc.34" expl="loop invariant preservation" proved="true">
-  <proof prover="0"><result status="timeout" time="200.000000" steps="1524942"/></proof>
   <transf name="split_vc" proved="true" >
    <goal name="m&#39;vc.34.0" expl="loop invariant preservation" proved="true">
    <proof prover="0"><result status="valid" time="0.059213" steps="125"/></proof>
    </goal>
    <goal name="m&#39;vc.34.1" expl="loop invariant preservation" proved="true">
-   <proof prover="0"><undone/></proof>
-   <proof prover="1"><result status="valid" time="0.051593" steps="172791"/></proof>
+   <transf name="subst_all" proved="true" >
+    <goal name="m&#39;vc.34.1.0" expl="loop invariant preservation" proved="true">
+    <transf name="apply" proved="true" arg1="strict_trans" arg2="with" arg3="l_s, (r_z * r_y)">
+     <goal name="m&#39;vc.34.1.0.0" expl="apply premises" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="m&#39;vc.34.1.0.0.0" expl="apply premises" proved="true">
+      <proof prover="0"><result status="valid" time="0.054561" steps="60"/></proof>
+      </goal>
+      <goal name="m&#39;vc.34.1.0.0.1" expl="apply premises" proved="true">
+      <transf name="assert" proved="true" arg1="(r_y * r_z &gt; 2 * r_z)">
+       <goal name="m&#39;vc.34.1.0.0.1.0" expl="asserted formula" proved="true">
+       <proof prover="0"><result status="valid" time="0.055436" steps="52"/></proof>
+       </goal>
+       <goal name="m&#39;vc.34.1.0.0.1.1" expl="apply premises" proved="true">
+       <proof prover="0"><result status="valid" time="0.047174" steps="34"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
    </goal>
   </transf>
   </goal>
   <goal name="m&#39;vc.35" expl="alignment condition" proved="true">
-  <proof prover="0"><result status="valid" time="0.064170" steps="155"/></proof>
+  <proof prover="0"><result status="valid" time="0.064170" steps="156"/></proof>
   </goal>
   <goal name="m&#39;vc.36" expl="loop invariant preservation" proved="true">
   <proof prover="0"><result status="valid" time="0.065574" steps="49"/></proof>
@@ -158,13 +181,10 @@
   <proof prover="0"><result status="valid" time="0.054646" steps="52"/></proof>
   </goal>
   <goal name="m&#39;vc.41" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.079464" steps="57"/></proof>
+  <proof prover="0"><result status="valid" time="0.054624" steps="50"/></proof>
   </goal>
   <goal name="m&#39;vc.42" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.054624" steps="52"/></proof>
-  </goal>
-  <goal name="m&#39;vc.43" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.062223" steps="52"/></proof>
+  <proof prover="0"><result status="valid" time="0.062223" steps="50"/></proof>
   </goal>
  </transf>
  </goal>

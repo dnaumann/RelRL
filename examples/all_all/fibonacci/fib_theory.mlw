@@ -1,0 +1,9 @@
+theory Fib_theory
+
+  use int.Int
+
+  let rec function fib_spec (n: int) : int
+    requires { n >= 0 } variant { n }
+  = if n < 2 then n else fib_spec(n-1) + fib_spec(n-2)
+
+end

@@ -1,0 +1,193 @@
+module Partition
+
+  use wr_set.Set
+  use wr_set.Interval
+
+  predicate disjoint_family (p: set (set 'a)) =
+    forall s t: set 'a.
+      mem s p ->
+      mem t p ->
+      not (s == t) ->
+      inter s t == empty
+
+  predicate covers_interval (p: set (set int)) (m: int) =
+    union_onset p == interval 0 m
+
+  predicate nonempty_subsets (p: set (set 'a)) =
+    not (mem empty p)
+
+  type prepartition = {
+    max : int;
+    parts : set (set int);
+  }
+
+  predicate isPartition (p: prepartition) =
+    (p.max = 0 /\ p.parts == empty) \/
+    (p.max > 0 /\
+     disjoint_family p.parts /\
+     covers_interval p.parts p.max /\
+     nonempty_subsets p.parts)
+
+
+  (** * Create prepartitions *)
+
+  function makePartition int : prepartition
+
+  axiom makePartition_def : forall m: int.
+    let {max = max; parts = p} = makePartition m in
+    (m <= 0 -> max = 0 /\ p == empty) /\
+    (m  > 0 -> max = m /\
+               forall s: set int.
+                 mem s p <-> (exists n: int. 0 <= n < m /\ s == singleton n))
+
+  lemma makePartition_isPartition : forall m: int. isPartition (makePartition m)
+
+
+  (** * Find *)
+
+  function pfind (int) (prepartition) : set int
+
+  axiom pfind_def1 : forall p: prepartition, i:int.
+    isPartition p ->
+    0 <= i < p.max ->
+    mem (pfind i p) p.parts /\ mem i (pfind i p)
+
+  axiom pfind_def2 : forall p: prepartition, i:int.
+    isPartition p -> i < 0 -> pfind i p == empty
+
+  axiom pfind_def3 : forall p: prepartition, i: int.
+    isPartition p -> p.max <= i -> pfind i p == empty
+
+  lemma pfind_makePartition : forall i m: int.
+    m > 0 -> 0 <= i < m -> pfind i (makePartition m) == singleton i
+
+  lemma pfind_mem_parts : forall p: prepartition, i: int.
+    isPartition p -> 0 <= i < p.max -> mem (pfind i p) p.parts
+
+  lemma pfind_ge_max : forall p: prepartition, i: int.
+    isPartition p -> p.max <= i -> pfind i p == empty
+
+  lemma pfind_mem : forall p: prepartition, x: int.
+    isPartition p -> 0 <= x < p.max -> mem x (pfind x p)
+
+  lemma pfind_eq : forall p: prepartition, x y: int.
+    isPartition p ->
+    0 <= x < p.max ->
+    0 <= y < p.max ->
+    (mem y (pfind x p) <-> pfind x p == pfind y p)
+
+  (** * Union *)
+
+  function punion (p: prepartition) (l l': set int) : prepartition =
+    if mem l p.parts && mem l' p.parts then
+      let ul = (union l l') in
+      let nparts = union (diff (diff p.parts (singleton l)) (singleton l'))
+                         (singleton ul) in
+      {max = p.max; parts = nparts}
+    else p
+
+  lemma union_not_mem : forall p: prepartition, l l': set int.
+    isPartition p ->
+    mem l p.parts ->
+    mem l' p.parts ->
+    not (l == l') ->
+    let np = punion p l l' in
+    (not (mem l np.parts)) /\ (not (mem l' np.parts))
+
+  lemma union_isPartition : forall p: prepartition, l l': set int.
+    isPartition p ->
+    mem l p.parts ->
+    mem l' p.parts ->
+    isPartition (punion p l l')
+
+  lemma find_union : forall p: prepartition, x y: int.
+    isPartition p ->
+    0 <= x < p.max ->
+    0 <= y < p.max ->
+    let np = punion p (pfind x p) (pfind y p) in
+    pfind x np == pfind y np
+
+  lemma find_union_other : forall p: prepartition, x y: int.
+    isPartition p ->
+    0 <= x < p.max ->
+    0 <= y < p.max ->
+    let np = punion p (pfind x p) (pfind y p) in
+    forall i: int.
+      0 <= i < p.max ->
+      not (mem i (pfind x p)) ->
+      not (mem i (pfind y p)) ->
+      pfind i p == pfind i np
+
+  lemma find_union_other_alt : forall p: prepartition, x y: int.
+    isPartition p ->
+    0 <= x < p.max ->
+    0 <= y < p.max ->
+    let np = punion p (pfind x p) (pfind y p) in
+    forall i: int.
+      0 <= i < p.max ->
+      not (mem i (pfind x np)) ->
+      pfind i p == pfind i np
+
+
+  (** * getMax and getParts *)
+
+  function getMax (p: prepartition) : int = p.max
+  function getParts (p: prepartition) : set (set int) = p.parts
+
+  (** * Two partition properties *)
+
+  predicate eqPartition (p1 p2: prepartition) =
+    getMax p1 = getMax p2 /\
+    (forall i: int. 0 <= i < getMax p1 -> pfind i p1 == pfind i p2)
+
+  lemma twopart : forall p1 p2: prepartition, x y: int.
+    isPartition p1 ->
+    isPartition p2 ->
+    eqPartition p1 p2 ->
+    0 <= x < getMax p1 ->
+    0 <= y < getMax p1 ->
+    let np1 = punion p1 (pfind x p1) (pfind y p1) in
+    let np2 = punion p2 (pfind x p2) (pfind y p2) in
+    eqPartition np1 np2
+
+
+  (** * Exports for WhyRel *)
+
+  type intset = set int
+
+  constant emptyIntset : intset
+  axiom emptyIntset_ax : emptyIntset = empty
+
+  constant emptyPartition : prepartition
+  axiom emptyPartition_ax : emptyPartition = {max = 0; parts = empty}
+
+  predicate mem (i: int) (s: intset) = Set.mem i s
+
+  type partition = {
+    to_prepart: prepartition;
+  } invariant { isPartition to_prepart }
+    by { to_prepart = emptyPartition }
+  meta coercion function to_prepart
+
+  constant pEmpty : partition
+  axiom pEmpty_ax : pEmpty = emptyPartition
+
+  val ghost function pMake (n: int) : partition
+    ensures { result = makePartition n }
+
+  val ghost function pFind (n: int) (p: partition) : set int
+    ensures { result = pfind n p }
+
+  val ghost function pUnion (p: partition) (l l': set int) : partition
+    ensures { result = punion p l l' }
+
+  val ghost function pMax (p: partition) : int
+    ensures { result = getMax p }
+
+  val ghost function pParts (p: partition) : set (set int)
+    ensures { result = getParts p }
+
+  val predicate pEq (p1 p2: partition) : bool
+    ensures { result <-> eqPartition p1 p2 }
+
+end

@@ -1,0 +1,67 @@
+module Kruskal_aux
+
+  use int.Int
+  use prelude.Prelude
+
+  (* ------------------------------------------------------------------------ *)
+  (* Lists                                                                    *)
+  (* ------------------------------------------------------------------------ *)
+
+  use export list.List
+  use export list.Mem
+  use list.Length
+
+  type intList = list int
+
+  val function nil : intList
+    ensures { result = Nil }
+
+  let function cons (i: int) (l: intList) : intList
+    ensures { result = Cons i l }
+  = Cons i l
+
+  let function listLength (l: intList) : int
+    ensures { result = length l}
+  = length l
+
+
+  (* ------------------------------------------------------------------------ *)
+  (* Graphs                                                                   *)
+  (* ------------------------------------------------------------------------ *)
+
+  constant maxWeightConst : int
+  axiom maxWeight_pos : maxWeightConst > 0
+
+  val function maxWeight : int
+    ensures { result = maxWeightConst }
+
+  type edge = { startVertex: int; endVertex: int; weight: int }
+    invariant { 0 <= weight < maxWeight }
+
+  type graph = { numVertices: int; edges: A.array edge }
+    invariant { numVertices = A.length edges }
+    invariant { forall i:int. 0 <= i < numVertices ->
+                  let e = A.get edges i in
+                  0 <= startVertex e < numVertices /\
+                  0 <= endVertex e < numVertices }
+    invariant { forall i j:int.
+                  0 <= i < numVertices ->
+                  0 <= j < numVertices ->
+                  i <= j -> (A.get edges i).weight <= (A.get edges j).weight }
+    by { numVertices = 0; edges = A.make 0 (any edge) }
+
+  let emptyGraph = { numVertices = 0; edges = A.make 0 (any edge) }
+
+  let function hasVertex (g: graph) (v: int) = 0 <= v < numVertices g
+
+  let function numEdges (es: A.array edge) = A.length es
+
+  lemma graph_edges_within : forall g: graph.
+    let es = edges g in
+    forall i: int. 0 <= i < A.length es ->
+      let e = A.get es i in
+      hasVertex g (startVertex e) /\
+      hasVertex g (endVertex e) /\
+      0 <= weight e < maxWeight
+
+end
