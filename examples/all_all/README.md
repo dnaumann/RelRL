@@ -5,10 +5,14 @@
   different ways.
 - **SSSP**: Establishes equivalence of two priority queue modules with similar
   internals.  Client program is Dijkstra's single source shortest paths
-  algorithm.
+  algorithm. Yet to be verified for current WhyRel.
 - **Kruskal**: Equivalence of two union-find implementations; one based on
   QuickFind and another based on QuickUnion.  Client program is Kruskal's
-  algorithm for computing the minimum spanning tree of a graph.
+  algorithm for computing the minimum spanning tree of a graph. Yet to be
+  verified for current WhyRel
+
+- **stack**: Equivalence to two stack implementations. Yet to be verified for
+  current WhyRel
 - **sumpub**: Information flow case study.  Verifies that a program summing up
   public elements in a list with public and non-public elements does not leak
   information about non-public values.
@@ -28,8 +32,6 @@
 - **tiling**: Loop tiling compiler optimization example.  Taken from
     [*Relational Logic with Framing and Hypotheses: Technical
     Report*](https://arxiv.org/abs/1611.08992), Banerjee et al.
-- **Veracity2g**: Contains veracity2G challenge problem that were not verifiable
+- **Veracity**: Contains challenge problems that were not verifiable
   using veracity framework. They deal with commutativity checking. See
   https://github.com/veracity-lang/veracity/
-- **all_exists**: contains forall exists examples taken from a variety of
-  benchmarks.

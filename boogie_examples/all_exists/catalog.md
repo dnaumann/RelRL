@@ -1,10 +1,22 @@
 # Boogie example catalog
 
+- BoogieExamples.bpl
+- ccr.bpl
+- Conditional_Loop.bpl
+- Conditional_Loop_LockstepAttempt.bpl
+- data.bpl
+- factorial.bpl
+- hiccupSum.bpl
+- Itzhaky.bpl
+- lmcsExample.bpl
+
 ## Hypra
 
 - lowError
 
-## Veracity2G
+## Veracity
+
+Veracity challenge problems that were not verifiable using the Veracity framework. See https://github.com/veracity-lang/veracity/
 
 - fizzbuzz
 - simple_vector
@@ -28,6 +40,15 @@ https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa
 - refine2
 - smaller
 
+### K-Safety
+
+K-safety properties from https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/K_safety
+
+- Coll_Item_Sym
+- Counter_Det
+- Double_Square_NI
+- Fig2
+
 ## PCSat
 
 https://github.com/ravenbeutner/ForEx/tree/main/benchmarks/pcsat
@@ -45,8 +66,7 @@ https://github.com/ravenbeutner/ForEx/tree/main/benchmarks/pcsat
 
 https://github.com/rcdickerson/orhle/tree/main/experiments
 
-Function call modelled using havoc assume. Existential specs are used for the
-right program.
+Function call modelled using havoc assume. Existential specs are used for the right program.
 
 ### API Refinement
 
