@@ -1,7 +1,7 @@
 # WhyRel
 
 WhyRel is a tool for reasoning about relational properties of object-based
-programs based on this [paper](http://arxiv.org/abs/1910.14560).  It has been
+programs based on this [paper](https://dl.acm.org/doi/10.1145/3551497).  It has been
 used to verify equivalence of ADTs, simple noninterference examples and program
 transformations.  WhyRel is built on top of the [Why3](https://www.why3.org)
 platform for deductive program verification and relies on it to generate and
@@ -19,17 +19,25 @@ programs in this setting.  See the `examples/` directory for some case studies
 done using WhyRel.
 
 This repository contains the sources for a new version of WhyRel.  The previous
-version was used to evaluate a rich set of case studies but is no longer
+version was used to evaluate a rich set of case studies in but is no longer
 maintained.  The current version is a reimplementation intended to be used for
 experimenting with encodings and additional features.
+
+In detail: The previous version supported specification and verification of
+forall-forall properties (2-safety) as documented in this
+[paper](https://link.springer.com/chapter/10.1007/978-3-031-30820-8_11).
+The current version adds support for forall-exists properties using a 
+technique documented in this [paper](https://arxiv.org/abs/2509.04777).
+Many forall-forall examples were ported to the new version but not all.
 
 This research has been partially supported by grants NSF CNS 2426414, NSF CNS 1718713 and ONR N00014-17-1-2787
 
 ## Contents
 
-- `boogie_examples` contains boogie translations of the examples in all_exists folder.
-- `examples` contains WhyRel case studies. It has a readme with instructions for replay.
 - `src` contains the WhyRel ocaml source
+- `examples` contains WhyRel case studies. It has a readme with instructions for installing solvers and for replay.  
+- `examples/all_all` has the forall-forall examples, and `examples/all_exists` has all-exists examples. The readme files in these folders provide catalogs. 
+- `boogie_examples` contains boogie translations of the examples in `examples/all_exists`.
 - `stdlib` is WhyRel's standard library.
 - `vscode` is a vscode extension of WhyRel syntax highlighting.
 - `emacs` syntax highlighting in emacs
@@ -60,11 +68,9 @@ Alternatively, if you install Why3 from source, make sure to also install the OC
 The sources are expected to compile using OCaml 5.1.1 and above.
 
 To compile, `cd` to the directory where you cloned this repository (referred
-to as `<WHYREL>` from here on) and run `make`.  To test out your installation
-you can run `<WHYREL>/bin/whyrel -version`.  There is no `make install`
-option; simply add `<WHYREL>/bin` to your `PATH` variable if desired.  Run
-`whyrel -help` to learn about supported command line flags.
+to as `<WHYREL>` from here on) and run `make`.  There may be some warnings, which can be ignored. 
 
+To test out your installation you can run `<WHYREL>/bin/whyrel -version`.  There is no `make install` option; simply add `<WHYREL>/bin` to your `PATH` variable if desired.  Run `whyrel -help` to learn about supported command line flags.
 
 ### Verification
 
@@ -73,7 +79,7 @@ orchestrated via why3 ide. Why3 supports a wide range of automated and
 interactive provers. Altergo and Z3 were used in developing and testing examples
 for WhyRel. There has been emphasis on using SMT solvers to discharge VCs in the
 design of WhyRel. Please refer to the Why3 installation documentation for
-instructions on how to install these and other supported provers.
+instructions on how to install these and other supported provers.  See also `examples/README.md`.
 
 ## Usage
 
