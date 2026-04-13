@@ -26,3 +26,4 @@ tools/
 *code-workspace
 test/*
 *.res
+*.claude
