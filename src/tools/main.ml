@@ -17,6 +17,8 @@ let only_print_version   = ref false
 let no_encap_check       = ref false
 let no_frame_lemma       = ref false
 let no_resolve_for_locEq = ref false
+let no_simplify_effects  = ref false
+let all_exists_mode      = ref false
 
 let output : out_channel option ref = ref None
 
@@ -76,6 +78,11 @@ let translate_program fmt penv ctbl =
   let ctxt, state_module = Translate.Build_State.mk (penv,ctbl) in
   let mlw_files = compile_penv ctxt penv in
   emit_mlw state_module;
+  (* Why3.Mlw_printer.pp_mlw_file Format.std_formatter (Why3.Ptree.mlw_file_of_sexp (Sexplib.Sexp.load_sexp "sexp.txt")); *)
+  (* Sexplib.Sexp.output_hum stdout (Sexplib.Sexp.load_sexp "sexp.txt");
+  output_char stdout '\n';
+  flush stdout; *)
+  (* (Sexplib.Sexp.save_sexps_hum "sexp.txt" ((List.map Why3.Ptree.sexp_of_mlw_file) mlw_files)); *)
   List.iter emit_mlw mlw_files
 
 let typecheck_program prog =
@@ -145,6 +152,9 @@ let args =
    "-type-check", Set only_typecheck_flag,
    " Type check program and exit";
 
+   "-all-exists", Set all_exists_mode,
+   " Intepret relational specs as forall-exists";
+
    "-debug", Set debug,
    " Print debug information";
 
@@ -156,6 +166,9 @@ let args =
 
    "-locEq", Set_string locEq_method,
    "<meth>  Derive the local equivalence spec for method <meth>";
+
+   "-no-simplify-effects", Set no_simplify_effects,
+   " Do not attempt to simplify effects";
 
    "-no-encap", Set no_encap_check,
    " Do not perform the Encap check";
@@ -175,12 +188,16 @@ let usage = "Usage: " ^ get_progname () ^ " [options] [<file>...]"
 let set_debug_flags () =
   tc_debug := !debug;
   trans_debug := !debug;
-  Pretrans.pretrans_debug := !debug;
+  Rename_locals.pretrans_debug := !debug;
   Encap_check.encap_debug := !debug
 
 let set_behaviour_flags () =
   Encap_check.do_encap_check := not !no_encap_check;
-  Translate.gen_frame_lemma := not !no_frame_lemma
+  Translate.gen_frame_lemma := not !no_frame_lemma;
+  Pretrans.simplify_effects := not !no_simplify_effects;
+  Typing.all_exists_mode := !all_exists_mode;
+  Typing.only_parse_or_typecheck := !only_parse_flag || !only_typecheck_flag;
+  ()
 
 let main () =
   let add_program_file s = program_files := s :: !program_files in

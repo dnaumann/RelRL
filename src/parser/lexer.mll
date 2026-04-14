@@ -86,6 +86,7 @@ let symbols = Hashtbl.of_seq @@ List.to_seq [
     ("assume", ASSUME);
     ("assert", ASSERT);
     ("invariant", INVARIANT);
+    ("variant", VARIANT);
 
     ("rd", READ);
     ("wr", WRITE);
@@ -103,6 +104,7 @@ let symbols = Hashtbl.of_seq @@ List.to_seq [
     ("end", END);
 
     ("predicate", PREDICATE);
+    ("inductive", INDUCTIVE);
     ("bipredicate", BIPREDICATE);
     ("coupling", COUPLING);
     ("axiom", AXIOM);
@@ -132,14 +134,23 @@ let symbols = Hashtbl.of_seq @@ List.to_seq [
     ("Agree", AGREE);
     ("Both", BOTH);
 
+    ("HavocR", BIHAVOC);
     ("Var", BIVAR);
     ("If", BIIF);
     ("While", BIWHILE);
+    ("WhileL", BIWHILELEFT);
+    ("WhileR", BIWHILERIGHT);
     ("Assume", BIASSUME);
     ("Assert", BIASSERT);
     ("Link", BIUPDATE);
     ("Connect", BIUPDATE);
     ("with", WITH);
+
+    ("If4", BIIFFOUR);
+    ("thenThen", BITHENTHEN);
+    ("thenElse", BITHENELSE);
+    ("elseThen", BIELSETHEN);
+    ("elseElse", BIELSEELSE);
 
     ("extern", EXTERN);
     ("type", TYPE);

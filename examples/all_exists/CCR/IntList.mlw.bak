@@ -1,0 +1,52 @@
+module IntList
+  use int.Int
+  use export list.List
+  use list.Length
+  use export list.Nth
+  use option.Option
+  use list.NthLength
+
+  type intList = list int
+  constant nil : intList
+  axiom nil_ax : nil = Nil
+
+  let function hd (l:intList) : int
+    requires { exists h,t. l = Cons h t } =
+    match l with
+    | Cons h _ -> h
+    end
+  
+  let function tl (l:intList) : intList =
+    match l with
+    | Nil -> Nil
+    | Cons _ t -> t
+    end
+  
+  let function listLength (l:intList) : int = length(l)
+  
+  let function cons (h:int) (t:intList) : intList = Cons h t
+
+  let function listNth (n:int) (xs:intList) : int
+    requires { 0 <= n < listLength(xs) } =
+    match nth n xs with
+    | Some v -> v
+    end
+
+  lemma listNth_0_Cons : forall h t.
+    listNth 0 (Cons h t) = h
+
+  lemma listNth_pos_Cons : forall n h t.
+    0 < n <= listLength t -> listNth n (Cons h t) = listNth (n-1) t
+
+  let rec function upd_list  (k: int) (v: int) (xs:intList) : intList
+    requires { 0 <= k < listLength(xs) } =
+    match xs with
+    | nil -> nil
+    | (Cons h t) -> if (k = 0) then  (Cons v t) else Cons h (upd_list (k - 1) v t)
+    end
+
+
+end
+
+
+

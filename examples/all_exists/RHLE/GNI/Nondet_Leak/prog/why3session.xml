@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <proof prover="0"><result status="valid" time="0.017282" steps="49"/></proof>
+ </goal>
+</theory>
+<theory name="FREL">
+ <goal name="prog&#39;vc" expl="VC for prog">
+ <transf name="split_vc" >
+  <goal name="prog&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.018246" steps="12"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.019479" steps="27"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.2" expl="postcondition">
+  <proof prover="0"><undone/></proof>
+  </goal>
+  <goal name="prog&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.020587" steps="33"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.020300" steps="23"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.014181" steps="23"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.019043" steps="23"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.023231" steps="19"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.020497" steps="19"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.025323" steps="19"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.018072" steps="23"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.018994" steps="23"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.023480" steps="24"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

@@ -83,6 +83,12 @@ let interface_predicates (idef: interface_def node) : named_formula node list =
       | _ -> None
     ) @@ get_elts idef.elt.intr_elts
 
+let interface_inductives (idef: interface_def node) : inductive_predicate node list =
+  List.filter_map (function
+      | Intr_inductive ind -> Some ind
+      | _ -> None
+    ) @@ get_elts idef.elt.intr_elts
+
 let interface_imports (idef: interface_def node) : import_directive node list =
   List.filter_map (function
       | Intr_import i -> Some i
@@ -110,6 +116,12 @@ let module_datagroup_names (mdef: module_def node) : ident list =
 let module_predicates (mdef: module_def node) : named_formula node list =
   List.filter_map (function
       | Mdl_formula nf when nf.elt.kind = `Predicate -> Some nf
+      | _ -> None
+    ) @@ get_elts mdef.elt.mdl_elts
+
+let module_inductives (mdef: module_def node) : inductive_predicate node list =
+  List.filter_map (function
+      | Mdl_inductive ind -> Some ind
       | _ -> None
     ) @@ get_elts mdef.elt.mdl_elts
 

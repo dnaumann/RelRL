@@ -37,7 +37,7 @@ let mod_fn = mk_qualid ["mod"]
 (* Functions on Why3 references                                               *)
 (* -------------------------------------------------------------------------- *)
 
-let get_ref_fn = mk_qualid [Ident.op_prefix "!"]
+let get_ref_fn = mk_qualid [Ident.op_tight "!"]
 let set_ref_fn = mk_qualid [Ident.op_infix ":="]
 let mk_ref_fn = mk_qualid ["ref"]
 

@@ -1,12 +1,18 @@
 (setq whyrel-keywords
       '("meth" "requires" "ensures" "effects" "reads" "writes" "reads/writes"
-        "predicate" "lemma" "axiom" "boundary" "ghost" "datagroup" "class"
-        "interface" "module" "bimodule" "end" "if" "else" "while" "do" "done"
-        "public" "modscope" "let" "forall" "exists" "and" "or" "not"
-        "private" "coupling" "in"
-        "skip" "new" "var" "assume" "assert" "invariant" "Var" "While" "If"
+        "inductive" "predicate" "lemma" "axiom" "boundary" "ghost" "datagroup"
+        "class" "interface" "module" "bimodule" "end" "if" "else" "while"
+        "do" "done" "public" "modscope" "let" "forall" "exists" "and" "or" "not"
+        "private" "coupling" "in" "havoc"
+        "skip" "new" "var" "assume" "assert" "invariant" "variant"
+        "Havoc" "Var" "While" "WhileL" "WhileR" "If"
+        "If4" "thenThen" "thenElse" "elseThen" "elseElse"
         "rd" "wr" "rw" "import" "theory" "as" "contains" "then" "Connect"
         "Link" "Assume" "Assert" "with" "extern" "type" "const" "default"))
+
+(setq whyrel-left-pairs '("<|" "<]" "[<" "|_"))
+
+(setq whyrel-right-pairs '("|>" "[>" ">]" "_|"))
 
 (setq whyrel-default-functions '("Agree" "Both" "Type" "old"))
 
@@ -16,6 +22,8 @@
 
 (setq whyrel-font-lock-keywords
       (let ((whyrel-keywords-regexp (regexp-opt whyrel-keywords 'symbols))
+            (whyrel-left-pairs-regexp (regexp-opt whyrel-left-pairs 'string))
+            (whyrel-right-pairs-regexp (regexp-opt whyrel-right-pairs 'string))
             (whyrel-default-types-regexp
              (regexp-opt whyrel-default-types 'symbols))
             (whyrel-types-regexp "\\:\\s *\\([a-zA-Z][_a-zA-Z0-9'+]*\\)")
@@ -50,6 +58,8 @@
             (whyrel-extern-function-regexp
              "extern \\(\\b[a-zA-Z0-9']+\\b\\)"))
         `((,whyrel-keywords-regexp . font-lock-keyword-face)
+          (,whyrel-left-pairs-regexp . font-lock-doc-face)
+          (,whyrel-right-pairs-regexp . font-lock-doc-face)
           (,whyrel-cast-regexp (1 font-lock-variable-name-face))
           (,whyrel-default-types-regexp (1 font-lock-type-face))
           (,whyrel-types-regexp (1 font-lock-type-face))
@@ -91,6 +101,18 @@
   (setq-local indent-tabs-mode nil)
   (setq-local tab-width 2)
   (setq-local comment-start "/*")
-  (setq-local comment-end "*/"))
+  (setq-local comment-end "*/")
+
+  (setq-local prettify-symbols-alist
+              '((">=" . ?≥)
+                ("<=" . ?≤)
+                ("->" . ?→)
+                ("/\\" . ?∧)
+                ("\\/" . ?∨)
+                ("forall" . ?∀)
+                ("exists" . ?∃)
+                ("<>" . ?≠)))
+  (prettify-symbols-mode 1)
+  )
 
 (provide 'whyrel-mode)

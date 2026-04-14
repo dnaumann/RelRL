@@ -1,0 +1,937 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.055730" steps="71"/></proof>
+  </goal>
+  <goal name="state&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.083629" steps="453"/></proof>
+  </goal>
+  <goal name="state&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.062116" steps="74"/></proof>
+  </goal>
+  <goal name="state&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.058000" steps="88"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="AB" proved="true">
+ <goal name="main&#39;vc" expl="VC for main" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="main&#39;vc.0" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.044230" steps="28"/></proof>
+  </goal>
+  <goal name="main&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.048628" steps="30"/></proof>
+  </goal>
+  <goal name="main&#39;vc.2" expl="wr {y}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.053203" steps="32"/></proof>
+  </goal>
+  <goal name="main&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047339" steps="32"/></proof>
+  </goal>
+  <goal name="main&#39;vc.4" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.038331" steps="36"/></proof>
+  </goal>
+  <goal name="main&#39;vc.5" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.073417" steps="260"/></proof>
+  </goal>
+  <goal name="main&#39;vc.6" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.070184" steps="111"/></proof>
+  </goal>
+  <goal name="main&#39;vc.7" expl="tmp := x.{i} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.060072" steps="128"/></proof>
+  </goal>
+  <goal name="main&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.061046" steps="133"/></proof>
+  </goal>
+  <goal name="main&#39;vc.9" expl="y.{i} := tmp * tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.058505" steps="151"/></proof>
+  </goal>
+  <goal name="main&#39;vc.10" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049023" steps="77"/></proof>
+  </goal>
+  <goal name="main&#39;vc.11" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.048961" steps="77"/></proof>
+  </goal>
+  <goal name="main&#39;vc.12" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.107832" steps="1849"/></proof>
+  </goal>
+  <goal name="main&#39;vc.13" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.076852" steps="802"/></proof>
+  </goal>
+  <goal name="main&#39;vc.14" expl="wr {y}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="1.334916" steps="25464"/></proof>
+  </goal>
+  <goal name="main&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052094" steps="220"/></proof>
+  </goal>
+  <goal name="main&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="1.854792" steps="48817"/></proof>
+  </goal>
+  <goal name="main&#39;vc.17" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.048322" steps="56"/></proof>
+  </goal>
+  <goal name="main&#39;vc.18" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.040799" steps="56"/></proof>
+  </goal>
+  <goal name="main&#39;vc.19" expl="wr ({z} union {y})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.076259" steps="233"/></proof>
+  </goal>
+  <goal name="main&#39;vc.20" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047745" steps="58"/></proof>
+  </goal>
+  <goal name="main&#39;vc.21" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.052662" steps="62"/></proof>
+  </goal>
+  <goal name="main&#39;vc.22" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.076971" steps="85"/></proof>
+  </goal>
+  <goal name="main&#39;vc.23" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.115612" steps="539"/></proof>
+  </goal>
+  <goal name="main&#39;vc.24" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.073822" steps="205"/></proof>
+  </goal>
+  <goal name="main&#39;vc.25" expl="tmp := x.{999 - k} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.079703" steps="222"/></proof>
+  </goal>
+  <goal name="main&#39;vc.26" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.088066" steps="613"/></proof>
+  </goal>
+  <goal name="main&#39;vc.27" expl="z.{k} := tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.083033" steps="652"/></proof>
+  </goal>
+  <goal name="main&#39;vc.28" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.065537" steps="94"/></proof>
+  </goal>
+  <goal name="main&#39;vc.29" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.060945" steps="95"/></proof>
+  </goal>
+  <goal name="main&#39;vc.30" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.149770" steps="2661"/></proof>
+  </goal>
+  <goal name="main&#39;vc.31" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.094763" steps="727"/></proof>
+  </goal>
+  <goal name="main&#39;vc.32" expl="wr ({z} union {y})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="4.184227" steps="97816"/></proof>
+  </goal>
+  <goal name="main&#39;vc.33" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.071237" steps="125"/></proof>
+  </goal>
+  <goal name="main&#39;vc.34" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="5.638848" steps="182613"/></proof>
+  </goal>
+  <goal name="main&#39;vc.35" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="1.420786" steps="42476"/></proof>
+  </goal>
+  <goal name="main&#39;vc.36" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.047549" steps="82"/></proof>
+  </goal>
+  <goal name="main&#39;vc.37" expl="wr ({y} union {z})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.098501" steps="97"/></proof>
+  </goal>
+  <goal name="main&#39;vc.38" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.069482" steps="119"/></proof>
+  </goal>
+  <goal name="main&#39;vc.39" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.061551" steps="114"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="BA" proved="true">
+ <goal name="main&#39;vc" expl="VC for main" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="main&#39;vc.0" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.047366" steps="28"/></proof>
+  </goal>
+  <goal name="main&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.048670" steps="30"/></proof>
+  </goal>
+  <goal name="main&#39;vc.2" expl="wr {z}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.048014" steps="32"/></proof>
+  </goal>
+  <goal name="main&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.038944" steps="32"/></proof>
+  </goal>
+  <goal name="main&#39;vc.4" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.043038" steps="36"/></proof>
+  </goal>
+  <goal name="main&#39;vc.5" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.067806" steps="262"/></proof>
+  </goal>
+  <goal name="main&#39;vc.6" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.066821" steps="112"/></proof>
+  </goal>
+  <goal name="main&#39;vc.7" expl="tmp := x.{999 - k} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.055300" steps="126"/></proof>
+  </goal>
+  <goal name="main&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.062014" steps="129"/></proof>
+  </goal>
+  <goal name="main&#39;vc.9" expl="z.{k} := tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.063352" steps="147"/></proof>
+  </goal>
+  <goal name="main&#39;vc.10" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.047335" steps="66"/></proof>
+  </goal>
+  <goal name="main&#39;vc.11" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.050792" steps="67"/></proof>
+  </goal>
+  <goal name="main&#39;vc.12" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.085776" steps="454"/></proof>
+  </goal>
+  <goal name="main&#39;vc.13" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060272" steps="191"/></proof>
+  </goal>
+  <goal name="main&#39;vc.14" expl="wr {z}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.507281" steps="5906"/></proof>
+  </goal>
+  <goal name="main&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050357" steps="90"/></proof>
+  </goal>
+  <goal name="main&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.585426" steps="6785"/></proof>
+  </goal>
+  <goal name="main&#39;vc.17" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.056840" steps="56"/></proof>
+  </goal>
+  <goal name="main&#39;vc.18" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.057954" steps="56"/></proof>
+  </goal>
+  <goal name="main&#39;vc.19" expl="wr ({z} union {y})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.075393" steps="233"/></proof>
+  </goal>
+  <goal name="main&#39;vc.20" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.048896" steps="58"/></proof>
+  </goal>
+  <goal name="main&#39;vc.21" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.046280" steps="62"/></proof>
+  </goal>
+  <goal name="main&#39;vc.22" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.054059" steps="74"/></proof>
+  </goal>
+  <goal name="main&#39;vc.23" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.103529" steps="540"/></proof>
+  </goal>
+  <goal name="main&#39;vc.24" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.067944" steps="207"/></proof>
+  </goal>
+  <goal name="main&#39;vc.25" expl="tmp := x.{i} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.071485" steps="222"/></proof>
+  </goal>
+  <goal name="main&#39;vc.26" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.070787" steps="229"/></proof>
+  </goal>
+  <goal name="main&#39;vc.27" expl="y.{i} := tmp * tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.064848" steps="246"/></proof>
+  </goal>
+  <goal name="main&#39;vc.28" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.051493" steps="112"/></proof>
+  </goal>
+  <goal name="main&#39;vc.29" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.047270" steps="112"/></proof>
+  </goal>
+  <goal name="main&#39;vc.30" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.131506" steps="3008"/></proof>
+  </goal>
+  <goal name="main&#39;vc.31" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.077504" steps="1089"/></proof>
+  </goal>
+  <goal name="main&#39;vc.32" expl="wr ({z} union {y})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="4.250859" steps="65192"/></proof>
+  </goal>
+  <goal name="main&#39;vc.33" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052559" steps="284"/></proof>
+  </goal>
+  <goal name="main&#39;vc.34" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="5.693172" steps="123247"/></proof>
+  </goal>
+  <goal name="main&#39;vc.35" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="1.396443" steps="30938"/></proof>
+  </goal>
+  <goal name="main&#39;vc.36" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.053434" steps="82"/></proof>
+  </goal>
+  <goal name="main&#39;vc.37" expl="wr ({y} union {z})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.056389" steps="97"/></proof>
+  </goal>
+  <goal name="main&#39;vc.38" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.057535" steps="119"/></proof>
+  </goal>
+  <goal name="main&#39;vc.39" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.055364" steps="114"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="COMMUTE" proved="true">
+ <goal name="main&#39;vc" expl="VC for main" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="main&#39;vc.0" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.046767" steps="70"/></proof>
+  </goal>
+  <goal name="main&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.052575" steps="72"/></proof>
+  </goal>
+  <goal name="main&#39;vc.2" expl="wr {y}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.054255" steps="74"/></proof>
+  </goal>
+  <goal name="main&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044198" steps="74"/></proof>
+  </goal>
+  <goal name="main&#39;vc.4" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044020" steps="78"/></proof>
+  </goal>
+  <goal name="main&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.096902" steps="358"/></proof>
+  </goal>
+  <goal name="main&#39;vc.6" expl="tmp := x.{i} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.109900" steps="476"/></proof>
+  </goal>
+  <goal name="main&#39;vc.7" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.108507" steps="398"/></proof>
+  </goal>
+  <goal name="main&#39;vc.8" expl="y.{i} := tmp * tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.108266" steps="471"/></proof>
+  </goal>
+  <goal name="main&#39;vc.9" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.057658" steps="108"/></proof>
+  </goal>
+  <goal name="main&#39;vc.10" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.056760" steps="109"/></proof>
+  </goal>
+  <goal name="main&#39;vc.11" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.128668" steps="2389"/></proof>
+  </goal>
+  <goal name="main&#39;vc.12" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.090835" steps="1286"/></proof>
+  </goal>
+  <goal name="main&#39;vc.13" expl="wr {y}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="1.507213" steps="31610"/></proof>
+  </goal>
+  <goal name="main&#39;vc.14" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057706" steps="247"/></proof>
+  </goal>
+  <goal name="main&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="4.829904" steps="100544"/></proof>
+  </goal>
+  <goal name="main&#39;vc.16" expl="globals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.047379" steps="100"/></proof>
+  </goal>
+  <goal name="main&#39;vc.17" expl="globals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.049149" steps="100"/></proof>
+  </goal>
+  <goal name="main&#39;vc.18" expl="wr ({z} union {y})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.093970" steps="385"/></proof>
+  </goal>
+  <goal name="main&#39;vc.19" expl="wr {z}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.063972" steps="104"/></proof>
+  </goal>
+  <goal name="main&#39;vc.20" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.541718" steps="8419"/></proof>
+  </goal>
+  <goal name="main&#39;vc.21" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.055508" steps="106"/></proof>
+  </goal>
+  <goal name="main&#39;vc.22" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.051026" steps="110"/></proof>
+  </goal>
+  <goal name="main&#39;vc.23" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="12.108904" steps="121614"/></proof>
+  </goal>
+  <goal name="main&#39;vc.24" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.076358" steps="289"/></proof>
+  </goal>
+  <goal name="main&#39;vc.25" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.050364" steps="117"/></proof>
+  </goal>
+  <goal name="main&#39;vc.26" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.072901" steps="134"/></proof>
+  </goal>
+  <goal name="main&#39;vc.27" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.053002" steps="115"/></proof>
+  </goal>
+  <goal name="main&#39;vc.28" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.144235" steps="935"/></proof>
+  </goal>
+  <goal name="main&#39;vc.29" expl="tmp := x.{999 - k} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.186206" steps="1107"/></proof>
+  </goal>
+  <goal name="main&#39;vc.30" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.300700" steps="4566"/></proof>
+  </goal>
+  <goal name="main&#39;vc.31" expl="tmp := x.{999 - k} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.350054" steps="6185"/></proof>
+  </goal>
+  <goal name="main&#39;vc.32" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.259255" steps="4738"/></proof>
+  </goal>
+  <goal name="main&#39;vc.33" expl="z.{k} := tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.491013" steps="6366"/></proof>
+  </goal>
+  <goal name="main&#39;vc.34" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.070525" steps="174"/></proof>
+  </goal>
+  <goal name="main&#39;vc.35" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.068117" steps="175"/></proof>
+  </goal>
+  <goal name="main&#39;vc.36" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.307283" steps="5614"/></proof>
+  </goal>
+  <goal name="main&#39;vc.37" expl="z.{k} := tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.426750" steps="7712"/></proof>
+  </goal>
+  <goal name="main&#39;vc.38" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.061178" steps="192"/></proof>
+  </goal>
+  <goal name="main&#39;vc.39" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.061640" steps="193"/></proof>
+  </goal>
+  <goal name="main&#39;vc.40" expl="globals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.228343" steps="3724"/></proof>
+  </goal>
+  <goal name="main&#39;vc.41" expl="globals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.270726" steps="3884"/></proof>
+  </goal>
+  <goal name="main&#39;vc.42" expl="wr ({z} union {y})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="6.903882" steps="118735"/></proof>
+  </goal>
+  <goal name="main&#39;vc.43" expl="wr {z}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="8.006197" steps="130558"/></proof>
+  </goal>
+  <goal name="main&#39;vc.44" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="12.998273" steps="188800"/></proof>
+  </goal>
+  <goal name="main&#39;vc.45" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.084858" steps="237"/></proof>
+  </goal>
+  <goal name="main&#39;vc.46" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060396" steps="238"/></proof>
+  </goal>
+  <goal name="main&#39;vc.47" expl="loop invariant preservation" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="main&#39;vc.47.0" expl="loop invariant preservation" proved="true">
+   <transf name="inline_goal" proved="true" >
+    <goal name="main&#39;vc.47.0.0" expl="loop invariant preservation" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="main&#39;vc.47.0.0.0" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="1.364016" steps="23343"/></proof>
+     </goal>
+     <goal name="main&#39;vc.47.0.0.1" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="6.944067" steps="114700"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="main&#39;vc.47.1" expl="loop invariant preservation" proved="true">
+   <transf name="inline_goal" proved="true" >
+    <goal name="main&#39;vc.47.1.0" expl="loop invariant preservation" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="main&#39;vc.47.1.0.0" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="50.289029" steps="710067"/></proof>
+     </goal>
+     <goal name="main&#39;vc.47.1.0.1" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="50.029388" steps="694360"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="main&#39;vc.48" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="25.370330" steps="443904"/></proof>
+  </goal>
+  <goal name="main&#39;vc.49" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="20.032670" steps="335121"/></proof>
+  </goal>
+  <goal name="main&#39;vc.50" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="7.106654" steps="142277"/></proof>
+  </goal>
+  <goal name="main&#39;vc.51" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.096617" steps="250"/></proof>
+  </goal>
+  <goal name="main&#39;vc.52" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.092813" steps="196"/></proof>
+  </goal>
+  <goal name="main&#39;vc.53" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.095375" steps="192"/></proof>
+  </goal>
+  <goal name="main&#39;vc.54" expl="globals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.077295" steps="158"/></proof>
+  </goal>
+  <goal name="main&#39;vc.55" expl="globals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.068268" steps="158"/></proof>
+  </goal>
+  <goal name="main&#39;vc.56" expl="wr ({y} union {z})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.146468" steps="815"/></proof>
+  </goal>
+  <goal name="main&#39;vc.57" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.052290" steps="160"/></proof>
+  </goal>
+  <goal name="main&#39;vc.58" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.067460" steps="160"/></proof>
+  </goal>
+  <goal name="main&#39;vc.59" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.059854" steps="164"/></proof>
+  </goal>
+  <goal name="main&#39;vc.60" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.105886" steps="203"/></proof>
+  </goal>
+  <goal name="main&#39;vc.61" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.061430" steps="168"/></proof>
+  </goal>
+  <goal name="main&#39;vc.62" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.082855" steps="213"/></proof>
+  </goal>
+  <goal name="main&#39;vc.63" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.071326" steps="162"/></proof>
+  </goal>
+  <goal name="main&#39;vc.64" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.168286" steps="1171"/></proof>
+  </goal>
+  <goal name="main&#39;vc.65" expl="tmp := x.{i} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.205131" steps="1386"/></proof>
+  </goal>
+  <goal name="main&#39;vc.66" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.181051" steps="1257"/></proof>
+  </goal>
+  <goal name="main&#39;vc.67" expl="y.{i} := tmp * tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.230917" steps="1428"/></proof>
+  </goal>
+  <goal name="main&#39;vc.68" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.073188" steps="227"/></proof>
+  </goal>
+  <goal name="main&#39;vc.69" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.082827" steps="227"/></proof>
+  </goal>
+  <goal name="main&#39;vc.70" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.088794" steps="310"/></proof>
+  </goal>
+  <goal name="main&#39;vc.71" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.075502" steps="310"/></proof>
+  </goal>
+  <goal name="main&#39;vc.72" expl="globals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.097802" steps="311"/></proof>
+  </goal>
+  <goal name="main&#39;vc.73" expl="globals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.262522" steps="4730"/></proof>
+  </goal>
+  <goal name="main&#39;vc.74" expl="wr ({y} union {z})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="5.337340" steps="95019"/></proof>
+  </goal>
+  <goal name="main&#39;vc.75" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="10.002660" steps="172715"/></proof>
+  </goal>
+  <goal name="main&#39;vc.76" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.069912" steps="408"/></proof>
+  </goal>
+  <goal name="main&#39;vc.77" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="32.843602" steps="599167"/></proof>
+  </goal>
+  <goal name="main&#39;vc.78" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="5.462930" steps="106966"/></proof>
+  </goal>
+  <goal name="main&#39;vc.79" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="18.873534" steps="450178"/></proof>
+  </goal>
+  <goal name="main&#39;vc.80" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.096523" steps="1462"/></proof>
+  </goal>
+  <goal name="main&#39;vc.81" expl="loop invariant preservation" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="main&#39;vc.81.0" expl="loop invariant preservation" proved="true">
+   <transf name="inline_goal" proved="true" >
+    <goal name="main&#39;vc.81.0.0" expl="loop invariant preservation" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="main&#39;vc.81.0.0.0" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="1.367116" steps="23335"/></proof>
+     </goal>
+     <goal name="main&#39;vc.81.0.0.1" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="4.849299" steps="87168"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="main&#39;vc.81.1" expl="loop invariant preservation" proved="true">
+   <transf name="inline_goal" proved="true" >
+    <goal name="main&#39;vc.81.1.0" expl="loop invariant preservation" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="main&#39;vc.81.1.0.0" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="26.454577" steps="363509"/></proof>
+     </goal>
+     <goal name="main&#39;vc.81.1.0.1" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="24.785426" steps="390852"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="main&#39;vc.82" expl="wr ({y} union {z})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.070072" steps="236"/></proof>
+  </goal>
+  <goal name="main&#39;vc.83" expl="wr ({y} union {z})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.076340" steps="190"/></proof>
+  </goal>
+  <goal name="main&#39;vc.84" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.058934" steps="190"/></proof>
+  </goal>
+  <goal name="main&#39;vc.85" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.082509" steps="246"/></proof>
+  </goal>
+  <goal name="main&#39;vc.86" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.073801" steps="268"/></proof>
+  </goal>
+  <goal name="main&#39;vc.87" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.064156" steps="190"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="COMMUTE_SEQ" proved="true">
+ <goal name="main&#39;vc" expl="VC for main" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="main&#39;vc.0" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.045966" steps="70"/></proof>
+  </goal>
+  <goal name="main&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.050892" steps="72"/></proof>
+  </goal>
+  <goal name="main&#39;vc.2" expl="wr {y}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.055170" steps="74"/></proof>
+  </goal>
+  <goal name="main&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.045273" steps="74"/></proof>
+  </goal>
+  <goal name="main&#39;vc.4" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047500" steps="78"/></proof>
+  </goal>
+  <goal name="main&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.090182" steps="358"/></proof>
+  </goal>
+  <goal name="main&#39;vc.6" expl="tmp := x.{i} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.104940" steps="476"/></proof>
+  </goal>
+  <goal name="main&#39;vc.7" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.093761" steps="398"/></proof>
+  </goal>
+  <goal name="main&#39;vc.8" expl="y.{i} := tmp * tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.109032" steps="471"/></proof>
+  </goal>
+  <goal name="main&#39;vc.9" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.053319" steps="108"/></proof>
+  </goal>
+  <goal name="main&#39;vc.10" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.048051" steps="109"/></proof>
+  </goal>
+  <goal name="main&#39;vc.11" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.116899" steps="2389"/></proof>
+  </goal>
+  <goal name="main&#39;vc.12" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.091351" steps="1286"/></proof>
+  </goal>
+  <goal name="main&#39;vc.13" expl="wr {y}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="1.820092" steps="31610"/></proof>
+  </goal>
+  <goal name="main&#39;vc.14" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059927" steps="247"/></proof>
+  </goal>
+  <goal name="main&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="4.570762" steps="100544"/></proof>
+  </goal>
+  <goal name="main&#39;vc.16" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.049016" steps="98"/></proof>
+  </goal>
+  <goal name="main&#39;vc.17" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044124" steps="98"/></proof>
+  </goal>
+  <goal name="main&#39;vc.18" expl="wr ({z} union {y})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.089825" steps="380"/></proof>
+  </goal>
+  <goal name="main&#39;vc.19" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044360" steps="100"/></proof>
+  </goal>
+  <goal name="main&#39;vc.20" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049581" steps="104"/></proof>
+  </goal>
+  <goal name="main&#39;vc.21" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.060566" steps="119"/></proof>
+  </goal>
+  <goal name="main&#39;vc.22" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.114574" steps="639"/></proof>
+  </goal>
+  <goal name="main&#39;vc.23" expl="tmp := x.{999 - k} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.132611" steps="804"/></proof>
+  </goal>
+  <goal name="main&#39;vc.24" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.173967" steps="3431"/></proof>
+  </goal>
+  <goal name="main&#39;vc.25" expl="z.{k} := tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.236459" steps="4651"/></proof>
+  </goal>
+  <goal name="main&#39;vc.26" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.057432" steps="136"/></proof>
+  </goal>
+  <goal name="main&#39;vc.27" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.050994" steps="137"/></proof>
+  </goal>
+  <goal name="main&#39;vc.28" expl="globals type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.141144" steps="2469"/></proof>
+  </goal>
+  <goal name="main&#39;vc.29" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.095790" steps="1075"/></proof>
+  </goal>
+  <goal name="main&#39;vc.30" expl="wr ({z} union {y})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="3.308384" steps="69861"/></proof>
+  </goal>
+  <goal name="main&#39;vc.31" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059980" steps="160"/></proof>
+  </goal>
+  <goal name="main&#39;vc.32" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="6.629793" steps="169793"/></proof>
+  </goal>
+  <goal name="main&#39;vc.33" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="3.320728" steps="72355"/></proof>
+  </goal>
+  <goal name="main&#39;vc.34" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.089793" steps="151"/></proof>
+  </goal>
+  <goal name="main&#39;vc.35" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.098158" steps="146"/></proof>
+  </goal>
+  <goal name="main&#39;vc.36" expl="globals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.069318" steps="126"/></proof>
+  </goal>
+  <goal name="main&#39;vc.37" expl="globals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.093844" steps="126"/></proof>
+  </goal>
+  <goal name="main&#39;vc.38" expl="wr {z}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.081266" steps="130"/></proof>
+  </goal>
+  <goal name="main&#39;vc.39" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="1.284573" steps="21718"/></proof>
+  </goal>
+  <goal name="main&#39;vc.40" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.048798" steps="130"/></proof>
+  </goal>
+  <goal name="main&#39;vc.41" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.221903" steps="1606"/></proof>
+  </goal>
+  <goal name="main&#39;vc.42" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.063001" steps="134"/></proof>
+  </goal>
+  <goal name="main&#39;vc.43" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.117244" steps="167"/></proof>
+  </goal>
+  <goal name="main&#39;vc.44" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="22.779512" steps="281246"/></proof>
+  </goal>
+  <goal name="main&#39;vc.45" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.157492" steps="879"/></proof>
+  </goal>
+  <goal name="main&#39;vc.46" expl="tmp := x.{999 - k} ( index is in bounds)" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="main&#39;vc.46.0" expl="tmp := x.{999 - k}" proved="true">
+   <proof prover="0"><result status="valid" time="0.074805" steps="158"/></proof>
+   </goal>
+   <goal name="main&#39;vc.46.1" expl="tmp := x.{999 - k}" proved="true">
+   <proof prover="0"><result status="valid" time="0.177083" steps="1037"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="main&#39;vc.47" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.181684" steps="940"/></proof>
+  </goal>
+  <goal name="main&#39;vc.48" expl="z.{k} := tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.189513" steps="1146"/></proof>
+  </goal>
+  <goal name="main&#39;vc.49" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.073669" steps="172"/></proof>
+  </goal>
+  <goal name="main&#39;vc.50" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.068497" steps="173"/></proof>
+  </goal>
+  <goal name="main&#39;vc.51" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.080884" steps="186"/></proof>
+  </goal>
+  <goal name="main&#39;vc.52" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.104016" steps="187"/></proof>
+  </goal>
+  <goal name="main&#39;vc.53" expl="globals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.098618" steps="188"/></proof>
+  </goal>
+  <goal name="main&#39;vc.54" expl="globals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.180405" steps="923"/></proof>
+  </goal>
+  <goal name="main&#39;vc.55" expl="wr {z}`slots" proved="true">
+  <proof prover="0"><result status="valid" time="1.602822" steps="23355"/></proof>
+  </goal>
+  <goal name="main&#39;vc.56" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="3.150203" steps="59348"/></proof>
+  </goal>
+  <goal name="main&#39;vc.57" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059990" steps="198"/></proof>
+  </goal>
+  <goal name="main&#39;vc.58" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="4.177697" steps="64859"/></proof>
+  </goal>
+  <goal name="main&#39;vc.59" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="11.418306" steps="222616"/></proof>
+  </goal>
+  <goal name="main&#39;vc.60" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.111044" steps="276"/></proof>
+  </goal>
+  <goal name="main&#39;vc.61" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="48.171756" steps="575774"/></proof>
+  </goal>
+  <goal name="main&#39;vc.62" expl="globals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.068612" steps="158"/></proof>
+  </goal>
+  <goal name="main&#39;vc.63" expl="globals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.068105" steps="158"/></proof>
+  </goal>
+  <goal name="main&#39;vc.64" expl="wr ({y} union {z})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.172397" steps="831"/></proof>
+  </goal>
+  <goal name="main&#39;vc.65" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.069295" steps="160"/></proof>
+  </goal>
+  <goal name="main&#39;vc.66" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.071391" steps="160"/></proof>
+  </goal>
+  <goal name="main&#39;vc.67" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.077368" steps="164"/></proof>
+  </goal>
+  <goal name="main&#39;vc.68" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.122186" steps="205"/></proof>
+  </goal>
+  <goal name="main&#39;vc.69" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.080169" steps="168"/></proof>
+  </goal>
+  <goal name="main&#39;vc.70" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.084883" steps="222"/></proof>
+  </goal>
+  <goal name="main&#39;vc.71" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.084653" steps="162"/></proof>
+  </goal>
+  <goal name="main&#39;vc.72" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.185574" steps="1187"/></proof>
+  </goal>
+  <goal name="main&#39;vc.73" expl="tmp := x.{i} ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.212040" steps="1415"/></proof>
+  </goal>
+  <goal name="main&#39;vc.74" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.208304" steps="1262"/></proof>
+  </goal>
+  <goal name="main&#39;vc.75" expl="y.{i} := tmp * tmp ( index is in bounds)" proved="true">
+  <proof prover="0"><result status="valid" time="0.247084" steps="1449"/></proof>
+  </goal>
+  <goal name="main&#39;vc.76" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.065549" steps="229"/></proof>
+  </goal>
+  <goal name="main&#39;vc.77" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.065007" steps="229"/></proof>
+  </goal>
+  <goal name="main&#39;vc.78" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.063926" steps="312"/></proof>
+  </goal>
+  <goal name="main&#39;vc.79" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.064042" steps="312"/></proof>
+  </goal>
+  <goal name="main&#39;vc.80" expl="globals type invariant left" proved="true">
+  <proof prover="0"><result status="valid" time="0.081504" steps="312"/></proof>
+  </goal>
+  <goal name="main&#39;vc.81" expl="globals type invariant right" proved="true">
+  <proof prover="0"><result status="valid" time="0.219436" steps="4763"/></proof>
+  </goal>
+  <goal name="main&#39;vc.82" expl="wr ({y} union {z})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="5.550097" steps="89346"/></proof>
+  </goal>
+  <goal name="main&#39;vc.83" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="10.086312" steps="172837"/></proof>
+  </goal>
+  <goal name="main&#39;vc.84" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.077745" steps="410"/></proof>
+  </goal>
+  <goal name="main&#39;vc.85" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="27.742270" steps="577913"/></proof>
+  </goal>
+  <goal name="main&#39;vc.86" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="5.311021" steps="108368"/></proof>
+  </goal>
+  <goal name="main&#39;vc.87" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="17.840893" steps="441832"/></proof>
+  </goal>
+  <goal name="main&#39;vc.88" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.112153" steps="1483"/></proof>
+  </goal>
+  <goal name="main&#39;vc.89" expl="loop invariant preservation" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="main&#39;vc.89.0" expl="loop invariant preservation" proved="true">
+   <transf name="inline_goal" proved="true" >
+    <goal name="main&#39;vc.89.0.0" expl="loop invariant preservation" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="main&#39;vc.89.0.0.0" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="1.438484" steps="23446"/></proof>
+     </goal>
+     <goal name="main&#39;vc.89.0.0.1" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="4.365142" steps="69676"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="main&#39;vc.89.1" expl="loop invariant preservation" proved="true">
+   <transf name="inline_goal" proved="true" >
+    <goal name="main&#39;vc.89.1.0" expl="loop invariant preservation" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="main&#39;vc.89.1.0.0" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="24.162354" steps="450105"/></proof>
+     </goal>
+     <goal name="main&#39;vc.89.1.0.1" expl="loop invariant preservation" proved="true">
+     <proof prover="0"><result status="valid" time="26.901681" steps="481448"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="main&#39;vc.90" expl="wr ({y} union {z})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.074813" steps="239"/></proof>
+  </goal>
+  <goal name="main&#39;vc.91" expl="wr ({y} union {z})`slots" proved="true">
+  <proof prover="0"><result status="valid" time="0.054100" steps="190"/></proof>
+  </goal>
+  <goal name="main&#39;vc.92" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.070397" steps="190"/></proof>
+  </goal>
+  <goal name="main&#39;vc.93" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.080153" steps="250"/></proof>
+  </goal>
+  <goal name="main&#39;vc.94" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.141712" steps="277"/></proof>
+  </goal>
+  <goal name="main&#39;vc.95" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.107550" steps="190"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

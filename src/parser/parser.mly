@@ -157,6 +157,7 @@ let mk_boundary_elt loc desc =
 %token WHILE                    /* while */
 %token DO                       /* do */
 %token INVARIANT                /* invariant */
+%token VARIANT                  /* variant */
 %token DONE                     /* done */
 %token ASSUME                   /* assume */
 %token ASSERT                   /* assert */
@@ -177,6 +178,7 @@ let mk_boundary_elt loc desc =
 %token END                      /* end */
 
 %token PREDICATE                /* predicate */
+%token INDUCTIVE                /* inductive */
 %token BIPREDICATE              /* bipredicate */
 %token AXIOM                    /* axiom */
 %token LEMMA                    /* lemma */
@@ -220,13 +222,22 @@ let mk_boundary_elt loc desc =
 %token PRIVATE_INV_ANNOT        /* private */
 %token COUPLING_ANNOT           /* coupling */
 
+%token BIHAVOC                  /* HavocR */
 %token BIVAR                    /* Var */
 %token BIIF                     /* If */
 %token BIWHILE                  /* While */
+%token BIWHILELEFT              /* WhileL */
+%token BIWHILERIGHT             /* WhileR */
 %token BIASSUME                 /* Assume */
 %token BIASSERT                 /* Assert */
 %token BIUPDATE                 /* Link */
 %token WITH                     /* With */
+
+%token BIIFFOUR                 /* If4 */
+%token BITHENTHEN               /* then@then */
+%token BITHENELSE               /* then@else */
+%token BIELSETHEN               /* else@then */
+%token BIELSEELSE               /* else@else */
 
 %token EXTERN                   /* extern */
 %token TYPE                     /* type */
@@ -504,6 +515,7 @@ command:
 
 while_spec_elt:
   | INVARIANT; LBRACE; inv=formula; RBRACE { mk_node (Winvariant inv) $loc }
+  | VARIANT; LBRACE; e=exp; RBRACE { mk_node (Wvariant e) $loc }
   | EFFECTS; LBRACE; e=effect_list; RBRACE { mk_node (Wframe e) $loc }
   | EFFECT_WRS;
     LBRACE; es=separated_list(COMMA, effect_elt_desc); RBRACE
@@ -589,6 +601,22 @@ ty_or_null_ty:
 meth_def:
   | m=meth_decl                   { mk_node (Method(m,None)) $loc }
   | m=meth_decl; EQUAL; c=command { mk_node (Method(m,Some c)) $loc }
+  ;
+
+inductive_predicate:
+  | INDUCTIVE; name=simple_lident;
+    LPAREN; ps=separated_list(COMMA, named_formula_param); RPAREN;
+    EQUAL; body=inductive_cases
+    { mk_node {ind_name=name; ind_params=ps; ind_cases=body} $loc }
+  ;
+
+inductive_cases:
+  |                                            { [] }
+  | BAR; ic=inductive_case; is=inductive_cases { (ic :: is) }
+  ;
+
+inductive_case:
+  | constr=simple_lident; COLON; f=formula { (mk_node constr $loc,f) }
   ;
 
 named_formula:
@@ -695,6 +723,7 @@ interface_elt:
     { mk_node (Intr_datagroup(is)) $loc }
   | e=extern_decl
     { mk_node (Intr_extern e) $loc }
+  | i=inductive_predicate { mk_node (Intr_inductive i) $loc }
   ;
 
 interface_elt_list:
@@ -742,6 +771,8 @@ module_elt:
       mk_node (Mdl_datagroup(group,flds)) $loc }
   | e=extern_decl
     { mk_node (Mdl_extern(e)) $loc }
+  | i=inductive_predicate
+    { mk_node (Mdl_inductive i) $loc }
   ;
 
 datagroup_def:
@@ -885,6 +916,8 @@ named_rformula:
       $loc }
 
 bicommand:
+  | BIHAVOC; x=ident; LBRACE; r=rformula; RBRACE
+    { mk_node (Bihavoc_right(x,r)) $loc }
   | c1=command; BAR; c2=command
     { mk_node (Bisplit(c1,c2)) $loc }
   | LEFT_SYNC; a=atomic_command; RIGHT_SYNC
@@ -912,11 +945,37 @@ bicommand:
   | BIWHILE; e1=exp; BAR; e2=exp; DOT; ag=alignment_guard; DO;
     bws=biwhile_spec; b=bicommand; DONE
     { mk_node (Biwhile(e1,e2,ag,bws,b)) $loc }
+  | BIWHILERIGHT; e1=exp; DO; bws=biwhile_spec; b=bicommand; DONE
+    { let false_node = mk_node Ffalse $loc in
+      let rfalse_node = mk_node (Rboth false_node) $loc in
+      let true_node = mk_node Ftrue $loc in
+      let rtrue_node = mk_node (Rboth true_node) $loc in
+      let ag = Some (rfalse_node, rtrue_node) in
+      let false_expr = mk_node (Econst (mk_node (Ebool false) $loc)) $loc in
+      mk_node (Biwhile(false_expr,e1,ag,bws,b)) $loc }
+  | BIWHILELEFT; e1=exp; DO; bws=biwhile_spec; b=bicommand; DONE
+    { let false_node = mk_node Ffalse $loc in
+      let rfalse_node = mk_node (Rboth false_node) $loc in
+      let true_node = mk_node Ftrue $loc in
+      let rtrue_node = mk_node (Rboth true_node) $loc in
+      let ag = Some (rtrue_node, rfalse_node) in
+      let false_expr = mk_node (Econst (mk_node (Ebool false) $loc)) $loc in
+      mk_node (Biwhile(e1,false_expr,ag,bws,b)) $loc }
   | BIUPDATE; x1=ident; WITH; x2=ident
     { mk_node (Biupdate(x1,x2)) $loc }
+  | b=bicommand_fourwayif { b }
   | LPAREN; b=bicommand; RPAREN
     { b }
   | b=bicommand; SEMICOLON { b }
+  ;
+
+bicommand_fourwayif:
+  | BIIFFOUR; e1=exp; BAR; e2=exp;
+    BITHENTHEN; b1=bicommand;
+    BITHENELSE; b2=bicommand;
+    BIELSETHEN; b3=bicommand;
+    BIELSEELSE; b4=bicommand; END
+    { mk_node (Biif4(e1, e2, b1, b2, b3, b4)) $loc }
   ;
 
 %inline biwhile_spec:
@@ -928,6 +987,8 @@ biwhile_spec_elt:
     { mk_node (Biwinvariant rf) $loc }
   | EFFECTS; LBRACE; e1=effect_list; BAR; e2=effect_list; RBRACE
     { mk_node (Biwframe (e1, e2)) $loc }
+  | VARIANT; LBRACE; e=biexp; RBRACE
+    { mk_node (Biwvariant e) $loc }
   ;
 
 varbind:

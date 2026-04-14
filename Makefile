@@ -28,4 +28,3 @@ menhir-repl:
 .PHONY: clean
 clean:
 	$(OCB) -clean
-

@@ -1,0 +1,73 @@
+module List3
+  use int.Int
+  use export list.List
+  use list.Length
+  use export list.Nth
+  use option.Option
+  use list.NthLength
+
+
+  type intList = list int
+  constant nil : intList
+  axiom nil_ax : nil = Nil
+
+  let function cons (h:int) (t:intList) : intList = Cons h t
+
+  let function listLength (l:intList) : int = length(l)
+
+  function listNth3 (n:int) (xs:intList) : int
+
+  axiom listNth_0: forall x1: int, l: intList.
+    (listNth3 0 (cons x1 l)) = x1
+
+
+  axiom listNth_1: forall x1: int, x2: int,  l: intList.
+    listNth3 1 (cons x1 (cons x2 l)) = x2
+
+
+  axiom listNth_2: forall x1: int, x2: int, x3: int,  l: intList.
+    listNth3 2 (cons x1 (cons x2 (cons x3 l))) = x3
+
+
+
+  predicate is_sorted3 (xs: intList) =
+    listLength(xs) = 3 /\
+      (listNth3 0 xs) <=  (listNth3 1 xs) <= (listNth3 2 xs)
+
+ predicate is_permutation3 (l1: intList) (l2: intList) = 
+     (listLength(l1) = 3 /\ listLength(l2) = 3)  /\
+    
+    (let fst1 = (listNth3 0 l1) in 
+    let fst2 = (listNth3 0 l2) in
+    let snd1 = (listNth3 1 l1) in 
+    let snd2 = (listNth3 1 l2) in
+    let third1 = (listNth3 2 l1) in 
+    let third2 = (listNth3 2 l2) in
+
+    (((fst1 = fst2) /\  (snd1 = snd2) /\ (third1 = third2)) \/
+     ((fst1 = fst2) /\  (snd1 = third2) /\ (third1 = snd2)) \/
+     ((fst1 = snd2) /\  (snd1 = fst2) /\ (third1 = third2)) \/
+     ((fst1 = snd2) /\  (snd1 = third2) /\ (third1 = fst2)) \/
+     ((fst1 = third2) /\  (snd1 = fst2) /\ (third1 = snd2)) \/
+     ((fst1 = third2) /\  (snd1 = snd2) /\ (third1 = fst2))))
+
+
+  let rec function upd_list  (k: int) (v: int) (xs:intList) : intList
+    requires { 0 <= k < listLength(xs) } =
+    match xs with
+    | nil -> nil
+    | (Cons h t) -> if (k = 0) then  (Cons v t) else Cons h (upd_list (k - 1) v t)
+    end
+
+  let rec function add3(l: intList): intList =
+    match l with
+    | nil -> nil
+    | Cons h t -> Cons (h + 3) (add3 t)
+    end
+
+
+
+end
+
+
+

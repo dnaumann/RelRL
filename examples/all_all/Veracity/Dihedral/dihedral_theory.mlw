@@ -1,0 +1,115 @@
+module Dihedral_Theory
+  use int.Int
+  use int.ComputerDivision
+
+  (* --- Dihedral group element-level functions --- *)
+
+  (* Rotation by k positions in Dn *)
+  function rk (a k n: int): int = mod (a + k) n
+
+  (* Symmetry (reflection) in Dn *)
+  function s_fn (a n: int): int = mod (n - a) n
+
+  (* Composed motion: rotation by rot, then optionally symmetry *)
+  function motion (e rot: int) (do_s: bool) (n: int): int =
+    if do_s then s_fn (rk e rot n) n else rk e rot n
+
+
+  (* --- Basic modular arithmetic lemmas --- *)
+
+  (* (a mod n + b) mod n = (a + b) mod n *)
+  axiom mod_add: forall a b n: int. n > 0 ->
+    mod (mod a n + b) n = mod (a + b) n
+
+  (* 0 <= a < n  =>  a mod n = a *)
+  lemma mod_small: forall a n: int. n > 0 -> 0 <= a -> a < n ->
+    mod a n = a
+
+  (* n mod n = 0 *)
+  lemma mod_self: forall n: int. n > 0 -> mod n n = 0
+
+  (* range of mod *)
+  lemma mod_range: forall a n: int. n > 0 -> 0 <= a ->
+    0 <= mod a n /\ mod a n < n
+
+
+  (* --- Range lemmas for rk, s_fn, motion --- *)
+
+  lemma rk_range: forall a k n: int. n > 0 -> 0 <= a -> 0 <= k ->
+    0 <= rk a k n /\ rk a k n < n
+
+  lemma s_fn_range: forall a n: int. n > 0 -> 0 <= a -> a < n ->
+    0 <= s_fn a n /\ s_fn a n < n
+
+  lemma motion_range: forall e rot n: int, s: bool.
+    n > 0 -> 0 <= e -> e < n -> 0 <= rot -> rot < n ->
+    0 <= motion e rot s n /\ motion e rot s n < n
+
+
+  (* --- Reflection lemmas --- *)
+
+  (* Double reflection is identity: s(s(a)) = a when 0 <= a < n *)
+  lemma double_reflect: forall a n: int. n > 0 -> 0 <= a -> a < n ->
+    mod (n - mod (n - a) n) n = a
+
+  (* Half-rotation commutes with reflection:
+     s(rk(a, n/2)) = rk(s(a), n/2)  when n even, 0 <= a < n *)
+  axiom reflect_half_rot: forall a n: int.
+    n > 1 -> mod n 2 = 0 -> 0 <= a -> a < n ->
+    mod (n - mod (a + div n 2) n) n = mod (mod (n - a) n + div n 2) n
+
+
+  (* --- Commutativity case lemmas --- *)
+
+  (* Case 1: two pure rotations always commute
+     rk(rk(e, r1), r2) = rk(rk(e, r2), r1) *)
+  lemma commute_rot_rot: forall e r1 r2 n: int.
+    n > 1 -> 0 <= r1 < n -> 0 <= r2 < n -> 0 <= e < n ->
+    motion (motion e r1 false n) r2 false n =
+    motion (motion e r2 false n) r1 false n
+
+  (* Case 2a: s1=true, s2=false, r2=0
+     rk(s(rk(e, r1)), 0) = s(rk(rk(e, 0), r1)) *)
+  lemma commute_sr_r0: forall e r1 n: int.
+    n > 1 -> 0 <= r1 < n -> 0 <= e < n ->
+    motion (motion e r1 true n) 0 false n =
+    motion (motion e 0 false n) r1 true n
+
+  (* Case 2b: s1=true, s2=false, n even, r2=n/2
+     rk(s(rk(e, r1)), n/2) = s(rk(rk(e, n/2), r1)) *)
+  axiom commute_sr_rhalf: forall e r1 n: int.
+    n > 1 -> mod n 2 = 0 -> 0 <= r1 < n -> 0 <= e < n ->
+    motion (motion e r1 true n) (div n 2) false n =
+    motion (motion e (div n 2) false n) r1 true n
+
+  (* Case 3a: s1=false, s2=true, r1=0
+     s(rk(rk(e, 0), r2)) = rk(s(rk(e, r2)), 0) *)
+  lemma commute_r0_sr: forall e r2 n: int.
+    n > 1 -> 0 <= r2 < n -> 0 <= e < n ->
+    motion (motion e 0 false n) r2 true n =
+    motion (motion e r2 true n) 0 false n
+
+  (* Case 3b: s1=false, s2=true, n even, r1=n/2
+     s(rk(rk(e, n/2), r2)) = rk(s(rk(e, r2)), n/2) *)
+  lemma commute_rhalf_sr: forall e r2 n: int.
+    n > 1 -> mod n 2 = 0 -> 0 <= r2 < n -> 0 <= e < n ->
+    motion (motion e (div n 2) false n) r2 true n =
+    motion (motion e r2 true n) (div n 2) false n
+
+  (* Case 4: s1=true, s2=true, r1=r2 — identical motions trivially commute *)
+  lemma commute_sr_sr_same: forall e rot n: int.
+    n > 1 -> 0 <= rot < n -> 0 <= e < n ->
+    motion (motion e rot true n) rot true n =
+    motion (motion e rot true n) rot true n
+
+  (* Master commutativity theorem: under phi, motions commute *)
+  lemma motion_commutes: forall e r1 r2 n: int, s1 s2: bool.
+    n > 1 -> 0 <= r1 < n -> 0 <= r2 < n -> 0 <= e < n ->
+    ((s1 = false /\ s2 = false)
+     \/ (s1 = true /\ s2 = false /\ (r2 = 0 \/ (mod n 2 = 0 /\ r2 = div n 2)))
+     \/ (s1 = false /\ s2 = true /\ (r1 = 0 \/ (mod n 2 = 0 /\ r1 = div n 2)))
+     \/ (s1 = true /\ s2 = true /\ r1 = r2)) ->
+    motion (motion e r1 s1 n) r2 s2 n =
+    motion (motion e r2 s2 n) r1 s1 n
+
+end

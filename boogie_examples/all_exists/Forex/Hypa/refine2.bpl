@@ -1,0 +1,79 @@
+// https://github.com/ravenbeutner/ForEx/blob/main/benchmarks/hypa/refine2.txt
+
+// verifies.
+
+procedure example (time1: int, time2: int) returns (c1: int, c2: int, x1: int, x2: int)
+    requires (time1 == time2);
+    // requires (time1 >= 0);  // added
+    ensures (c1 == 0 ==> (c2 == 1 && x1 == x2));
+{
+    var k1: int; var k2: int;
+    var s1: int;  var s2: int;
+    var b1: bool; var b2: bool;
+    var vsnap: int;
+    k1 := time1; k2 := time2;
+
+    havoc b1;
+    if (b1)
+    {
+        x1 := 0;
+        c1 := 0;
+        while (k1 > 0)
+           invariant (x1 + k1 == time1);
+           invariant (time1 <= 0 ==> x1 == 0);
+           invariant (time1 > 0 ==> k1 >= 0);
+        {
+            k1 := k1 - 1;
+            x1 := x1 + 1;
+        }
+    } else
+    {
+        x1 := 0;
+        c1 := 1;
+        while (k1 > 0)
+        {
+            k1 := k1 - 1;
+            havoc s1;
+            x1 := x1 + s1;
+        }
+    }
+    assert (exists v:bool :: v != b1); // added by chk
+    havoc b2;
+    assume (b2 != b1);
+    
+    if (b2)
+    {
+        x2 := 0;
+        c2 := 0;
+        while (k2 > 0)
+        {
+            vsnap := k2; // variant k2
+
+            k2 := k2 - 1;
+            x2 := x2 + 1;
+            x2 := x2 + 1;
+
+            assert (0 <= k2 && k2 < vsnap); // variant decreases
+        }
+    } else
+    {
+        x2 := 0;
+        c2 := 1;
+        while (k2 > 0)
+           invariant (x2 + k2 == time2);
+           invariant (time2 <= 0 ==> x2 == 0);
+           invariant (time2 > 0 ==> k2 >= 0);
+        {
+            vsnap := k2; // variant k2
+
+            k2 := k2 - 1;
+            assert (exists v:int :: v == 0); // added by chk 
+            havoc s2;
+            assume s2 == 0;
+            x2 := x2 + s2 + 1;
+
+            assert (0 <= k2 && k2 < vsnap); // variant decreases
+        }
+    }
+
+}

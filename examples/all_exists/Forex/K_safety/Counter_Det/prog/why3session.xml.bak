@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.046462" steps="48"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="FREL" proved="true">
+ <goal name="prog&#39;vc" expl="VC for prog" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="prog&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.080589" steps="259"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.042211" steps="28"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049432" steps="29"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.3" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.046238" steps="30"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.4" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.109647" steps="540"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051042" steps="82"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053620" steps="82"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.7" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.048612" steps="84"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.051455" steps="44"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.042900" steps="44"/></proof>
+  </goal>
+  <goal name="prog&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.043357" steps="44"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

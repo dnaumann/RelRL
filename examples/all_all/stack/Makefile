@@ -1,0 +1,25 @@
+WHY3=why3
+WHYREL=../../../bin/whyrel
+WHYREL_STDLIB=../../../stdlib
+FILES=stack.rl arraystack.rl liststack.rl relstack.rl client.rl
+
+all: prog.mlw
+
+prog.mlw: $(FILES)
+	$(WHYREL) -margin 136 -o $@ $^
+	python3 add_lemmas.py $@
+
+
+ide: prog.mlw
+	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
+
+replay: prog.mlw prog/why3session.xml
+	$(WHY3) replay -L . -L $(WHYREL_STDLIB) prog
+
+type: $(FILES)
+	$(WHYREL) -debug -type-check $^
+
+.PHONY: clean
+clean:
+	rm -f prog.mlw
+

@@ -12,6 +12,28 @@ type ident =
   | Id of string
   | Qualid of string * string list
 
+(* FUTURE: Potentially model identifiers as follows: *)
+module Ident : sig
+  type t
+  val name : t -> string
+  val fresh : string -> t
+  val refresh : t -> t
+end = struct
+  type t = Name of string
+         | Gensym of string * int
+
+  let count = ref 0
+
+  let name = function
+    | Name x -> x
+    | Gensym(x,k) -> x ^ Int.to_string k
+
+  let fresh = fun x -> incr count; Gensym(x, !count)
+
+  let refresh = function
+    | Name x | Gensym (x,_) -> incr count; Gensym (x, !count)
+end
+
 type ty =
   | Tctor of ident * ty node list
 
@@ -144,6 +166,7 @@ and while_spec = while_spec_elt node list
 
 and while_spec_elt =
   | Winvariant of formula node
+  | Wvariant of exp node
   | Wframe of effect node
 
 type spec_elt =
@@ -195,6 +218,12 @@ type named_formula = {
   body: formula node;
 }
 
+type inductive_predicate = {
+  ind_name: ident;
+  ind_params: (ident * ty node) list;
+  ind_cases: (ident node * formula node) list;
+}
+
 type import_directive = {
   import_kind: import_kind;
   import_name: ident;
@@ -233,6 +262,7 @@ type interface_elt =
   | Intr_formula of named_formula node
   | Intr_import of import_directive node
   | Intr_extern of extern_decl node
+  | Intr_inductive of inductive_predicate node
 
 type interface_def = {
   intr_name: ident;
@@ -247,6 +277,7 @@ type module_elt =
   | Mdl_formula of named_formula node
   | Mdl_import of import_directive node
   | Mdl_extern of extern_decl node
+  | Mdl_inductive of inductive_predicate node
 
 type module_def = {
   mdl_name: ident;
@@ -281,11 +312,15 @@ and rlet_binding = ident * ty node option * let_bind node
 and rquantifier_bindings = quantifier_bindings * quantifier_bindings
 
 type bicommand =
+  | Bihavoc_right of ident * rformula node
   | Bisplit of command node * command node
   | Bisync of atomic_command node
   | Bivardecl of varbind option * varbind option * bicommand node
   | Biseq of bicommand node * bicommand node
   | Biif of exp node * exp node * bicommand node * bicommand node
+  | Biif4 of exp node * exp node
+             * bicommand node * bicommand node
+             * bicommand node * bicommand node
   | Biwhile of exp node * exp node * alignment_guard option
                * biwhile_spec * bicommand node
   | Biassume of rformula node
@@ -301,6 +336,7 @@ and biwhile_spec = biwhile_spec_elt node list
 and biwhile_spec_elt =
   | Biwinvariant of rformula node
   | Biwframe of effect node * effect node
+  | Biwvariant of biexp node
 
 type named_rformula = {
   kind: [`Axiom | `Lemma | `Predicate];

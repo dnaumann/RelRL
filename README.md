@@ -1,10 +1,11 @@
 # WhyRel
 
 WhyRel is a tool for reasoning about relational properties of object-based
-programs.  It has been used to verify equivalence of ADTs, simple
-noninterference examples and program transformations.  WhyRel is built on top
-of the [Why3](http://why3.lri.fr) platform for deductive program verification
-and relies on it to generate and discharge verification conditions (VCs).
+programs based on this [paper](https://dl.acm.org/doi/10.1145/3551497).  It has been
+used to verify equivalence of ADTs, simple noninterference examples and program
+transformations.  WhyRel is built on top of the [Why3](https://www.why3.org)
+platform for deductive program verification and relies on it to generate and
+discharge verification conditions (VCs).
 
 Source files are written in a syntax similar to ML/WhyML but the language
 contains features most familiar in Java-like contexts; e.g., mutable locals,
@@ -18,74 +19,69 @@ programs in this setting.  See the `examples/` directory for some case studies
 done using WhyRel.
 
 This repository contains the sources for a new version of WhyRel.  The previous
-version was used to evaluate a rich set of case studies but is no longer
+version was used to evaluate a rich set of case studies in but is no longer
 maintained.  The current version is a reimplementation intended to be used for
 experimenting with encodings and additional features.
 
-This research has been partially supported by grants NSF CNS 1718713 and ONR
-N00014-17-1-2787
+In detail: The previous version supported specification and verification of
+forall-forall properties (2-safety) as documented in this
+[paper](https://link.springer.com/chapter/10.1007/978-3-031-30820-8_11).
+The current version adds support for forall-exists properties using a 
+technique documented in this [paper](https://arxiv.org/abs/2509.04777).
+Many forall-forall examples were ported to the new version but not all.
 
+This research has been partially supported by grants NSF CNS 2426414, NSF CNS 1718713 and ONR N00014-17-1-2787
 
-## State of this repository
+## Contents
 
-The `encoding` branch contains in progress work on all-exists verification. The
-tag `stable` points to a stable release of WhyRel that works with Why3 version
-1.7.0.
-
-
-## Documentation
-
-The relational program logic and a high level description of the current version
-of WhyRel can be found [here](http://arxiv.org/abs/1910.14560).
-
+- `src` contains the WhyRel ocaml source
+- `examples` contains WhyRel case studies. It has a readme with instructions for installing solvers and for replay.  
+- `examples/all_all` has the forall-forall examples, and `examples/all_exists` has all-exists examples. The readme files in these folders provide catalogs. 
+- `boogie_examples` contains boogie translations of the examples in `examples/all_exists`.
+- `stdlib` is WhyRel's standard library.
+- `vscode` is a vscode extension of WhyRel syntax highlighting.
+- `emacs` syntax highlighting in emacs
+- `why3_bug` reproduces a bug in thw mlw_printer module in why3 version used
+  here.
 
 ## Installation
 
 The dependencies for WhyRel are:
 
-- Why3 1.7.0
-- OCamlbuild 0.14.0
+- Why3 1.7.2
+- OCamlbuild 0.16.1 
 
-Please refer to Why3's [installation
-instructions](http://why3.lri.fr/doc/install.html#installing-why3). If you
-install Why3 from source, make sure to also install the OCaml API.
-OCamlbuild is required to build WhyRel.  The sources are expected to
-compile using OCaml 4.09.1 and above.
 
 The recommended way of installing dependencies is by using an
 [opam](https://opam.ocaml.org) switch.
 
 ```
-opam switch create whyrel 4.09.1
-opam install why3.1.7.0 ocamlbuild
+opam switch create whyrel 5.1.1
+opam install why3.1.7.2 ocamlbuild 
+opam install why3-ide.1.7.2 
 ```
 
-You may also consider installing the `why-ide` package.
-
+Alternatively, if you install Why3 from source, make sure to also install the OCaml API.
 
 ### Compilation
 
+The sources are expected to compile using OCaml 5.1.1 and above.
+
 To compile, `cd` to the directory where you cloned this repository (referred
-to as `<WHYREL>` from here on) and run `make`.  To test out your installation
-you can run `<WHYREL>/bin/whyrel -version`.  There is no `make install`
-option; simply add `<WHYREL>/bin` to your `PATH` variable if desired.  Run
-`whyrel -help` to learn about supported command line flags.
+to as `<WHYREL>` from here on) and run `make`.  There may be some warnings, which can be ignored. 
 
+To test out your installation you can run `<WHYREL>/bin/whyrel -version`.  There is no `make install` option; simply add `<WHYREL>/bin` to your `PATH` variable if desired.  Run `whyrel -help` to learn about supported command line flags.
 
-### External provers
+### Verification
 
-Why3 supports a wide range of automated and interactive provers.  In developing
-and testing examples for WhyRel, the emphasis has been on using SMT solvers to
-discharge VCs.  These include Alt-Ergo, Z3, CVC3, and CVC4.  Please refer to the
-Why3 installation documentation for instructions on how to install these and
-other supported provers.
-
+The whyml file generated by WhyRel is verified using external smt solvers
+orchestrated via why3 ide. Why3 supports a wide range of automated and
+interactive provers. Altergo and Z3 were used in developing and testing examples
+for WhyRel. There has been emphasis on using SMT solvers to discharge VCs in the
+design of WhyRel. Please refer to the Why3 installation documentation for
+instructions on how to install these and other supported provers.  See also `examples/README.md`.
 
 ## Usage
-
-At its present state, WhyRel can be used to translate a series of source files
-to WhyML modules.  The experimental `-locEq` option can be used to derive the
-local equivalence spec for a given method.
 
 To compile a file called `foo.rl` run
 
@@ -112,25 +108,16 @@ instance, run
 why3 ide -L <WHYREL>/stdlib foo.mlw
 ```
 
-It is important to include WhyRel's standard library by using the `-L` option.
-
-
-### Minor issues
-
-WhyRel relies on Why3's pretty printer.  As of Why3 1.3.3 there is an issue with
-how lemmas and axioms are printed.  What should be `lemma bar : P` is instead
-printed as `lemma bar = P`.  To fix, simply replace the `=` with `:`.  The sed
-file `post-process.sed` in the `util` directory can be used to apply this change
-uniformly.
+The default relational verification is forall forall. To perform forall exists
+verification, pass the `-all-exists` option. For example:
 
 ```
-sed -f <WHYREL>/util/post-process.sed -i .bak path/to/mlw/file
+whyrel -all-exists foo.rl -o foo.mlw
 ```
 
 
-## Examples
+The experimental `-locEq` option can be used to derive the local equivalence
+spec for a given method.
 
-See the `examples` directory for a few case studies.  Each example is placed
-in a directory that includes source files, WhyML files, and Why3 session
-files.  To replay an example using Why3's IDE, it should be sufficient to run
-`make && make ide` in the example's directory.
+
+

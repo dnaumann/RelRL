@@ -158,11 +158,11 @@ let meth_map_of_penv prog : meth_map =
 
   let debug_print mdecl mdl_name =
     Format.fprintf Format.err_formatter
-      "Processing method %s in %s: effects: %a\n"
+      "Processing method %s in %s: \neffects: @[<hv>%a@]\n"
       (string_of_ident mdecl.meth_name.node)
       (string_of_ident mdl_name)
       Pretty.pp_effect (effects_of_spec mdecl.meth_spec);
-    Format.pp_print_flush Format.err_formatter ();
+    Format.pp_print_flush Format.err_formatter ()
   in
 
   let interface_methods i =

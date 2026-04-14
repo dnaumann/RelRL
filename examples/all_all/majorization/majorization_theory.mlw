@@ -1,0 +1,9 @@
+module Majorization_Theory
+
+use int.Int
+
+axiom scaling_preserves_ordering: forall a, b, c. 
+    a > 0 /\ b > c -> b * a > c * a
+
+end
+

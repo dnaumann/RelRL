@@ -58,8 +58,9 @@ let rec resolve_command fields com : command =
   | Vardecl (x, m, t, c) -> Vardecl (x, m, t, ~! c)
   | Seq (c1, c2) -> Seq (~! c1, ~! c2)
   | If (e, c1, c2) -> If  (e, ~! c1, ~! c2)
-  | While (e, {winvariants; wframe}, c) ->
-    While (e, {winvariants; wframe = resolve_effect' fields wframe}, ~! c)
+  | While (e, {winvariants; wframe; wvariant}, c) ->
+    let wframe = resolve_effect' fields wframe in
+    While (e, {winvariants; wframe; wvariant}, ~! c)
 
 let resolve_command_opt fields = function
   | None -> None
@@ -68,15 +69,17 @@ let resolve_command_opt fields = function
 let rec resolve_bicommand fields bicom : bicommand =
   let ( ~! ) = resolve_bicommand fields in
   match bicom with
+  | Bihavoc_right (x, rf) -> Bihavoc_right (x, rf)
   | Bisplit (c1, c2) ->
     Bisplit (resolve_command fields c1, resolve_command fields c2)
   | Bisync ac -> Bisync ac
   | Bivardecl (x, x', cc) -> Bivardecl (x, x', ~! cc)
   | Biseq (cc1, cc2) -> Biseq (~! cc1, ~! cc2)
   | Biif (g, g', cc, dd) -> Biif (g, g', ~! cc, ~! dd)
-  | Biwhile (e, e', ag, {biwinvariants; biwframe}, cc) ->
+  | Biif4 (g, g', branches) -> Biif4 (g, g', map_fourwayif (~!) branches)
+  | Biwhile (e, e', ag, {biwinvariants; biwframe; biwvariant}, cc) ->
     let biwframe = map_pair (resolve_effect' fields) biwframe in
-    Biwhile (e, e', ag, {biwinvariants; biwframe}, ~! cc)
+    Biwhile (e, e', ag, {biwinvariants; biwframe; biwvariant}, ~! cc)
   | Biassume rf -> Biassume rf
   | Biassert rf -> Biassert rf
   | Biupdate (x, x') -> Biupdate (x, x')

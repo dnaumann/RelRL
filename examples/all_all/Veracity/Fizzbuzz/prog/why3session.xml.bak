@@ -1,0 +1,1359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.042880" steps="60"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Fizzbuzz35" proved="true">
+ <goal name="fizzbuzz&#39;vc" expl="VC for fizzbuzz" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="fizzbuzz&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047946" steps="15"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.042242" steps="10"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.050677" steps="26"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.045300" steps="14"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.4" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.041124" steps="18"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055687" steps="55"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046578" steps="28"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056881" steps="91"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.063422" steps="119"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048337" steps="22"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045640" steps="22"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.11" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056277" steps="43"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.12" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052975" steps="80"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.13" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.047741" steps="35"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.14" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.042743" steps="20"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.15" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047031" steps="20"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.16" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.048811" steps="39"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.17" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047724" steps="24"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.18" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049157" steps="45"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.19" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.044271" steps="30"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.20" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048683" steps="74"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.21" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053097" steps="40"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.22" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.058267" steps="113"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.23" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060865" steps="115"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.24" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.068336" steps="131"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.25" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046656" steps="34"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.26" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046002" steps="34"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.27" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050644" steps="61"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.28" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056920" steps="74"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.29" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.064474" steps="65"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.30" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.045235" steps="30"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.31" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.050351" steps="49"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Fizzbuzz53" proved="true">
+ <goal name="fizzbuzz&#39;vc" expl="VC for fizzbuzz" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="fizzbuzz&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049458" steps="15"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044659" steps="10"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047801" steps="26"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044532" steps="14"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.4" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.047281" steps="18"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057194" steps="55"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046162" steps="28"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.061837" steps="90"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055448" steps="93"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.038252" steps="22"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046254" steps="22"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.11" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052223" steps="43"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.12" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054710" steps="60"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.13" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.053989" steps="35"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.14" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.046386" steps="20"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.15" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.048224" steps="20"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.16" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.052123" steps="39"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.17" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.043761" steps="24"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.18" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.052005" steps="45"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.19" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.042016" steps="30"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.20" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056789" steps="74"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.21" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045311" steps="40"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.22" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.058822" steps="113"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.23" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059862" steps="115"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.24" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.066888" steps="130"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.25" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050236" steps="34"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.26" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.044350" steps="34"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.27" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059088" steps="61"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.28" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053512" steps="74"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.29" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.061117" steps="65"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.30" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.045669" steps="30"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.31" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.051009" steps="51"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="FizzBuzzCommutes" proved="true">
+ <goal name="fizzbuzz&#39;vc" expl="VC for fizzbuzz" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="fizzbuzz&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.042257" steps="22"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047115" steps="22"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047350" steps="23"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.051752" steps="42"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.4" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.046131" steps="29"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.5" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.056917" steps="42"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.6" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.054665" steps="29"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.7" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.044331" steps="27"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.048033" steps="40"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.9" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.045073" steps="46"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.111394" steps="485"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.11" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.044511" steps="58"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.12" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054307" steps="59"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.13" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.066839" steps="160"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.14" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.078600" steps="205"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.072549" steps="163"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.070684" steps="166"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.17" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.053748" steps="63"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.18" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.109049" steps="448"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.19" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049906" steps="54"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.20" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046431" steps="55"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.21" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.063321" steps="154"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.22" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.068712" steps="203"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.23" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059237" steps="86"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.24" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.067212" steps="120"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.25" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.051383" steps="59"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.26" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.050431" steps="42"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.27" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.116076" steps="477"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.28" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055914" steps="54"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.29" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051852" steps="55"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.30" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.061877" steps="85"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.31" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.064219" steps="151"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.32" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.063117" steps="155"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.33" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.069281" steps="164"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.34" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.055471" steps="59"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.35" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.044001" steps="48"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.36" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046240" steps="48"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.37" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045152" steps="49"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.38" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056062" steps="80"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.39" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.068625" steps="142"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.40" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055799" steps="80"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.41" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.063354" steps="110"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.42" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.050180" steps="53"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.43" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.050925" steps="46"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.44" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.051197" steps="46"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.45" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.045413" steps="47"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.46" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.053592" steps="69"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.47" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.042261" steps="51"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.48" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.056223" steps="76"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.49" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.052397" steps="71"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.50" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049897" steps="51"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.51" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.060994" steps="77"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.52" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.050240" steps="49"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.53" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.052560" steps="62"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.54" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049744" steps="68"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.55" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.128405" steps="582"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.56" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056348" steps="81"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.57" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054404" steps="82"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.58" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.075015" steps="217"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.59" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.078022" steps="249"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.60" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.077406" steps="247"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.61" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.072588" steps="229"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.62" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.081766" steps="257"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.63" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.075445" steps="258"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.64" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.054639" steps="86"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.65" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.117106" steps="545"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.66" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049277" steps="76"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.67" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052879" steps="77"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.68" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.070916" steps="208"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.69" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.072978" steps="239"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.70" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.071259" steps="232"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.71" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060307" steps="129"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.72" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.072040" steps="166"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.73" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.063095" steps="134"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.74" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.049684" steps="81"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.75" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.048720" steps="64"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.76" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.117579" steps="585"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.77" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050218" steps="76"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.78" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054902" steps="77"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.79" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.062308" steps="126"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.80" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.069805" steps="164"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.81" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.071088" steps="131"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.82" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.078907" steps="213"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.83" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.076595" steps="237"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.84" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.072179" steps="235"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.85" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.055523" steps="81"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.86" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051254" steps="70"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.87" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051487" steps="70"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.88" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049360" steps="72"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.89" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060541" steps="120"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.90" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.070000" steps="153"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.91" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.064132" steps="124"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.92" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.063829" steps="121"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.93" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.065111" steps="153"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.94" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.062632" steps="124"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.95" expl="lockstep" proved="true">
+  <proof prover="0"><result status="valid" time="0.051879" steps="75"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.96" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.055784" steps="71"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.97" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.056202" steps="64"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.98" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.065508" steps="147"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.99" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.046998" steps="64"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="FizzBuzzCommutes_Seq" proved="true">
+ <goal name="fizzbuzz&#39;vc" expl="VC for fizzbuzz" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="fizzbuzz&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049945" steps="27"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.050306" steps="22"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049009" steps="38"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.053188" steps="26"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.4" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049104" steps="30"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057016" steps="77"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047572" steps="40"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059597" steps="110"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.067862" steps="143"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049750" steps="34"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.040555" steps="34"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.11" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056580" steps="56"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.12" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053914" steps="99"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.13" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.053344" steps="49"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.14" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044404" steps="32"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.15" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.046191" steps="32"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.16" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.052142" steps="53"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.17" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.048216" steps="36"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.18" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.057830" steps="59"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.19" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.043104" steps="42"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.20" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056655" steps="93"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.21" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045273" steps="52"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.22" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060761" steps="133"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.23" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.064661" steps="135"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.24" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.062743" steps="152"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.25" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049061" steps="46"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.26" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045623" steps="46"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.27" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056238" steps="75"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.28" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059500" steps="91"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.29" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060952" steps="78"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.30" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.056769" steps="65"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.31" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.059121" steps="64"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.32" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.058082" steps="68"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.33" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.075564" steps="181"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.34" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.050755" steps="47"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.35" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.057335" steps="69"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.36" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.052501" steps="50"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.37" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.058316" steps="71"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.38" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.058328" steps="71"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.39" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.059773" steps="77"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.40" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.048980" steps="54"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.41" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.108769" steps="483"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.42" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048545" steps="64"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.43" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.069787" steps="161"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.44" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.066174" steps="169"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.45" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.067543" steps="98"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.46" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060505" steps="100"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.47" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.067125" steps="105"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.48" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050133" steps="58"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.49" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054211" steps="58"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.50" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.065067" steps="89"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.51" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.070241" steps="115"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.52" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.062045" steps="92"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.53" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057412" steps="93"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.54" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.058156" steps="96"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.55" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.059174" steps="81"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.56" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.060818" steps="81"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.57" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.059355" steps="86"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.58" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.067982" steps="81"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.59" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049964" steps="61"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.60" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.048028" steps="61"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.61" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.059565" steps="87"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.62" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049755" steps="63"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.63" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.059295" steps="91"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.64" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.053065" steps="67"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.65" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.109469" steps="555"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.66" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050085" steps="78"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.67" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.072925" steps="189"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.68" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.075799" steps="198"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.69" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.070466" steps="209"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.70" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052665" steps="71"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.71" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057542" steps="73"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.72" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060997" steps="109"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.73" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.065404" steps="135"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.74" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.062770" steps="113"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.75" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.059769" steps="81"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.76" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.050645" steps="73"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.77" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.062391" steps="158"/></proof>
+  </goal>
+  <goal name="fizzbuzz&#39;vc.78" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.057637" steps="73"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="SumAB" proved="true">
+ <goal name="sum&#39;vc" expl="VC for sum" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="sum&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.045243" steps="15"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049428" steps="20"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.054692" steps="31"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.040012" steps="16"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.4" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056267" steps="26"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049075" steps="26"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055638" steps="75"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046057" steps="24"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045650" steps="24"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054461" steps="70"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.10" expl="i := n / 2" proved="true">
+  <proof prover="0"><result status="valid" time="0.045291" steps="18"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.11" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.044407" steps="21"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.12" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.055283" steps="42"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.13" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.055749" steps="75"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.14" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048973" steps="44"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047803" steps="44"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.063459" steps="124"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.17" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050083" steps="39"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.18" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045629" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.19" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059989" steps="120"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.20" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.050981" steps="89"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="SumBA" proved="true">
+ <goal name="sum&#39;vc" expl="VC for sum" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="sum&#39;vc.0" expl="i := n / 2" proved="true">
+  <proof prover="0"><result status="valid" time="0.046448" steps="6"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.054864" steps="19"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.046802" steps="20"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047422" steps="32"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.4" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047739" steps="26"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053632" steps="26"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056780" steps="73"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047780" steps="24"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047106" steps="24"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.058360" steps="71"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.10" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047206" steps="21"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.11" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.050017" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.12" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.053264" steps="73"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.13" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.048422" steps="31"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.14" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048577" steps="43"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047855" steps="44"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060264" steps="117"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.17" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050045" steps="39"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.18" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.043018" steps="40"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.19" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.062253" steps="112"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.20" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.044208" steps="87"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="SumCommutes" proved="true">
+ <goal name="sum&#39;vc" expl="VC for sum" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="sum&#39;vc.0" expl="i := n / 2" proved="true">
+  <proof prover="0"><result status="valid" time="0.038512" steps="20"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.046837" steps="22"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.054310" steps="44"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.052198" steps="45"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.4" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.058702" steps="56"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.5" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.057983" steps="70"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.6" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.047111" steps="37"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.7" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.048501" steps="37"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049219" steps="37"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051221" steps="50"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046060" steps="50"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.11" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045577" steps="51"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.12" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.062842" steps="116"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.13" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055729" steps="54"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.14" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049392" steps="54"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046042" steps="45"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050110" steps="46"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.17" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049587" steps="47"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.18" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.063515" steps="110"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.19" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050299" steps="49"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.20" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.051191" steps="49"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.21" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052494" steps="54"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.22" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050214" steps="54"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.23" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048356" steps="55"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.24" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050210" steps="55"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.25" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.067288" steps="119"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.26" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049116" steps="58"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.27" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052519" steps="50"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.28" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049353" steps="50"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.29" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051204" steps="51"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.30" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050102" steps="51"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.31" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.066354" steps="113"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.32" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.052552" steps="53"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.33" expl="guard agreement" proved="true">
+  <proof prover="0"><result status="valid" time="0.047490" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.34" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050183" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.35" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048927" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.36" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050253" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.37" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048715" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.38" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048534" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.39" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.049002" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.40" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055509" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.41" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051528" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.42" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049615" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.43" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048264" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.44" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.049357" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.45" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.055600" steps="41"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.46" expl="i := n / 2" proved="true">
+  <proof prover="0"><result status="valid" time="0.049152" steps="47"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.47" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049299" steps="53"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.48" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049399" steps="53"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.49" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.053310" steps="54"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.50" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.063229" steps="125"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.51" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.065286" steps="152"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.52" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.053694" steps="74"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.53" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.054136" steps="81"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.54" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052985" steps="90"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.55" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.058501" steps="91"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.56" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055238" steps="92"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.57" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.076034" steps="215"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.58" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059223" steps="94"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.59" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.055162" steps="95"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.60" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055488" steps="85"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.61" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057099" steps="86"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.62" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052736" steps="86"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.63" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.077988" steps="209"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.64" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054222" steps="90"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.65" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.055827" steps="91"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.66" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.054333" steps="86"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.67" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.060033" steps="101"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.68" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053710" steps="101"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.69" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.058894" steps="101"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.70" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057648" steps="101"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.71" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.087538" steps="229"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.72" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.059363" steps="105"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.73" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.056322" steps="95"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.74" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.059872" steps="95"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.75" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052019" steps="96"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.76" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053686" steps="96"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.77" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.075890" steps="223"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.78" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.056557" steps="100"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.79" expl="guard agreement" proved="true">
+  <proof prover="0"><result status="valid" time="0.048936" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.80" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055881" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.81" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054183" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.82" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055548" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.83" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055217" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.84" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057898" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.85" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.057985" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.86" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057391" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.87" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050318" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.88" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053973" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.89" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055145" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.90" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050901" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.91" expl="alignment condition" proved="true">
+  <proof prover="0"><result status="valid" time="0.056193" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.92" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.683545" steps="4044"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.93" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.078384" steps="208"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.94" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.051977" steps="97"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.95" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.151276" steps="741"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="SumCommutes_Seq" proved="true">
+ <goal name="sum&#39;vc" expl="VC for sum" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="sum&#39;vc.0" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.045440" steps="27"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.053962" steps="32"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.050370" steps="44"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.046490" steps="28"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.4" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047455" steps="38"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.5" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052644" steps="39"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.6" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.058100" steps="88"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.7" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.048001" steps="36"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.046569" steps="36"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.054735" steps="83"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.10" expl="i := n / 2" proved="true">
+  <proof prover="0"><result status="valid" time="0.046257" steps="31"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.11" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.045348" steps="33"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.12" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.047911" steps="54"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.13" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.057216" steps="87"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.14" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.045750" steps="56"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.15" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047007" steps="56"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.16" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.066014" steps="138"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.17" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051893" steps="52"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.18" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050489" steps="52"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.19" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.058882" steps="132"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.20" expl="i := n / 2" proved="true">
+  <proof prover="0"><result status="valid" time="0.046837" steps="48"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.21" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.046423" steps="56"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.22" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.050367" steps="56"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.23" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.064744" steps="115"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.24" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.048828" steps="60"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.25" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052378" steps="75"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.26" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.052644" steps="76"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.27" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.066408" steps="164"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.28" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.055507" steps="79"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.29" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.047050" steps="70"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.30" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051640" steps="71"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.31" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.066009" steps="160"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.32" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057065" steps="74"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.33" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.046271" steps="71"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.34" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.049050" steps="71"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.35" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.055118" steps="71"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.36" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.068063" steps="167"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.37" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.056232" steps="81"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.38" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053670" steps="95"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.39" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.053892" steps="95"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.40" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051299" steps="96"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.41" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.074371" steps="221"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.42" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.051638" steps="90"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.43" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.057838" steps="90"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.44" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.050216" steps="90"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.45" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.078630" steps="214"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.46" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.802526" steps="4719"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.47" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.069784" steps="203"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.48" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.054669" steps="92"/></proof>
+  </goal>
+  <goal name="sum&#39;vc.49" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.153882" steps="729"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

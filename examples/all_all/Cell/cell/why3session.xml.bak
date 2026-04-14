@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="1" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="cell.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.055069" steps="71"/></proof>
+  </goal>
+  <goal name="state&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.097093" steps="545"/></proof>
+  </goal>
+  <goal name="state&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.061384" steps="92"/></proof>
+  </goal>
+  <goal name="state&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.070931" steps="66"/></proof>
+  </goal>
+  <goal name="state&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.068673" steps="92"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="CELL" proved="true">
+ <goal name="emptyPoolCellP" proved="true">
+ <proof prover="1"><result status="valid" time="0.064784" steps="72"/></proof>
+ </goal>
+</theory>
+<theory name="ACell" proved="true">
+ <goal name="init_Cell&#39;vc" expl="VC for init_Cell" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="init_Cell&#39;vc.0" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.059974" steps="14"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.1" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.058924" steps="14"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.2" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.057229" steps="26"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.3" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.073833" steps="64"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.4" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.096318" steps="99"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.141016" steps="352"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.056689" steps="42"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.7" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.128983" steps="429"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.8" expl="wr {self}`rep" proved="true">
+  <proof prover="1"><result status="valid" time="0.142549" steps="441"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="4.287667" steps="14925"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.114757" steps="233"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="1.505921" steps="6197"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="1.093264" steps="5227"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="cset&#39;vc" expl="VC for cset" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="cset&#39;vc.0" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.055976" steps="12"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.1" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.059133" steps="12"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.051459" steps="20"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.3" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.101384" steps="186"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.748347" steps="2510"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.163014" steps="539"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.247507" steps="815"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="cget&#39;vc" expl="VC for cget" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="cget&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.079201" steps="55"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.1" expl="result := self.value" proved="true">
+  <proof prover="1"><result status="valid" time="0.059560" steps="47"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.071711" steps="20"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.081511" steps="82"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.073165" steps="18"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.062207" steps="18"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="boundary_frames_invariant_ACell" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="boundary_frames_invariant_ACell.0" proved="true">
+  <proof prover="1"><result status="valid" time="1.870040" steps="8597"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="BCell" proved="true">
+ <goal name="init_Cell&#39;vc" expl="VC for init_Cell" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="init_Cell&#39;vc.0" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.071189" steps="16"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.1" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.064766" steps="16"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.2" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.054469" steps="28"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.3" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.066114" steps="66"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.4" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.074386" steps="101"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.117703" steps="355"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.052719" steps="44"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.7" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.130392" steps="432"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.8" expl="wr {self}`rep" proved="true">
+  <proof prover="1"><result status="valid" time="0.134740" steps="443"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="3.541073" steps="14927"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.099746" steps="235"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="1.215416" steps="6197"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="1.334707" steps="5356"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.13" expl="self.value := - k" proved="true">
+  <proof prover="1"><result status="valid" time="0.062985" steps="16"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.14" expl="self.value := - k" proved="true">
+  <proof prover="1"><result status="valid" time="0.074067" steps="16"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.15" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.069596" steps="28"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.16" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.082185" steps="66"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.17" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.092307" steps="102"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.18" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.128475" steps="355"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.19" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.061961" steps="44"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.20" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.169767" steps="434"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.21" expl="wr {self}`rep" proved="true">
+  <proof prover="1"><result status="valid" time="0.155024" steps="445"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.22" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="3.525267" steps="14939"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.23" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.119611" steps="235"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.24" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="1.252468" steps="6207"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.25" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="1.209303" steps="5333"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="cset&#39;vc" expl="VC for cset" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="cset&#39;vc.0" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.056196" steps="14"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.1" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.054898" steps="14"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.073665" steps="22"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.3" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.099337" steps="191"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.689489" steps="2513"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.155038" steps="539"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.255112" steps="1153"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.7" expl="self.value := - k" proved="true">
+  <proof prover="1"><result status="valid" time="0.058164" steps="14"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.8" expl="self.value := - k" proved="true">
+  <proof prover="1"><result status="valid" time="0.061910" steps="14"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.053357" steps="22"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.10" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.117821" steps="192"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.751592" steps="2520"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.137813" steps="546"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.13" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.213595" steps="1142"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="cget&#39;vc" expl="VC for cget" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="cget&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.056206" steps="55"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.1" expl="value := self.value" proved="true">
+  <proof prover="1"><result status="valid" time="0.069129" steps="47"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.080827" steps="23"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.088708" steps="83"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.064248" steps="20"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.044281" steps="20"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="boundary_frames_invariant_BCell" proved="true">
+ <proof prover="1"><result status="valid" time="1.890052" steps="8294"/></proof>
+ </goal>
+</theory>
+<theory name="CELL_REL" proved="true">
+ <goal name="init_Cell&#39;vc" expl="VC for init_Cell" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="init_Cell&#39;vc.0" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.060255" steps="44"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.1" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.076422" steps="44"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.2" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.072728" steps="54"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.3" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.062891" steps="54"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.4" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.072157" steps="64"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.5" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.058113" steps="68"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.6" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.071278" steps="182"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.7" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.100462" steps="211"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.8" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.055809" steps="80"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.9" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.073066" steps="211"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.10" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.112915" steps="271"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.11" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.203124" steps="825"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.12" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.226688" steps="934"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.13" expl="wr {self}`rep" proved="true">
+  <proof prover="1"><result status="valid" time="0.244928" steps="1011"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.14" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.273261" steps="1026"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.15" expl="wr {self}`rep" proved="true">
+  <proof prover="1"><result status="valid" time="0.256732" steps="1027"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.16" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.316336" steps="1042"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.17" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.065602" steps="122"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.18" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.603479" steps="3439"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.19" expl="postcondition" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="init_Cell&#39;vc.19.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="init_Cell&#39;vc.19.0.0" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="0.093216" steps="125"/></proof>
+    </goal>
+    <goal name="init_Cell&#39;vc.19.0.1" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="1.056568" steps="5687"/></proof>
+    </goal>
+    <goal name="init_Cell&#39;vc.19.0.2" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="1.234148" steps="6443"/></proof>
+    </goal>
+    <goal name="init_Cell&#39;vc.19.0.3" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="3.011322" steps="13857"/></proof>
+    </goal>
+    <goal name="init_Cell&#39;vc.19.0.4" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="0.609289" steps="2639"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="init_Cell&#39;vc.20" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.284410" steps="904"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.21" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.109502" steps="130"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.22" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="7.025718" steps="37489"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.23" expl="postcondition" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="init_Cell&#39;vc.23.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="init_Cell&#39;vc.23.0.0" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="0.152077" steps="136"/></proof>
+    </goal>
+    <goal name="init_Cell&#39;vc.23.0.1" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="0.081158" steps="126"/></proof>
+    </goal>
+    <goal name="init_Cell&#39;vc.23.0.2" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="0.099300" steps="126"/></proof>
+    </goal>
+    <goal name="init_Cell&#39;vc.23.0.3" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="0.117667" steps="137"/></proof>
+    </goal>
+    <goal name="init_Cell&#39;vc.23.0.4" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="0.254563" steps="501"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="init_Cell&#39;vc.24" expl="postcondition" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="init_Cell&#39;vc.24.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="init_Cell&#39;vc.24.0.0" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="3.795457" steps="15484"/></proof>
+    </goal>
+    <goal name="init_Cell&#39;vc.24.0.1" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="3.754903" steps="15500"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="init_Cell&#39;vc.25" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.120309" steps="134"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.26" expl="self.value := - k" proved="true">
+  <proof prover="1"><result status="valid" time="0.069042" steps="54"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.27" expl="self.value := - k" proved="true">
+  <proof prover="1"><result status="valid" time="0.100501" steps="54"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.28" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.148691" steps="64"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.29" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.121471" steps="68"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.30" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.114082" steps="183"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.31" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.200177" steps="214"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.32" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.091948" steps="80"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.33" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.097611" steps="212"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.34" expl="self.rep := {self}" proved="true">
+  <proof prover="1"><result status="valid" time="0.151434" steps="282"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.35" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.235765" steps="838"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.36" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.245983" steps="947"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.37" expl="wr {self}`rep" proved="true">
+  <proof prover="1"><result status="valid" time="0.271179" steps="1027"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.38" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.283123" steps="1044"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.39" expl="wr {self}`rep" proved="true">
+  <proof prover="1"><result status="valid" time="0.274396" steps="1045"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.40" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.285891" steps="1062"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.41" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.071914" steps="126"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.42" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.696822" steps="3458"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.43" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="23.775489" steps="98198"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.44" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.166028" steps="918"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.45" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.185096" steps="135"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.46" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="8.778100" steps="36620"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.47" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.078313" steps="130"/></proof>
+  </goal>
+  <goal name="init_Cell&#39;vc.48" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="init_Cell&#39;vc.48.0" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="14.334216" steps="46528"/></proof>
+   </goal>
+   <goal name="init_Cell&#39;vc.48.1" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="13.323301" steps="46534"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="init_Cell&#39;vc.49" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.074645" steps="134"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="cset&#39;vc" expl="VC for cset" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="cset&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="2.981046" steps="10691"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.1" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.068540" steps="40"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.2" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.071499" steps="40"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.3" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.083819" steps="50"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.4" expl="self.value := k" proved="true">
+  <proof prover="1"><result status="valid" time="0.061797" steps="50"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.5" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.206692" steps="487"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.6" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.177449" steps="505"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.072724" steps="64"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.273248" steps="1771"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="4.395295" steps="21016"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.099701" steps="69"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="1.379885" steps="5792"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.097171" steps="76"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.13" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.087062" steps="77"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.14" expl="postcondition" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="cset&#39;vc.14.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="cset&#39;vc.14.0.0" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="0.631227" steps="2674"/></proof>
+    </goal>
+    <goal name="cset&#39;vc.14.0.1" expl="postcondition" proved="true">
+    <proof prover="1"><result status="valid" time="0.635807" steps="2672"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="cset&#39;vc.15" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.078038" steps="81"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.16" expl="self.value := - k" proved="true">
+  <proof prover="1"><result status="valid" time="0.056140" steps="50"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.17" expl="self.value := - k" proved="true">
+  <proof prover="1"><result status="valid" time="0.080757" steps="50"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.18" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.238136" steps="497"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.19" expl="wr {self}`value" proved="true">
+  <proof prover="1"><result status="valid" time="0.192607" steps="518"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.20" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.069108" steps="64"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.21" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.283648" steps="1768"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.22" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="5.533245" steps="28827"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.23" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.099726" steps="69"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.24" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="1.087267" steps="5852"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.25" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.076764" steps="76"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.26" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.073644" steps="77"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.27" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="26.669137" steps="135200"/></proof>
+  </goal>
+  <goal name="cset&#39;vc.28" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.076061" steps="81"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="cget&#39;vc" expl="VC for cget" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="cget&#39;vc.0" expl="result := self.value" proved="true">
+  <proof prover="1"><result status="valid" time="0.112263" steps="104"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.1" expl="value := self.value" proved="true">
+  <proof prover="1"><result status="valid" time="0.116827" steps="109"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.083984" steps="44"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.071816" steps="44"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.060748" steps="44"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.059422" steps="44"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.091389" steps="194"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.064259" steps="48"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.060598" steps="48"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.052858" steps="48"/></proof>
+  </goal>
+  <goal name="cget&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.078908" steps="128"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="boundary_frames_coupling_CELL_REL" proved="true">
+ <proof prover="1"><result status="valid" time="6.618370" steps="25048"/></proof>
+ </goal>
+ <goal name="cellC_is_refperm_monotonic" proved="true">
+ <transf name="introduce_premises" proved="true" >
+  <goal name="cellC_is_refperm_monotonic.0" proved="true">
+  <transf name="inline_goal" proved="true" >
+   <goal name="cellC_is_refperm_monotonic.0.0" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="cellC_is_refperm_monotonic.0.0.0" proved="true">
+    <proof prover="1"><result status="valid" time="0.096394" steps="133"/></proof>
+    </goal>
+    <goal name="cellC_is_refperm_monotonic.0.0.1" proved="true">
+    <proof prover="1"><result status="valid" time="0.073485" steps="11"/></proof>
+    </goal>
+    <goal name="cellC_is_refperm_monotonic.0.0.2" proved="true">
+    <proof prover="1"><result status="valid" time="0.073626" steps="11"/></proof>
+    </goal>
+    <goal name="cellC_is_refperm_monotonic.0.0.3" proved="true">
+    <proof prover="1"><result status="valid" time="0.107684" steps="159"/></proof>
+    </goal>
+    <goal name="cellC_is_refperm_monotonic.0.0.4" proved="true">
+    <transf name="unfold" proved="true" arg1="cellC" arg2="in" arg3="H10">
+     <goal name="cellC_is_refperm_monotonic.0.0.4.0" proved="true">
+     <transf name="destruct_rec" proved="true" arg1="H10">
+      <goal name="cellC_is_refperm_monotonic.0.0.4.0.0" expl="destruct premise" proved="true">
+      <proof prover="1"><result status="valid" time="0.057152" steps="20"/></proof>
+      </goal>
+      <goal name="cellC_is_refperm_monotonic.0.0.4.0.1" proved="true">
+      <transf name="instantiate" proved="true" arg1="H10" arg2="l_c,r_c">
+       <goal name="cellC_is_refperm_monotonic.0.0.4.0.1.0" proved="true">
+       <transf name="destruct_rec" proved="true" arg1="Hinst">
+        <goal name="cellC_is_refperm_monotonic.0.0.4.0.1.0.0" expl="destruct premise" proved="true">
+        <proof prover="1"><result status="valid" time="0.060571" steps="28"/></proof>
+        </goal>
+        <goal name="cellC_is_refperm_monotonic.0.0.4.0.1.0.1" expl="destruct premise" proved="true">
+        <proof prover="1"><result status="valid" time="0.062591" steps="28"/></proof>
+        </goal>
+        <goal name="cellC_is_refperm_monotonic.0.0.4.0.1.0.2" expl="destruct premise" proved="true">
+        <proof prover="1"><result status="valid" time="0.062972" steps="28"/></proof>
+        </goal>
+        <goal name="cellC_is_refperm_monotonic.0.0.4.0.1.0.3" expl="destruct premise" proved="true">
+        <proof prover="1"><result status="valid" time="0.076149" steps="28"/></proof>
+        </goal>
+        <goal name="cellC_is_refperm_monotonic.0.0.4.0.1.0.4" expl="destruct premise" proved="true">
+        <proof prover="1"><result status="valid" time="0.055577" steps="28"/></proof>
+        </goal>
+        <goal name="cellC_is_refperm_monotonic.0.0.4.0.1.0.5" expl="destruct premise" proved="true">
+        <proof prover="1"><result status="valid" time="0.067993" steps="28"/></proof>
+        </goal>
+        <goal name="cellC_is_refperm_monotonic.0.0.4.0.1.0.6" expl="destruct premise" proved="true">
+        <proof prover="1"><result status="valid" time="0.086943" steps="136"/></proof>
+        </goal>
+        <goal name="cellC_is_refperm_monotonic.0.0.4.0.1.0.7" proved="true">
+        <proof prover="1"><result status="valid" time="0.049281" steps="30"/></proof>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Main" proved="true">
+ <goal name="main&#39;vc" expl="VC for main" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="main&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.059875" steps="9"/></proof>
+  </goal>
+  <goal name="main&#39;vc.1" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.072993" steps="24"/></proof>
+  </goal>
+  <goal name="main&#39;vc.2" expl="Cell(c,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.071430" steps="24"/></proof>
+  </goal>
+  <goal name="main&#39;vc.3" expl="Cell(c,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.071415" steps="24"/></proof>
+  </goal>
+  <goal name="main&#39;vc.4" expl="Cell(c,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.083786" steps="74"/></proof>
+  </goal>
+  <goal name="main&#39;vc.5" expl="Cell(c,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.065070" steps="28"/></proof>
+  </goal>
+  <goal name="main&#39;vc.6" expl="Cell(c,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.058926" steps="28"/></proof>
+  </goal>
+  <goal name="main&#39;vc.7" expl="Cell(c,k)" proved="true">
+  <proof prover="1"><result status="valid" time="0.066109" steps="31"/></proof>
+  </goal>
+  <goal name="main&#39;vc.8" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.090337" steps="177"/></proof>
+  </goal>
+  <goal name="main&#39;vc.9" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.058787" steps="40"/></proof>
+  </goal>
+  <goal name="main&#39;vc.10" expl="cset(c,x)" proved="true">
+  <proof prover="1"><result status="valid" time="0.091953" steps="182"/></proof>
+  </goal>
+  <goal name="main&#39;vc.11" expl="cset(c,x)" proved="true">
+  <proof prover="1"><result status="valid" time="0.050914" steps="42"/></proof>
+  </goal>
+  <goal name="main&#39;vc.12" expl="cset(c,x)" proved="true">
+  <proof prover="1"><result status="valid" time="0.052527" steps="42"/></proof>
+  </goal>
+  <goal name="main&#39;vc.13" expl="cset(c,x)" proved="true">
+  <proof prover="1"><result status="valid" time="0.073710" steps="42"/></proof>
+  </goal>
+  <goal name="main&#39;vc.14" expl="cset(c,x)" proved="true">
+  <proof prover="1"><result status="valid" time="0.080213" steps="43"/></proof>
+  </goal>
+  <goal name="main&#39;vc.15" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.061312" steps="52"/></proof>
+  </goal>
+  <goal name="main&#39;vc.16" expl="result := cget(c)" proved="true">
+  <proof prover="1"><result status="valid" time="0.101835" steps="247"/></proof>
+  </goal>
+  <goal name="main&#39;vc.17" expl="result := cget(c)" proved="true">
+  <proof prover="1"><result status="valid" time="0.051552" steps="54"/></proof>
+  </goal>
+  <goal name="main&#39;vc.18" expl="result := cget(c)" proved="true">
+  <proof prover="1"><result status="valid" time="0.055836" steps="54"/></proof>
+  </goal>
+  <goal name="main&#39;vc.19" expl="result := cget(c)" proved="true">
+  <proof prover="1"><result status="valid" time="0.051587" steps="55"/></proof>
+  </goal>
+  <goal name="main&#39;vc.20" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="4.145497" steps="28082"/></proof>
+  </goal>
+  <goal name="main&#39;vc.21" expl="wr {}`rep" proved="true">
+  <proof prover="1"><result status="valid" time="2.048366" steps="17184"/></proof>
+  </goal>
+  <goal name="main&#39;vc.22" expl="wr {}`value" proved="true">
+  <proof prover="1"><result status="valid" time="1.431897" steps="11617"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Main_Link" proved="true">
+ <goal name="cellP_holds_in_main" proved="true">
+ <proof prover="1"><result status="valid" time="0.079886" steps="29"/></proof>
+ </goal>
+ <goal name="left_cellI_holds_in_main" proved="true">
+ <proof prover="1"><result status="valid" time="0.089077" steps="94"/></proof>
+ </goal>
+ <goal name="right_cellI_holds_in_main" proved="true">
+ <proof prover="1"><result status="valid" time="0.086848" steps="85"/></proof>
+ </goal>
+ <goal name="cellC_holds_in_main" proved="true">
+ <proof prover="1"><result status="valid" time="0.265063" steps="1050"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

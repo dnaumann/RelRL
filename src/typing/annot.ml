@@ -199,6 +199,7 @@ type command =
 
 and while_spec = {
   winvariants: formula list;
+  wvariant: exp t option;
   wframe: effect;
 }
 
@@ -248,6 +249,12 @@ type named_formula = {
   body: formula;
 }
 
+type inductive_predicate = {
+  ind_name: ident t;
+  ind_params: ident t list;
+  ind_cases: (ident * formula) list;
+}
+
 type import_kind = Ast.import_kind
 
 type import_directive = {
@@ -275,6 +282,7 @@ type interface_elt =
   | Intr_formula of named_formula
   | Intr_import of import_directive
   | Intr_extern of extern_decl
+  | Intr_inductive of inductive_predicate
 
 type interface_def = {
   intr_name: ident;
@@ -289,6 +297,7 @@ type module_elt =
   | Mdl_formula of named_formula
   | Mdl_import of import_directive
   | Mdl_extern of extern_decl
+  | Mdl_inductive of inductive_predicate
 
 type module_def = {
   mdl_name: ident;
@@ -324,15 +333,24 @@ and rlet_binder = ident t * ity * let_bind t
 and rqbinders = qbinders * qbinders
 
 type bicommand =
+  | Bihavoc_right of ident t * rformula
   | Bisplit of command * command
   | Bisync of atomic_command
   | Bivardecl of varbind option * varbind option * bicommand
   | Biseq of bicommand * bicommand
   | Biif of exp t * exp t * bicommand * bicommand
+  | Biif4 of exp t * exp t * fourwayif
   | Biwhile of exp t * exp t * alignment_guard * biwhile_spec * bicommand
   | Biassume of rformula
   | Biassert of rformula
   | Biupdate of ident t * ident t (* Update the refperm *)
+
+and fourwayif = {
+  then_then: bicommand;
+  then_else: bicommand;
+  else_then: bicommand;
+  else_else: bicommand
+}
 
 and alignment_guard = rformula * rformula
 
@@ -341,6 +359,7 @@ and varbind = ident t * modifier option * ity
 and biwhile_spec = {
   biwinvariants: rformula list;
   biwframe: effect * effect;
+  biwvariant: biexp t option;
 }
 
 type named_rformula = {
@@ -556,11 +575,13 @@ end = struct
   *)
   type emb = { imgs: exp t list M.t; vars: (ident t * ity * effect_kind) list }
 
-  let mk_union_list regions =
-    let mk_union r r' = Ebinop (Union, r, r') -: Trgn in
-    match regions with
-    | [] -> invalid_arg "mk_union_list"
-    | r::rs -> foldl mk_union r rs
+  let mk_union r r' : exp t =
+    match r.node, r'.node with
+    | Econst {node = Eemptyset; _}, _ -> r'
+    | _, Econst {node = Eemptyset; _} -> r
+    | _, _ -> Ebinop (Union, r, r') -: Trgn
+
+  let mk_union_list regions = foldl1 mk_union regions
 
   let emb (eff: effect) : emb =
     let rec walk imgs vars eff =
@@ -1019,8 +1040,210 @@ let rec free_vars_rformula = function
 
 
 (* -------------------------------------------------------------------------- *)
-(* Projections                                                                *)
+(* Equality mod assertions/assumptions/invariants/extra locals                *)
 (* -------------------------------------------------------------------------- *)
+
+let rec eqv_command c c' = match c, c' with
+  | Acommand ac, Acommand ac' -> ac = ac'
+  | Vardecl (id, m, ty, c), Vardecl (id', m', ty', c') ->
+    eqv_command c c'
+    (* id = id' && m = m' && ty = ty' && eqv_command c c' *)
+  | Vardecl (id, m, ty, c), c' -> eqv_command c c'
+  | c, Vardecl (id, m, ty, c') -> eqv_command c c'
+  | Seq (c1, c2), Seq (c1', c2') -> eqv_command c1 c1' && eqv_command c2 c2'
+  | If (e, c1, c2), If (e', c1', c2') ->
+    e = e' && eqv_command c1 c1' && eqv_command c2 c2'
+  | While (e, _, c), While (e', _, c') -> e = e' && eqv_command c c'
+  | Assume _, Assume _ -> true
+  | Assert _, Assert _ -> true
+  | _, _ -> false
+
+
+(* -------------------------------------------------------------------------- *)
+(* Simplifications and rewritings                                             *)
+(* -------------------------------------------------------------------------- *)
+
+(* reassoc f = f'
+
+   any subterm in f of the form f1 /\ f2 /\ f3 is rewritten to
+   (f1 /\ f2) /\ f3 in f'.
+*)
+let rec reassoc (f: formula) : formula =
+  match f with
+  | Fconn (Conj, f1, f2) ->
+    let f1' = reassoc f1 in
+    let f2' = reassoc f2 in
+    begin match f2' with
+      | Fconn (Conj, t1, t2) -> Fconn (Conj, Fconn (Conj, f1', t1), t2)
+      | _ -> Fconn (Conj, f1', f2')
+    end
+  | Fnot f -> Fnot (reassoc f)
+  | Flet (id, v, f) -> Flet (id, v, reassoc f)
+  | Fconn (c, f1, f2) -> Fconn (c, reassoc f1, reassoc f2)
+  | Fquant (q, qbinds, f) -> Fquant (q, qbinds, reassoc f)
+  | _ -> f
+
+(* simplify_formula f = f'
+
+   rewrite every occurence of true /\ H or H /\ true in f to H in f'.
+*)
+let rec simplify_formula (f: formula) : formula =
+  match f with
+  | Ftrue -> Ftrue
+  (* FIXME: Using builtin equality below *)
+  | Fexp {node=Ebinop (Equal, e1, e2); _} when e1 = e2 -> Ftrue
+  | Fconn (Conj, f1, f2) ->
+    let f1' = simplify_formula f1 in
+    let f2' = simplify_formula f2 in
+    begin match f1', f2' with
+      | Ftrue, h
+      | h, Ftrue
+      | Fexp {node=Econst {node=Ebool true; _};_}, h
+      | h, Fexp {node=Econst {node=Ebool true; _};_} -> h
+      | _, _ -> Fconn (Conj, f1', f2')
+    end
+  | Fnot f -> Fnot (simplify_formula f)
+  | Flet (id, v, f) -> Flet (id, v, simplify_formula f)
+  | Fconn (c, f1, f2) -> Fconn (c, simplify_formula f1, simplify_formula f2)
+  | Fquant (q, qbinds, f) -> Fquant (q, qbinds, simplify_formula f)
+  | _ -> f
+
+(* rw_skip c = c'
+
+   Rewrite rules:
+
+     skip; d --> skip; d            d; skip --> skip; d
+
+     c; (skip; d) --> skip; (c; d)  c; (d; skip) --> skip; (c; d)
+
+     (skip; c); d --> skip; (c; d)  (c; skip); d --> skip; (c; d)
+
+*)
+let rec rw_skip (c: command) : command =
+  match c with
+  | Acommand ac -> Acommand ac
+  | Vardecl (id, modif, ty, c) -> Vardecl (id, modif, ty, rw_skip c)
+  | Seq (c1, c2) ->
+    let c1' = rw_skip c1 in
+    let c2' = rw_skip c2 in
+    begin match c1', c2' with
+      | Acommand Skip, d | d, Acommand Skip -> Seq (Acommand Skip, d)
+      | _, Seq (Acommand Skip, d) | _, Seq (d, Acommand Skip) ->
+        Seq (Acommand Skip, Seq (c1', d))
+      | Seq (Acommand Skip, d), _ | Seq (d, Acommand Skip), _ ->
+        Seq (Acommand Skip, Seq (d, c2'))
+      | _, _ -> Seq (c1', c2')
+    end
+  | If (e, c1, c2) -> If (e, rw_skip c1, rw_skip c2)
+  | While (e, f, c) -> While (e, f, rw_skip c)
+  | _ -> c
+
+let rec find_last_in_seq (c: command) : command =
+  match c with
+  | Seq (c1, c2) -> find_last_in_seq c2
+  | _ -> c
+
+let rec remove_last_in_seq (c: command) : command =
+  match c with
+  | Seq (c1, (Seq (_, _) as c2)) -> Seq (c1, remove_last_in_seq c2)
+  | Seq (c1, _) -> c1
+  | c -> c
+
+(* simplify_command c = c'
+
+   rewrite every occurence of skip ; D or D ; skip in c to D in c';
+   rewrite assert { f } and assume { f } in c to skip in c';
+   rewrite while false do C done to skip
+   rewrite while e do c; if e then c end to while e do c
+*)
+let rec simplify_command (c: command) : command =
+  match c with
+  | Acommand ac -> Acommand ac
+  | Vardecl (id, modif, ty, c) -> Vardecl (id, modif, ty, simplify_command c)
+  | Seq (c1, c2) ->
+    let c1' = simplify_command c1 in
+    let c2' = simplify_command c2 in
+    begin match c1', c2' with
+      | Acommand Skip, d | d, Acommand Skip -> d
+      | _, _ -> Seq (c1', c2')
+    end
+  | If (e, c1, c2) -> If (e, simplify_command c1, simplify_command c2)
+  | While ({node=Econst {node=Ebool false}}, _, _) -> Acommand Skip
+  | While (e, {winvariants; wframe; wvariant}, c) ->
+    let winvariants = map simplify_formula winvariants in
+    let body = simplify_command c in
+    begin match find_last_in_seq body with
+    | If (e', c', Acommand Skip) ->
+      let body_wo_if = remove_last_in_seq body in
+      if eqv_command body_wo_if c' && e = e' then
+        While (e, {winvariants; wframe; wvariant}, body_wo_if)
+      else
+        While (e, {winvariants; wframe; wvariant}, body)
+    | _ -> While (e, {winvariants; wframe; wvariant}, body)
+    end
+  | Assume _ | Assert _ -> Acommand Skip
+
+(* rewrite ((c1 ; c2) ; c3) to (c1 ; (c2 ; c3)) *)
+let rec reassoc_command (c: command) : command =
+  match c with
+  | Seq (c1, c2) ->
+    let c1' = reassoc_command c1 in
+    let c2' = reassoc_command c2 in
+    begin match c1' with
+      | Seq (c1, c2) -> Seq (c1, reassoc_command (Seq (c2, c2')))
+      | _ -> Seq (c1', c2')
+    end
+  | Vardecl (id, modif, ty, c) -> Vardecl (id, modif, ty, reassoc_command c)
+  | If (e, c1, c2) -> If (e, reassoc_command c1, reassoc_command c2)
+  | While (e, f, c) -> While (e, f, reassoc_command c)
+  | c -> c
+
+let rw_command = reassoc_command % simplify_command % rw_skip
+
+
+(* -------------------------------------------------------------------------- *)
+(* Functions on biprograms and projections                                    *)
+(* -------------------------------------------------------------------------- *)
+
+let mk_seq xs = foldr1 (fun x y -> Seq(x,y)) xs
+
+let mk_biseq xs = foldr1 (fun x y -> Biseq(x,y)) xs
+
+let map_fourwayif f {then_then; then_else; else_then; else_else} =
+  {then_then = f then_then; then_else = f then_else;
+   else_then = f else_then; else_else = f else_else}
+
+let rec does_biupdate = function
+  | Bihavoc_right _ -> false
+  | Biupdate (_, _) -> true
+  | Bisplit _ | Bisync _ | Biassume _ | Biassert _ -> false
+  | Bivardecl (_, _, cc) | Biwhile (_, _, _, _, cc) ->
+    does_biupdate cc
+  | Biseq (cc1, cc2) | Biif (_, _, cc1, cc2) ->
+    does_biupdate cc1 || does_biupdate cc2
+  | Biif4 (_, _, {then_then; then_else; else_then; else_else}) ->
+    does_biupdate then_then ||
+    does_biupdate then_else ||
+    does_biupdate else_then ||
+    does_biupdate else_else
+
+let rec reassoc_bicommand (cc: bicommand) : bicommand =
+  match cc with
+  | Biseq (cc1, cc2) ->
+    let cc1' = reassoc_bicommand cc1 in
+    let cc2' = reassoc_bicommand cc2 in
+    begin match cc1' with
+      | Biseq (cc1, cc2) -> Biseq (cc1, reassoc_bicommand (Biseq (cc2, cc2')))
+      | _ -> Biseq (cc1', cc2')
+    end
+  | Bisplit (c1, c2) -> Bisplit (reassoc_command c1, reassoc_command c2)
+  | Bivardecl (x, y, cc) -> Bivardecl (x, y, reassoc_bicommand cc)
+  | Biif (e, e', cc1, cc2) ->
+    Biif (e, e', reassoc_bicommand cc1, reassoc_bicommand cc2)
+  | Biif4 (e, e', branches) ->
+    Biif4 (e, e', map_fourwayif reassoc_bicommand branches)
+  | Biwhile (e, e', ag, ws, cc) -> Biwhile (e, e', ag, ws, reassoc_bicommand cc)
+  | c -> c
 
 let projl_biexp (b: biexp t) : formula =
   let open Option.Monad_syntax in
@@ -1082,83 +1305,184 @@ let rec projr_rformula (rf: rformula) : formula =
 
 let rec projl (cc: bicommand) : command =
   match cc with
+  | Bihavoc_right (x, _) -> Acommand Skip
   | Bisplit (cl, _) -> cl
   | Bisync ac -> Acommand ac
   | Biseq (cc1, cc2) -> Seq (projl cc1, projl cc2)
   | Bivardecl (Some (id, modif, ty), _, cc) -> Vardecl (id, modif, ty, projl cc)
   | Bivardecl (None, _, cc) -> projl cc
   | Biif (e, _, cc1, cc2) -> If (e, projl cc1, projl cc2)
-  | Biwhile (e, _, _, {biwinvariants; biwframe=(eff, _)}, cc) ->
+  | Biif4 (e, _, {then_then; then_else; else_then; else_else}) ->
+    let then1, else1 = projl then_then, projl else_then in
+    (* let then2, else2 = projl then_else, projl else_else in *)
+    (* assert (eqv_command (rw_command then1) (rw_command then2)); *)
+    (* assert (eqv_command (rw_command else1) (rw_command else2)); *)
+    If (e, then1, else1)
+  | Biwhile (e, _, _, {biwinvariants; biwframe=(eff, _); biwvariant}, cc) ->
     let winvariants = map projl_rformula biwinvariants in
-    While (e, {winvariants; wframe=eff}, projl cc)
-  | Biassume rf -> Assume (projl_rformula rf)
-  | Biassert rf -> Assert (projl_rformula rf)
+    While (e, {winvariants; wframe=eff; wvariant=None}, projl cc)
+  | Biassume rf -> (* Assume (projl_rformula rf) *) Acommand Skip
+  | Biassert rf -> (* Assert (projl_rformula rf) *) Acommand Skip
   | Biupdate _ -> Acommand Skip
 
 let rec projr (cc: bicommand) : command =
   match cc with
+  | Bihavoc_right (x, _) -> Acommand (Havoc x)
   | Bisplit (_, cr) -> cr
   | Bisync ac -> Acommand ac
   | Biseq (cc1, cc2) -> Seq (projr cc1, projr cc2)
   | Bivardecl (_, Some (id, modif, ty), cc) -> Vardecl (id, modif, ty, projr cc)
   | Bivardecl (_, None, cc) -> projr cc
   | Biif (_, e, cc1, cc2) -> If (e, projr cc1, projr cc2)
+  | Biif4 (_, e, {then_then; then_else; else_then; else_else}) ->
+    let then1, else1 = projr then_then, projr then_else in
+    (* let then2, else2 = projr else_then, projr else_else in *)
+    (* assert (eqv_command (rw_command then1) (rw_command then2)); *)
+    (* assert (eqv_command (rw_command else1) (rw_command else2)); *)
+    If (e, then1, else1)
   | Biwhile (_, e, _, {biwinvariants; biwframe=(_,eff)}, cc) ->
     let winvariants = map projr_rformula biwinvariants in
-    While (e, {winvariants; wframe=eff}, projr cc)
-  | Biassume rf -> Assume (projr_rformula rf)
-  | Biassert rf -> Assert (projr_rformula rf)
+    While (e, {winvariants; wframe=eff; wvariant=None}, projr cc)
+  | Biassume rf -> (* Assume (projr_rformula rf) *) Acommand Skip
+  | Biassert rf -> (* Assert (projr_rformula rf) *) Acommand Skip
   | Biupdate _ -> Acommand Skip
 
+let rec projr_bicommand (cc: bicommand) : bicommand =
+  match cc with
+  | Bihavoc_right (x, rf) -> Bihavoc_right (x, rf)
+  | Bisplit (_, cr) -> Bisplit (Acommand Skip, cr)
+  | Bisync ac -> Bisplit (Acommand Skip, Acommand ac)
+  | Biassume rf -> Biassume rf
+  | Biassert rf -> Biassert rf
+  | Biupdate (x, x') -> Biupdate (x, x')
+  | Biseq (cc1, cc2) -> Biseq (projr_bicommand cc1, projr_bicommand cc2)
+  | Bivardecl (_, Some v, cc) -> Bivardecl (None, Some v, projr_bicommand cc)
+  | Bivardecl (_, None, cc) -> projr_bicommand cc
+  | Biif (_, e, cc1, cc2) ->
+    let true_exp = Econst (Ebool true -: Tbool) -: Tbool in
+    let cc1' = projr_bicommand cc1 in
+    let cc2' = projr_bicommand cc2 in
+    let branches = { then_then = cc1'; then_else = cc2';
+                     else_then = cc1'; else_else = cc2' } in
+    Biif4 (true_exp, e, branches)
+  | Biif4 (_, e, branches) ->
+    let true_exp = Econst (Ebool true -: Tbool) -: Tbool in
+    let branches' = map_fourwayif projr_bicommand branches in
+    Biif4 (true_exp, e, branches')
+  | Biwhile (_, e, _, {biwinvariants; biwvariant; biwframe=(_,eff)}, cc) ->
+    let false_exp = Econst (Ebool false -: Tbool) -: Tbool in
+    let ag = (Rleft Ffalse, Rright Ftrue) in
+    let cc' = projr_bicommand cc in
+    let biwframe = ([], eff) in
+    Biwhile (false_exp, e, ag, {biwinvariants; biwvariant; biwframe}, cc')
 
-(* -------------------------------------------------------------------------- *)
-(* Simplifications and rewritings                                             *)
-(* -------------------------------------------------------------------------- *)
+(* Source programs are not allowed to have vars that start with this prefix. *)
+let reserved_id_prefix = "q__"
 
-(* reassoc f = f'
+let mk_fresh_id : string -> ident =
+  let c = ref 0 in
+  fun name -> incr c; Id (reserved_id_prefix ^ name ^ Int.to_string !c)
 
-   any subterm in f of the form f1 /\ f2 /\ f3 is rewritten to
-   (f1 /\ f2) /\ f3 in f'.
-*)
-let rec reassoc (f: formula) : formula =
-  match f with
-  | Fconn (Conj, f1, f2) ->
-    let f1' = reassoc f1 in
-    let f2' = reassoc f2 in
-    begin match f2' with
-      | Fconn (Conj, t1, t2) -> Fconn (Conj, Fconn (Conj, f1', t1), t2)
-      | _ -> Fconn (Conj, f1', f2')
+let rec all_existify (b: bicommand) : bicommand =
+  match b with
+  | Bihavoc_right (x, rf) ->
+    let xbind = {name = x; in_rgn = None; is_non_null = false} in
+    let check = Rquant (Exists, ([], [xbind]), rf) in
+    mk_biseq [Biassert check; Bihavoc_right (x, rf)]
+  | Bisplit (c1, c2) -> Bisplit (c1, unary_all_existify c2)
+  | Bisync ac -> Bisync ac
+  | Bivardecl (l, r, body) -> Bivardecl (l, r, all_existify body)
+  | Biseq (cc1, cc2) -> Biseq (all_existify cc1, all_existify cc2)
+  | Biif (e, e', cc1, cc2) -> Biif (e, e', all_existify cc1, all_existify cc2)
+  | Biif4 (e, e', bs) -> Biif4 (e, e', map_fourwayif all_existify bs)
+  | Biupdate (x, y) -> Biupdate (x, y) (* "Link x with y" *)
+  | Biassert rf -> Biassert rf
+  | Biassume rf ->
+    warn "Relational assumptions are not treated soundly except after right havocs.";
+    Biassume rf
+  | Biwhile (e, e', (lg, rg), annot, cc) when is_false_ag rg ->
+    (* This loop never does right-only iterations so we don't need a variant *)
+    Biwhile (e, e', (lg, rg), annot, all_existify cc)
+  | Biwhile (e, e', (lg, rg), {biwframe; biwinvariants; biwvariant}, cc) ->
+    begin match biwvariant with
+      | None -> raise @@ Invalid_argument "all_existify: expected variant"
+      | Some vnt ->
+        let vfresh = mk_fresh_id "vnt" in
+        let vnt_snap = Evar (vfresh -: vnt.ty) -: vnt.ty in
+        let vnt_snap' = Bivalue (Right vnt_snap -: vnt.ty) -: vnt.ty in
+        let zero = Biconst (Eint 0 -: Tint) -: Tint in
+        let vnt_ge0 = Bibinop (Ast.Leq, zero, vnt_snap') in
+        let vnt_dec = Bibinop (Ast.Lt, vnt, vnt_snap') in
+        let vnt_ini = Rbiexp (Bibinop (Ast.Equal, vnt_snap', vnt) -: Tbool) in
+        let hav_vnt = Bihavoc_right (vfresh -: vnt.ty, vnt_ini) in
+        let bfresh = mk_fresh_id "b" in
+        let b_snap = Evar (bfresh -: Tbool) -: Tbool in
+        let b_snap' = Bivalue (Right b_snap -: Tbool) -: Tbool in
+        let rgt_only : rformula =
+          let lft_e = Rbiexp (Bivalue (Left e -: Tbool) -: Tbool) in
+          let rgt_e' = Rbiexp (Bivalue (Right e' -: Tbool) -: Tbool) in
+          let neg_lft = Rnot (Rconn (Ast.Conj, lft_e, lg)) in
+          let enab_rgt = Rconn (Ast.Conj, rgt_e', rg) in
+          Rconn (Ast.Conj, neg_lft, enab_rgt) in
+        let b_ini = Rconn (Ast.Iff, Rbiexp b_snap', rgt_only) in
+        let hav_b = Bihavoc_right (bfresh -: Tbool, b_ini) in
+        let vnt_ge0_asrt =
+          let vnt_ge0' = Rbiexp (vnt_ge0 -: Tbool) in
+          Biassert (Rconn (Ast.Imp, Rbiexp b_snap', vnt_ge0')) in
+        let vnt_dec_asrt =
+          let vnt_dec' = Rbiexp (vnt_dec -: Tbool) in
+          Biassert (Rconn (Ast.Imp, Rbiexp b_snap', vnt_dec')) in
+        let body = mk_biseq [
+            hav_vnt;
+            hav_b;
+            all_existify cc;
+            vnt_ge0_asrt;
+            vnt_dec_asrt;
+          ] in
+        let cc' =
+          let v = vfresh -: vnt.ty, None, vnt.ty in
+          let b = bfresh -: Tbool, None, Tbool in
+          Bivardecl (None, Some v, Bivardecl (None, Some b, body)) in
+        let biwvariant = None in
+        Biwhile (e, e', (lg, rg), {biwframe; biwinvariants; biwvariant}, cc')
     end
-  | Fnot f -> Fnot (reassoc f)
-  | Flet (id, v, f) -> Flet (id, v, reassoc f)
-  | Fconn (c, f1, f2) -> Fconn (c, reassoc f1, reassoc f2)
-  | Fquant (q, qbinds, f) -> Fquant (q, qbinds, reassoc f)
-  | _ -> f
 
-(* simplify_formula f = f'
-
-   rewrite every occurence of true /\ H or H /\ true in f to H in f'.
-*)
-let rec simplify_formula (f: formula) : formula =
-  match f with
-  | Ftrue -> Ftrue
-  (* FIXME: Using builtin equality below *)
-  | Fexp {node=Ebinop (Equal, e1, e2); _} when e1 = e2 -> Ftrue
-  | Fconn (Conj, f1, f2) ->
-    let f1' = simplify_formula f1 in
-    let f2' = simplify_formula f2 in
-    begin match f1', f2' with
-      | Ftrue, h
-      | h, Ftrue
-      | Fexp {node=Econst {node=Ebool true; _};_}, h
-      | h, Fexp {node=Econst {node=Ebool true; _};_} -> h
-      | _, _ -> Fconn (Conj, f1', f2')
+and unary_all_existify (c: command) : command =
+  match c with
+  | Acommand (Call (x,m,args)) ->
+    (* TODO: Add support for forward underapproximation specs *)
+    (* c : P ~e~> Q  is the same as skip|c : [> P >] =e=> [> Q >] *)
+    warn "Calls to procedures on the right are not treated soundly.";
+    Acommand (Call (x,m,args))
+  | Acommand ac -> Acommand ac
+  | Assume f ->
+    warn "Unary assumptions are not treated soundly.";
+    Assume f
+  | Assert f -> Assert f
+  | Vardecl (c, m, ty, body) -> Vardecl (c, m, ty, unary_all_existify body)
+  | Seq (c1, c2) -> Seq (unary_all_existify c1, unary_all_existify c2)
+  | If (e, c1, c2) -> If (e, unary_all_existify c1, unary_all_existify c2)
+  | While (e, spec, c) ->
+    begin match spec.wvariant with
+      | None -> raise @@ Invalid_argument "unary_all_existify: expected variant"
+      | Some vnt ->
+        let vfresh = mk_fresh_id "vnt" in
+        let vnt_snap = Evar (vfresh -: vnt.ty) -: vnt.ty in 
+        let vnt_snap_stmt = Acommand(Assign (vfresh -: vnt.ty, vnt)) in 
+        let zero = Econst (Eint 0 -: Tint) -: Tint in
+        let vnt_ge0 = Ebinop (Ast.Leq, zero, vnt_snap) in
+        let vnt_dec = Ebinop (Ast.Lt, vnt, vnt_snap) in
+        let vnt_ge0_asrt = Assert (Fexp (vnt_ge0 -: Tbool)) in
+        let vnt_dec_asrt = Assert (Fexp (vnt_dec -: Tbool)) in
+        let c' = unary_all_existify c in
+        let c' = mk_seq [vnt_snap_stmt; c'; vnt_ge0_asrt; vnt_dec_asrt] in
+        let spec = {spec with wvariant = None} in
+        While (e, spec, Vardecl(vfresh -: vnt.ty, None, vnt.ty, c'))
     end
-  | Fnot f -> Fnot (simplify_formula f)
-  | Flet (id, v, f) -> Flet (id, v, simplify_formula f)
-  | Fconn (c, f1, f2) -> Fconn (c, simplify_formula f1, simplify_formula f2)
-  | Fquant (q, qbinds, f) -> Fquant (q, qbinds, simplify_formula f)
-  | _ -> f
+
+and is_false_ag (f: rformula) = match f with
+  | Rleft Ffalse | Rright Ffalse | Rboth Ffalse -> true
+  | _ -> false
 
 let projl_rformula_simplify (rf: rformula) : formula =
   let f = projl_rformula rf in
@@ -1168,75 +1492,6 @@ let projr_rformula_simplify (rf: rformula) : formula =
   let f = projr_rformula rf in
   simplify_formula (reassoc f)
 
-
-(* rw_skip c = c'
-
-   Rewrite rules:
-
-     skip; d --> skip; d            d; skip --> skip; d
-
-     c; (skip; d) --> skip; (c; d)  c; (d; skip) --> skip; (c; d)
-
-     (skip; c); d --> skip; (c; d)  (c; skip); d --> skip; (c; d)
-
-*)
-let rec rw_skip (c: command) : command =
-  match c with
-  | Acommand ac -> Acommand ac
-  | Vardecl (id, modif, ty, c) -> Vardecl (id, modif, ty, rw_skip c)
-  | Seq (c1, c2) ->
-    let c1' = rw_skip c1 in
-    let c2' = rw_skip c2 in
-    begin match c1', c2' with
-      | Acommand Skip, d | d, Acommand Skip -> Seq (Acommand Skip, d)
-      | _, Seq (Acommand Skip, d) | _, Seq (d, Acommand Skip) ->
-        Seq (Acommand Skip, Seq (c1', d))
-      | Seq (Acommand Skip, d), _ | Seq (d, Acommand Skip), _ ->
-        Seq (Acommand Skip, Seq (d, c2'))
-      | _, _ -> Seq (c1', c2')
-    end
-  | If (e, c1, c2) -> If (e, rw_skip c1, rw_skip c2)
-  | While (e, f, c) -> While (e, f, rw_skip c)
-  | _ -> c
-
-
-(* simplify_command c = c'
-
-   rewrite every occurence of skip ; D or D ; skip in c to D in c';
-   additionally, rewrite assert { f } and assume { f } in c to skip in c'.
-*)
-let rec simplify_command (c: command) : command =
-  match c with
-  | Acommand ac -> Acommand ac
-  | Vardecl (id, modif, ty, c) -> Vardecl (id, modif, ty, simplify_command c)
-  | Seq (c1, c2) ->
-    let c1' = simplify_command c1 in
-    let c2' = simplify_command c2 in
-    begin match c1', c2' with
-      | Acommand Skip, d | d, Acommand Skip -> d
-      | _, _ -> Seq (c1', c2')
-    end
-  | If (e, c1, c2) -> If (e, simplify_command c1, simplify_command c2)
-  | While (e, {winvariants; wframe}, c) ->
-    let winvariants = map simplify_formula winvariants in
-    While (e, {winvariants; wframe}, simplify_command c)
-  | Assume _ | Assert _ -> Acommand Skip
-
-(* rewrite ((c1 ; c2) ; c3) to (c1 ; (c2 ; c3)) *)
-let rec reassoc_command (c: command) : command =
-  match c with
-  | Seq (c1, c2) ->
-    let c1' = reassoc_command c1 in
-    let c2' = reassoc_command c2 in
-    begin match c1' with
-      | Seq (c1, c2) -> Seq (c1, reassoc_command (Seq (c2, c2')))
-      | _ -> Seq (c1', c2')
-    end
-  | Vardecl (id, modif, ty, c) -> Vardecl (id, modif, ty, reassoc_command c)
-  | If (e, c1, c2) -> If (e, reassoc_command c1, reassoc_command c2)
-  | While (e, f, c) -> While (e, f, reassoc_command c)
-  | c -> c
-
 let projl_simplify (cc: bicommand) : command =
   let c = projl cc in
   reassoc_command @@ simplify_command (rw_skip c)
@@ -1244,27 +1499,6 @@ let projl_simplify (cc: bicommand) : command =
 let projr_simplify (cc: bicommand) : command =
   let c = projr cc in
   reassoc_command @@ simplify_command (rw_skip c)
-
-let rw_command = reassoc_command % simplify_command % rw_skip
-
-
-(* -------------------------------------------------------------------------- *)
-(* Equality mod assertions/assumptions/invariants/extra locals                *)
-(* -------------------------------------------------------------------------- *)
-
-let rec eqv_command c c' = match c, c' with
-  | Acommand ac, Acommand ac' -> ac = ac'
-  | Vardecl (id, m, ty, c), Vardecl (id', m', ty', c') ->
-    id = id' && m = m' && ty = ty' && eqv_command c c'
-  | Vardecl (id, m, ty, c), c' -> eqv_command c c'
-  | c, Vardecl (id, m, ty, c') -> eqv_command c c'
-  | Seq (c1, c2), Seq (c1', c2') -> eqv_command c1 c1' && eqv_command c2 c2'
-  | If (e, c1, c2), If (e', c1', c2') ->
-    e = e' && eqv_command c1 c1' && eqv_command c2 c2'
-  | While (e, _, c), While (e', _, c') -> e = e' && eqv_command c c'
-  | Assume _, Assume _ -> true
-  | Assert _, Assert _ -> true
-  | _, _ -> false
 
 
 (* -------------------------------------------------------------------------- *)
@@ -1369,6 +1603,7 @@ end = struct
 
   let dfs gph visited start =
     let rec walk path node visited =
+      (* Printf.printf "Visiting %s\n" (id_name node); *)
       if mem node path then failwith "Cyclic imports" else
       if mem node visited then visited else
         let path = node :: path in
@@ -1380,12 +1615,19 @@ end = struct
     let gph = build_gph prog in
     rev (foldl (fun (node,_) visited -> dfs gph node visited) [] gph)
 
+ let  print_gph gph =  List.iter (fun (node, succ) ->
+        Printf.printf "%s -> [%s]\n" (id_name node)
+          (String.concat "; " (List.map id_name succ))
+      ) gph
+
   let dependencies_parsed_program : Ast.program -> ident list =
+
     let imports (i:Ast.import_directive Ast.node) =
       if i.elt.import_kind <> Ast.Iregular then [] else
       [i.elt.import_name] @ Option.to_list i.elt.related_by in
     let interface_imports (intr: Ast.interface_def Ast.node) =
       concat_map imports (Astutil.interface_imports intr) in
+
     let module_imports (mdl: Ast.module_def Ast.node) =
       let intr = mdl.elt.mdl_interface in
       intr :: concat_map imports (Astutil.module_imports mdl) in
@@ -1403,15 +1645,20 @@ end = struct
       map f programs in
     fun prog -> 
       let gph = build_gph prog in
-      rev (foldl (fun (node,_) visited -> dfs gph node visited) [] gph)
+      (* print_gph gph; *)
+      rev (foldl (fun (node,_) visited ->  dfs gph node visited) [] gph)
+
+      
 
   let sort_by_dependencies (p:Ast.program) : Ast.program =
+    
     let pmap = foldr (fun e acc -> match e.Ast.elt with
-      | Ast.Unr_intr i -> M.add i.elt.intr_name e acc
-      | Ast.Unr_mdl m -> M.add m.elt.mdl_name e acc
-      | Ast.Rel_mdl bm -> M.add bm.elt.bimdl_name e acc
-      ) M.empty p in
+    | Ast.Unr_intr i -> M.add i.elt.intr_name e acc
+    | Ast.Unr_mdl m -> M.add m.elt.mdl_name e acc
+    | Ast.Rel_mdl bm -> M.add bm.elt.bimdl_name e acc
+    ) M.empty p in
     let deps = dependencies_parsed_program p in
+
     foldr (fun name acc -> M.find name pmap :: acc) [] deps
 
 end

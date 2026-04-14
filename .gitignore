@@ -14,3 +14,16 @@ _build/
 *.cmxs
 *.cmxa
 
+
+.gitignore
+bin/whyrel
+
+*notes.md
+*.dot
+*.png
+*.svg
+tools/
+*code-workspace
+test/*
+*.res
+*.claude
