@@ -3,7 +3,6 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="Alt-Ergo" version="2.6.2" timelimit="200" steplimit="0" memlimit="8000"/>
-<prover id="1" name="Z3" version="4.15.3" timelimit="200" steplimit="0" memlimit="8000"/>
 <file format="whyml" proved="true">
 <path name=".."/><path name="prog.mlw"/>
 <theory name="State" proved="true">
@@ -836,7 +835,6 @@
          <transf name="split_all_full" proved="true" >
           <goal name="tabulate&#39;vc.67.0.0.0.0.0.6.0.0" expl="VC for tabulate" proved="true">
           <proof prover="0"><result status="valid" time="0.255035" steps="530"/></proof>
-          <proof prover="1" timelimit="1" memlimit="1000"><result status="valid" time="0.156915" steps="429431"/></proof>
           </goal>
           <goal name="tabulate&#39;vc.67.0.0.0.0.0.6.0.1" expl="VC for tabulate" proved="true">
           <transf name="split_vc" proved="true" >
@@ -857,7 +855,6 @@
             <transf name="subst" proved="true" arg1="o">
              <goal name="tabulate&#39;vc.67.0.0.0.0.0.6.0.2.0.0.0" expl="true case (sl(o) ~ sr(pi(o)))" proved="true">
              <proof prover="0"><result status="valid" time="0.341747" steps="573"/></proof>
-             <proof prover="1"><result status="valid" time="0.119912" steps="432185"/></proof>
              </goal>
             </transf>
             </goal>

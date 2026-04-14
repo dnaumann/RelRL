@@ -710,7 +710,21 @@
   <proof prover="0"><result status="valid" time="0.128996" steps="254"/></proof>
   </goal>
   <goal name="tabulate&#39;vc.46" expl="Node(p,k)" proved="true">
-  <proof prover="0"><result status="valid" time="305.541147" steps="982522"/></proof>
+  <transf name="inline_goal" proved="true" >
+   <goal name="tabulate&#39;vc.46.0" expl="Node(p,k)" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="tabulate&#39;vc.46.0.0" expl="Node(p,k)" proved="true">
+    <proof prover="0"><result status="valid" time="1.872825" steps="5085"/></proof>
+    </goal>
+    <goal name="tabulate&#39;vc.46.0.1" expl="Node(p,k)" proved="true">
+    <proof prover="0"><result status="valid" time="1.952612" steps="5085"/></proof>
+    </goal>
+    <goal name="tabulate&#39;vc.46.0.2" expl="Node(p,k)" proved="true">
+    <proof prover="0"><result status="valid" time="6.162304" steps="23117"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
   </goal>
   <goal name="tabulate&#39;vc.47" expl="Node(p,k)" proved="true">
   <proof prover="0"><result status="valid" time="0.169952" steps="747"/></proof>
