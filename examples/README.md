@@ -24,3 +24,7 @@ on all the examples and outputs a summary.
 
 The all_all directory has examples on all all property verification. And
 similarly for all_exists directory.
+
+Note that full replay can take a long time in the range of an hour or two.
+Replay will fail for unverified and invalid case studies. These are mentioned in
+the local READMEs.
