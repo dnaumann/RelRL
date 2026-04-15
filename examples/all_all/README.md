@@ -1,18 +1,18 @@
 # All All Examples
 
+Examples that have not been verified for the current WhyRel version is mentioned
+as unverified.
 
 - **Cell**: Equivalence of two modules implementing boxed integers in
   different ways.
 - **SSSP**: Establishes equivalence of two priority queue modules with similar
   internals.  Client program is Dijkstra's single source shortest paths
-  algorithm. Yet to be verified for current WhyRel.
+  algorithm. Unverified.
 - **Kruskal**: Equivalence of two union-find implementations; one based on
   QuickFind and another based on QuickUnion.  Client program is Kruskal's
-  algorithm for computing the minimum spanning tree of a graph. Yet to be
-  verified for current WhyRel
+  algorithm for computing the minimum spanning tree of a graph. unverified
 
-- **stack**: Equivalence to two stack implementations. Yet to be verified for
-  current WhyRel
+- **stack**: Equivalence to two stack implementations. unverified.
 - **sumpub**: Information flow case study.  Verifies that a program summing up
   public elements in a list with public and non-public elements does not leak
   information about non-public values.
