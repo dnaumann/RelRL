@@ -142,7 +142,7 @@ and run_local_equivalence fmt meth_name ctbl penv =
     Printf.fprintf stderr "Unknown method %s\n" m;
     exit 1
 
-let print_version () = Printf.fprintf stdout "WhyRel, version 0.2\n"
+let print_version () = Printf.fprintf stdout "WhyRel, version 0.3\n"
 
 let args =
   let open Arg in
