@@ -70,7 +70,10 @@ The sources are expected to compile using OCaml 5.1.1 and above.
 To compile, `cd` to the directory where you cloned this repository (referred
 to as `<WHYREL>` from here on) and run `make`.  There may be some warnings, which can be ignored. 
 
-To test out your installation you can run `<WHYREL>/bin/whyrel -version`.  There is no `make install` option; simply add `<WHYREL>/bin` to your `PATH` variable if desired.  Run `whyrel -help` to learn about supported command line flags.
+To test out your installation you can run `<WHYREL>/bin/whyrel -version`. It
+should output: `WhyRel, version 0.3`.  There is no `make install` option; simply
+add `<WHYREL>/bin` to your `PATH` variable if desired.  Run `whyrel -help` to
+learn about supported command line flags.
 
 ### Verification
 
