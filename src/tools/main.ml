@@ -5,6 +5,7 @@ open Lib
 open Ctbl
 open Typing
 open Translate
+open Align
 
 type pathname = string
 
@@ -19,6 +20,8 @@ let no_frame_lemma       = ref false
 let no_resolve_for_locEq = ref false
 let no_simplify_effects  = ref false
 let all_exists_mode      = ref false
+
+let align_mode = ref false
 
 let output : out_channel option ref = ref None
 
@@ -181,6 +184,9 @@ let args =
 
    "-version", Set only_print_version,
    " Print version";
+
+   "-align", Set align_mode,
+   "Tranforms a given pair of unary programs into an aligned biprogram";
   ]
 
 let usage = "Usage: " ^ get_progname () ^ " [options] [<file>...]"
@@ -197,6 +203,7 @@ let set_behaviour_flags () =
   Pretrans.simplify_effects := not !no_simplify_effects;
   Typing.all_exists_mode := !all_exists_mode;
   Typing.only_parse_or_typecheck := !only_parse_flag || !only_typecheck_flag;
+  Align.
   ()
 
 let main () =

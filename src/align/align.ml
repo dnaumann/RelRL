@@ -1,0 +1,1 @@
+Printf.fprintf stdout "Finished Aligning"
