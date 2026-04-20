@@ -1,6 +1,42 @@
 # WhyRel Architecture Guide
 
+
+### What is WhyRel?
+
+**WhyRel** is a tool for verifying **relational properties** of object-oriented programs written in a Java-like language. It enables developers to prove:
+
+- **Program equivalence**: Two implementations produce the same results
+- **Information flow security**: Programs don't leak sensitive information
+- **Program transformations**: Compiler optimizations preserve behavior
+- **Encapsulation**: Hidden invariants are maintained
+
+### Key Features
+
+- **Built on Why3**: Leverages the Why3 platform for deductive verification
+- **Relational Region Logic**: Implements relational specifications for heap-based reasoning
+- **Unary Region Logic**: Supports single-program verification
+- **SMT Solver Integration**: Uses Alt-Ergo, Z3, CVC3, CVC4 to discharge verification conditions
+- **Modular Reasoning**: Supports encapsulation, module interfaces, and modular linking rules
+
 ## System Architecture Overview
+
+
+WhyRel follows a classic compiler pipeline architecture:
+
+```
+Source Code (*.rl)
+    ↓
+Lexer/Parser           → see parser/
+    ↓
+Type Checker           → see typing/
+    ↓
+Pre-translator         → see pretrans/
+    ↓
+Translator             → see translate/
+    ↓
+Why3 Output (*.mlw)
+```
+
 
 ### High-Level Component Diagram
 
@@ -140,6 +176,7 @@
 ---
 
 ## Data Flow Through Processing Stages
+
 
 ### Stage 1: Parsing
 
@@ -285,6 +322,8 @@ Output: Why3.Ptree.mlw_file list
 4. Formulas → Why3 terms
 5. Bimodules → Relational Why3 predicates
 
+
+
 ### Stage 5: Output
 
 ```
@@ -298,6 +337,7 @@ Write to file (main.ml::get_formatter)
     │
     └─ Output .mlw file
 ```
+
 
 ---
 
@@ -367,6 +407,59 @@ Ctbl.t contains:
 └─ bimodules: ident → bimodule_info
    └─ bimodule_info: {name, left, right, ...}
 ```
+
+## Module Interaction Patterns
+
+### Pattern 1: Type Environment Threading
+
+```
+Initial environment setup (typing.ml):
+tenv = { ctxt: M.add (Id "alloc") Trgn M.empty; ctbl; ... }
+
+Pass through type checking:
+tc_exp tenv expr → Result(ity)
+tc_formula tenv formula → Result(())
+
+Update environment:
+let tenv' = {tenv with ctxt = M.add (Id "x") Tint tenv.ctxt}
+
+Use updated environment:
+tc_statement tenv' statement
+```
+
+### Pattern 2: Class Table Lookup
+
+```
+Get class info:
+let cls = Ctbl.find_class ctbl (Id "MyClass")
+
+Access class fields:
+List.iter (fun field → 
+  printf "%s: %s" field.name field.type
+) cls.fields
+
+Validate field access:
+if List.mem_assoc field_name cls.fields
+then Ok (get_field_type cls field_name)
+else Error "Field not found"
+```
+
+### Pattern 3: Program Environment Traversal
+
+```
+Iterate all interfaces:
+M.iter (fun name def → match def with
+  | Unary_interface iface → process_interface iface
+  | _ → ()
+) penv
+
+Find specific element:
+match M.find (Id "ClassName") penv with
+| Unary_interface {...} → ...
+| Module {...} → ...
+| _ → Error "Not found"
+```
+---
 
 ---
 
@@ -520,59 +613,6 @@ compile_penv context penv
 
 ---
 
-## Module Interaction Patterns
-
-### Pattern 1: Type Environment Threading
-
-```
-Initial environment setup (typing.ml):
-tenv = { ctxt: M.add (Id "alloc") Trgn M.empty; ctbl; ... }
-
-Pass through type checking:
-tc_exp tenv expr → Result(ity)
-tc_formula tenv formula → Result(())
-
-Update environment:
-let tenv' = {tenv with ctxt = M.add (Id "x") Tint tenv.ctxt}
-
-Use updated environment:
-tc_statement tenv' statement
-```
-
-### Pattern 2: Class Table Lookup
-
-```
-Get class info:
-let cls = Ctbl.find_class ctbl (Id "MyClass")
-
-Access class fields:
-List.iter (fun field → 
-  printf "%s: %s" field.name field.type
-) cls.fields
-
-Validate field access:
-if List.mem_assoc field_name cls.fields
-then Ok (get_field_type cls field_name)
-else Error "Field not found"
-```
-
-### Pattern 3: Program Environment Traversal
-
-```
-Iterate all interfaces:
-M.iter (fun name def → match def with
-  | Unary_interface iface → process_interface iface
-  | _ → ()
-) penv
-
-Find specific element:
-match M.find (Id "ClassName") penv with
-| Unary_interface {...} → ...
-| Module {...} → ...
-| _ → Error "Not found"
-```
-
----
 
 ## Memory/Heap Model
 
@@ -671,35 +711,6 @@ Output phase:
     └─ Handle file write failures
 ```
 
----
 
-## Extensibility Points
 
-```
-To add new construct:
-
-1. Lexer/Parser Level
-   └─ lexer.mll, parser.mly
-      └─ Add tokens and grammar rules
-
-2. AST Level
-   └─ ast.ml
-      └─ Add new type/command/expression variant
-
-3. Type System Level
-   └─ typing.ml, annot.ml
-      └─ Add type checking rules
-
-4. Analysis Level
-   └─ pretrans.ml
-      └─ Add new analysis pass
-
-5. Translation Level
-   └─ translate.ml
-      └─ Add translation rule to Why3
-
-6. Utility Level
-   └─ lib.ml, why3util.ml
-      └─ Add helper functions if needed
-```
-
+X
