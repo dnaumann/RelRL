@@ -1,6 +1,7 @@
 (** pretrans.ml -- transformations on annotated ASTs *)
 
 open Lib
+open Ast
 open Astutil
 open Annot
 open Annot.Norm
@@ -8,6 +9,8 @@ open Typing
 open Rename_locals
 
 let simplify_effects = ref true
+let resolve_for_locEq = ref false
+let locEq_debug = ref true
 
 (* -------------------------------------------------------------------------- *)
 (* Expand specs to include invariants, and in modules, the interface spec     *)
@@ -1397,6 +1400,38 @@ end
 (* -------------------------------------------------------------------------- *)
 (* Driver                                                                     *)
 (* -------------------------------------------------------------------------- *)
+
+let handle_local_equivalence meth_name penv ctbl =
+
+  let penv = Expand_method_spec.expand penv in
+  let penv =
+    if !resolve_for_locEq then Resolve_datagroups.resolve (ctbl,penv)
+    else penv in
+  let penv = Normalize_effects.normalize penv in
+  Boundary_info.run penv;
+  if !locEq_debug then begin
+      let rec print_boundaries = function
+        | [] -> ()
+        | (mdl, bnd) :: bnds ->
+          Format.printf "Boundary: %a: %a\n"
+            Pretty.pp_ident mdl Pretty.pp_effect (eff_of_bnd bnd);
+          print_boundaries bnds in
+      let boundaries =
+        let f mdl a b = (mdl, Boundary_info.overall_boundary mdl) :: b in
+        M.fold f penv [] in
+      print_boundaries boundaries;
+    end;
+  try
+    let fmt = Format.std_formatter in
+
+    LocEq.pp_derive_locEq ~resolve:(!resolve_for_locEq)
+      ctbl penv meth_name fmt;
+    Format.pp_force_newline fmt ();
+    Format.pp_print_flush fmt ()
+  with
+    LocEq.Unknown_method m ->
+    Printf.fprintf stderr "Unknown method %s\n" m;
+    exit 1
 
 let process ctbl penv =
   (* Add invariants (public/private/coupling) to method specs; further, for each

@@ -1,6 +1,8 @@
 (* astutil.ml -- functions on syntax trees and other utilities *)
 
 open Ast
+open Lib
+
 
 module Ident : Map.OrderedType with type t = ident =
 struct
@@ -53,6 +55,28 @@ let get_program_elt_name (p: program_elt) : ident =
   | Rel_mdl bm -> bm.elt.bimdl_name
 
 let the_main_interface = {intr_name = Id "MAIN"; intr_elts = []}
+
+(* Parsing utils *)
+
+let print_position outx (lexbuf: Lexing.lexbuf) =
+  let pos = lexbuf.lex_curr_p in
+  let file,lnum,loc = pos.pos_fname,pos.pos_lnum,pos.pos_cnum - pos.pos_bol in
+  Printf.fprintf outx "%s:%d:%d" file lnum loc
+
+let parse_with_error lexbuf =
+  try Parser.top Lexer.token lexbuf with
+  | Lexer.Lexer_error msg ->
+    Printf.fprintf stderr "%a: %s\n" print_position lexbuf msg;
+    exit 1
+  | Parser.Error ->
+    Printf.fprintf stderr "%a: syntax error\n" print_position lexbuf;
+    exit 1
+
+let parse_file filename =
+  let contents = read_file filename in
+  let lexbuf = Lexing.from_string ~with_positions:true contents in
+  lexbuf.lex_curr_p <- { lexbuf.lex_curr_p with pos_fname = filename };
+  parse_with_error lexbuf
 
 let is_relation_module (p: program_elt node) : bool =
   match p.elt with

@@ -41,26 +41,6 @@ let get_formatter () =
   | None -> Format.std_formatter
   | Some out_chan -> Format.formatter_of_out_channel out_chan
 
-let print_position outx (lexbuf: Lexing.lexbuf) =
-  let pos = lexbuf.lex_curr_p in
-  let file,lnum,loc = pos.pos_fname,pos.pos_lnum,pos.pos_cnum - pos.pos_bol in
-  Printf.fprintf outx "%s:%d:%d" file lnum loc
-
-let parse_with_error lexbuf =
-  try Parser.top Lexer.token lexbuf with
-  | Lexer.Lexer_error msg ->
-    Printf.fprintf stderr "%a: %s\n" print_position lexbuf msg;
-    exit 1
-  | Parser.Error ->
-    Printf.fprintf stderr "%a: syntax error\n" print_position lexbuf;
-    exit 1
-
-let parse_file filename =
-  let contents = read_file filename in
-  let lexbuf = Lexing.from_string ~with_positions:true contents in
-  lexbuf.lex_curr_p <- { lexbuf.lex_curr_p with pos_fname = filename };
-  parse_with_error lexbuf
-
 let parse_and_type_check filename =
   let program = parse_file filename in
   match tc_program program with
@@ -95,8 +75,15 @@ let typecheck_program prog =
 
 let run () =
   let program = parse_program !program_files in
+  if !locEq_method <> "" && not !only_parse_flag && not !only_typecheck_flag  then 
+      let meth_name = Id !locEq_method in
+      let program = filter_out is_relation_module program in
+      let penv, ctbl = typecheck_program program in
+      Pretrans.handle_local_equivalence meth_name penv ctbl  else
+  if !align_mode  then Align.align !program_files set_output else 
   if !only_parse_flag then () else
     let penv, ctbl = typecheck_program program in
+    (* if !align_mode then Align.align penv ctbl set_output else (); *)
     if !only_typecheck_flag then () else begin
       let fmt = get_formatter () in
       Format.pp_set_margin fmt !margin;
@@ -104,46 +91,7 @@ let run () =
       translate_program fmt penv ctbl
     end
 
-let rec handle_local_equivalence meth_name =
-  let meth_name = Id meth_name in
-  let fmt = Format.std_formatter in
-  let program = parse_program !program_files in
-  let program = filter_out is_relation_module program in
-  if !only_parse_flag then () else
-    let penv, ctbl = typecheck_program program in
-    if !only_typecheck_flag then () else begin
-      run_local_equivalence fmt meth_name ctbl penv
-    end
 
-and run_local_equivalence fmt meth_name ctbl penv =
-  let open Pretrans in
-  let penv = Expand_method_spec.expand penv in
-  let penv =
-    if not !no_resolve_for_locEq then Resolve_datagroups.resolve (ctbl,penv)
-    else penv in
-  let penv = Normalize_effects.normalize penv in
-  Boundary_info.run penv;
-  if !debug then begin
-      let rec print_boundaries = function
-        | [] -> ()
-        | (mdl, bnd) :: bnds ->
-          Format.printf "Boundary: %a: %a\n"
-            Pretty.pp_ident mdl Pretty.pp_effect (eff_of_bnd bnd);
-          print_boundaries bnds in
-      let boundaries =
-        let f mdl a b = (mdl, Boundary_info.overall_boundary mdl) :: b in
-        M.fold f penv [] in
-      print_boundaries boundaries;
-    end;
-  try
-    LocEq.pp_derive_locEq ~resolve:(not !no_resolve_for_locEq)
-      ctbl penv meth_name fmt;
-    Format.pp_force_newline fmt ();
-    Format.pp_print_flush fmt ()
-  with
-    LocEq.Unknown_method m ->
-    Printf.fprintf stderr "Unknown method %s\n" m;
-    exit 1
 
 let print_version () = Printf.fprintf stdout "WhyRel, version 0.3\n"
 
@@ -195,15 +143,16 @@ let set_debug_flags () =
   tc_debug := !debug;
   trans_debug := !debug;
   Rename_locals.pretrans_debug := !debug;
-  Encap_check.encap_debug := !debug
+  Encap_check.encap_debug := !debug;
+  Pretrans.locEq_debug := !debug
 
 let set_behaviour_flags () =
   Encap_check.do_encap_check := not !no_encap_check;
   Translate.gen_frame_lemma := not !no_frame_lemma;
   Pretrans.simplify_effects := not !no_simplify_effects;
+  Pretrans.resolve_for_locEq := not !no_simplify_effects;
   Typing.all_exists_mode := !all_exists_mode;
   Typing.only_parse_or_typecheck := !only_parse_flag || !only_typecheck_flag;
-  Align.
   ()
 
 let main () =
@@ -214,8 +163,8 @@ let main () =
   set_behaviour_flags ();
   if !only_print_version then print_version () else
   if List.length !program_files = 0 then () else
-  if !locEq_method <> "" then handle_local_equivalence !locEq_method
-  else run (); close_output ()
+  run (); 
+  close_output ()
 
 ;;
 
