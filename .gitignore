@@ -22,7 +22,6 @@ bin/whyrel
 *.dot
 *.png
 *.svg
-tools/
 *code-workspace
 test/*
 *.res

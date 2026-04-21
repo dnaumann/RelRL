@@ -31,69 +31,6 @@ let margin : int ref = ref 136
 
 let set_output fname = output := Some (open_out fname)
 
-let close_output () =
-  match !output with
-  | None -> ()
-  | Some out_chan -> close_out out_chan
-
-let get_formatter () =
-  match !output with
-  | None -> Format.std_formatter
-  | Some out_chan -> Format.formatter_of_out_channel out_chan
-
-let parse_and_type_check filename =
-  let program = parse_file filename in
-  match tc_program program with
-  | Ok _ -> ()
-  | Error msg -> Printf.fprintf stderr "%s\n" msg
-
-let parse_program files =
-  let progs = concat_map parse_file files in
-  let main_interface = no_loc the_main_interface in
-  no_loc (Unr_intr main_interface) :: progs
-
-let translate_program fmt penv ctbl =
-  let emit_mlw mlw =
-    Why3.Mlw_printer.pp_mlw_file fmt mlw;
-    Format.pp_print_newline fmt ();
-    Format.pp_print_newline fmt ();
-    Format.print_flush () in
-  let ctxt, state_module = Translate.Build_State.mk (penv,ctbl) in
-  let mlw_files = compile_penv ctxt penv in
-  emit_mlw state_module;
-  (* Why3.Mlw_printer.pp_mlw_file Format.std_formatter (Why3.Ptree.mlw_file_of_sexp (Sexplib.Sexp.load_sexp "sexp.txt")); *)
-  (* Sexplib.Sexp.output_hum stdout (Sexplib.Sexp.load_sexp "sexp.txt");
-  output_char stdout '\n';
-  flush stdout; *)
-  (* (Sexplib.Sexp.save_sexps_hum "sexp.txt" ((List.map Why3.Ptree.sexp_of_mlw_file) mlw_files)); *)
-  List.iter emit_mlw mlw_files
-
-let typecheck_program prog =
-  match tc_program prog with
-  | Ok (penv, ctbl) -> (penv, ctbl)
-  | Error msg -> Printf.fprintf stderr "%s\n" msg; exit 1
-
-let run () =
-  let program = parse_program !program_files in
-  if !locEq_method <> "" && not !only_parse_flag && not !only_typecheck_flag  then 
-      let meth_name = Id !locEq_method in
-      let program = filter_out is_relation_module program in
-      let penv, ctbl = typecheck_program program in
-      Pretrans.handle_local_equivalence meth_name penv ctbl  else
-  if !align_mode  then Align.align !program_files set_output else 
-  if !only_parse_flag then () else
-    let penv, ctbl = typecheck_program program in
-    (* if !align_mode then Align.align penv ctbl set_output else (); *)
-    if !only_typecheck_flag then () else begin
-      let fmt = get_formatter () in
-      Format.pp_set_margin fmt !margin;
-      let penv = Pretrans.process ctbl penv in
-      translate_program fmt penv ctbl
-    end
-
-
-
-let print_version () = Printf.fprintf stdout "WhyRel, version 0.3\n"
 
 let args =
   let open Arg in
@@ -137,8 +74,6 @@ let args =
    "Tranforms a given pair of unary programs into an aligned biprogram";
   ]
 
-let usage = "Usage: " ^ get_progname () ^ " [options] [<file>...]"
-
 let set_debug_flags () =
   tc_debug := !debug;
   trans_debug := !debug;
@@ -155,6 +90,47 @@ let set_behaviour_flags () =
   Typing.only_parse_or_typecheck := !only_parse_flag || !only_typecheck_flag;
   ()
 
+
+let usage = "Usage: " ^ get_progname () ^ " [options] [<file>...]"
+
+let close_output () =
+  match !output with
+  | None -> ()
+  | Some out_chan -> close_out out_chan
+
+let get_formatter () =
+  match !output with
+  | None -> Format.std_formatter
+  | Some out_chan -> Format.formatter_of_out_channel out_chan
+
+let parse_program files =
+  let progs = concat_map parse_file files in
+  let main_interface = no_loc the_main_interface in
+  no_loc (Unr_intr main_interface) :: progs
+
+let typecheck_program prog =
+  match tc_program prog with
+  | Ok (penv, ctbl) -> (penv, ctbl)
+  | Error msg -> Printf.fprintf stderr "%s\n" msg; exit 1
+
+let translate_program fmt penv ctbl =
+  let emit_mlw mlw =
+    Why3.Mlw_printer.pp_mlw_file fmt mlw;
+    Format.pp_print_newline fmt ();
+    Format.pp_print_newline fmt ();
+    Format.print_flush () in
+  let ctxt, state_module = Translate.Build_State.mk (penv,ctbl) in
+  let mlw_files = compile_penv ctxt penv in
+  emit_mlw state_module;
+  (* Why3.Mlw_printer.pp_mlw_file Format.std_formatter (Why3.Ptree.mlw_file_of_sexp (Sexplib.Sexp.load_sexp "sexp.txt")); *)
+  (* Sexplib.Sexp.output_hum stdout (Sexplib.Sexp.load_sexp "sexp.txt");
+  output_char stdout '\n';
+  flush stdout; *)
+  (* (Sexplib.Sexp.save_sexps_hum "sexp.txt" ((List.map Why3.Ptree.sexp_of_mlw_file) mlw_files)); *)
+  List.iter emit_mlw mlw_files
+
+let print_version () = Printf.fprintf stdout "WhyRel, version 0.3\n"
+
 let main () =
   let add_program_file s = program_files := s :: !program_files in
   Arg.parse (Arg.align args) add_program_file usage;
@@ -163,7 +139,24 @@ let main () =
   set_behaviour_flags ();
   if !only_print_version then print_version () else
   if List.length !program_files = 0 then () else
-  run (); 
+  let program = parse_program !program_files  in
+  if !only_parse_flag then () else
+  let penv, ctbl = typecheck_program program in
+    (* if !align_mode then Align.align penv ctbl set_output else (); *)
+  if !only_typecheck_flag then () else 
+  if !locEq_method <> "" then 
+      let meth_name = Id !locEq_method in
+      let program = filter_out is_relation_module program in
+      let penv, ctbl = typecheck_program program in
+      Pretrans.handle_local_equivalence meth_name penv ctbl  else
+  if !align_mode  then Align.run !program_files set_output else 
+  begin
+      let fmt = get_formatter () in
+      Format.pp_set_margin fmt !margin;
+      let penv = Pretrans.process ctbl penv in
+      translate_program fmt penv ctbl
+  end;
+  
   close_output ()
 
 ;;
