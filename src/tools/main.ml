@@ -23,13 +23,20 @@ let all_exists_mode      = ref false
 
 let align_mode = ref false
 
+let align_left_module   : string ref = ref ""
+let align_left_method : string ref = ref ""
+let align_right_module  : string ref = ref ""
+let align_right_method: string ref = ref ""
+
 let output : out_channel option ref = ref None
 
 let locEq_method : string ref = ref ""
 
-let margin : int ref = ref 136
+let margin : int ref = ref 80
 
-let set_output fname = output := Some (open_out fname)
+let output_fname : string ref = ref ""
+
+let set_output fname = output_fname := fname; output := Some (open_out fname)
 
 
 let args =
@@ -46,7 +53,7 @@ let args =
    "-debug", Set debug,
    " Print debug information";
 
-   "-o", String (fun f -> set_output f),
+   "-o", String set_output,
    "<file>  Set output file name to <file>";
 
    "-margin", Set_int margin,
@@ -71,7 +78,14 @@ let args =
    " Print version";
 
    "-align", Set align_mode,
-   "Tranforms a given pair of unary programs into an aligned biprogram";
+   " Transforms a given pair of unary programs into an aligned biprogram;
+     Expects the following format: whyrel -align -l <module> <method> -r <module> <method> files -o <file>";
+
+   "-l", Tuple [Set_string align_left_module; Set_string align_left_method],
+   "<module> <method>  Left-hand side module and method for alignment";
+
+   "-r", Tuple [Set_string align_right_module; Set_string align_right_method],
+   "<module> <method>  Right-hand side module and method for alignment";
   ]
 
 let set_debug_flags () =
@@ -138,7 +152,8 @@ let main () =
   set_debug_flags ();
   set_behaviour_flags ();
   if !only_print_version then print_version () else
-  if List.length !program_files = 0 then () else
+  if List.length !program_files = 0 then 
+  Printf.fprintf stderr "Error! No input files specified\n"  else
   let program = parse_program !program_files  in
   if !only_parse_flag then () else
   let penv, ctbl = typecheck_program program in
@@ -149,13 +164,31 @@ let main () =
       let program = filter_out is_relation_module program in
       let penv, ctbl = typecheck_program program in
       Pretrans.handle_local_equivalence meth_name penv ctbl  else
-  if !align_mode  then Align.run !program_files set_output else 
-  begin
+  if !align_mode  
+  then 
+    if !align_left_module = "" || 
+       !align_left_method = "" ||
+       !align_right_module = "" ||
+       !align_right_method = "" 
+    then Printf.fprintf stderr "Error! Expected the following format: whyrel -align -l <module> <method> -r <module> <method> files -o <file>\n" 
+    else 
+      begin
+      Printf.fprintf stdout "penv: \n";
+      Format.pp_set_margin Format.std_formatter !margin;
+      Pretty.pp_penv Format.std_formatter penv;
+      Printf.fprintf stdout "\nctbl: \n";
+      Ctbl.debug_print_ctbl stdout ctbl;
+      Printf.fprintf stdout "\n%s %s %s %s %s\n"
+        !align_left_module !align_left_method
+        !align_right_module !align_right_method
+        (if !output_fname = "" then "(stdout)" else !output_fname)
+      end
+  else begin
       let fmt = get_formatter () in
       Format.pp_set_margin fmt !margin;
       let penv = Pretrans.process ctbl penv in
       translate_program fmt penv ctbl
-  end;
+      end;
   
   close_output ()
 
