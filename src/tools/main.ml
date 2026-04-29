@@ -170,7 +170,7 @@ let main () =
        !align_left_method = "" ||
        !align_right_module = "" ||
        !align_right_method = "" 
-    then Printf.fprintf stderr "Error! Expected the following format: whyrel -align -l <module> <method> -r <module> <method> files -o <file>\n" 
+    then Printf.fprintf stderr "Error! Expected format: whyrel -align -l <module> <method> -r <module> <method> files -o <file>\n" 
     else 
       begin
       Printf.fprintf stdout "penv: \n";
@@ -181,7 +181,9 @@ let main () =
       Printf.fprintf stdout "\n%s %s %s %s %s\n"
         !align_left_module !align_left_method
         !align_right_module !align_right_method
-        (if !output_fname = "" then "(stdout)" else !output_fname)
+        (if !output_fname = "" then "(stdout)" else !output_fname);
+      Align.run penv !align_left_module !align_left_method
+        !align_right_module !align_right_method output_file
       end
   else begin
       let fmt = get_formatter () in

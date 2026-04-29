@@ -668,27 +668,35 @@ let pp_bimodule_elt outf = function
   | Bimdl_import imp ->
     fprintf outf "@[<v 2>%a@]" pp_import_directive imp
 
+let pp_program_elt outf elt = match elt with
+  | Unary_interface idef ->
+    fprintf outf "@[<hv 2>interface %a =@;" pp_ident idef.intr_name;
+    List.iter (fun ie -> fprintf outf "@[%a@]@;@;" pp_interface_elt ie) idef.intr_elts;
+    fprintf outf "@]end"
+  | Unary_module mdef ->
+    fprintf outf "@[<hv 2>module %a : %a =@;"
+      pp_ident mdef.mdl_name pp_ident mdef.mdl_interface;
+    List.iter (fun me -> fprintf outf "@[%a@]@;@;" pp_module_elt me) mdef.mdl_elts;
+    fprintf outf "@]end"
+  | Relation_module bdef ->
+    fprintf outf "@[<hv 2>bimodule %a (%a | %a) =@;"
+      pp_ident bdef.bimdl_name pp_ident bdef.bimdl_left_impl pp_ident bdef.bimdl_right_impl;
+    List.iter (fun be -> fprintf outf "@[%a@]@;@;" pp_bimodule_elt be) bdef.bimdl_elts;
+    fprintf outf "@]end"
+
 let pp_penv outf penv =
-  let pp_elt outf (_name, elt) = match elt with
-    | Unary_interface idef ->
-      fprintf outf "@[<hv 2>interface %a =@;" pp_ident idef.intr_name;
-      List.iter (fun ie -> fprintf outf "@[%a@]@;@;" pp_interface_elt ie) idef.intr_elts;
-      fprintf outf "@]end"
-    | Unary_module mdef ->
-      fprintf outf "@[<hv 2>module %a : %a =@;"
-        pp_ident mdef.mdl_name pp_ident mdef.mdl_interface;
-      List.iter (fun me -> fprintf outf "@[%a@]@;@;" pp_module_elt me) mdef.mdl_elts;
-      fprintf outf "@]end"
-    | Relation_module bdef ->
-      fprintf outf "@[<hv 2>bimodule %a (%a | %a) =@;"
-        pp_ident bdef.bimdl_name pp_ident bdef.bimdl_left_impl pp_ident bdef.bimdl_right_impl;
-      List.iter (fun be -> fprintf outf "@[%a@]@;@;" pp_bimodule_elt be) bdef.bimdl_elts;
-      fprintf outf "@]end"
+  let pp_elt outf (name, elt) =
+    fprintf outf "key: %s @\n" (Astutil.string_of_ident name);
+    pp_program_elt outf elt
   in
   let elts = M.bindings penv in
   fprintf outf "@[<v 2>Program Environment (%d entries):@." (List.length elts);
   List.iter (fun elt -> fprintf outf "@[%a@]@.@." pp_elt elt) elts;
   fprintf outf "@]"
+
+let pp_penv_values outf penv =
+  let elts = M.bindings penv in
+  List.iter (fun (_, elt) -> fprintf outf "@[%a@]@.@." pp_program_elt elt) elts
 
 
   
