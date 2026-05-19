@@ -1,241 +1,157 @@
 # Typing API Reference
 
-## typing/typing.ml
+## typing/annot.ml — Core Types
 
-Type checking and well-formedness validation.
-
-### Main Entry Point
+### `penv` — Program Environment
 
 ```ocaml
-(* Type check a complete program *)
-val tc_program : Ast.program list -> (penv * Ctbl.t) Result.t
+type program_elt =
+  | Unary_interface of interface_def   (* interface CELL = ... end *)
+  | Unary_module    of module_def      (* module ACell : CELL = ... end *)
+  | Relation_module of bimodule_def    (* bimodule CELL_REL (ACell | BCell) = ... end *)
+
+type penv = program_elt M.t           (* ident → program_elt *)
 ```
 
-
-### Type Abbreviations
-```ocaml
-type ity = Annot.ity      (* Intermediate type *)
-type ident = Ast.ident    (* Qualified/unqualified name *)
-type loc = Ast.loc        (* Source location *)
-type penv = definition M.t  (* Program environment *)
-type ctbl = Ctbl.t        (* Class table *)
-```
-
-
-### Standard Maps
-```ocaml
-(* String → Type mapping *)
-let env = M.empty
-M.add (Id "x") Tint env
-
-(* Class → Info mapping *)
-Ctbl.classes ctbl  (* class_name → class_info *)
-```
-
-
-### Result Monad Pattern
-
+`penv` maps module/interface names (as `Ast.ident`) to their typed definitions. After typechecking, every top-level declaration in the `.rl` file is an entry.
 
 ```ocaml
-let ( let* ) = Result.bind
+(* Example: look up a bimodule *)
+match M.find (Ast.Id "CELL_REL") penv with
+| Relation_module bdef -> bdef.bimdl_elts  (* list of coupling, bimeth defs *)
+| _ -> failwith "not a bimodule"
 
-let my_function () : 'a Result.t =
-  let* x = parse_file "file.rl" in
-  let* (penv, ctbl) = tc_program x in
-  let* () = validate_encapsulation ctbl penv in
-  Ok penv
+(* Iterate over all modules *)
+M.iter (fun name elt ->
+  match elt with
+  | Unary_module mdef -> ...
+  | Relation_module bdef -> ...
+  | Unary_interface idef -> ...
+) penv
 ```
 
-
-
-### Type Environments
-
-```ocaml
-(* Annotated types *)
-Tint, Tbool, Trgn, Tprop
-Tclass(name)                 (* Class types *)
-Tmath(name, Some ty)         (* Math types (for heap) *)
-
-(* Type bindings *)
-M.empty                      (* Empty context *)
-M.add (Id "x") Tint env.ctxt (* Add binding *)
-```
-
-```ocaml
-type tenv = {
-  ctxt: ity M.t;              (* Variable type bindings *)
-  ctbl: Ctbl.t;               (* Class information *)
-  grps: (ident * ident list) list;  (* Datagroups *)
-  exts: ident list;             (* Extern types *)
-}
-
-val initial_tenv : tenv
-
-type bi_tenv = {
-  left_tenv: tenv;
-  right_tenv: tenv;
-  bipreds: bipred_params M.t;
-}
-
-val initial_bi_tenv : bi_tenv
-```
-
-### Expression Type Checking
-
-```ocaml
-val tc_exp : tenv -> Ast.exp -> Annot.ity Result.t
-val tc_exp_list : tenv -> Ast.exp list -> Annot.ity list Result.t
-```
-
-### Formula Type Checking
-
-```ocaml
-val tc_formula : tenv -> Ast.formula -> unit Result.t
-val tc_spec : tenv -> Ast.spec -> unit Result.t
-```
-
-### Program Environment
-
-```ocaml
-type penv = Annot.definition M.t
-
-val find_interface : penv -> ident -> Annot.interface_def
-val find_module : penv -> ident -> Annot.module_def
-val find_bimodule : penv -> ident -> Annot.bimodule_def
-```
-
-### Utility Functions
-
-```ocaml
-val is_array_ty : Annot.ity -> bool
-val is_class_ty : Annot.ity -> bool
-val is_math_ty : Annot.ity -> bool
-
-val binop_ty : Ast.binop -> Annot.ity * Annot.ity * Annot.ity
-val unrop_ty : Ast.unrop -> Annot.ity * Annot.ity
-
-val string_of_ity : Annot.ity -> string
-```
-
----
-
-## typing/annot.ml
-
-Type-annotated syntax trees.
-
-### Intermediate Type System
+### `ity` — Intermediate Types
 
 ```ocaml
 type ity =
-  | Tint
-  | Tbool
-  | Trgn
-  | Tprop
-  | Tclass of id * params
-  | Tanyclass
-  | Tmath of id * ity option
+  | Tint | Tbool | Trgn | Tunit | Tprop
+  | Tclass of ident          (* class Cell *)
+  | Tanyclass                (* type of null *)
+  | Tmath of ident * ity option   (* math types, e.g. array *)
+  | Tmeth of { params: ity list; ret: ity }
+  | Tfunc of { params: ity list; ret: ity }
+```
 
-type exp = {
-  exp_desc: exp_desc;
-  exp_type: ity;
+### Key AST Types
+
+```ocaml
+(* Annotated node: value paired with its ity *)
+type 'a t = { ty: ity; node: 'a }
+let ( -: ) node ty = { node; ty }   (* constructor *)
+
+type interface_def = { intr_name: ident; intr_elts: interface_elt list }
+type module_def    = { mdl_name: ident; mdl_interface: ident; mdl_elts: module_elt list }
+type bimodule_def  = { bimdl_name: ident; bimdl_left_impl: ident;
+                       bimdl_right_impl: ident; bimdl_elts: bimodule_elt list }
+
+type meth_decl = {
+  meth_name: ident t;
+  params: meth_param_info list;
+  result_ty: ity;
+  meth_spec: spec;        (* Precond | Postcond | Effects *)
+  ...
 }
+type meth_def = Method of meth_decl * command option
 
-and exp_desc =
-  | Econst of const_exp
-  | Evar of id
-  | Ebinop of binop * exp * exp
-  | (* ... *)
-
-type formula = {
-  formula_desc: formula_desc;
-  formula_name: id option;
+type bimeth_decl = {
+  bimeth_name: ident;
+  bimeth_left_params: meth_param_info list;
+  bimeth_right_params: meth_param_info list;
+  result_ty: ity * ity;
+  bimeth_spec: bispec;    (* Biprecond | Bipostcond | Bieffects *)
+  ...
 }
+type bimeth_def = Bimethod of bimeth_decl * bicommand option
 
-and formula_desc =
-  | Ftrue | Ffalse
-  | Fexp of exp
-  | (* ... *)
-
-type definition =
-  | Unary_interface of interface_def
-  | Module of module_def
-  | Biinterface of biinterface_def
-  | Bimodule of bimodule_def
-  | Datagroup of datagroup_def
-  | Extern of extern_def
-
-type program = definition list
+type named_rformula = {
+  biformula_name: ident;
+  body: rformula;
+  is_coupling: bool;   (* true → coupling; false → predicate/lemma *)
+  ...
+}
 ```
 
 ### Utility Functions
 
 ```ocaml
 val string_of_ity : ity -> string
-val id_name : id -> string
-val exp_type : exp -> ity
-val formula_type : formula -> ity option
+val id_name : ident -> string          (* extracts string from Ast.Id *)
+val spec_preconds  : spec   -> formula list
+val spec_postconds : spec   -> formula list
+val bispec_preconds : bispec -> rformula list
 ```
 
 ---
 
-## typing/ctbl.ml
+## typing/ctbl.ml — Class Table
 
-Class table — storage for class definitions and metadata.
-
-### Main API
+`Ctbl.t` is `class_info M.t` — a map from class name to its field declarations. Built from class definitions encountered during typechecking.
 
 ```ocaml
-type t
+type class_info = {
+  name: classname;
+  fields: field_decl list;    (* field_decl = { field_name; field_ty; attribute } *)
+}
 
+type t = class_info M.t
+```
+
+### Key Functions
+
+```ocaml
 val empty : t
 
-val find_class : t -> ident -> class_info
-val find_interface : t -> ident -> interface_info
-val find_module : t -> ident -> module_info
-val find_method : t -> ident -> ident -> method_info
+(* Field queries *)
+val fields      : t -> classname:ident -> (ident * ity) list
+val field_type  : t -> field:ident -> ity option
+val field_attr  : t -> field:ident -> modifier option
+val is_ghost_field : t -> field:ident -> bool
 
-val add_class : t -> ident -> class_info -> t
-val add_interface : t -> ident -> interface_info -> t
-val add_module : t -> ident -> module_info -> t
+(* Class queries *)
+val class_exists      : t -> classname:ident -> bool
+val known_class_names : t -> ident list
+val is_array_like_class : t -> classname:ident -> bool  (* has length+slots fields *)
 
-val classes : t -> class_info M.t
-val interfaces : t -> interface_info M.t
-val modules : t -> module_info M.t
-val methods : t -> method_info M.t
-
-val is_class : t -> ident -> bool
-val is_interface : t -> ident -> bool
-val is_module : t -> ident -> bool
-
-val is_public : t -> ident -> ident -> bool
-val is_private : t -> ident -> ident -> bool
+(* Build from AST *)
+val of_penv : penv -> t
 
 val debug_print_ctbl : out_channel -> t -> unit
 ```
 
-### Information Records
+```ocaml
+(* Example: get fields of Cell class *)
+Ctbl.fields ctbl ~classname:(Ast.Id "Cell")
+(* → [(Id "value", Tint); (Id "rep", Trgn)] *)
+```
+
+---
+
+## typing/typing.ml — Typechecking Entry Point
 
 ```ocaml
-type class_info = {
-  c_name: ident;
-  c_fields: (ident * ity) list;
-  c_super: ident option;
-  c_rep: ident option;
-}
+val tc_program : Ast.program list -> (penv * Ctbl.t) Result.t
+```
 
-type interface_info = {
-  i_name: ident;
-  i_methods: (ident * method_sig) list;
-}
+Takes a list of parsed AST programs (one per file), returns a typed `penv` and `ctbl` or an error string.
 
-type module_info = {
-  m_name: ident;
-  m_interface: ident;
-  m_classes: class_info M.t;
-}
+### Result Monad
 
-type method_sig = {
-  ms_params: (ident * ity) list;
-  ms_return: ity option;
-}
+All internal functions use `Result.bind` via `let*`:
+
+```ocaml
+let ( let* ) = Result.bind
+
+let* (penv, ctbl) = tc_program progs in
+(* penv: program_elt M.t *)
+(* ctbl: class_info M.t  *)
 ```

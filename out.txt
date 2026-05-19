@@ -1,0 +1,209 @@
+penv: 
+Program Environment (6 entries):
+key: ACell 
+module ACell : CELL =
+  meth cget( self: Cell) : int
+    =
+    result := self.value
+  
+  meth cset( self: Cell,  k: int) : unit
+    =
+    self.value := k
+  
+  meth Cell( self: Cell,  k: int) : unit
+    =
+    self.value := k;
+    self.rep := {self};
+    pool := pool union {self}
+  
+  private invariant cellI =
+  (forall c:Cell in pool. c.rep = {c} /\ let v = c.value in v >= 0)
+  
+  class Cell {  value: int;  rep: rgn }
+  
+  end
+
+key: BCell 
+module BCell : CELL =
+  meth cget( self: Cell) : int
+    =
+    var value : int in value := self.value;
+                       result := - value
+  
+  meth cset( self: Cell,  k: int) : unit
+    =
+    if k <= 0 then
+      self.value := k
+    else
+      self.value := - k
+    end
+  
+  meth Cell( self: Cell,  k: int) : unit
+    =
+    if k <= 0 then
+      self.value := k
+    else
+      self.value := - k
+    end;
+    self.rep := {self};
+    pool := pool union {self}
+  
+  private invariant cellI =
+  (forall c:Cell in pool. let v = c.value in v <= 0 /\ c.rep = {c})
+  
+  class Cell {  value: int;  rep: rgn }
+  
+  end
+
+key: CELL 
+interface CELL =
+  class Cell {  value: int;  rep: rgn }
+  
+  ghost pool : rgn
+  
+  boundary { pool, pool`any, pool`rep`any }
+  
+  public invariant cellP =
+  (forall c:Cell in pool,d:Cell in pool.
+    let crep = c.rep in let drep = d.rep in c <> d -> crep # drep)
+  
+  lemma emptyPoolCellP: pool = {} -> cellP()
+  
+  meth Cell( self: Cell,  k: int) : unit
+    requires { ~(self in pool) }
+    requires { self.rep = {} }
+    requires { k >= 0 }
+    ensures { self in pool }
+    effects { rw {self}`any ;  rw alloc ;  rw pool ;  rd self ;  rd k }
+    
+  
+  meth cset( self: Cell,  k: int) : unit
+    requires { self in pool }
+    requires { k >= 0 }
+    effects { rw {self}`any ;  rw alloc ;  rd self ;  rd k }
+    
+  
+  meth cget( self: Cell) : int
+    requires { self in pool }
+    ensures { result >= 0 }
+    effects { rd self ;  rd {self}`any ;  rw alloc }
+    
+  
+  end
+
+key: CELL_REL 
+bimodule CELL_REL (ACell | BCell) =
+  coupling cellC =
+    Agree pool /\
+    Both (cellI()) /\
+    Cell of pool =:= Cell of pool /\
+    (forall c:Cell in pool | c:Cell in pool.
+      Agree c -> let v | v = c.value | c.value in v =:= - v)
+  
+  meth Cell( self: Cell,  k: int| self: Cell,  k: int) : (unit | unit)
+    requires { cellC( | ) }
+    ensures  { cellC( | ) }
+    requires { Both (~(self in pool)) }
+    requires { Both (self.rep = {}) }
+    requires { Both (cellP()) }
+    requires { Both (cellI()) }
+    requires { let rp | rp = self.rep | self.rep in Agree rp }
+    requires { let vl | vl = self.value | self.value in vl =:= - vl }
+    requires { Agree k }
+    requires { Agree self }
+    requires { Both (k >= 0) }
+    ensures  { Both (cellP()) }
+    ensures  { Both (cellI()) }
+    ensures  { Both (self in pool) }
+    effects  { rw {self}`any ;  rw alloc ;  rw pool ;  rd k
+             | rw {self}`any ;  rw alloc ;  rw pool ;  rd k }
+
+    =
+    (self.value := k
+    | if k <= 0 then
+        self.value := k
+      else
+        self.value := - k
+      end);
+    Assert {Both (k >= 0) -> let v | v = self.value | self.value in v =:= - v};
+    |_ self.rep := {self} _|;
+    |_ pool := pool union {self} _|
+  
+  meth cset( self: Cell,  k: int| self: Cell,  k: int) : (unit | unit)
+    requires { cellC( | ) }
+    ensures  { cellC( | ) }
+    requires { Both (self in pool) }
+    requires { Both (cellP()) }
+    requires { Both (cellI()) }
+    requires { let rep | rep = self.rep | self.rep in Agree rep }
+    requires { let vl | vl = self.value | self.value in vl =:= - vl }
+    requires { Agree k }
+    requires { Both (k >= 0) }
+    ensures  { let rep | rep = self.rep | self.rep in Agree rep }
+    ensures  { Both (cellP()) }
+    ensures  { Both (cellI()) }
+    effects  { rw {self}`any ;  rw alloc ;  rw pool ;  rd k
+             | rw {self}`any ;  rw alloc ;  rw pool ;  rd k }
+
+    =
+    Assert {Agree self};
+    (self.value := k
+    | if k <= 0 then
+        self.value := k
+      else
+        self.value := - k
+      end)
+  
+  meth cget( self: Cell| self: Cell) : (int | int)
+    requires { cellC( | ) }
+    ensures  { cellC( | ) }
+    requires { Both (self in pool) }
+    requires { Both (cellP()) }
+    requires { Both (cellI()) }
+    requires { let rep | rep = self.rep | self.rep in Agree rep }
+    requires { let vl | vl = self.value | self.value in vl =:= - vl }
+    ensures  { Both (cellP()) }
+    ensures  { Both (cellI()) }
+    ensures  { Both (result >= 0) }
+    ensures  { Agree result }
+    effects  { rw {self}`any ;  rw alloc ;  rw pool
+             | rw {self}`any ;  rw alloc ;  rw pool }
+
+    =
+    (result := self.value
+    | var value : int in value := self.value;
+                         result := - value)
+  
+  end
+
+key: MAIN 
+interface MAIN = end
+
+key: Main 
+module Main : MAIN =
+  meth main( x: int) : int
+    requires { pool = {} }
+    requires { x >= 0 }
+    effects { rw alloc ;  rw pool ;  rw x }
+    
+    =
+    var c : Cell in
+    c := new Cell;
+    var k : int in
+    k := 0;
+    Cell(c,k);
+    assert {c in alloc};
+    x := x + 1;
+    cset(c,x);
+    result := cget(c)
+  
+  import CELL related_by CELL_REL 
+  
+  end
+
+
+ctbl: 
+  Cell{ rep: rgn; value: int }
+
+
+ACell cset BCell cset (stdout)

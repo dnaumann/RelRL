@@ -530,9 +530,9 @@ let pp_bicommand outf c =
     | Bivardecl (x, y, c) ->
       let pp_var_opt outf = function
         | Some v -> pp_varbind outf v
-        | None -> fprintf outf "_"
+        | None -> fprintf outf ""
       in
-      fprintf outf "@[<hv>@[<h>var@ %a@ |@ %a@ in@]@;%a@]"
+      fprintf outf "@[<hv>@[<h>Var@ %a@ |@ %a@ in@]@;%a@]"
         pp_var_opt x pp_var_opt y pp_bicommand' c
     | Biseq (c1, c2) -> fprintf outf "@[<v>%a;@;%a@]" pp_bicommand' c1 pp_bicommand' c2 
     | Biif (e1, e2, c1, c2) ->

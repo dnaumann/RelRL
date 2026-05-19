@@ -26,7 +26,7 @@
 
 ## Key Concepts
 
-### Typing Environments
+### Types
 
 ```ocaml
 type tenv = {
@@ -37,16 +37,12 @@ type tenv = {
 }
 ```
 
-### Intermediate Type System (`ity`)
 
 - Core types: `Tint`, `Tbool`, `Trgn` (regions), `Tprop` (propositions)
 - Class types: `Tclass of class_name`
 - Math types: `Tmath of name * ty option` (for heap model)
 
-### Program Environment (`penv`)
-
-- Collections of: interfaces, modules, bimodules, datagroups
-- Stored as: `(ident, definition) M.t` (map data structure)
+- Penv: Stored as: `(ident, definition) M.t` (map data structure)
 
 ## Data Flow
 

@@ -1,0 +1,272 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{parskip}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  frame=single,
+  breaklines=true,
+}
+
+\title{Design Document: Align Mode for WhyRel}
+\author{WhyRel Project}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Overview}
+% ============================================================
+
+Align mode (\texttt{-align}) is a tool-assisted workflow within WhyRel for constructing
+\emph{bicommands} --- the relational programs that pair up the execution steps of two
+unary methods and serve as the proof skeleton for relational verification.
+
+Writing bicommands by hand is tedious and error-prone.  The alignment of two programs
+is not unique: many correct alignments exist, and the ``best'' one for a given proof
+depends on the relationship being proved.  Align mode addresses this by:
+
+\begin{enumerate}
+  \item Computing a \emph{default alignment} automatically from the two method bodies.
+  \item Displaying the result in a form the user can inspect and refine.
+  \item (Planned) Providing an interactive rewriting interface so the user can pivot to
+        a better alignment without leaving the tool.
+\end{enumerate}
+
+% ============================================================
+\section{Background}
+% ============================================================
+
+\subsection{Relational verification in WhyRel}
+
+WhyRel verifies relational properties (equivalence, noninterference, simulation) by
+asking the user to supply a \emph{bimodule}: a pair of modules together with a
+relational specification and a \emph{bicommand} body.  A bicommand is a structured
+interleaving of two unary command sequences; it must project onto the respective
+unary bodies when the left or right side is erased.
+
+The two primitive bicommand constructors are:
+\begin{description}
+  \item[\texttt{|[c, d]|}] (\texttt{Bisync}/\texttt{Biprod}) --- execute $c$ and $d$
+        synchronously; both sides advance together.
+  \item[\texttt{|[c, skip]|} / \texttt{|[skip, d]|}] (\texttt{Bisplit}) --- advance
+        only one side; the other idles.
+\end{description}
+
+Higher-level constructs (\texttt{Bivardecl}, \texttt{Biwhile}, \ldots) handle
+variable scoping and loops.
+
+\subsection{The alignment problem}
+
+Given unary method bodies $L$ and $R$, an alignment is any bicommand $B$ such that
+$\pi_L(B) \equiv L$ and $\pi_R(B) \equiv R$, where $\pi_L$, $\pi_R$ are the left and
+right projection functions.  Alignments that pair corresponding steps with
+\texttt{Bisync} tend to produce the easiest proofs; purely split alignments always
+work but give weak relational structure.
+
+% ============================================================
+\section{Current Implementation}
+% ============================================================
+
+\subsection{Entry point}
+
+Align mode is invoked with:
+\begin{lstlisting}
+whyrel -align -l <LMod> <LMeth> -r <RMod> <RMeth> files... [-o <file>] [-man]
+\end{lstlisting}
+
+\texttt{main.ml} parses and type-checks the input files in the usual way, then calls
+\texttt{Align.run} instead of the translation pipeline.
+
+\subsection{Default alignment (\texttt{align.ml})}
+
+The default alignment is computed by \texttt{compose\_sequentially}:
+
+\begin{enumerate}
+  \item Look up the bodies of \texttt{LMod.LMeth} and \texttt{RMod.RMeth} in
+        \texttt{penv} via \texttt{find\_method\_body}.
+  \item Call \texttt{build\_default lc rc}, which:
+        \begin{itemize}
+          \item Pierces matching \texttt{Vardecl} nodes on either side with
+                \texttt{Bivardecl}, preserving scoping.
+          \item Flattens remaining sequences with \texttt{flatten\_seq}.
+          \item Interleaves the flat step lists with \texttt{interleave\_steps}: each
+                left step is emitted as \texttt{|[c, skip]|} followed by the
+                corresponding right step as \texttt{|[skip, d]|}; unmatched tail
+                steps are padded with \texttt{skip}.
+        \end{itemize}
+\end{enumerate}
+
+This produces a fully split alignment --- no synchronisation is assumed.  It is always
+valid (projections are correct by construction) but typically not the intended proof
+structure.
+
+\subsection{Output modes}
+
+Two output modes are currently supported, selected by the \texttt{-man} flag.
+
+\paragraph{Default mode (HTTP server, \texttt{http\_server.ml}).}
+The bicommand is pretty-printed to a string and served as plain text over a local HTTP
+server on port 8080 at \texttt{/bicom}.  The client (e.g.\ a browser or \texttt{curl})
+can fetch the alignment text.
+
+\paragraph{Manual / HTML mode (\texttt{-man}, \texttt{html\_server.ml}).}
+The bicommand is rendered as a line-numbered HTML page (dark-theme monospace) and
+served at \texttt{/bicom}.  This is useful for visual inspection.
+
+% ============================================================
+\section{Planned Features}
+% ============================================================
+
+\subsection{Synchronisation heuristics}
+
+The default split-everything alignment is rarely the desired proof structure.  Common
+heuristics to improve it:
+
+\begin{itemize}
+  \item \textbf{Syntactic matching}: pair steps that are syntactically identical
+        (same assignment shape, same field, same operator) as \texttt{Bisync}.
+  \item \textbf{Loop pairing}: when both sides contain a \texttt{While} loop at the
+        same position, emit a \texttt{Biwhile} rather than two split loops.
+  \item \textbf{User-provided hints}: allow the user to annotate the source with
+        alignment hints that override the default.
+\end{itemize}
+
+\subsection{Rewriting rules (\texttt{rewrites.ml})}
+
+Once a default alignment is displayed, the user should be able to refine it by applying
+named rewriting rules that preserve projection correctness.  Candidate rules include:
+
+\begin{description}
+  \item[\textsc{Sync}] Merge \texttt{|[c, skip]| ; |[skip, d]|} into \texttt{|[c, d]|}
+        when $c$ and $d$ are ``related enough'' (e.g.\ same shape).
+  \item[\textsc{SplitL} / \textsc{SplitR}] Reverse of \textsc{Sync}: split a
+        \texttt{Bisync} step into two split steps.
+  \item[\textsc{SwapL} / \textsc{SwapR}] Move a split step past the next step on the
+        same side (commuting independent statements).
+  \item[\textsc{PairWhile}] Convert two consecutive \texttt{While} bisplit loops into a
+        \texttt{Biwhile}.
+  \item[\textsc{UnpairWhile}] Reverse of \textsc{PairWhile}.
+\end{description}
+
+Each rule has a \emph{focus}: the line or node in the bicommand where it applies.
+Rules should be invertible where possible to support undo.
+
+\subsection{Interactive mode (\texttt{interactive.ml})}
+
+The interactive mode extends the HTTP server with a stateful session:
+
+\begin{enumerate}
+  \item The server holds the current bicommand as mutable state.
+  \item \texttt{GET /bicom} returns the current alignment (HTML or plain text).
+  \item \texttt{POST /rewrite} applies a named rewrite rule at a given focus; the
+        server returns the updated alignment.
+  \item \texttt{POST /undo} reverts the last rewrite.
+  \item \texttt{GET /export} writes the current bicommand as a WhyRel bimodule
+        skeleton to the output file.
+\end{enumerate}
+
+A thin browser-side UI (or a CLI companion) can drive this API, letting the user
+iteratively refine the alignment before copying the result into their \texttt{.rl}
+file.
+
+\subsection{Export to bimodule skeleton}
+
+After alignment is finalised, align mode should emit a \texttt{.rl} file containing:
+\begin{itemize}
+  \item The biinterface derived from the two module interfaces.
+  \item A bimodule stub with the aligned bicommand body and placeholder relational
+        specifications (\texttt{requires true}, \texttt{ensures true}).
+\end{itemize}
+This skeleton can be opened in an editor, filled in with the actual relational
+specifications, and fed back to the full WhyRel pipeline.
+
+% ============================================================
+\section{Architecture}
+% ============================================================
+
+\begin{verbatim}
+Align.run
+  |
+  +-- compose_sequentially     (align.ml)
+  |     |
+  |     +-- find_method_body   lookup in penv
+  |     +-- build_default      structural recursion over Vardecl/Seq
+  |           +-- interleave_steps   flat step pairing
+  |
+  +-- [man_mode = false]  start_server (http_server.ml)   plain text
+  +-- [man_mode = true]   start_html_server (html_server.ml) HTML view
+  |
+  (planned)
+  +-- Interactive.session      stateful rewrite loop
+  |     +-- Rewrites.apply     rewrite rules
+  |     +-- Rewrites.undo      history stack
+  +-- Export.bimodule_skeleton emit .rl stub
+\end{verbatim}
+
+% ============================================================
+\section{Data Flow}
+% ============================================================
+
+\begin{enumerate}
+  \item \textbf{Input}: \texttt{penv} (type-checked program environment),
+        left/right module and method names.
+  \item \textbf{Body extraction}: \texttt{find\_method\_body} returns
+        \texttt{Annot.command option} for each side.
+  \item \textbf{Alignment}: \texttt{build\_default} produces an
+        \texttt{Annot.bicommand}.
+  \item \textbf{Serialisation}: \texttt{Pretty.pp\_bicommand} renders the
+        bicommand to a string.
+  \item \textbf{Serving}: the string (or HTML-wrapped version) is served over
+        HTTP.
+  \item \textbf{(Future) Editing}: rewrite rules transform the bicommand
+        in-place; the updated string is re-served.
+  \item \textbf{(Future) Export}: the final bicommand is written back to a
+        \texttt{.rl} file.
+\end{enumerate}
+
+% ============================================================
+\section{Design Decisions and Open Questions}
+% ============================================================
+
+\begin{enumerate}
+  \item \textbf{Projection correctness as invariant.}  Every rewrite rule must
+        preserve the projection invariant ($\pi_L(B) \equiv L$, $\pi_R(B) \equiv R$).
+        Rules should be implemented with this as a postcondition and ideally checked
+        by running the WhyRel projection checker after each rewrite.
+
+  \item \textbf{Granularity of focus.}  Should rewrites target individual
+        \texttt{Bisplit} nodes (fine-grained) or top-level sequence positions
+        (coarse-grained)?  Fine-grained targeting is more expressive but requires
+        a richer path/zipper representation.
+
+  \item \textbf{State representation.}  The interactive server holds mutable OCaml
+        state.  Should this be a simple reference to the current bicommand plus a
+        history stack, or something more structured (e.g.\ a zipper for focus
+        tracking)?
+
+  \item \textbf{Conflict with the normal pipeline.}  Align mode currently skips
+        pre-translation and translation.  If the user wants to verify the resulting
+        bimodule, they must run WhyRel again on the exported \texttt{.rl} file.
+        A tighter integration (e.g.\ align $\to$ verify in one invocation) could
+        be explored.
+
+  \item \textbf{Loop alignment.}  Biwhile pairing requires both sides to have loops
+        at the same structural position.  What should happen when loop bounds differ
+        or loop bodies have different shapes?
+
+  \item \textbf{Port conflicts.}  Both server modes hardcode port 8080.  This should
+        be configurable via a \texttt{-port} flag.
+\end{enumerate}
+
+\end{document}

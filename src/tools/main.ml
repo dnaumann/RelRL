@@ -22,6 +22,7 @@ let no_simplify_effects  = ref false
 let all_exists_mode      = ref false
 
 let align_mode = ref false
+let align_man_mode = ref false
 
 let align_left_module   : string ref = ref ""
 let align_left_method : string ref = ref ""
@@ -86,6 +87,9 @@ let args =
 
    "-r", Tuple [Set_string align_right_module; Set_string align_right_method],
    "<module> <method>  Right-hand side module and method for alignment";
+
+   "-man", Set align_man_mode,
+   " In align mode: starts an html server instead of the default http server which writes an HTML file with line-numbered bicom ";
   ]
 
 let set_debug_flags () =
@@ -164,13 +168,17 @@ let main () =
       let program = filter_out is_relation_module program in
       let penv, ctbl = typecheck_program program in
       Pretrans.handle_local_equivalence meth_name penv ctbl  else
+  if !output_fname = "" && !align_mode then
+    (let base = Filename.basename (List.hd !program_files) in
+     let stem = try Filename.chop_extension base with Invalid_argument _ -> base in
+     output_fname := stem ^ "_align_output.rl");
   if !align_mode  
   then 
     if !align_left_module = "" || 
        !align_left_method = "" ||
        !align_right_module = "" ||
        !align_right_method = "" 
-    then Printf.fprintf stderr "Error! Expected format: whyrel -align -l <module> <method> -r <module> <method> files -o <file>\n" 
+    then Printf.fprintf stderr "Error! Expected format: whyrel -align -l <module> <method> -r <module> <method> files [-o <file>]\n" 
     else 
       begin
       Printf.fprintf stdout "penv: \n";
@@ -181,9 +189,10 @@ let main () =
       Printf.fprintf stdout "\n%s %s %s %s %s\n"
         !align_left_module !align_left_method
         !align_right_module !align_right_method
-        (if !output_fname = "" then "(stdout)" else !output_fname);
+        !output_fname;
       Align.run penv !align_left_module !align_left_method
-        !align_right_module !align_right_method output_file
+        !align_right_module !align_right_method !output_fname
+        ~man_mode:!align_man_mode
       end
   else begin
       let fmt = get_formatter () in

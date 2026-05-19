@@ -3,50 +3,25 @@
 
 ### What is WhyRel?
 
-**WhyRel** is a tool for verifying **relational properties** of object-oriented programs written in a Java-like language. It enables developers to prove:
+**WhyRel** is a tool for verifying **relational properties** of object-oriented programs written in a Java-like language. 
+
+- **Built on Why3**: Leverages the Why3 platform for deductive verification
+- **Relational Region Logic**: Implements relational specifications for heap-based reasoning
+- **Unary Region Logic**: Supports single-program verification
+- **Modular Reasoning**: Supports encapsulation, module interfaces, and modular linking rules
+
+It enables developers to prove:
 
 - **Program equivalence**: Two implementations produce the same results
 - **Information flow security**: Programs don't leak sensitive information
 - **Program transformations**: Compiler optimizations preserve behavior
 - **Encapsulation**: Hidden invariants are maintained
 
-### Key Features
-
-- **Built on Why3**: Leverages the Why3 platform for deductive verification
-- **Relational Region Logic**: Implements relational specifications for heap-based reasoning
-- **Unary Region Logic**: Supports single-program verification
-- **SMT Solver Integration**: Uses Alt-Ergo, Z3, CVC3, CVC4 to discharge verification conditions
-- **Modular Reasoning**: Supports encapsulation, module interfaces, and modular linking rules
-
 ## System Architecture Overview
-
-
-WhyRel follows a classic compiler pipeline architecture:
-
-```
-Source Code (*.rl)
-    ↓
-Lexer/Parser           → see parser/
-    ↓
-Type Checker           → see typing/
-    ↓
-Pre-translator         → see pretrans/
-    ↓
-Translator             → see translate/
-    ↓
-Why3 Output (*.mlw)
-```
-
 
 ### High-Level Component Diagram
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        WhyRel Tool Chain                                │
-└─────────────────────────────────────────────────────────────────────────┘
-
-                              INPUT
-                                ↓
                     ┌───────────────────────┐
                     │   WhyRel Source File  │
                     │      (file.rl)        │
@@ -174,6 +149,127 @@ Why3 Output (*.mlw)
 ```
 
 ---
+## Workflows
+
+### Type Checking Flow
+
+```
+tc_program input
+  │
+  ├─ Parse input → Ast.program list
+  │
+  ├─ For each interface:
+  │  ├─ Register in class table
+  │  └─ Check method signatures
+  │
+  ├─ For each module:
+  │  ├─ Validate against interface
+  │  ├─ Check field declarations
+  │  └─ Type check methods:
+  │     ├─ tc_method_body
+  │     │  ├─ tc_command (for each statement)
+  │     │  │  ├─ tc_exp (for each expression)
+  │     │  │  └─ Update type environment
+  │     │  └─ Check command sequence
+  │     └─ Check specs:
+  │        ├─ tc_formula (preconditions)
+  │        └─ tc_formula (postconditions)
+  │
+  ├─ For each bimodule:
+  │  ├─ Check interfaces match
+  │  ├─ Type check bicommands (2-program execution)
+  │  └─ Type check specifications
+  │
+  └─ Return: (penv, ctbl)
+```
+
+### Translation Flow
+
+```
+compile_penv context penv
+  │
+  ├─ Build state module
+  │  ├─ Create reftype algebraic type
+  │  │  └─ For each class: | ClassName of field list
+  │  └─ Create accessor/updater functions
+  │
+  ├─ Process interfaces
+  │  └─ For each method:
+  │     ├─ Create Why3 signature
+  │     └─ Translate specifications
+  │
+  ├─ Process modules
+  │  └─ For each method:
+  │     ├─ trans_formula → why3_term (pre/post)
+  │     ├─ trans_command → why3_stmt
+  │     │  ├─ Translate assignments
+  │     │  ├─ Translate field access
+  │     │  └─ Translate new/delete
+  │     └─ Add frame lemmas
+  │
+  └─ Process bimodules
+     └─ For each bimethod:
+        ├─ Create bimethod predicate
+        ├─ trans_formula → why3_relational_term
+        └─ trans_bicommand → why3_stmt pair
+```
+
+---
+
+
+### Complete WhyRel Execution
+
+```
+main () [tools/main.ml]
+  │
+  ├─ parse_program !program_files
+  │  │
+  │  └─ parse_file (for each file)
+  │      │
+  │      ├─ Lexing.from_string (lexer.mll)
+  │      └─ Parser.top Lexer.token lexbuf
+  │          → Ast.program list
+  │
+  └─ typecheck_program parsed_program
+      │
+      └─ Typing.tc_program
+          │
+          ├─ Build initial environments
+          ├─ Process each program element
+          │  ├─ tc_interface/tc_module/tc_bimodule
+          │  ├─ tc_exp for expressions in methods
+          │  └─ tc_formula for formulas in specs
+          ├─ Validate encapsulation
+          └─ Return: (penv, ctbl)
+       
+  └─ (if not --typecheck-only)
+      │
+      ├─ Pretrans.process ctbl penv
+      │  │
+      │  ├─ Expand_method_spec.expand
+      │  ├─ Encap_check.check
+      │  ├─ Derive_biinterface.derive
+      │  ├─ Resolve_datagroups.resolve
+      │  └─ Generate frame lemmas
+      │      → penv (modified)
+      │
+      ├─ Translate.compile_penv context penv
+      │  │
+      │  ├─ Build_State.mk (create heap module)
+      │  ├─ For each interface/module/bimodule:
+      │  │  ├─ trans_exp (translate expressions)
+      │  │  ├─ trans_formula (translate formulas)
+      │  │  └─ trans_command (translate commands)
+      │  └─ Return: Why3.Ptree.mlw_file list
+      │
+      └─ Format and output
+          │
+          ├─ get_formatter() (stdout or file)
+          ├─ Why3.Mlw_printer.pp_mlw_file
+          └─ Write to .mlw file
+```
+
+
 
 ## Data Flow Through Processing Stages
 
@@ -224,7 +320,18 @@ Type Checker (typing.ml::tc_program)
     │  ├─ Classes are well-defined
     │  ├─ Methods have consistent signatures
     │  ├─ Specifications type-check
-    │  └─ All referenced identifiers exist
+    │  ├─ All referenced identifiers exist
+    │  └─ Bicommand projection check (wf_bimeth_def)
+    │     ├─ For each bimodule method with a bicommand body:
+    │     │  ├─ Compute left projection:  projl_simplify cc  (annot.ml)
+    │     │  │  └─ Extracts the left unary command from cc, then simplifies
+    │     │  │     (Bisync → both sides, Bisplit → left branch,
+    │     │  │      Bihavoc_right → Skip, alignment constructs → Skip)
+    │     │  ├─ Compute right projection: projr_simplify cc  (annot.ml)
+    │     │  │  └─ Mirror of projl: extracts the right unary command
+    │     │  ├─ Check left projection ≡ left module's unary method body
+    │     │  └─ Check right projection ≡ right module's unary method body
+    │     └─ Error: "Malformed bicommand (<side>): <method>" if mismatch
     │
     ├─ Type check expressions
     │  └─ Infer types, ensure operations are valid
@@ -339,8 +446,6 @@ Write to file (main.ml::get_formatter)
 ```
 
 
----
-
 ## Key Data Structures
 
 ### 1. Type System
@@ -372,40 +477,6 @@ bi_tenv (Bimodular Type Environment):
 ├─ left_tenv: tenv
 ├─ right_tenv: tenv
 └─ bipreds: bipred_params M.t (relational predicates)
-```
-
-### 3. Program Environment (penv)
-
-```
-penv: ident → definition
-
-definition:
-├─ Unary_interface of interface_def
-│  └─ Contains: classes, methods, public fields, invariants
-├─ Module of module_def
-│  └─ Contains: interface, classes, fields, method impls
-├─ Biinterface of biinterface_def
-│  └─ Relational interface (two unary interfaces)
-├─ Bimodule of bimodule_def
-│  └─ Relational module (two modules + bicommands)
-├─ Datagroup of datagroup_def
-│  └─ Field groupings for abstraction
-└─ Extern of extern_def
-   └─ External definitions
-```
-
-### 4. Class Table (Ctbl.t)
-
-```
-Ctbl.t contains:
-├─ classes: ident → class_info
-│  └─ class_info: {name, fields, super, ...}
-├─ interfaces: ident → interface_info
-│  └─ interface_info: {name, methods, ...}
-├─ modules: ident → module_info
-│  └─ module_info: {name, interface, ...}
-└─ bimodules: ident → bimodule_info
-   └─ bimodule_info: {name, left, right, ...}
 ```
 
 ## Module Interaction Patterns
@@ -461,157 +532,6 @@ match M.find (Id "ClassName") penv with
 ```
 ---
 
----
-
-## Function Call Chain Analysis
-
-### Complete WhyRel Execution
-
-```
-main () [tools/main.ml]
-  │
-  ├─ parse_program !program_files
-  │  │
-  │  └─ parse_file (for each file)
-  │      │
-  │      ├─ Lexing.from_string (lexer.mll)
-  │      └─ Parser.top Lexer.token lexbuf
-  │          → Ast.program list
-  │
-  └─ typecheck_program parsed_program
-      │
-      └─ Typing.tc_program
-          │
-          ├─ Build initial environments
-          ├─ Process each program element
-          │  ├─ tc_interface/tc_module/tc_bimodule
-          │  ├─ tc_exp for expressions in methods
-          │  └─ tc_formula for formulas in specs
-          ├─ Validate encapsulation
-          └─ Return: (penv, ctbl)
-       
-  └─ (if not --typecheck-only)
-      │
-      ├─ Pretrans.process ctbl penv
-      │  │
-      │  ├─ Expand_method_spec.expand
-      │  ├─ Encap_check.check
-      │  ├─ Derive_biinterface.derive
-      │  ├─ Resolve_datagroups.resolve
-      │  └─ Generate frame lemmas
-      │      → penv (modified)
-      │
-      ├─ Translate.compile_penv context penv
-      │  │
-      │  ├─ Build_State.mk (create heap module)
-      │  ├─ For each interface/module/bimodule:
-      │  │  ├─ trans_exp (translate expressions)
-      │  │  ├─ trans_formula (translate formulas)
-      │  │  └─ trans_command (translate commands)
-      │  └─ Return: Why3.Ptree.mlw_file list
-      │
-      └─ Format and output
-          │
-          ├─ get_formatter() (stdout or file)
-          ├─ Why3.Mlw_printer.pp_mlw_file
-          └─ Write to .mlw file
-```
-
----
-
-## Critical Code Paths
-
-### Path 1: Adding a New Expression Type
-
-```
-1. ast.ml
-   Add: | Enewexpr of exp node
-   
-2. lexer.mll
-   Add token for syntax
-   
-3. parser.mly
-   Add: | NEWKW expr { no_loc (Enewexpr $2) }
-   
-4. typing.ml
-   Add case in tc_exp:
-   | Enewexpr e -> ...
-   
-5. annot.ml
-   If type needs special representation
-   
-6. translate.ml
-   Add case in trans_exp:
-   | Enewexpr e -> ...
-   
-7. pretty.ml
-   Add printing support
-```
-
-### Path 2: Type Checking Flow
-
-```
-tc_program input
-  │
-  ├─ Parse input → Ast.program list
-  │
-  ├─ For each interface:
-  │  ├─ Register in class table
-  │  └─ Check method signatures
-  │
-  ├─ For each module:
-  │  ├─ Validate against interface
-  │  ├─ Check field declarations
-  │  └─ Type check methods:
-  │     ├─ tc_method_body
-  │     │  ├─ tc_command (for each statement)
-  │     │  │  ├─ tc_exp (for each expression)
-  │     │  │  └─ Update type environment
-  │     │  └─ Check command sequence
-  │     └─ Check specs:
-  │        ├─ tc_formula (preconditions)
-  │        └─ tc_formula (postconditions)
-  │
-  ├─ For each bimodule:
-  │  ├─ Check interfaces match
-  │  ├─ Type check bicommands (2-program execution)
-  │  └─ Type check specifications
-  │
-  └─ Return: (penv, ctbl)
-```
-
-### Path 3: Translation Flow
-
-```
-compile_penv context penv
-  │
-  ├─ Build state module
-  │  ├─ Create reftype algebraic type
-  │  │  └─ For each class: | ClassName of field list
-  │  └─ Create accessor/updater functions
-  │
-  ├─ Process interfaces
-  │  └─ For each method:
-  │     ├─ Create Why3 signature
-  │     └─ Translate specifications
-  │
-  ├─ Process modules
-  │  └─ For each method:
-  │     ├─ trans_formula → why3_term (pre/post)
-  │     ├─ trans_command → why3_stmt
-  │     │  ├─ Translate assignments
-  │     │  ├─ Translate field access
-  │     │  └─ Translate new/delete
-  │     └─ Add frame lemmas
-  │
-  └─ Process bimodules
-     └─ For each bimethod:
-        ├─ Create bimethod predicate
-        ├─ trans_formula → why3_relational_term
-        └─ trans_bicommand → why3_stmt pair
-```
-
----
 
 
 ## Memory/Heap Model
@@ -642,32 +562,6 @@ Updater functions:
   let update_cell_value (h: heap) (r: reftype) (v: int): heap = {
     h with cell_value = fun obj → if obj = r then v else h.cell_value obj
   }
-```
-
----
-
-## Why3 Integration Points
-
-```
-┌─ AST (WhyRel)
-│  └─ Program structure
-│     (interfaces, modules, methods, fields)
-│
-├─ Annotated AST
-│  └─ Types and specifications
-│
-├─ Why3 Parse Tree
-│  ├─ mlw_file (modules)
-│  ├─ type_def (types)
-│  ├─ decl (declarations)
-│  ├─ expr (terms)
-│  ├─ term (logical formulas)
-│  └─ spec (pre/post-conditions)
-│
-└─ Why3 Verification
-   ├─ Generates verification conditions
-   ├─ Calls SMT solvers
-   └─ Produces proof discharge results
 ```
 
 ---
@@ -710,7 +604,3 @@ Output phase:
     │
     └─ Handle file write failures
 ```
-
-
-
-X
