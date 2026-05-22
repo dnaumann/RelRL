@@ -6,7 +6,7 @@ FILES=stack.rl arraystack.rl liststack.rl relstack.rl client.rl cell.rl
 all: prog.mlw
 
 prog.mlw: $(FILES)
-	$(WHYREL) -margin 136 -o $@ $^
+	$(WHYREL) -all-exists -margin 136 -o $@ $^
 	python3 add_lemmas.py $@
 
 
