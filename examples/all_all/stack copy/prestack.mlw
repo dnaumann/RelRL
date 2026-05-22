@@ -2,7 +2,6 @@ module State
   use prelude.Prelude
   use prelude.PreRefperm
   use stack_theory.Stack_theory
-  use stack_theory.Stack_theory
   
   type reftype = 
       | Cell
@@ -18,12 +17,12 @@ module State
               mutable ghost contents : M.t intList;
               mutable top : M.t int;
               mutable arr : M.t reference;
-              mutable car : M.t int;
+              mutable car : M.t reference;
               mutable cdr : M.t reference;
               mutable slots : M.t (A.array reference);
               mutable length : M.t int;
-              mutable ghost cell_rep : M.t rgn;
               mutable cell_value : M.t int;
+              mutable ghost cell_rep : M.t rgn;
               mutable maxSize : int;
               mutable ghost pool : rgn
               }
@@ -32,7 +31,7 @@ module State
       forall p : reference.
         ((M.mem p alloct) ->
            (((alloct[p]) = Cell) ->
-              (((M.mem p cell_rep) /\ (M.mem p cell_value)) /\
+              (((M.mem p cell_value) /\ (M.mem p cell_rep)) /\
                  (forall q : reference. ((Rgn.mem q (cell_rep[p])) -> ((q = null) \/ (M.mem q alloct))))))) }
     invariant {
       forall p : reference.
@@ -53,7 +52,10 @@ module State
       forall p : reference.
         ((M.mem p alloct) ->
            (((alloct[p]) = Node) ->
-              (((M.mem p car) /\ (M.mem p cdr)) /\ (((cdr[p]) = null) \/ ((M.mem (cdr[p]) alloct) /\ ((alloct[cdr[p]]) = Node)))))) }
+              (((M.mem p car) /\ (M.mem p cdr)) /\
+                 ((((car[p]) = null) \/ ((M.mem (car[p]) alloct) /\ ((alloct[car[p]]) = Cell)))
+                    /\
+                    (((cdr[p]) = null) \/ ((M.mem (cdr[p]) alloct) /\ ((alloct[cdr[p]]) = Node))))))) }
     invariant {
       forall p : reference.
         ((M.mem p alloct) ->
@@ -75,8 +77,8 @@ module State
     invariant { not (M.mem null cdr) }
     invariant { not (M.mem null slots) }
     invariant { not (M.mem null length) }
-    invariant { not (M.mem null cell_rep) }
     invariant { not (M.mem null cell_value) }
+    invariant { not (M.mem null cell_rep) }
     by
       { alloct = (().M.create) ;
         head = (().M.create) ;
@@ -89,8 +91,8 @@ module State
         cdr = (().M.create) ;
         slots = (().M.create) ;
         length = (().M.create) ;
-        cell_rep = (().M.create) ;
         cell_value = (().M.create) ;
+        cell_rep = (().M.create) ;
         maxSize = (any int) ;
         pool = emptyRgn }
   
@@ -115,7 +117,7 @@ module State
           (forall p : reference, q : reference. ((M.mem p pi.lor) -> (((pi.lor[p]) = q) -> ((sl.alloct[p]) = (sr.alloct[q])))))))
   
   val mk_Cell (s: state) : reference
-    writes { s.alloct, s.cell_rep, s.cell_value }
+    writes { s.alloct, s.cell_value, s.cell_rep }
     ensures { not (M.mem result (old s.alloct)) }
     
     ensures { (s.alloct = (M.add result Cell (old s.alloct))) }
@@ -126,9 +128,9 @@ module State
     
     ensures { hasCellType s result }
     
-    ensures { (s.cell_rep = (M.add result emptyRgn (old s.cell_rep))) }
-    
     ensures { (s.cell_value = (M.add result 0 (old s.cell_value))) }
+    
+    ensures { (s.cell_rep = (M.add result emptyRgn (old s.cell_rep))) }
   
   val mk_CellArray (s: state) : reference
     writes { s.alloct, s.slots, s.length }
@@ -158,7 +160,7 @@ module State
     
     ensures { hasNodeType s result }
     
-    ensures { (s.car = (M.add result 0 (old s.car))) }
+    ensures { (s.car = (M.add result null (old s.car))) }
     
     ensures { (s.cdr = (M.add result null (old s.cdr))) }
   
@@ -234,9 +236,10 @@ module State
     writes { s.arr }
     ensures { (s.arr = (M.add o v (old s.arr))) }
   
-  val set_car (s: state) (o: reference) (v: int) : unit
+  val set_car (s: state) (o: reference) (v: reference) : unit
     requires { (o <> null) }
     requires { hasNodeType s o }
+    requires { hasCellType s v }
     writes { s.car }
     ensures { (s.car = (M.add o v (old s.car))) }
   
@@ -259,18 +262,18 @@ module State
     writes { s.length }
     ensures { (s.length = (M.add o v (old s.length))) }
   
+  val set_cell_value (s: state) (o: reference) (v: int) : unit
+    requires { (o <> null) }
+    requires { hasCellType s o }
+    writes { s.cell_value }
+    ensures { (s.cell_value = (M.add o v (old s.cell_value))) }
+  
   val set_cell_rep (s: state) (o: reference) (ghost v: rgn) : unit
     requires { (o <> null) }
     requires { hasCellType s o }
     requires { isValidRgn s v }
     writes { s.cell_rep }
     ensures { (s.cell_rep = (M.add o v (old s.cell_rep))) }
-  
-  val set_cell_value (s: state) (o: reference) (v: int) : unit
-    requires { (o <> null) }
-    requires { hasCellType s o }
-    writes { s.cell_value }
-    ensures { (s.cell_value = (M.add o v (old s.cell_value))) }
   
   function img_top : state -> (rgn -> rgn)
   
@@ -334,7 +337,10 @@ module State
   
   function img_car : state -> (rgn -> rgn)
   
-  axiom img_car_ax: forall s : state, r : rgn. ((img_car s r) = emptyRgn)
+  axiom img_car_ax:
+    forall s : state, r : rgn, p : reference.
+      ((Rgn.mem p (img_car s r)) <->
+         (exists q : reference. ((M.mem q s.alloct) /\ (((s.alloct[q]) = Node) /\ ((Rgn.mem q r) /\ (p = (s.car[q])))))))
   
   function img_arr : state -> (rgn -> rgn)
   
@@ -346,13 +352,13 @@ module State
   predicate alloc_does_not_shrink (pre: state) (post: state) =
     forall p : reference. ((M.mem p pre.alloct) -> ((M.mem p post.alloct) /\ ((pre.alloct[p]) = (post.alloct[p]))))
   
-  predicate wr_frame_cell_rep (pre: state) (post: state) (r: rgn) =
-    forall p : reference.
-      ((M.mem p pre.alloct) -> (((post.alloct[p]) = Cell) -> ((not (Rgn.mem p r)) -> ((pre.cell_rep[p]) = (post.cell_rep[p])))))
-  
   predicate wr_frame_cell_value (pre: state) (post: state) (r: rgn) =
     forall p : reference.
       ((M.mem p pre.alloct) -> (((post.alloct[p]) = Cell) -> ((not (Rgn.mem p r)) -> ((pre.cell_value[p]) = (post.cell_value[p])))))
+  
+  predicate wr_frame_cell_rep (pre: state) (post: state) (r: rgn) =
+    forall p : reference.
+      ((M.mem p pre.alloct) -> (((post.alloct[p]) = Cell) -> ((not (Rgn.mem p r)) -> ((pre.cell_rep[p]) = (post.cell_rep[p])))))
   
   predicate wr_frame_slots (pre: state) (post: state) (r: rgn) =
     forall p : reference.
@@ -473,7 +479,8 @@ module State
        (forall o : reference.
           ((isAllocated sl o) ->
              ((hasNodeType sl o) ->
-                ((Rgn.mem o w) -> ((M.mem o pi.lor) /\ ([@expl:sl(o) ~ sr(pi(o))] ((sl.car[o]) = (sr.car[pi.lor[o]])))))))))
+                ((Rgn.mem o w) ->
+                   ((M.mem o pi.lor) /\ ([@expl:sl(o) ~ sr(pi(o))] (PreRefperm.idRef pi (sl.car[o]) (sr.car[pi.lor[o]])))))))))
   
   predicate agree_arr (sl: state) (sr: state) (pi: PreRefperm.t) (w: rgn) =
     ((okRefperm sl sr pi) /\
@@ -484,9 +491,9 @@ module State
                    ((M.mem o pi.lor) /\ ([@expl:sl(o) ~ sr(pi(o))] (PreRefperm.idRef pi (sl.arr[o]) (sr.arr[pi.lor[o]])))))))))
   
   predicate agree_allfields (sl: state) (sr: state) (pi: PreRefperm.t) (w: rgn) =
-    (agree_cell_rep sl sr pi w)
+    (agree_cell_value sl sr pi w)
       /\
-      (agree_cell_value sl sr pi w)
+      (agree_cell_rep sl sr pi w)
       /\
       (agree_slots sl sr pi w)
       /\
@@ -509,43 +516,63 @@ module State
       (agree_arr sl sr pi w)
 end
 
+module CELL
+  use prelude.Prelude
+  use State
+  
+  val init_Cell (s: state) (self: reference) (k: int) : unit
+    requires { hasCellType s self }
+    requires { (self <> null) }
+    writes { s.cell_value, s.cell_rep }
+    ensures { (result = ()) }
+    
+    ensures { [@expl:wr {self}`cell_value] (wr_frame_cell_value (old s) s (self.singleton)) }
+    
+    ensures { [@expl:wr {self}`cell_rep] (wr_frame_cell_rep (old s) s (self.singleton)) }
+    
+    ensures { (s.cell_value[self]) = k }
+    
+    ensures { (s.cell_rep[self]) = (self.singleton) }
+end
+
 module STACK
   use prelude.Prelude
   use State
+  use CELL
   use export stack_theory.Stack_theory
   
   predicate stackPub (s: state) =
     (s.maxSize > 0)
       /\
-      (typeofRgn s s.pool (L.Cons Stack L.Nil))
+      (typeofRgn s s.pool (L.Cons Stack (L.Cons Cell L.Nil)))
       /\
-      (forall st1 : reference.
-         (isAllocated s st1)
+      (forall s1 : reference.
+         (isAllocated s s1)
            ->
-           (hasStackType s st1)
+           (hasStackType s s1)
            ->
-           (Rgn.mem st1 s.pool)
+           (Rgn.mem s1 s.pool)
            ->
-           (let sz = s.size[st1] in
-            let xs = s.contents[st1] in
+           (let sz = s.size[s1] in
+            let xs = s.contents[s1] in
             (sz = (xs.listLength)) /\ (0 <= sz) /\ (sz <= s.maxSize)))
       /\
-      (forall st1 : reference, st2 : reference.
-         (isAllocated s st1)
+      (forall s2 : reference, t : reference.
+         (isAllocated s s2)
            ->
-           (hasStackType s st1)
+           (hasStackType s s2)
            ->
-           (Rgn.mem st1 s.pool)
+           (Rgn.mem s2 s.pool)
            ->
-           (isAllocated s st2)
+           (isAllocated s t)
            ->
-           (hasStackType s st2)
+           (hasStackType s t)
            ->
-           (Rgn.mem st2 s.pool)
+           (Rgn.mem t s.pool)
            ->
-           (let srep = s.rep[st1] in
-            let trep = s.rep[st2] in
-            (st1 <> st2) -> (srep \# trep)))
+           (let srep = s.rep[s2] in
+            let trep = s.rep[t] in
+            (s2 <> t) -> (srep \# trep)))
   
   val init_Stack (s: state) (self: reference) : unit
     requires { hasStackType s self }
@@ -607,7 +634,7 @@ module STACK
                <
                s.maxSize }
     requires { s.stackPub }
-    writes { s.contents, s.slots, s.head, s.cdr, s.arr, s.rep, s.cell_rep, s.top, s.size, s.length, s.cell_value, s.car, s.alloct }
+    writes { s.contents, s.slots, s.head, s.cdr, s.arr, s.car, s.rep, s.cell_rep, s.top, s.size, s.length, s.cell_value, s.alloct }
     ensures { (result = ()) }
     
     ensures { alloc_does_not_shrink (old s) s }
@@ -622,6 +649,8 @@ module STACK
     
     ensures { [@expl:wr ({self} union {self}`rep)`arr] (wr_frame_arr (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
     
+    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old s) s (s.rep[self])) }
+    
     ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
     
     ensures { [@expl:wr {self}`rep`cell_rep] (wr_frame_cell_rep (old s) s (s.rep[self])) }
@@ -633,8 +662,6 @@ module STACK
     ensures { [@expl:wr {self}`rep`length] (wr_frame_length (old s) s (s.rep[self])) }
     
     ensures { [@expl:wr {self}`rep`cell_value] (wr_frame_cell_value (old s) s (s.rep[self])) }
-    
-    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old s) s (s.rep[self])) }
     
     ensures { let bsnap_r37 = old (Rgn.union s.pool (img_rep s s.pool)) in
               Rgn.subset bsnap_r37 (Rgn.union s.pool (img_rep s s.pool)) }
@@ -660,7 +687,7 @@ module STACK
     
     ensures { s.stackPub }
   
-  val pop (s: state) (self: reference) : int
+  val pop (s: state) (self: reference) : reference
     requires { hasStackType s self }
     requires { (self <> null) }
     requires { Rgn.mem self s.pool }
@@ -669,7 +696,11 @@ module STACK
                >
                0 }
     requires { s.stackPub }
-    writes { s.contents, s.slots, s.head, s.cdr, s.arr, s.rep, s.cell_rep, s.top, s.size, s.length, s.cell_value, s.car }
+    writes { s.contents, s.slots, s.head, s.cdr, s.arr, s.car, s.rep, s.cell_rep, s.top, s.size, s.length, s.cell_value }
+    ensures { (result <> null) }
+    
+    ensures { hasCellType s result }
+    
     ensures { [@expl:wr ({self} union {self}`rep)`contents] (wr_frame_contents (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
     
     ensures { [@expl:wr {self}`rep`slots] (wr_frame_slots (old s) s (s.rep[self])) }
@@ -680,9 +711,12 @@ module STACK
     
     ensures { [@expl:wr ({self} union {self}`rep)`arr] (wr_frame_arr (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
     
+    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old s) s (s.rep[self])) }
+    
     ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
     
-    ensures { [@expl:wr {self}`rep`cell_rep] (wr_frame_cell_rep (old s) s (s.rep[self])) }
+    ensures { [@expl:wr ({self}`rep union {result})`cell_rep]
+              (wr_frame_cell_rep (old s) s (Rgn.union (s.rep[self]) (result.singleton))) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`top] (wr_frame_top (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
     
@@ -690,9 +724,8 @@ module STACK
     
     ensures { [@expl:wr {self}`rep`length] (wr_frame_length (old s) s (s.rep[self])) }
     
-    ensures { [@expl:wr {self}`rep`cell_value] (wr_frame_cell_value (old s) s (s.rep[self])) }
-    
-    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old s) s (s.rep[self])) }
+    ensures { [@expl:wr ({self}`rep union {result})`cell_value]
+              (wr_frame_cell_value (old s) s (Rgn.union (s.rep[self]) (result.singleton))) }
     
     ensures { let bsnap_r37 = old (Rgn.union s.pool (img_rep s s.pool)) in
               Rgn.subset bsnap_r37 (Rgn.union s.pool (img_rep s s.pool)) }
@@ -705,20 +738,23 @@ module STACK
               1 }
     
     ensures { let oxs = old (s.contents[self]) in
-              let m = oxs.hd in
-              result
+              let t = oxs.hd in
+              (s.cell_value[result])
               =
-              m }
+              t }
     
     ensures { let ostk = old (s.contents[self]) in
               (s.contents[self])
               =
               (ostk.tl) }
     
-    ensures { let rep1 = old (s.rep[self]) in
+    ensures { let rep1 = s.rep[self] in
+              Rgn.mem result rep1 }
+    
+    ensures { let rep2 = old (s.rep[self]) in
               (s.rep[self])
               =
-              rep1 }
+              rep2 }
     
     ensures { s.stackPub }
   
@@ -730,98 +766,62 @@ module STACK
     ensures { result = s.maxSize }
     
     ensures { s.stackPub }
-end
-
-module CELL
-  use prelude.Prelude
-  use State
   
-  val init_Cell (s: state) (self: reference) (k: int) : unit
-    requires { hasCellType s self }
-    requires { (self <> null) }
-    writes { s.cell_rep, s.cell_value }
-    ensures { (result = ()) }
+  val getCellValue (s: state) (c: reference) : int
+    requires { hasCellType s c }
+    requires { (c <> null) }
+    requires { s.stackPub }
+    ensures { let bsnap_r37 = old (Rgn.union s.pool (img_rep s s.pool)) in
+              Rgn.subset bsnap_r37 (Rgn.union s.pool (img_rep s s.pool)) }
     
-    ensures { [@expl:wr {self}`cell_rep] (wr_frame_cell_rep (old s) s (self.singleton)) }
+    ensures { (s.cell_value[c]) = result }
     
-    ensures { [@expl:wr {self}`cell_value] (wr_frame_cell_value (old s) s (self.singleton)) }
-    
-    ensures { (s.cell_value[self]) = k }
-    
-    ensures { (s.cell_rep[self]) = (self.singleton) }
-end
-
-module Cell
-  use prelude.Prelude
-  use State
-  use CELL
-  
-  let init_Cell (s : state) (self : reference) (k : int) : unit
-    requires { hasCellType s self }
-    requires { (self <> null) }
-    writes { s.cell_rep, s.cell_value }
-    ensures { (result = ()) }
-    
-    ensures { [@expl:wr {self}`cell_value] (wr_frame_cell_value (old s) s (self.singleton)) }
-    
-    ensures { [@expl:wr {self}`cell_rep] (wr_frame_cell_rep (old s) s (self.singleton)) }
-    
-    ensures { (s.cell_value[self]) = k }
-    
-    ensures { (s.cell_rep[self]) = (self.singleton) }
-  = label INIT in
-      let result = ref () in
-      let self = ref self in
-      let k = ref k in
-      ([@expl:self.cell_value := k] (set_cell_value s (! self) (! k)));
-      ([@expl:self.cell_rep := {self}] (set_cell_rep s (! self) ((! self).singleton)));
-      (! result)
+    ensures { s.stackPub }
 end
 
 module ArrayStack
   use prelude.Prelude
   use State
   use STACK
-  use Cell
   
   predicate arrayStackPriv (s: state) =
-    (s.STACK.stackPub)
+    (forall s1 : reference.
+       (isAllocated s s1)
+         ->
+         (hasStackType s s1)
+         ->
+         (Rgn.mem s1 s.pool)
+         ->
+         (let arr2 = s.arr[s1] in
+          let stk = s.contents[s1] in
+          let siz = s.size[s1] in
+          let top3 = s.top[s1] in
+          let rep4 = s.rep[s1] in
+          (typeofRgn s rep4 (L.Cons CellArray (L.Cons Cell L.Nil)))
+            /\
+            (arr2 <> null)
+            /\
+            ((s.length[arr2]) = s.maxSize)
+            /\
+            (Rgn.mem arr2 rep4)
+            /\
+            (forall i : int. ((0 <= i) /\ (i <= top3)) -> (let c = A.get (s.slots[arr2]) i in
+                                                           (c <> null) /\ (Rgn.mem c rep4)))
+            /\
+            (siz = (stk.STACK.listLength))
+            /\
+            (siz = top3 + 1)
+            /\
+            (forall i : int.
+               ((0 <= i) /\ (i <= top3))
+                 ->
+                 (let c = A.get (s.slots[arr2]) i in
+                  let v = s.cell_value[c] in
+                  v
+                  =
+                  (STACK.listNth (top3 - i) stk)))))
       /\
-      (forall st : reference.
-         (isAllocated s st)
-           ->
-           (hasStackType s st)
-           ->
-           (Rgn.mem st s.pool)
-           ->
-           (let arr1 = s.arr[st] in
-            let stk = s.contents[st] in
-            let siz = s.size[st] in
-            let top2 = s.top[st] in
-            let rep3 = s.rep[st] in
-            (typeofRgn s rep3 (L.Cons CellArray (L.Cons Cell L.Nil)))
-              /\
-              (arr1 <> null)
-              /\
-              ((s.length[arr1]) = s.maxSize)
-              /\
-              (Rgn.mem arr1 rep3)
-              /\
-              (forall i : int. ((0 <= i) /\ (i <= top2)) -> (let c = A.get (s.slots[arr1]) i in
-                                                             (c <> null) /\ (Rgn.mem c rep3)))
-              /\
-              (siz = (stk.STACK.listLength))
-              /\
-              (siz = top2 + 1)
-              /\
-              (forall i : int.
-                 ((0 <= i) /\ (i <= top2))
-                   ->
-                   (let c = A.get (s.slots[arr1]) i in
-                    let v = s.cell_value[c] in
-                    v
-                    =
-                    (STACK.listNth (top2 - i) stk)))))
+      (s.STACK.stackPub)
   
   let init_Stack (s : state) (self : reference) : unit
     requires { hasStackType s self }
@@ -974,7 +974,7 @@ module ArrayStack
       let k = ref k in
       let a = ref null in
       assert { hasCellArrayType s (! a) };
-      (let m = ref 0 in
+      (let t = ref 0 in
        let v = ref null in
        assert { hasCellType s (! v) };
        (let sz = ref 0 in
@@ -994,18 +994,12 @@ module ArrayStack
              (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
              \/
              ((! self) = null) };
-         (m := ([@expl:m := self.top] (s.top[! self])));
-         ([@expl:self.top := m + 1] (set_top s (! self) ((! m) + 1)));
+         (t := ([@expl:t := self.top] (s.top[! self])));
+         ([@expl:self.top := t + 1] (set_top s (! self) ((! t) + 1)));
          (v := ([@expl:v := new Cell] (s.mk_Cell)));
-         assert { not (Rgn.mem (! v) (Rgn.union s.pool (img_rep s s.pool))) };
-         assert {
-           (Rgn.mem (! v) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
-             \/
-             (not (Rgn.mem (! v) (s.alloct.M.domain at INIT)))
-             \/
-             ((! v) = null) };
-         ([@expl:Cell(v,k)] (Cell.init_Cell s (! v) (! k)));
-         (set_slots s (! a) ([@expl:a.{m + 1} := v] (A.set (s.slots[! a]) ((! m) + 1) (! v))));
+         ([@expl:v.cell_value := k] (set_cell_value s (! v) (! k)));
+         ([@expl:v.cell_rep := {v}] (set_cell_rep s (! v) ((! v).singleton)));
+         (set_slots s (! a) ([@expl:a.{t + 1} := v] (A.set (s.slots[! a]) ((! t) + 1) (! v))));
          ([@expl:self.arr := a] (set_arr s (! self) (! a)));
          assert {
            (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
@@ -1044,7 +1038,7 @@ module ArrayStack
                 (STACK.listNth (top3 - i) stk)) };
          (! result))))
   
-  let pop (s : state) (self : reference) : int
+  let pop (s : state) (self : reference) : reference
     requires { hasStackType s self }
     requires { (self <> null) }
     requires { Rgn.mem self s.pool }
@@ -1055,6 +1049,10 @@ module ArrayStack
     requires { s.STACK.stackPub }
     requires { s.arrayStackPriv }
     writes { s.contents, s.size, s.top }
+    ensures { (result <> null) }
+    
+    ensures { hasCellType s result }
+    
     ensures { [@expl:wr ({self} union {self}`rep)`size] (wr_frame_size (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`top] (wr_frame_top (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
@@ -1072,58 +1070,59 @@ module ArrayStack
               1 }
     
     ensures { let oxs = old (s.contents[self]) in
-              let m = oxs.STACK.hd in
-              result
+              let t = oxs.STACK.hd in
+              (s.cell_value[result])
               =
-              m }
+              t }
     
     ensures { let ostk = old (s.contents[self]) in
               (s.contents[self])
               =
               (ostk.STACK.tl) }
     
-    ensures { let rep1 = old (s.rep[self]) in
+    ensures { let rep1 = s.rep[self] in
+              Rgn.mem result rep1 }
+    
+    ensures { let rep2 = old (s.rep[self]) in
               (s.rep[self])
               =
-              rep1 }
+              rep2 }
     
     ensures { s.STACK.stackPub }
     
     ensures { s.arrayStackPriv }
   = label INIT in
-      let result = ref 0 in
+      let result = ref null in
       let self = ref self in
       let a = ref null in
       assert { hasCellArrayType s (! a) };
-      (let m = ref 0 in
+      (let t = ref 0 in
        let sz = ref 0 in
-       let ghost contents2 = ref (any intList) in
-       let pop_car = ref null in
-       assert { hasCellType s (! pop_car) };
+       let ghost contents3 = ref (any intList) in
        assert {
-         (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+         (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (Rgn.union (s.rep[! self]) ((! result).singleton))) at INIT))
            \/
            (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
            \/
            ((! self) = null) };
        (a := ([@expl:a := self.arr] (s.arr[! self])));
        assert {
-         (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+         (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (Rgn.union (s.rep[! self]) ((! result).singleton))) at INIT))
            \/
            (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
            \/
            ((! self) = null) };
-       (m := ([@expl:m := self.top] (s.top[! self])));
+       (t := ([@expl:t := self.top] (s.top[! self])));
        assert {
-         (Rgn.mem (! a) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+         (Rgn.mem (! a) ((Rgn.union ((! self).singleton) (Rgn.union (s.rep[! self]) ((! result).singleton))) at INIT))
            \/
            (not (Rgn.mem (! a) (s.alloct.M.domain at INIT)))
            \/
            ((! a) = null) };
-       (pop_car := ([@expl:pop_car := a.{m}] (A.get (s.slots[! a]) (! m))));
-       ([@expl:self.top := m - 1] (set_top s (! self) ((! m) - 1)));
+       (result := ([@expl:result := a.{t}] (A.get (s.slots[! a]) (! t))));
+       ([@expl:self.top := t - 1] (set_top s (! self) ((! t) - 1)));
        assert {
-         (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+         (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (Rgn.union (s.rep[! self]) ((! result).singleton))) at INIT))
            \/
            (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
            \/
@@ -1131,20 +1130,13 @@ module ArrayStack
        (sz := ([@expl:sz := self.size] (s.size[! self])));
        ([@expl:self.size := sz - 1] (set_size s (! self) ((! sz) - 1)));
        assert {
-         (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+         (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (Rgn.union (s.rep[! self]) ((! result).singleton))) at INIT))
            \/
            (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
            \/
            ((! self) = null) };
-       (contents2 := ([@expl:contents := self.contents] (s.contents[! self])));
-       ([@expl:self.contents := tl(contents)] (set_contents s (! self) ((! contents2).STACK.tl)));
-       assert {
-         (Rgn.mem (! pop_car) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
-           \/
-           (not (Rgn.mem (! pop_car) (s.alloct.M.domain at INIT)))
-           \/
-           ((! pop_car) = null) };
-       (result := ([@expl:result := pop_car.cell_value] (s.cell_value[! pop_car])));
+       (contents3 := ([@expl:contents := self.contents] (s.contents[! self])));
+       ([@expl:self.contents := tl(contents)] (set_contents s (! self) ((! contents3).STACK.tl)));
        (! result))
   
   let getMaxSize (s : state) : int
@@ -1159,6 +1151,26 @@ module ArrayStack
     
     ensures { s.arrayStackPriv }
   = label INIT in let result = ref 0 in (result := ([@expl:result := maxSize] s.maxSize)); (! result)
+  
+  let getCellValue (s : state) (c : reference) : int
+    requires { hasCellType s c }
+    requires { (c <> null) }
+    requires { s.STACK.stackPub }
+    requires { s.arrayStackPriv }
+    ensures { let bsnap_r1 = old (Rgn.union s.pool (img_rep s s.pool)) in
+              Rgn.subset bsnap_r1 (Rgn.union s.pool (img_rep s s.pool)) }
+    
+    ensures { (s.cell_value[c]) = result }
+    
+    ensures { s.STACK.stackPub }
+    
+    ensures { s.arrayStackPriv }
+  = label INIT in
+      let result = ref 0 in
+      let c = ref c in
+      assert { (Rgn.mem (! c) (((! c).singleton) at INIT)) \/ (not (Rgn.mem (! c) (s.alloct.M.domain at INIT))) \/ ((! c) = null) };
+      (result := ([@expl:result := c.cell_value] (s.cell_value[! c])));
+      (! result)
   
   lemma boundary_frames_invariant_ArrayStack:
     forall s : state, t : state, pi : PreRefperm.t.
@@ -1220,6 +1232,8 @@ module Client1
       let stk = ref null in
       assert { hasStackType s (! stk) };
       (let i = ref 0 in
+       let c1 = ref null in
+       assert { hasCellType s (! c1) };
        (stk := ([@expl:stk := new Stack] (s.mk_Stack)));
        assert {
          (Rgn.mem (! stk) ((Rgn.union s.pool (img_rep s s.pool)) at INIT))
@@ -1230,7 +1244,7 @@ module Client1
        ([@expl:Stack(stk)] (ArrayStack.init_Stack s (! stk)));
        assert { Rgn.mem (! stk) s.pool };
        while ((! i) < (! n)) do
-         invariant { [@expl:locals type invariant] (hasStackType s (! stk)) }
+         invariant { [@expl:locals type invariant] ((hasCellType s (! c1)) /\ (hasStackType s (! stk))) }
          invariant { alloc_does_not_shrink (old s) s }
          invariant {
            [@expl:wr ({stk} union {stk}`rep)`contents] (wr_frame_contents (old s) s (Rgn.union ((! stk).singleton) (s.rep[! stk]))) }
@@ -1247,7 +1261,7 @@ module Client1
                      sz
                      =
                      (! i) }
-         invariant { s.ArrayStack.arrayStackPriv }
+         invariant { (s.ArrayStack.STACK.stackPub) /\ (s.ArrayStack.arrayStackPriv) }
          invariant {
            let oa = old s.alloct.M.domain in
            Rgn.subset (Rgn.diff (Rgn.union ((! stk).singleton) (s.rep[! stk])) (null.singleton)) (Rgn.diff s.alloct.M.domain oa) }
@@ -1260,7 +1274,7 @@ module Client1
        done;
        (i := ([@expl:i := 0] 0));
        while ((! i) < (! n)) do
-         invariant { [@expl:locals type invariant] (hasStackType s (! stk)) }
+         invariant { [@expl:locals type invariant] ((hasCellType s (! c1)) /\ (hasStackType s (! stk))) }
          invariant { alloc_does_not_shrink (old s) s }
          invariant {
            [@expl:wr ({stk} union {stk}`rep)`contents] (wr_frame_contents (old s) s (Rgn.union ((! stk).singleton) (s.rep[! stk]))) }
@@ -1274,18 +1288,27 @@ module Client1
                      (! n)
                      -
                      (! i) }
-         invariant { s.ArrayStack.arrayStackPriv }
+         invariant { (s.ArrayStack.STACK.stackPub) /\ (s.ArrayStack.arrayStackPriv) }
+         invariant { ((! c1) = null) \/ (let rep2 = s.rep[! stk] in
+                                         Rgn.mem (! c1) rep2) }
          invariant {
            let oa = s.alloct.M.domain at INIT in
            Rgn.subset (Rgn.diff (Rgn.union ((! stk).singleton) (s.rep[! stk])) (null.singleton)) (Rgn.diff s.alloct.M.domain oa) }
-         let v = ref 0 in
          assert {
            Rgn.subset
-              (Rgn.diff (Rgn.union ((! stk).singleton) (s.rep[! stk])) (null.singleton))
+              (Rgn.diff (Rgn.union ((! stk).singleton) (Rgn.union (s.rep[! stk]) ((! c1).singleton))) (null.singleton))
               (Rgn.union ((Rgn.union s.pool (img_rep s s.pool)) at INIT) (Rgn.diff s.alloct.M.domain (s.alloct.M.domain at INIT))) };
-         (v := ([@expl:v := pop(stk)] (ArrayStack.pop s (! stk))));
-         (result := ([@expl:result := result + v] ((! result) + (! v))));
-         (i := ([@expl:i := i + 1] ((! i) + 1)))
+         (c1 := ([@expl:c := pop(stk)] (ArrayStack.pop s (! stk))));
+         (let v = ref 0 in
+          assert {
+            (Rgn.mem (! c1) ((Rgn.union s.pool (img_rep s s.pool)) at INIT))
+              \/
+              (not (Rgn.mem (! c1) (s.alloct.M.domain at INIT)))
+              \/
+              ((! c1) = null) };
+          (v := ([@expl:v := getCellValue(c)] (ArrayStack.getCellValue s (! c1))));
+          (result := ([@expl:result := result + v] ((! result) + (! v))));
+          (i := ([@expl:i := i + 1] ((! i) + 1))))
        done;
        (! result))
 end
@@ -1294,82 +1317,32 @@ module ListStack
   use prelude.Prelude
   use State
   use STACK
-  use export stack_theory.Stack_theory
   
-
-
-  inductive stackRep (s: state) (l: list int) (m: reference) =
-  | nil_stack : 
-      forall s1: state.
-      stackRep s1 Nil null
-  | cons_stack : 
-      forall s1: state, nxt: reference, head:reference,  x: int, xs: list int.
-       stackRep s1 xs nxt -> 
-      isAllocated s1 head ->
-      hasNodeType s1 head ->
-      s1.cdr[head] = nxt ->
-      s1.car[head] = x ->
-    stackRep s1 (Cons x xs) head
+  predicate stackRep (s: state) (xs: intList) (n: reference) = (hasNodeType s n) -> true
   
-
-  lemma stackRep_mono :
-    forall s old_s: state, l: list int, p: reference.
-    (* Precondition: The stack is valid in the old state *)
-    stackRep old_s l p ->
-    
-    (* 1. Allocation Monotonicity: Old objects remain allocated *)
-    (forall x: reference. isAllocated old_s x -> isAllocated s x) ->
-    
-    (* 2. Type Preservation: Old objects retain their types *)
-    (forall x: reference. isAllocated old_s x -> hasNodeType old_s x -> hasNodeType s x) ->
-    
-    (* 3. Structural Preservation: car/cdr fields match for old Nodes *)
-    (forall x: reference. isAllocated old_s x -> hasNodeType old_s x ->
-      (old_s.car)[x] = (s.car)[x] /\ (old_s.cdr)[x] = (s.cdr)[x]) ->
-
-    (* Conclusion: The stack is valid in the new state *)
-    stackRep s l p
-
-    let rec lemma stackRep_agree (s1 s2: state) (l: list int) (p: reference) (r:  rgn)
-    requires { stackRep s1 l p }
-    requires { p = null \/ Rgn.mem p r }
-    requires { forall x. Rgn.mem x r -> isAllocated s1 x -> hasNodeType s1 x -> Rgn.mem (s1.cdr)[x] r }
-    requires { forall x. Rgn.mem x r -> 
-                (x = null \/ 
-                   (isAllocated s2 x /\ 
-                    (hasNodeType s1 x -> hasNodeType s2 x) /\ 
-                    (hasNodeType s1 x -> (s1.car)[x] = (s2.car)[x] /\ (s1.cdr)[x] = (s2.cdr)[x]))) } 
-    ensures  { stackRep s2 l p }
-    variant  { l }
-    = match l with
-    | Nil -> () 
-    | Cons _ tail ->
-        let nxt = (s1.cdr)[p] in
-        stackRep_agree s1 s2 tail nxt r
-    end
-
   predicate listStackPriv (s: state) =
     (s.STACK.stackPub)
       /\
-      (forall st : reference.
-         (isAllocated s st)
+      (forall s1 : reference.
+         (isAllocated s s1)
            ->
-           (hasStackType s st)
+           (hasStackType s s1)
            ->
-           (Rgn.mem st s.pool)
+           (Rgn.mem s1 s.pool)
            ->
-           (let rep1 = s.rep[st] in
-            let head2 = s.head[st] in
-            let stk = s.contents[st] in
-            (Rgn.mem null rep1)
+           (let rep2 = s.rep[s1] in
+            let head3 = s.head[s1] in
+            let stk = s.contents[s1] in
+            (Rgn.mem null rep2)
               /\
-              (Rgn.mem head2 rep1)
+              (Rgn.mem head3 rep2)
               /\
-              (Rgn.subset (img_cdr s rep1) rep1)
+              (Rgn.subset (img_cdr s rep2) rep2)
               /\
-              (typeofRgn s rep1 (L.Cons Node L.Nil))
+              (forall n : reference. (isAllocated s n) -> (hasNodeType s n) -> (Rgn.mem n rep2) -> (let c = s.car[n] in
+                                                                    Rgn.mem c rep2))
               /\
-              (stackRep s stk head2)))
+              (stackRep s stk head3)))
   
   let init_Stack (s : state) (self : reference) : unit
     requires { hasStackType s self }
@@ -1450,7 +1423,7 @@ module ListStack
                s.maxSize }
     requires { s.STACK.stackPub }
     requires { s.listStackPriv }
-    writes { s.alloct, s.car, s.cdr, s.contents, s.head, s.rep, s.size }
+    writes { s.alloct, s.car, s.cdr, s.cell_rep, s.cell_value, s.contents, s.head, s.rep, s.size }
     ensures { (result = ()) }
     
     ensures { alloc_does_not_shrink (old s) s }
@@ -1461,11 +1434,15 @@ module ListStack
     
     ensures { [@expl:wr {self}`rep`cdr] (wr_frame_cdr (old s) s (s.rep[self])) }
     
+    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old s) s (s.rep[self])) }
+    
     ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
+    
+    ensures { [@expl:wr {self}`rep`cell_rep] (wr_frame_cell_rep (old s) s (s.rep[self])) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`size] (wr_frame_size (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
     
-    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old s) s (s.rep[self])) }
+    ensures { [@expl:wr {self}`rep`cell_value] (wr_frame_cell_value (old s) s (s.rep[self])) }
     
     ensures { let bsnap_r13 = old (Rgn.union s.pool (img_rep s s.pool)) in
               Rgn.subset bsnap_r13 (Rgn.union s.pool (img_rep s s.pool)) }
@@ -1496,54 +1473,89 @@ module ListStack
       let result = ref () in
       let self = ref self in
       let k = ref k in
-      let n = ref null in
-      assert { hasNodeType s (! n) };
-      (let tmp = ref null in
-       assert { hasNodeType s (! tmp) };
-       (let sz = ref 0 in
-        let ghost rep1 = ref emptyRgn in
-        assert { isValidRgn s (! rep1) };
-        (let ghost contents2 = ref (any intList) in
-         (n := ([@expl:n := new Node] (s.mk_Node)));
-         ([@expl:n.car := k] (set_car s (! n) (! k)));
-         assert {
-           (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
-             \/
-             (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
-             \/
-             ((! self) = null) };
-         (tmp := ([@expl:tmp := self.head] (s.head[! self])));
-         assert { let rep3 = s.rep[! self] in
-                  Rgn.mem (! tmp) rep3 };
-         ([@expl:n.cdr := tmp] (set_cdr s (! n) (! tmp)));
-         ([@expl:self.head := n] (set_head s (! self) (! n)));
-         assert {
-           (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
-             \/
-             (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
-             \/
-             ((! self) = null) };
-         (sz := ([@expl:sz := self.size] (s.size[! self])));
-         ([@expl:self.size := sz + 1] (set_size s (! self) ((! sz) + 1)));
-         assert {
-           (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
-             \/
-             (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
-             \/
-             ((! self) = null) };
-         (rep1 := ([@expl:rep := self.rep] (s.rep[! self])));
-         ([@expl:self.rep := rep union {n}] (set_rep s (! self) (Rgn.union (! rep1) ((! n).singleton))));
-         assert {
-           (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
-             \/
-             (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
-             \/
-             ((! self) = null) };
-         (contents2 := ([@expl:contents := self.contents] (s.contents[! self])));
-         ([@expl:self.contents := cons(k,contents)] (set_contents s (! self) (STACK.cons (! k) (! contents2))));
-         (! result))))
+      let v = ref null in
+      assert { hasCellType s (! v) };
+      (let n = ref null in
+       assert { hasNodeType s (! n) };
+       (let tmp = ref null in
+        assert { hasNodeType s (! tmp) };
+        (let sz = ref 0 in
+         let ghost rep1 = ref emptyRgn in
+         assert { isValidRgn s (! rep1) };
+         (let ghost contents2 = ref (any intList) in
+          (v := ([@expl:v := new Cell] (s.mk_Cell)));
+          assert { not (Rgn.mem (! v) (Rgn.union s.pool (img_rep s s.pool))) };
+          assert {
+            (Rgn.mem (! v) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+              \/
+              (not (Rgn.mem (! v) (s.alloct.M.domain at INIT)))
+              \/
+              ((! v) = null) };
+          ([@expl:Cell(v,k)] (STACK.CELL.init_Cell s (! v) (! k)));
+          (n := ([@expl:n := new Node] (s.mk_Node)));
+          ([@expl:n.car := v] (set_car s (! n) (! v)));
+          assert {
+            (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+              \/
+              (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
+              \/
+              ((! self) = null) };
+          (tmp := ([@expl:tmp := self.head] (s.head[! self])));
+          assert { let rep3 = s.rep[! self] in
+                   Rgn.mem (! tmp) rep3 };
+          ([@expl:n.cdr := tmp] (set_cdr s (! n) (! tmp)));
+          assert {
+            let rep4 = s.rep[! self] in
+            forall n5 : reference.
+              (isAllocated s n5) -> (hasNodeType s n5) -> (Rgn.mem n5 rep4) -> (let c = s.car[n5] in
+                                                                    Rgn.mem c rep4) };
+          ([@expl:self.head := n] (set_head s (! self) (! n)));
+          assert {
+            (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+              \/
+              (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
+              \/
+              ((! self) = null) };
+          (sz := ([@expl:sz := self.size] (s.size[! self])));
+          ([@expl:self.size := sz + 1] (set_size s (! self) ((! sz) + 1)));
+          assert {
+            (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+              \/
+              (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
+              \/
+              ((! self) = null) };
+          (rep1 := ([@expl:rep := self.rep] (s.rep[! self])));
+          ([@expl:self.rep := rep union {v} union {n}]
+           (set_rep s (! self) (Rgn.union (Rgn.union (! rep1) ((! v).singleton)) ((! n).singleton))));
+          assert { let h = s.head[! self] in
+                   let n6 = s.cdr[h] in
+                   let rep7 = s.rep[! self] in
+                   Rgn.mem n6 rep7 };
+          assert { let rep8 = s.rep[! self] in
+                   Rgn.subset (img_cdr s rep8) rep8 };
+          assert { let h = s.head[! self] in
+                   let c = s.cdr[h] in
+                   let rep9 = s.rep[! self] in
+                   Rgn.mem c rep9 };
+          assert {
+            let rep10 = s.rep[! self] in
+            forall n11 : reference.
+              (isAllocated s n11) -> (hasNodeType s n11) -> (Rgn.mem n11 rep10) -> (let c = s.car[n11] in
+                                                                    Rgn.mem c rep10) };
+          assert {
+            (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+              \/
+              (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
+              \/
+              ((! self) = null) };
+          (contents2 := ([@expl:contents := self.contents] (s.contents[! self])));
+          ([@expl:self.contents := cons(k,contents)] (set_contents s (! self) (STACK.cons (! k) (! contents2))));
+          assert { let h = s.head[! self] in
+                   let stk = s.contents[! self] in
+                   stackRep s stk h };
+          (! result)))))
   
-  let pop (s : state) (self : reference) : int
+  let pop (s : state) (self : reference) : reference
     requires { hasStackType s self }
     requires { (self <> null) }
     requires { Rgn.mem self s.pool }
@@ -1554,6 +1566,10 @@ module ListStack
     requires { s.STACK.stackPub }
     requires { s.listStackPriv }
     writes { s.contents, s.head, s.size }
+    ensures { (result <> null) }
+    
+    ensures { hasCellType s result }
+    
     ensures { [@expl:wr ({self} union {self}`rep)`size] (wr_frame_size (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`head] (wr_frame_head (old s) s (Rgn.union (self.singleton) (s.rep[self]))) }
@@ -1571,37 +1587,40 @@ module ListStack
               1 }
     
     ensures { let oxs = old (s.contents[self]) in
-              let m = oxs.STACK.hd in
-              result
+              let t = oxs.STACK.hd in
+              (s.cell_value[result])
               =
-              m }
+              t }
     
     ensures { let ostk = old (s.contents[self]) in
               (s.contents[self])
               =
               (ostk.STACK.tl) }
     
-    ensures { let rep1 = old (s.rep[self]) in
+    ensures { let rep1 = s.rep[self] in
+              Rgn.mem result rep1 }
+    
+    ensures { let rep2 = old (s.rep[self]) in
               (s.rep[self])
               =
-              rep1 }
+              rep2 }
     
     ensures { s.STACK.stackPub }
     
     ensures { s.listStackPriv }
   = label INIT in
-      let result = ref 0 in
+      let result = ref null in
       let self = ref self in
       let tmp = ref null in
       assert { hasNodeType s (! tmp) };
       (let nxt = ref null in
        assert { hasNodeType s (! nxt) };
        (let sz = ref 0 in
-        let ghost contents2 = ref (any intList) in
+        let ghost contents3 = ref (any intList) in
         assert { let stk = s.contents[! self] in
-                 exists h : int, m : intList. stk = (STACK.cons h m) };
+                 exists h : int, t : intList. stk = (STACK.cons h t) };
         assert {
-          (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+          (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (Rgn.union (s.rep[! self]) ((! result).singleton))) at INIT))
             \/
             (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
             \/
@@ -1609,7 +1628,14 @@ module ListStack
         (tmp := ([@expl:tmp := self.head] (s.head[! self])));
         assert { (! tmp) <> null };
         assert {
-          (Rgn.mem (! tmp) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+          (Rgn.mem (! tmp) ((Rgn.union ((! self).singleton) (Rgn.union (s.rep[! self]) ((! result).singleton))) at INIT))
+            \/
+            (not (Rgn.mem (! tmp) (s.alloct.M.domain at INIT)))
+            \/
+            ((! tmp) = null) };
+        (result := ([@expl:result := tmp.car] (s.car[! tmp])));
+        assert {
+          (Rgn.mem (! tmp) ((Rgn.union ((! self).singleton) (Rgn.union (s.rep[! self]) ((! result).singleton))) at INIT))
             \/
             (not (Rgn.mem (! tmp) (s.alloct.M.domain at INIT)))
             \/
@@ -1617,7 +1643,7 @@ module ListStack
         (nxt := ([@expl:nxt := tmp.cdr] (s.cdr[! tmp])));
         ([@expl:self.head := nxt] (set_head s (! self) (! nxt)));
         assert {
-          (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+          (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (Rgn.union (s.rep[! self]) ((! result).singleton))) at INIT))
             \/
             (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
             \/
@@ -1625,20 +1651,13 @@ module ListStack
         (sz := ([@expl:sz := self.size] (s.size[! self])));
         ([@expl:self.size := sz - 1] (set_size s (! self) ((! sz) - 1)));
         assert {
-          (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
+          (Rgn.mem (! self) ((Rgn.union ((! self).singleton) (Rgn.union (s.rep[! self]) ((! result).singleton))) at INIT))
             \/
             (not (Rgn.mem (! self) (s.alloct.M.domain at INIT)))
             \/
             ((! self) = null) };
-        (contents2 := ([@expl:contents := self.contents] (s.contents[! self])));
-        ([@expl:self.contents := tl(contents)] (set_contents s (! self) ((! contents2).STACK.tl)));
-        assert {
-          (Rgn.mem (! tmp) ((Rgn.union ((! self).singleton) (s.rep[! self])) at INIT))
-            \/
-            (not (Rgn.mem (! tmp) (s.alloct.M.domain at INIT)))
-            \/
-            ((! tmp) = null) };
-        (result := ([@expl:result := tmp.car] (s.car[! tmp])));
+        (contents3 := ([@expl:contents := self.contents] (s.contents[! self])));
+        ([@expl:self.contents := tl(contents)] (set_contents s (! self) ((! contents3).STACK.tl)));
         (! result)))
   
   let getMaxSize (s : state) : int
@@ -1653,6 +1672,26 @@ module ListStack
     
     ensures { s.listStackPriv }
   = label INIT in let result = ref 0 in (result := ([@expl:result := maxSize] s.maxSize)); (! result)
+  
+  let getCellValue (s : state) (c : reference) : int
+    requires { hasCellType s c }
+    requires { (c <> null) }
+    requires { s.STACK.stackPub }
+    requires { s.listStackPriv }
+    ensures { let bsnap_r13 = old (Rgn.union s.pool (img_rep s s.pool)) in
+              Rgn.subset bsnap_r13 (Rgn.union s.pool (img_rep s s.pool)) }
+    
+    ensures { (s.cell_value[c]) = result }
+    
+    ensures { s.STACK.stackPub }
+    
+    ensures { s.listStackPriv }
+  = label INIT in
+      let result = ref 0 in
+      let c = ref c in
+      assert { (Rgn.mem (! c) (((! c).singleton) at INIT)) \/ (not (Rgn.mem (! c) (s.alloct.M.domain at INIT))) \/ ((! c) = null) };
+      (result := ([@expl:result := c.cell_value] (s.cell_value[! c])));
+      (! result)
   
   lemma boundary_frames_invariant_ListStack:
     forall s : state, t : state, pi : PreRefperm.t.
@@ -1680,7 +1719,7 @@ module Client2
   let prog (s : state) (n : int) : int
     requires { (s.maxSize > n) /\ (n >= 0) }
     requires { s.pool = emptyRgn }
-    writes { s.alloct, s.arr, s.car, s.cdr, s.contents, s.head, s.pool, s.rep, s.size, s.top }
+    writes { s.alloct, s.arr, s.car, s.cdr, s.cell_rep, s.cell_value, s.contents, s.head, s.pool, s.rep, s.size, s.top }
     ensures { alloc_does_not_shrink (old s) s }
     
     ensures { [@expl:wr (pool union pool`rep)`contents] (wr_frame_contents (old s) s (Rgn.union s.pool (img_rep s s.pool))) }
@@ -1691,13 +1730,17 @@ module Client2
     
     ensures { [@expl:wr (pool union pool`rep)`arr] (wr_frame_arr (old s) s (Rgn.union s.pool (img_rep s s.pool))) }
     
+    ensures { [@expl:wr (pool union pool`rep)`car] (wr_frame_car (old s) s (Rgn.union s.pool (img_rep s s.pool))) }
+    
     ensures { [@expl:wr (pool union pool`rep)`rep] (wr_frame_rep (old s) s (Rgn.union s.pool (img_rep s s.pool))) }
+    
+    ensures { [@expl:wr (pool union pool`rep)`cell_rep] (wr_frame_cell_rep (old s) s (Rgn.union s.pool (img_rep s s.pool))) }
     
     ensures { [@expl:wr (pool union pool`rep)`top] (wr_frame_top (old s) s (Rgn.union s.pool (img_rep s s.pool))) }
     
     ensures { [@expl:wr (pool union pool`rep)`size] (wr_frame_size (old s) s (Rgn.union s.pool (img_rep s s.pool))) }
     
-    ensures { [@expl:wr (pool union pool`rep)`car] (wr_frame_car (old s) s (Rgn.union s.pool (img_rep s s.pool))) }
+    ensures { [@expl:wr (pool union pool`rep)`cell_value] (wr_frame_cell_value (old s) s (Rgn.union s.pool (img_rep s s.pool))) }
     diverges
   = label INIT in
       let result = ref 0 in
@@ -1705,8 +1748,8 @@ module Client2
       let stk = ref null in
       assert { hasStackType s (! stk) };
       (let i = ref 0 in
-       let c = ref null in
-       assert { hasCellType s (! c) };
+       let c1 = ref null in
+       assert { hasCellType s (! c1) };
        (stk := ([@expl:stk := new Stack] (s.mk_Stack)));
        assert {
          (Rgn.mem (! stk) ((Rgn.union s.pool (img_rep s s.pool)) at INIT))
@@ -1716,22 +1759,24 @@ module Client2
            ((! stk) = null) };
        ([@expl:Stack(stk)] (ListStack.init_Stack s (! stk)));
        while ((! i) < (! n)) do
-         invariant { [@expl:locals type invariant] ((hasCellType s (! c)) /\ (hasStackType s (! stk))) }
+         invariant { [@expl:locals type invariant] ((hasCellType s (! c1)) /\ (hasStackType s (! stk))) }
          invariant { alloc_does_not_shrink (old s) s }
          invariant {
            [@expl:wr ({stk} union {stk}`rep)`contents] (wr_frame_contents (old s) s (Rgn.union ((! stk).singleton) (s.rep[! stk]))) }
          invariant { [@expl:wr ({stk} union {stk}`rep)`head] (wr_frame_head (old s) s (Rgn.union ((! stk).singleton) (s.rep[! stk]))) }
          invariant { [@expl:wr {stk}`rep`cdr] (wr_frame_cdr (old s) s (s.rep[! stk])) }
-         invariant { [@expl:wr ({stk} union {stk}`rep)`rep] (wr_frame_rep (old s) s (Rgn.union ((! stk).singleton) (s.rep[! stk]))) }
-         invariant { [@expl:wr ({stk} union {stk}`rep)`size] (wr_frame_size (old s) s (Rgn.union ((! stk).singleton) (s.rep[! stk]))) }
          invariant { [@expl:wr {stk}`rep`car] (wr_frame_car (old s) s (s.rep[! stk])) }
+         invariant { [@expl:wr ({stk} union {stk}`rep)`rep] (wr_frame_rep (old s) s (Rgn.union ((! stk).singleton) (s.rep[! stk]))) }
+         invariant { [@expl:wr {stk}`rep`cell_rep] (wr_frame_cell_rep (old s) s (s.rep[! stk])) }
+         invariant { [@expl:wr ({stk} union {stk}`rep)`size] (wr_frame_size (old s) s (Rgn.union ((! stk).singleton) (s.rep[! stk]))) }
+         invariant { [@expl:wr {stk}`rep`cell_value] (wr_frame_cell_value (old s) s (s.rep[! stk])) }
          invariant { (0 <= (! i)) /\ ((! i) <= (! n)) }
          invariant { (Rgn.mem (! stk) s.pool) /\ (0 <= (! n)) /\ ((! n) < s.maxSize) }
          invariant { let sz = s.size[! stk] in
                      sz
                      =
                      (! i) }
-         invariant { s.ListStack.listStackPriv }
+         invariant { (s.ListStack.STACK.stackPub) /\ (s.ListStack.listStackPriv) }
          invariant {
            let oa = old s.alloct.M.domain in
            Rgn.subset (Rgn.diff (Rgn.union ((! stk).singleton) (s.rep[! stk])) (null.singleton)) (Rgn.diff s.alloct.M.domain oa) }
@@ -1744,7 +1789,7 @@ module Client2
        done;
        (i := ([@expl:i := 0] 0));
        while ((! i) < (! n)) do
-         invariant { [@expl:locals type invariant] ((hasCellType s (! c)) /\ (hasStackType s (! stk))) }
+         invariant { [@expl:locals type invariant] ((hasCellType s (! c1)) /\ (hasStackType s (! stk))) }
          invariant { alloc_does_not_shrink (old s) s }
          invariant {
            [@expl:wr ({stk} union {stk}`rep)`contents] (wr_frame_contents (old s) s (Rgn.union ((! stk).singleton) (s.rep[! stk]))) }
@@ -1758,18 +1803,27 @@ module Client2
                      (! n)
                      -
                      (! i) }
-         invariant { s.ListStack.listStackPriv }
+         invariant { (s.ListStack.STACK.stackPub) /\ (s.ListStack.listStackPriv) }
+         invariant { ((! c1) = null) \/ (let rep2 = s.rep[! stk] in
+                                         Rgn.mem (! c1) rep2) }
          invariant {
            let oa = s.alloct.M.domain at INIT in
            Rgn.subset (Rgn.diff (Rgn.union ((! stk).singleton) (s.rep[! stk])) (null.singleton)) (Rgn.diff s.alloct.M.domain oa) }
-         let v = ref 0 in
          assert {
            Rgn.subset
-              (Rgn.diff (Rgn.union ((! stk).singleton) (s.rep[! stk])) (null.singleton))
+              (Rgn.diff (Rgn.union ((! stk).singleton) (Rgn.union (s.rep[! stk]) ((! c1).singleton))) (null.singleton))
               (Rgn.union ((Rgn.union s.pool (img_rep s s.pool)) at INIT) (Rgn.diff s.alloct.M.domain (s.alloct.M.domain at INIT))) };
-         (v := ([@expl:v := pop(stk)] (ListStack.pop s (! stk))));
-         (result := ([@expl:result := result + v] ((! result) + (! v))));
-         (i := ([@expl:i := i + 1] ((! i) + 1)))
+         (c1 := ([@expl:c := pop(stk)] (ListStack.pop s (! stk))));
+         (let v = ref 0 in
+          assert {
+            (Rgn.mem (! c1) ((Rgn.union s.pool (img_rep s s.pool)) at INIT))
+              \/
+              (not (Rgn.mem (! c1) (s.alloct.M.domain at INIT)))
+              \/
+              ((! c1) = null) };
+          (v := ([@expl:v := getCellValue(c)] (ListStack.getCellValue s (! c1))));
+          (result := ([@expl:result := result + v] ((! result) + (! v))));
+          (i := ([@expl:i := i + 1] ((! i) + 1))))
        done;
        (! result))
 end
@@ -1799,85 +1853,47 @@ module REL_STACK_biinterface
     requires { PreRefperm.idRef pi l_self r_self }
     requires { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     requires { ((not (Rgn.mem l_self l_s.pool)) /\ (not (Rgn.mem r_self r_s.pool))) }
-    writes { l_s.alloct,
-      l_s.arr,
-      l_s.car,
-      l_s.cdr,
-      l_s.cell_rep,
-      l_s.cell_value,
-      l_s.contents,
-      l_s.head,
-      l_s.length,
-      l_s.pool,
+    writes { l_s.head,
       l_s.rep,
       l_s.size,
-      l_s.slots,
+      l_s.contents,
       l_s.top,
-      r_s.alloct,
-      r_s.arr,
-      r_s.car,
-      r_s.cdr,
-      r_s.cell_rep,
-      r_s.cell_value,
-      r_s.contents,
+      l_s.arr,
+      l_s.alloct,
+      l_s.pool,
       r_s.head,
-      r_s.length,
-      r_s.pool,
       r_s.rep,
       r_s.size,
-      r_s.slots,
-      r_s.top }
-    ensures { [@expl:wr ({self} union {self}`rep)`contents]
-              (wr_frame_contents (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
+      r_s.contents,
+      r_s.top,
+      r_s.arr,
+      r_s.alloct,
+      r_s.pool }
+    ensures { [@expl:wr {self}`head] (wr_frame_head (old l_s) l_s (l_self.singleton)) }
     
-    ensures { [@expl:wr {self}`rep`slots] (wr_frame_slots (old l_s) l_s (l_s.rep[l_self])) }
+    ensures { [@expl:wr {self}`rep] (wr_frame_rep (old l_s) l_s (l_self.singleton)) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`head] (wr_frame_head (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
+    ensures { [@expl:wr {self}`size] (wr_frame_size (old l_s) l_s (l_self.singleton)) }
     
-    ensures { [@expl:wr {self}`rep`cdr] (wr_frame_cdr (old l_s) l_s (l_s.rep[l_self])) }
+    ensures { [@expl:wr {self}`contents] (wr_frame_contents (old l_s) l_s (l_self.singleton)) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`arr] (wr_frame_arr (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
+    ensures { [@expl:wr {self}`top] (wr_frame_top (old l_s) l_s (l_self.singleton)) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
-    
-    ensures { [@expl:wr {self}`rep`cell_rep] (wr_frame_cell_rep (old l_s) l_s (l_s.rep[l_self])) }
-    
-    ensures { [@expl:wr ({self} union {self}`rep)`top] (wr_frame_top (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
-    
-    ensures { [@expl:wr ({self} union {self}`rep)`size] (wr_frame_size (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
-    
-    ensures { [@expl:wr {self}`rep`length] (wr_frame_length (old l_s) l_s (l_s.rep[l_self])) }
-    
-    ensures { [@expl:wr {self}`rep`cell_value] (wr_frame_cell_value (old l_s) l_s (l_s.rep[l_self])) }
-    
-    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old l_s) l_s (l_s.rep[l_self])) }
+    ensures { [@expl:wr {self}`arr] (wr_frame_arr (old l_s) l_s (l_self.singleton)) }
     
     ensures { alloc_does_not_shrink (old l_s) l_s }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`contents]
-              (wr_frame_contents (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
+    ensures { [@expl:wr {self}`head] (wr_frame_head (old r_s) r_s (r_self.singleton)) }
     
-    ensures { [@expl:wr {self}`rep`slots] (wr_frame_slots (old r_s) r_s (r_s.rep[r_self])) }
+    ensures { [@expl:wr {self}`rep] (wr_frame_rep (old r_s) r_s (r_self.singleton)) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`head] (wr_frame_head (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
+    ensures { [@expl:wr {self}`size] (wr_frame_size (old r_s) r_s (r_self.singleton)) }
     
-    ensures { [@expl:wr {self}`rep`cdr] (wr_frame_cdr (old r_s) r_s (r_s.rep[r_self])) }
+    ensures { [@expl:wr {self}`contents] (wr_frame_contents (old r_s) r_s (r_self.singleton)) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`arr] (wr_frame_arr (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
+    ensures { [@expl:wr {self}`top] (wr_frame_top (old r_s) r_s (r_self.singleton)) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
-    
-    ensures { [@expl:wr {self}`rep`cell_rep] (wr_frame_cell_rep (old r_s) r_s (r_s.rep[r_self])) }
-    
-    ensures { [@expl:wr ({self} union {self}`rep)`top] (wr_frame_top (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
-    
-    ensures { [@expl:wr ({self} union {self}`rep)`size] (wr_frame_size (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
-    
-    ensures { [@expl:wr {self}`rep`length] (wr_frame_length (old r_s) r_s (r_s.rep[r_self])) }
-    
-    ensures { [@expl:wr {self}`rep`cell_value] (wr_frame_cell_value (old r_s) r_s (r_s.rep[r_self])) }
-    
-    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old r_s) r_s (r_s.rep[r_self])) }
+    ensures { [@expl:wr {self}`arr] (wr_frame_arr (old r_s) r_s (r_self.singleton)) }
     
     ensures { alloc_does_not_shrink (old r_s) r_s }
     
@@ -1918,7 +1934,7 @@ module REL_STACK_biinterface
     
     ensures { (((l_s.size[l_self]) = 0) /\ ((r_s.size[r_self]) = 0)) }
     
-    ensures { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    ensures { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     
     ensures { ((let bsnap_r25 = old (Rgn.union l_s.pool (img_rep l_s l_s.pool)) in
                 Rgn.subset bsnap_r25 (Rgn.union l_s.pool (img_rep l_s l_s.pool))) /\
@@ -1929,21 +1945,21 @@ module REL_STACK_biinterface
               | (l_result, r_result) -> ((l_result = ()) /\ (r_result = ()))
               end }
   
-  val isEmpty (l_s: state) (r_s: state) (pi1: PreRefperm.t) (l_self: reference) (r_self: reference) : 
+  val isEmpty (l_s: state) (r_s: state) (pi3: PreRefperm.t) (l_self: reference) (r_self: reference) : 
     (bool, bool)
     requires { hasStackType l_s l_self }
     requires { (l_self <> null) }
     requires { hasStackType r_s r_self }
     requires { (r_self <> null) }
-    requires { okRefperm l_s r_s pi1 }
+    requires { okRefperm l_s r_s pi3 }
     requires { (true /\ true) }
-    requires { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
-    requires { PreRefperm.idRef pi1 l_self r_self }
-    requires { ((agree_allfields l_s r_s pi1 (l_self.singleton)) /\
-                  (agree_allfields r_s l_s (pi1.PreRefperm.invert) (r_self.singleton)))
+    requires { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
+    requires { PreRefperm.idRef pi3 l_self r_self }
+    requires { ((agree_allfields l_s r_s pi3 (l_self.singleton)) /\
+                  (agree_allfields r_s l_s (pi3.PreRefperm.invert) (r_self.singleton)))
     }
     requires { ((Rgn.mem l_self l_s.pool) /\ (Rgn.mem r_self r_s.pool)) }
-    ensures { okRefperm l_s r_s pi1 }
+    ensures { okRefperm l_s r_s pi3 }
     
     ensures { (true /\ true) }
     
@@ -1952,15 +1968,15 @@ module REL_STACK_biinterface
               ((agree_allfields
                   l_s
                   r_s
-                  pi1
+                  pi3
                   (Rgn.diff (Rgn.diff l_s.alloct.M.domain l_s_alloc) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
                  (agree_allfields
                     r_s
                     l_s
-                    (pi1.PreRefperm.invert)
+                    (pi3.PreRefperm.invert)
                     (Rgn.diff (Rgn.diff r_s.alloct.M.domain r_s_alloc) (Rgn.union r_s.pool (img_rep r_s r_s.pool))))) }
     
-    ensures { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    ensures { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     
     ensures { match result with
               | (l_result, r_result) -> ((l_result <-> ((l_s.size[l_self]) = 0)) /\ (r_result <-> ((r_s.size[r_self]) = 0)))
@@ -1998,34 +2014,34 @@ module REL_STACK_biinterface
                                   sz
                                   <
                                   r_s.maxSize)) }
-    requires { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    requires { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     requires { ((Rgn.mem l_self l_s.pool) /\ (Rgn.mem r_self r_s.pool)) }
-    writes { l_s.alloct,
+    writes { l_s.contents,
+      l_s.slots,
+      l_s.head,
+      l_s.cdr,
       l_s.arr,
       l_s.car,
-      l_s.cdr,
-      l_s.cell_rep,
-      l_s.cell_value,
-      l_s.contents,
-      l_s.head,
-      l_s.length,
       l_s.rep,
-      l_s.size,
-      l_s.slots,
+      l_s.cell_rep,
       l_s.top,
-      r_s.alloct,
+      l_s.size,
+      l_s.length,
+      l_s.cell_value,
+      l_s.alloct,
+      r_s.contents,
+      r_s.slots,
+      r_s.head,
+      r_s.cdr,
       r_s.arr,
       r_s.car,
-      r_s.cdr,
-      r_s.cell_rep,
-      r_s.cell_value,
-      r_s.contents,
-      r_s.head,
-      r_s.length,
       r_s.rep,
+      r_s.cell_rep,
+      r_s.top,
       r_s.size,
-      r_s.slots,
-      r_s.top }
+      r_s.length,
+      r_s.cell_value,
+      r_s.alloct }
     ensures { [@expl:wr ({self} union {self}`rep)`contents]
               (wr_frame_contents (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
     
@@ -2036,6 +2052,8 @@ module REL_STACK_biinterface
     ensures { [@expl:wr {self}`rep`cdr] (wr_frame_cdr (old l_s) l_s (l_s.rep[l_self])) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`arr] (wr_frame_arr (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
+    
+    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old l_s) l_s (l_s.rep[l_self])) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
     
@@ -2048,8 +2066,6 @@ module REL_STACK_biinterface
     ensures { [@expl:wr {self}`rep`length] (wr_frame_length (old l_s) l_s (l_s.rep[l_self])) }
     
     ensures { [@expl:wr {self}`rep`cell_value] (wr_frame_cell_value (old l_s) l_s (l_s.rep[l_self])) }
-    
-    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old l_s) l_s (l_s.rep[l_self])) }
     
     ensures { alloc_does_not_shrink (old l_s) l_s }
     
@@ -2064,6 +2080,8 @@ module REL_STACK_biinterface
     
     ensures { [@expl:wr ({self} union {self}`rep)`arr] (wr_frame_arr (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
     
+    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old r_s) r_s (r_s.rep[r_self])) }
+    
     ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
     
     ensures { [@expl:wr {self}`rep`cell_rep] (wr_frame_cell_rep (old r_s) r_s (r_s.rep[r_self])) }
@@ -2075,8 +2093,6 @@ module REL_STACK_biinterface
     ensures { [@expl:wr {self}`rep`length] (wr_frame_length (old r_s) r_s (r_s.rep[r_self])) }
     
     ensures { [@expl:wr {self}`rep`cell_value] (wr_frame_cell_value (old r_s) r_s (r_s.rep[r_self])) }
-    
-    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old r_s) r_s (r_s.rep[r_self])) }
     
     ensures { alloc_does_not_shrink (old r_s) r_s }
     
@@ -2135,7 +2151,7 @@ module REL_STACK_biinterface
                   +
                   1)) }
     
-    ensures { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    ensures { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     
     ensures { ((let bsnap_r25 = old (Rgn.union l_s.pool (img_rep l_s l_s.pool)) in
                 Rgn.subset bsnap_r25 (Rgn.union l_s.pool (img_rep l_s l_s.pool))) /\
@@ -2146,27 +2162,27 @@ module REL_STACK_biinterface
               | (l_result, r_result) -> ((l_result = ()) /\ (r_result = ()))
               end }
   
-  val pop (l_s: state) (r_s: state) (pi2: PreRefperm.t) (l_self: reference) (r_self: reference) : 
-    (int, int)
+  val pop (l_s: state) (r_s: state) (pi4: PreRefperm.t) (l_self: reference) (r_self: reference) : 
+    (reference, reference)
     requires { hasStackType l_s l_self }
     requires { (l_self <> null) }
     requires { hasStackType r_s r_self }
     requires { (r_self <> null) }
-    requires { okRefperm l_s r_s pi2 }
+    requires { okRefperm l_s r_s pi4 }
     requires { (true /\ true) }
     requires { ((agree_allfields
                    l_s
                    r_s
-                   pi2
+                   pi4
                    (Rgn.diff (Rgn.union (l_self.singleton) (l_s.rep[l_self])) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
                   (agree_allfields
                      r_s
                      l_s
-                     (pi2.PreRefperm.invert)
+                     (pi4.PreRefperm.invert)
                      (Rgn.diff (Rgn.union (r_self.singleton) (r_s.rep[r_self])) (Rgn.union r_s.pool (img_rep r_s r_s.pool)))))
     }
-    requires { PreRefperm.idRef pi2 l_self r_self }
-    requires { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    requires { PreRefperm.idRef pi4 l_self r_self }
+    requires { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     requires { ((let sz = l_s.size[l_self] in
                  sz
                  >
@@ -2175,30 +2191,38 @@ module REL_STACK_biinterface
                         >
                         0)) }
     requires { ((Rgn.mem l_self l_s.pool) /\ (Rgn.mem r_self r_s.pool)) }
-    writes { l_s.arr,
-      l_s.car,
-      l_s.cdr,
-      l_s.cell_rep,
-      l_s.cell_value,
-      l_s.contents,
-      l_s.head,
-      l_s.length,
-      l_s.rep,
-      l_s.size,
+    writes { l_s.contents,
       l_s.slots,
+      l_s.head,
+      l_s.cdr,
+      l_s.arr,
+      l_s.car,
+      l_s.rep,
+      l_s.cell_rep,
       l_s.top,
+      l_s.size,
+      l_s.length,
+      l_s.cell_value,
+      r_s.contents,
+      r_s.slots,
+      r_s.head,
+      r_s.cdr,
       r_s.arr,
       r_s.car,
-      r_s.cdr,
-      r_s.cell_rep,
-      r_s.cell_value,
-      r_s.contents,
-      r_s.head,
-      r_s.length,
       r_s.rep,
+      r_s.cell_rep,
+      r_s.top,
       r_s.size,
-      r_s.slots,
-      r_s.top }
+      r_s.length,
+      r_s.cell_value }
+    ensures { match result with
+              | (l_result, _) -> hasCellType l_s l_result
+              end }
+    
+    ensures { match result with
+              | (_, r_result) -> hasCellType r_s r_result
+              end }
+    
     ensures { [@expl:wr ({self} union {self}`rep)`contents]
               (wr_frame_contents (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
     
@@ -2209,6 +2233,8 @@ module REL_STACK_biinterface
     ensures { [@expl:wr {self}`rep`cdr] (wr_frame_cdr (old l_s) l_s (l_s.rep[l_self])) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`arr] (wr_frame_arr (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
+    
+    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old l_s) l_s (l_s.rep[l_self])) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
     
@@ -2222,8 +2248,6 @@ module REL_STACK_biinterface
     
     ensures { [@expl:wr {self}`rep`cell_value] (wr_frame_cell_value (old l_s) l_s (l_s.rep[l_self])) }
     
-    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old l_s) l_s (l_s.rep[l_self])) }
-    
     ensures { [@expl:wr ({self} union {self}`rep)`contents]
               (wr_frame_contents (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
     
@@ -2234,6 +2258,8 @@ module REL_STACK_biinterface
     ensures { [@expl:wr {self}`rep`cdr] (wr_frame_cdr (old r_s) r_s (r_s.rep[r_self])) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`arr] (wr_frame_arr (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
+    
+    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old r_s) r_s (r_s.rep[r_self])) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
     
@@ -2247,14 +2273,17 @@ module REL_STACK_biinterface
     
     ensures { [@expl:wr {self}`rep`cell_value] (wr_frame_cell_value (old r_s) r_s (r_s.rep[r_self])) }
     
-    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old r_s) r_s (r_s.rep[r_self])) }
-    
-    ensures { okRefperm l_s r_s pi2 }
+    ensures { okRefperm l_s r_s pi4 }
     
     ensures { (true /\ true) }
     
     ensures { match result with
-              | (l_result, r_result) -> (l_result = r_result)
+              | (l_result, r_result) ->
+                  let l_r = l_result in
+                  let r_r = r_result in
+                  let l_c = l_s.cell_value[l_r] in
+                  let r_c = r_s.cell_value[r_r] in
+                  (l_c = r_c)
               end }
     
     ensures { let l_s_alloc = old l_s.alloct.M.domain in
@@ -2264,26 +2293,33 @@ module REL_STACK_biinterface
               ((agree_allfields
                   l_s
                   r_s
-                  pi2
+                  pi4
                   (Rgn.diff (Rgn.union (Rgn.diff l_s.alloct.M.domain l_s_alloc) l_snap_r1) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
                  (agree_allfields
                     r_s
                     l_s
-                    (pi2.PreRefperm.invert)
+                    (pi4.PreRefperm.invert)
                     (Rgn.diff
                         (Rgn.union (Rgn.diff r_s.alloct.M.domain r_s_alloc) r_snap_r1)
                         (Rgn.union r_s.pool (img_rep r_s r_s.pool))))) }
     
-    ensures { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    ensures { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     
-    ensures { ((let rep3 = old (l_s.rep[l_self]) in
+    ensures { ((let rep5 = old (l_s.rep[l_self]) in
                 (l_s.rep[l_self])
                 =
-                rep3) /\
-                 (let rep4 = old (r_s.rep[r_self]) in
+                rep5) /\
+                 (let rep6 = old (r_s.rep[r_self]) in
                   (r_s.rep[r_self])
                   =
-                  rep4)) }
+                  rep6)) }
+    
+    ensures { match result with
+              | (l_result, r_result) ->
+                  ((let rep7 = l_s.rep[l_self] in
+                    Rgn.mem l_result rep7) /\ (let rep8 = r_s.rep[r_self] in
+                                               Rgn.mem r_result rep8))
+              end }
     
     ensures { ((let ostk = old (l_s.contents[l_self]) in
                 (l_s.contents[l_self])
@@ -2297,15 +2333,15 @@ module REL_STACK_biinterface
     ensures { match result with
               | (l_result, r_result) ->
                   ((let oxs = old (l_s.contents[l_self]) in
-                    let m = oxs.ArrayStack.STACK.hd in
-                    l_result
+                    let t = oxs.ArrayStack.STACK.hd in
+                    (l_s.cell_value[l_result])
                     =
-                    m) /\
+                    t) /\
                      (let oxs = old (r_s.contents[r_self]) in
-                      let m = oxs.ListStack.STACK.hd in
-                      r_result
+                      let t = oxs.ListStack.STACK.hd in
+                      (r_s.cell_value[r_result])
                       =
-                      m))
+                      t))
               end }
     
     ensures { ((let osz = old (l_s.size[l_self]) in
@@ -2320,6 +2356,34 @@ module REL_STACK_biinterface
                   osz
                   -
                   1)) }
+    
+    ensures { ((let bsnap_r25 = old (Rgn.union l_s.pool (img_rep l_s l_s.pool)) in
+                Rgn.subset bsnap_r25 (Rgn.union l_s.pool (img_rep l_s l_s.pool))) /\
+                 (let bsnap_r25 = old (Rgn.union r_s.pool (img_rep r_s r_s.pool)) in
+                  Rgn.subset bsnap_r25 (Rgn.union r_s.pool (img_rep r_s r_s.pool)))) }
+    
+    ensures { match result with
+              | (l_result, r_result) -> ((not (l_result = null)) /\ (not (r_result = null)))
+              end }
+  
+  val getCellValue (l_s: state) (r_s: state) (pi: PreRefperm.t) (l_c: reference) (r_c: reference) : 
+    (int, int)
+    requires { hasCellType l_s l_c }
+    requires { (l_c <> null) }
+    requires { hasCellType r_s r_c }
+    requires { (r_c <> null) }
+    requires { okRefperm l_s r_s pi }
+    requires { (true /\ true) }
+    requires { let l_v = l_s.cell_value[l_c] in
+               let r_v = r_s.cell_value[r_c] in
+               (l_v = r_v) }
+    ensures { okRefperm l_s r_s pi }
+    
+    ensures { (true /\ true) }
+    
+    ensures { match result with
+              | (l_result, r_result) -> (l_result = r_result)
+              end }
     
     ensures { ((let bsnap_r25 = old (Rgn.union l_s.pool (img_rep l_s l_s.pool)) in
                 Rgn.subset bsnap_r25 (Rgn.union l_s.pool (img_rep l_s l_s.pool))) /\
@@ -2368,8 +2432,6 @@ module CLIENT_REL
       r_s.size,
       r_s.slots,
       r_s.top }
-    ensures { PreRefperm.extends (old pi) pi }
-    
     ensures { [@expl:wr (pool union pool`rep)`contents] (wr_frame_contents (old l_s) l_s (Rgn.union l_s.pool (img_rep l_s l_s.pool))) }
     
     ensures { [@expl:wr (pool union pool`rep)`slots] (wr_frame_slots (old l_s) l_s (Rgn.union l_s.pool (img_rep l_s l_s.pool))) }
@@ -2379,6 +2441,8 @@ module CLIENT_REL
     ensures { [@expl:wr (pool union pool`rep)`cdr] (wr_frame_cdr (old l_s) l_s (Rgn.union l_s.pool (img_rep l_s l_s.pool))) }
     
     ensures { [@expl:wr (pool union pool`rep)`arr] (wr_frame_arr (old l_s) l_s (Rgn.union l_s.pool (img_rep l_s l_s.pool))) }
+    
+    ensures { [@expl:wr (pool union pool`rep)`car] (wr_frame_car (old l_s) l_s (Rgn.union l_s.pool (img_rep l_s l_s.pool))) }
     
     ensures { [@expl:wr (pool union pool`rep)`rep] (wr_frame_rep (old l_s) l_s (Rgn.union l_s.pool (img_rep l_s l_s.pool))) }
     
@@ -2393,8 +2457,6 @@ module CLIENT_REL
     ensures { [@expl:wr (pool union pool`rep)`cell_value]
               (wr_frame_cell_value (old l_s) l_s (Rgn.union l_s.pool (img_rep l_s l_s.pool))) }
     
-    ensures { [@expl:wr (pool union pool`rep)`car] (wr_frame_car (old l_s) l_s (Rgn.union l_s.pool (img_rep l_s l_s.pool))) }
-    
     ensures { alloc_does_not_shrink (old l_s) l_s }
     
     ensures { [@expl:wr (pool union pool`rep)`contents] (wr_frame_contents (old r_s) r_s (Rgn.union r_s.pool (img_rep r_s r_s.pool))) }
@@ -2406,6 +2468,8 @@ module CLIENT_REL
     ensures { [@expl:wr (pool union pool`rep)`cdr] (wr_frame_cdr (old r_s) r_s (Rgn.union r_s.pool (img_rep r_s r_s.pool))) }
     
     ensures { [@expl:wr (pool union pool`rep)`arr] (wr_frame_arr (old r_s) r_s (Rgn.union r_s.pool (img_rep r_s r_s.pool))) }
+    
+    ensures { [@expl:wr (pool union pool`rep)`car] (wr_frame_car (old r_s) r_s (Rgn.union r_s.pool (img_rep r_s r_s.pool))) }
     
     ensures { [@expl:wr (pool union pool`rep)`rep] (wr_frame_rep (old r_s) r_s (Rgn.union r_s.pool (img_rep r_s r_s.pool))) }
     
@@ -2419,8 +2483,6 @@ module CLIENT_REL
     
     ensures { [@expl:wr (pool union pool`rep)`cell_value]
               (wr_frame_cell_value (old r_s) r_s (Rgn.union r_s.pool (img_rep r_s r_s.pool))) }
-    
-    ensures { [@expl:wr (pool union pool`rep)`car] (wr_frame_car (old r_s) r_s (Rgn.union r_s.pool (img_rep r_s r_s.pool))) }
     
     ensures { alloc_does_not_shrink (old r_s) r_s }
     
@@ -2444,7 +2506,7 @@ module CLIENT_REL
       (l_stk := ([@expl:stk := new Stack] (l_s.mk_Stack)));
       (r_stk := ([@expl:stk := new Stack] (r_s.mk_Stack)));
       (PreRefperm.updateRefperm pi (! l_stk) (! r_stk));
-      (match [@expl:Stack(stk)] (init_Stack l_s r_s pi (! l_stk) (! r_stk)) with
+      (match [@expl:Stack(stk)] (REL_STACK_biinterface.init_Stack l_s r_s pi (! l_stk) (! r_stk)) with
        | _ -> ()
        end);
       while ((! l_i) < (! l_n)) do
@@ -2453,42 +2515,30 @@ module CLIENT_REL
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`contents]
           (wr_frame_contents (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
-        invariant { [@expl:wr {stk}`rep`slots] (wr_frame_slots (old l_s) l_s (l_s.rep[! l_stk])) }
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`head] (wr_frame_head (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
         invariant { [@expl:wr {stk}`rep`cdr] (wr_frame_cdr (old l_s) l_s (l_s.rep[! l_stk])) }
-        invariant {
-          [@expl:wr ({stk} union {stk}`rep)`arr] (wr_frame_arr (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
+        invariant { [@expl:wr {stk}`rep`car] (wr_frame_car (old l_s) l_s (l_s.rep[! l_stk])) }
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`rep] (wr_frame_rep (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
         invariant { [@expl:wr {stk}`rep`cell_rep] (wr_frame_cell_rep (old l_s) l_s (l_s.rep[! l_stk])) }
         invariant {
-          [@expl:wr ({stk} union {stk}`rep)`top] (wr_frame_top (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
-        invariant {
           [@expl:wr ({stk} union {stk}`rep)`size] (wr_frame_size (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
-        invariant { [@expl:wr {stk}`rep`length] (wr_frame_length (old l_s) l_s (l_s.rep[! l_stk])) }
         invariant { [@expl:wr {stk}`rep`cell_value] (wr_frame_cell_value (old l_s) l_s (l_s.rep[! l_stk])) }
-        invariant { [@expl:wr {stk}`rep`car] (wr_frame_car (old l_s) l_s (l_s.rep[! l_stk])) }
         invariant { alloc_does_not_shrink (old l_s) l_s }
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`contents]
           (wr_frame_contents (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
-        invariant { [@expl:wr {stk}`rep`slots] (wr_frame_slots (old r_s) r_s (r_s.rep[! r_stk])) }
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`head] (wr_frame_head (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
         invariant { [@expl:wr {stk}`rep`cdr] (wr_frame_cdr (old r_s) r_s (r_s.rep[! r_stk])) }
-        invariant {
-          [@expl:wr ({stk} union {stk}`rep)`arr] (wr_frame_arr (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
+        invariant { [@expl:wr {stk}`rep`car] (wr_frame_car (old r_s) r_s (r_s.rep[! r_stk])) }
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`rep] (wr_frame_rep (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
         invariant { [@expl:wr {stk}`rep`cell_rep] (wr_frame_cell_rep (old r_s) r_s (r_s.rep[! r_stk])) }
         invariant {
-          [@expl:wr ({stk} union {stk}`rep)`top] (wr_frame_top (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
-        invariant {
           [@expl:wr ({stk} union {stk}`rep)`size] (wr_frame_size (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
-        invariant { [@expl:wr {stk}`rep`length] (wr_frame_length (old r_s) r_s (r_s.rep[! r_stk])) }
         invariant { [@expl:wr {stk}`rep`cell_value] (wr_frame_cell_value (old r_s) r_s (r_s.rep[! r_stk])) }
-        invariant { [@expl:wr {stk}`rep`car] (wr_frame_car (old r_s) r_s (r_s.rep[! r_stk])) }
         invariant { alloc_does_not_shrink (old r_s) r_s }
         invariant { okRefperm l_s r_s pi }
         invariant {
@@ -2505,7 +2555,6 @@ module CLIENT_REL
             ((0 <= (! l_n)) /\ (0 <= (! r_n)))
             /\
             (((! l_n) < l_s.maxSize) /\ ((! r_n) < r_s.maxSize)) }
-        invariant { PreRefperm.idRef pi (! l_stk) (! r_stk) }
         invariant { let l_xs = l_s.contents[! l_stk] in
                     let r_xs = r_s.contents[! r_stk] in
                     (l_xs = r_xs) }
@@ -2516,7 +2565,7 @@ module CLIENT_REL
                                    sz
                                    =
                                    (! r_i))) }
-        invariant { (l_s.Client1.ArrayStack.arrayStackPriv) /\ (r_s.Client2.ListStack.listStackPriv) }
+        invariant { ((l_s.Client1.ArrayStack.STACK.stackPub) /\ (r_s.Client2.ListStack.STACK.stackPub)) }
         invariant {
           ((let oa = old l_s.alloct.M.domain in
             Rgn.subset
@@ -2527,7 +2576,7 @@ module CLIENT_REL
                  (Rgn.diff (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk])) (null.singleton))
                  (Rgn.diff r_s.alloct.M.domain oa))) }
         invariant { [@expl:lockstep] (((! l_i) < (! l_n)) = ((! r_i) < (! r_n))) }
-        (match [@expl:push(stk,i)] (push l_s r_s pi (! l_stk) (! l_i) (! r_stk) (! r_i)) with
+        (match [@expl:push(stk,i)] (REL_STACK_biinterface.push l_s r_s pi (! l_stk) (! l_i) (! r_stk) (! r_i)) with
          | _ -> ()
          end);
         (l_i := ([@expl:i := i + 1] ((! l_i) + 1)));
@@ -2542,45 +2591,20 @@ module CLIENT_REL
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`contents]
           (wr_frame_contents (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
-        invariant { [@expl:wr {stk}`rep`slots] (wr_frame_slots (old l_s) l_s (l_s.rep[! l_stk])) }
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`head] (wr_frame_head (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
-        invariant { [@expl:wr {stk}`rep`cdr] (wr_frame_cdr (old l_s) l_s (l_s.rep[! l_stk])) }
-        invariant {
-          [@expl:wr ({stk} union {stk}`rep)`arr] (wr_frame_arr (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
-        invariant {
-          [@expl:wr ({stk} union {stk}`rep)`rep] (wr_frame_rep (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
-        invariant { [@expl:wr {stk}`rep`cell_rep] (wr_frame_cell_rep (old l_s) l_s (l_s.rep[! l_stk])) }
-        invariant {
-          [@expl:wr ({stk} union {stk}`rep)`top] (wr_frame_top (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`size] (wr_frame_size (old l_s) l_s (Rgn.union ((! l_stk).singleton) (l_s.rep[! l_stk]))) }
-        invariant { [@expl:wr {stk}`rep`length] (wr_frame_length (old l_s) l_s (l_s.rep[! l_stk])) }
-        invariant { [@expl:wr {stk}`rep`cell_value] (wr_frame_cell_value (old l_s) l_s (l_s.rep[! l_stk])) }
-        invariant { [@expl:wr {stk}`rep`car] (wr_frame_car (old l_s) l_s (l_s.rep[! l_stk])) }
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`contents]
           (wr_frame_contents (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
-        invariant { [@expl:wr {stk}`rep`slots] (wr_frame_slots (old r_s) r_s (r_s.rep[! r_stk])) }
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`head] (wr_frame_head (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
-        invariant { [@expl:wr {stk}`rep`cdr] (wr_frame_cdr (old r_s) r_s (r_s.rep[! r_stk])) }
-        invariant {
-          [@expl:wr ({stk} union {stk}`rep)`arr] (wr_frame_arr (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
-        invariant {
-          [@expl:wr ({stk} union {stk}`rep)`rep] (wr_frame_rep (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
-        invariant { [@expl:wr {stk}`rep`cell_rep] (wr_frame_cell_rep (old r_s) r_s (r_s.rep[! r_stk])) }
-        invariant {
-          [@expl:wr ({stk} union {stk}`rep)`top] (wr_frame_top (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
         invariant {
           [@expl:wr ({stk} union {stk}`rep)`size] (wr_frame_size (old r_s) r_s (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk]))) }
-        invariant { [@expl:wr {stk}`rep`length] (wr_frame_length (old r_s) r_s (r_s.rep[! r_stk])) }
-        invariant { [@expl:wr {stk}`rep`cell_value] (wr_frame_cell_value (old r_s) r_s (r_s.rep[! r_stk])) }
-        invariant { [@expl:wr {stk}`rep`car] (wr_frame_car (old r_s) r_s (r_s.rep[! r_stk])) }
         invariant { okRefperm l_s r_s pi }
         invariant { ((0 <= (! l_i)) /\ (0 <= (! r_i))) /\ (((! l_i) <= (! l_n)) /\ ((! r_i) <= (! r_n))) }
         invariant { ((! l_i) = (! r_i)) /\ ((! l_n) = (! r_n)) }
-        invariant { PreRefperm.idRef pi (! l_stk) (! r_stk) }
         invariant {
           ((Rgn.mem (! l_stk) l_s.pool) /\ (Rgn.mem (! r_stk) r_s.pool))
             /\
@@ -2598,7 +2622,12 @@ module CLIENT_REL
                                    (! r_n)
                                    -
                                    (! r_i))) }
-        invariant { (l_s.Client1.ArrayStack.arrayStackPriv) /\ (r_s.Client2.ListStack.listStackPriv) }
+        invariant {
+          ((((! l_c) = null) \/ (let rep9 = l_s.rep[! l_stk] in
+                                 Rgn.mem (! l_c) rep9)) /\
+             (((! r_c) = null) \/ (let rep10 = r_s.rep[! r_stk] in
+                                   Rgn.mem (! r_c) rep10))) }
+        invariant { ((l_s.Client1.ArrayStack.STACK.stackPub) /\ (r_s.Client2.ListStack.STACK.stackPub)) }
         invariant { let l_xs = l_s.contents[! l_stk] in
                     let r_xs = r_s.contents[! r_stk] in
                     (l_xs = r_xs) }
@@ -2613,15 +2642,20 @@ module CLIENT_REL
                  (Rgn.diff (Rgn.union ((! r_stk).singleton) (r_s.rep[! r_stk])) (null.singleton))
                  (Rgn.diff r_s.alloct.M.domain oa))) }
         invariant { [@expl:lockstep] (((! l_i) < (! l_n)) = ((! r_i) < (! r_n))) }
-        let l_v = ref 0 in
-        let r_v = ref 0 in
-        (match pop l_s r_s pi (! l_stk) (! r_stk) with
-         | (l_pop_res, r_pop_res) -> (l_v := ([@expl:v := pop(stk)] l_pop_res)); (r_v := ([@expl:v := pop(stk)] r_pop_res))
+        (match REL_STACK_biinterface.pop l_s r_s pi (! l_stk) (! r_stk) with
+         | (l_pop_res, r_pop_res) -> (l_c := ([@expl:c := pop(stk)] l_pop_res)); (r_c := ([@expl:c := pop(stk)] r_pop_res))
          end);
-        (l_result := ([@expl:result := result + v] ((! l_result) + (! l_v))));
-        (r_result := ([@expl:result := result + v] ((! r_result) + (! r_v))));
-        (l_i := ([@expl:i := i + 1] ((! l_i) + 1)));
-        (r_i := ([@expl:i := i + 1] ((! r_i) + 1)))
+        (let l_v = ref 0 in
+         let r_v = ref 0 in
+         (match REL_STACK_biinterface.getCellValue l_s r_s pi (! l_c) (! r_c) with
+          | (l_getCellValue_res, r_getCellValue_res) ->
+              (l_v := ([@expl:v := getCellValue(c)] l_getCellValue_res));
+              (r_v := ([@expl:v := getCellValue(c)] r_getCellValue_res))
+          end);
+         (l_result := ([@expl:result := result + v] ((! l_result) + (! l_v))));
+         (r_result := ([@expl:result := result + v] ((! r_result) + (! r_v))));
+         (l_i := ([@expl:i := i + 1] ((! l_i) + 1)));
+         (r_i := ([@expl:i := i + 1] ((! r_i) + 1))))
       done;
       ((! l_result), (! r_result))
 end
@@ -2633,8 +2667,8 @@ module REL_STACK
   use ListStack
   use export stack_theory.Stack_theory
   
-  predicate stackCoupling (l_s: state) (r_s: state) (pi5: PreRefperm.t) =
-    (okRefperm l_s r_s pi5)
+  predicate stackCoupling (l_s: state) (r_s: state) (pi: PreRefperm.t) =
+    (okRefperm l_s r_s pi)
       ->
       ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub))
       /\
@@ -2644,43 +2678,43 @@ module REL_STACK
       /\
       (l_s.maxSize = r_s.maxSize)
       /\
-      (PreRefperm.idRgn pi5 l_s.pool r_s.pool)
+      (PreRefperm.idRgn pi l_s.pool r_s.pool)
       /\
-      (forall l_st : reference, r_st : reference.
-         (isAllocated l_s l_st)
+      (forall l_s11 : reference, r_s12 : reference.
+         (isAllocated l_s l_s11)
            ->
-           (hasStackType l_s l_st)
+           (hasStackType l_s l_s11)
            ->
-           (Rgn.mem l_st l_s.pool)
+           (Rgn.mem l_s11 l_s.pool)
            ->
-           (isAllocated r_s r_st)
+           (isAllocated r_s r_s12)
            ->
-           (hasStackType r_s r_st)
+           (hasStackType r_s r_s12)
            ->
-           (Rgn.mem r_st r_s.pool)
+           (Rgn.mem r_s12 r_s.pool)
            ->
-           (PreRefperm.idRef pi5 l_st r_st)
+           (PreRefperm.idRef pi l_s11 r_s12)
            ->
-           (let l_stk = l_s.contents[l_st] in
-            let r_stk = r_s.contents[r_st] in
+           (let l_stk = l_s.contents[l_s11] in
+            let r_stk = r_s.contents[r_s12] in
             (l_stk = r_stk)))
   
-  let init_Stack (l_s : state) (r_s : state) (pi6 : PreRefperm.t) (l_self : reference) (r_self : reference) : 
+  let init_Stack (l_s : state) (r_s : state) (pi : PreRefperm.t) (l_self : reference) (r_self : reference) : 
     (unit, unit)
     requires { hasStackType l_s l_self }
     requires { (l_self <> null) }
     requires { hasStackType r_s r_self }
     requires { (r_self <> null) }
-    requires { okRefperm l_s r_s pi6 }
-    requires { stackCoupling l_s r_s pi6 }
-    requires { ((agree_allfields l_s r_s pi6 (Rgn.diff (l_self.singleton) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
+    requires { okRefperm l_s r_s pi }
+    requires { stackCoupling l_s r_s pi }
+    requires { ((agree_allfields l_s r_s pi (Rgn.diff (l_self.singleton) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
                   (agree_allfields
                      r_s
                      l_s
-                     (pi6.PreRefperm.invert)
+                     (pi.PreRefperm.invert)
                      (Rgn.diff (r_self.singleton) (Rgn.union r_s.pool (img_rep r_s r_s.pool)))))
     }
-    requires { PreRefperm.idRef pi6 l_self r_self }
+    requires { PreRefperm.idRef pi l_self r_self }
     requires { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     requires { ((not (Rgn.mem l_self l_s.pool)) /\ (not (Rgn.mem r_self r_s.pool))) }
     writes { l_s.alloct,
@@ -2697,35 +2731,33 @@ module REL_STACK
       r_s.pool,
       r_s.rep,
       r_s.size }
-    ensures { [@expl:wr ({self} union {self}`rep)`contents]
-              (wr_frame_contents (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
+    ensures { [@expl:wr {self}`rep] (wr_frame_rep (old l_s) l_s (l_self.singleton)) }
     
-    ensures { [@expl:wr {self}`rep`slots] (wr_frame_slots (old l_s) l_s (l_s.rep[l_self])) }
+    ensures { [@expl:wr {self}`size] (wr_frame_size (old l_s) l_s (l_self.singleton)) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`arr] (wr_frame_arr (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
+    ensures { [@expl:wr {self}`contents] (wr_frame_contents (old l_s) l_s (l_self.singleton)) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
+    ensures { [@expl:wr {self}`top] (wr_frame_top (old l_s) l_s (l_self.singleton)) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`top] (wr_frame_top (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
-    
-    ensures { [@expl:wr ({self} union {self}`rep)`size] (wr_frame_size (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
-    
-    ensures { [@expl:wr {self}`rep`length] (wr_frame_length (old l_s) l_s (l_s.rep[l_self])) }
+    ensures { [@expl:wr {self}`arr] (wr_frame_arr (old l_s) l_s (l_self.singleton)) }
     
     ensures { alloc_does_not_shrink (old l_s) l_s }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`contents]
-              (wr_frame_contents (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
+    ensures { [@expl:wr {}`length] (wr_frame_length (old l_s) l_s emptyRgn) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`head] (wr_frame_head (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
+    ensures { [@expl:wr {}`slots] (wr_frame_slots (old l_s) l_s emptyRgn) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
+    ensures { [@expl:wr {self}`head] (wr_frame_head (old r_s) r_s (r_self.singleton)) }
     
-    ensures { [@expl:wr ({self} union {self}`rep)`size] (wr_frame_size (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
+    ensures { [@expl:wr {self}`rep] (wr_frame_rep (old r_s) r_s (r_self.singleton)) }
     
-    ensures { okRefperm l_s r_s pi6 }
+    ensures { [@expl:wr {self}`size] (wr_frame_size (old r_s) r_s (r_self.singleton)) }
     
-    ensures { stackCoupling l_s r_s pi6 }
+    ensures { [@expl:wr {self}`contents] (wr_frame_contents (old r_s) r_s (r_self.singleton)) }
+    
+    ensures { okRefperm l_s r_s pi }
+    
+    ensures { stackCoupling l_s r_s pi }
     
     ensures { let l_s_alloc = old l_s.alloct.M.domain in
               let r_s_alloc = old r_s.alloct.M.domain in
@@ -2734,12 +2766,12 @@ module REL_STACK
               ((agree_allfields
                   l_s
                   r_s
-                  pi6
+                  pi
                   (Rgn.diff (Rgn.union (Rgn.diff l_s.alloct.M.domain l_s_alloc) l_self0) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
                  (agree_allfields
                     r_s
                     l_s
-                    (pi6.PreRefperm.invert)
+                    (pi.PreRefperm.invert)
                     (Rgn.diff (Rgn.union (Rgn.diff r_s.alloct.M.domain r_s_alloc) r_self0) (Rgn.union r_s.pool (img_rep r_s r_s.pool))))) }
     
     ensures { ((let oa = old l_s.alloct.M.domain in
@@ -2760,7 +2792,7 @@ module REL_STACK
     
     ensures { (((l_s.size[l_self]) = 0) /\ ((r_s.size[r_self]) = 0)) }
     
-    ensures { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    ensures { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     
     ensures { ((let bsnap_r25 = old (Rgn.union l_s.pool (img_rep l_s l_s.pool)) in
                 Rgn.subset bsnap_r25 (Rgn.union l_s.pool (img_rep l_s l_s.pool))) /\
@@ -2809,37 +2841,38 @@ module REL_STACK
             Rgn.subset (Rgn.diff (r_s.rep[! r_self]) (null.singleton)) (Rgn.diff r_s.alloct.M.domain oa))) };
       ((! l_result), (! r_result))
   
-  let isEmpty (l_s : state) (r_s : state) (pi : PreRefperm.t) (l_self : reference) (r_self : reference) : 
+  let isEmpty (l_s : state) (r_s : state) (pi13 : PreRefperm.t) (l_self : reference) (r_self : reference) : 
     (bool, bool)
     requires { hasStackType l_s l_self }
     requires { (l_self <> null) }
     requires { hasStackType r_s r_self }
     requires { (r_self <> null) }
-    requires { okRefperm l_s r_s pi }
-    requires { stackCoupling l_s r_s pi }
-    requires { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
-    requires { PreRefperm.idRef pi l_self r_self }
-    requires { ((agree_allfields l_s r_s pi (l_self.singleton)) /\ (agree_allfields r_s l_s (pi.PreRefperm.invert) (r_self.singleton)))
+    requires { okRefperm l_s r_s pi13 }
+    requires { stackCoupling l_s r_s pi13 }
+    requires { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
+    requires { PreRefperm.idRef pi13 l_self r_self }
+    requires { ((agree_allfields l_s r_s pi13 (l_self.singleton)) /\
+                  (agree_allfields r_s l_s (pi13.PreRefperm.invert) (r_self.singleton)))
     }
     requires { ((Rgn.mem l_self l_s.pool) /\ (Rgn.mem r_self r_s.pool)) }
-    ensures { okRefperm l_s r_s pi }
+    ensures { okRefperm l_s r_s pi13 }
     
-    ensures { stackCoupling l_s r_s pi }
+    ensures { stackCoupling l_s r_s pi13 }
     
     ensures { let l_s_alloc = old l_s.alloct.M.domain in
               let r_s_alloc = old r_s.alloct.M.domain in
               ((agree_allfields
                   l_s
                   r_s
-                  pi
+                  pi13
                   (Rgn.diff (Rgn.diff l_s.alloct.M.domain l_s_alloc) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
                  (agree_allfields
                     r_s
                     l_s
-                    (pi.PreRefperm.invert)
+                    (pi13.PreRefperm.invert)
                     (Rgn.diff (Rgn.diff r_s.alloct.M.domain r_s_alloc) (Rgn.union r_s.pool (img_rep r_s r_s.pool))))) }
     
-    ensures { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    ensures { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     
     ensures { match result with
               | (l_result, r_result) -> ((l_result <-> ((l_s.size[l_self]) = 0)) /\ (r_result <-> ((r_s.size[r_self]) = 0)))
@@ -2862,26 +2895,26 @@ module REL_STACK
       (r_result := ([@expl:result := sz = 0] ((! r_sz) = 0)));
       ((! l_result), (! r_result))
   
-  let push (l_s : state) (r_s : state) (pi7 : PreRefperm.t) (l_self : reference) (l_k : int) (r_self : reference) (r_k : int) : 
+  let push (l_s : state) (r_s : state) (pi : PreRefperm.t) (l_self : reference) (l_k : int) (r_self : reference) (r_k : int) : 
     (unit, unit)
     requires { hasStackType l_s l_self }
     requires { (l_self <> null) }
     requires { hasStackType r_s r_self }
     requires { (r_self <> null) }
-    requires { okRefperm l_s r_s pi7 }
-    requires { stackCoupling l_s r_s pi7 }
+    requires { okRefperm l_s r_s pi }
+    requires { stackCoupling l_s r_s pi }
     requires { ((agree_allfields
                    l_s
                    r_s
-                   pi7
+                   pi
                    (Rgn.diff (Rgn.union (l_self.singleton) (l_s.rep[l_self])) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
                   (agree_allfields
                      r_s
                      l_s
-                     (pi7.PreRefperm.invert)
+                     (pi.PreRefperm.invert)
                      (Rgn.diff (Rgn.union (r_self.singleton) (r_s.rep[r_self])) (Rgn.union r_s.pool (img_rep r_s r_s.pool)))))
     }
-    requires { (PreRefperm.idRef pi7 l_self r_self) /\ (l_k = r_k) }
+    requires { (PreRefperm.idRef pi l_self r_self) /\ (l_k = r_k) }
     requires { ((let sz = l_s.size[l_self] in
                  sz
                  <
@@ -2889,9 +2922,10 @@ module REL_STACK
                                   sz
                                   <
                                   r_s.maxSize)) }
-    requires { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    requires { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     requires { ((Rgn.mem l_self l_s.pool) /\ (Rgn.mem r_self r_s.pool)) }
-    writes { l_s.alloct,
+    writes { pi,
+      l_s.alloct,
       l_s.arr,
       l_s.cell_rep,
       l_s.cell_value,
@@ -2903,6 +2937,8 @@ module REL_STACK
       r_s.alloct,
       r_s.car,
       r_s.cdr,
+      r_s.cell_rep,
+      r_s.cell_value,
       r_s.contents,
       r_s.head,
       r_s.rep,
@@ -2933,17 +2969,21 @@ module REL_STACK
     
     ensures { [@expl:wr {self}`rep`cdr] (wr_frame_cdr (old r_s) r_s (r_s.rep[r_self])) }
     
+    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old r_s) r_s (r_s.rep[r_self])) }
+    
     ensures { [@expl:wr ({self} union {self}`rep)`rep] (wr_frame_rep (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
+    
+    ensures { [@expl:wr {self}`rep`cell_rep] (wr_frame_cell_rep (old r_s) r_s (r_s.rep[r_self])) }
     
     ensures { [@expl:wr ({self} union {self}`rep)`size] (wr_frame_size (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
     
-    ensures { [@expl:wr {self}`rep`car] (wr_frame_car (old r_s) r_s (r_s.rep[r_self])) }
+    ensures { [@expl:wr {self}`rep`cell_value] (wr_frame_cell_value (old r_s) r_s (r_s.rep[r_self])) }
     
     ensures { alloc_does_not_shrink (old r_s) r_s }
     
-    ensures { okRefperm l_s r_s pi7 }
+    ensures { okRefperm l_s r_s pi }
     
-    ensures { stackCoupling l_s r_s pi7 }
+    ensures { stackCoupling l_s r_s pi }
     
     ensures { let l_s_alloc = old l_s.alloct.M.domain in
               let r_s_alloc = old r_s.alloct.M.domain in
@@ -2952,12 +2992,12 @@ module REL_STACK
               ((agree_allfields
                   l_s
                   r_s
-                  pi7
+                  pi
                   (Rgn.diff (Rgn.union (Rgn.diff l_s.alloct.M.domain l_s_alloc) l_snap_r1) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
                  (agree_allfields
                     r_s
                     l_s
-                    (pi7.PreRefperm.invert)
+                    (pi.PreRefperm.invert)
                     (Rgn.diff
                         (Rgn.union (Rgn.diff r_s.alloct.M.domain r_s_alloc) r_snap_r1)
                         (Rgn.union r_s.pool (img_rep r_s r_s.pool))))) }
@@ -2996,7 +3036,7 @@ module REL_STACK
                   +
                   1)) }
     
-    ensures { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    ensures { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     
     ensures { ((let bsnap_r25 = old (Rgn.union l_s.pool (img_rep l_s l_s.pool)) in
                 Rgn.subset bsnap_r25 (Rgn.union l_s.pool (img_rep l_s l_s.pool))) /\
@@ -3014,8 +3054,9 @@ module REL_STACK
       let r_self = ref r_self in
       let r_k = ref r_k in
       let l_a = ref null in
-      let l_m = ref 0 in
+      let l_t = ref 0 in
       let l_v = ref null in
+      let r_v = ref null in
       let r_n = ref null in
       let r_tmp = ref null in
       let l_sz = ref 0 in
@@ -3025,14 +3066,18 @@ module REL_STACK
       let ghost l_contents = ref (any intList) in
       let ghost r_contents = ref (any intList) in
       (l_a := ([@expl:a := self.arr] (l_s.arr[! l_self])));
-      (l_m := ([@expl:m := self.top] (l_s.top[! l_self])));
-      ([@expl:self.top := m + 1] (set_top l_s (! l_self) ((! l_m) + 1)));
+      (l_t := ([@expl:t := self.top] (l_s.top[! l_self])));
+      ([@expl:self.top := t + 1] (set_top l_s (! l_self) ((! l_t) + 1)));
       (l_v := ([@expl:v := new Cell] (l_s.mk_Cell)));
-      ([@expl:Cell(v,k)] (ArrayStack.Cell.init_Cell l_s (! l_v) (! l_k)));
-      (set_slots l_s (! l_a) ([@expl:a.{m + 1} := v] (A.set (l_s.slots[! l_a]) ((! l_m) + 1) (! l_v))));
+      (r_v := ([@expl:v := new Cell] (r_s.mk_Cell)));
+      (PreRefperm.updateRefperm pi (! l_v) (! r_v));
+      ([@expl:v.cell_value := k] (set_cell_value l_s (! l_v) (! l_k)));
+      ([@expl:v.cell_rep := {v}] (set_cell_rep l_s (! l_v) ((! l_v).singleton)));
+      ([@expl:Cell(v,k)] (ListStack.STACK.CELL.init_Cell r_s (! r_v) (! r_k)));
+      (set_slots l_s (! l_a) ([@expl:a.{t + 1} := v] (A.set (l_s.slots[! l_a]) ((! l_t) + 1) (! l_v))));
       ([@expl:self.arr := a] (set_arr l_s (! l_self) (! l_a)));
       (r_n := ([@expl:n := new Node] (r_s.mk_Node)));
-      ([@expl:n.car := k] (set_car r_s (! r_n) (! r_k)));
+      ([@expl:n.car := v] (set_car r_s (! r_n) (! r_v)));
       (r_tmp := ([@expl:tmp := self.head] (r_s.head[! r_self])));
       ([@expl:n.cdr := tmp] (set_cdr r_s (! r_n) (! r_tmp)));
       ([@expl:self.head := n] (set_head r_s (! r_self) (! r_n)));
@@ -3043,7 +3088,8 @@ module REL_STACK
       (l_rep := ([@expl:rep := self.rep] (l_s.rep[! l_self])));
       (r_rep := ([@expl:rep := self.rep] (r_s.rep[! r_self])));
       ([@expl:self.rep := rep union {v}] (set_rep l_s (! l_self) (Rgn.union (! l_rep) ((! l_v).singleton))));
-      ([@expl:self.rep := rep union {n}] (set_rep r_s (! r_self) (Rgn.union (! r_rep) ((! r_n).singleton))));
+      ([@expl:self.rep := rep union {v} union {n}]
+       (set_rep r_s (! r_self) (Rgn.union (Rgn.union (! r_rep) ((! r_v).singleton)) ((! r_n).singleton))));
       (l_contents := ([@expl:contents := self.contents] (l_s.contents[! l_self])));
       (r_contents := ([@expl:contents := self.contents] (r_s.contents[! r_self])));
       ([@expl:self.contents := cons(k,contents)] (set_contents l_s (! l_self) (ArrayStack.STACK.cons (! l_k) (! l_contents))));
@@ -3068,27 +3114,27 @@ module REL_STACK
             Rgn.subset (r_s.rep[! r_self]) (Rgn.union orep (Rgn.diff r_s.alloct.M.domain oa)))) };
       ((! l_result), (! r_result))
   
-  let pop (l_s : state) (r_s : state) (pi : PreRefperm.t) (l_self : reference) (r_self : reference) : 
-    (int, int)
+  let pop (l_s : state) (r_s : state) (pi14 : PreRefperm.t) (l_self : reference) (r_self : reference) : 
+    (reference, reference)
     requires { hasStackType l_s l_self }
     requires { (l_self <> null) }
     requires { hasStackType r_s r_self }
     requires { (r_self <> null) }
-    requires { okRefperm l_s r_s pi }
-    requires { stackCoupling l_s r_s pi }
+    requires { okRefperm l_s r_s pi14 }
+    requires { stackCoupling l_s r_s pi14 }
     requires { ((agree_allfields
                    l_s
                    r_s
-                   pi
+                   pi14
                    (Rgn.diff (Rgn.union (l_self.singleton) (l_s.rep[l_self])) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
                   (agree_allfields
                      r_s
                      l_s
-                     (pi.PreRefperm.invert)
+                     (pi14.PreRefperm.invert)
                      (Rgn.diff (Rgn.union (r_self.singleton) (r_s.rep[r_self])) (Rgn.union r_s.pool (img_rep r_s r_s.pool)))))
     }
-    requires { PreRefperm.idRef pi l_self r_self }
-    requires { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    requires { PreRefperm.idRef pi14 l_self r_self }
+    requires { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     requires { ((let sz = l_s.size[l_self] in
                  sz
                  >
@@ -3098,6 +3144,14 @@ module REL_STACK
                         0)) }
     requires { ((Rgn.mem l_self l_s.pool) /\ (Rgn.mem r_self r_s.pool)) }
     writes { l_s.contents, l_s.size, l_s.top, r_s.contents, r_s.head, r_s.size }
+    ensures { match result with
+              | (l_result, _) -> hasCellType l_s l_result
+              end }
+    
+    ensures { match result with
+              | (_, r_result) -> hasCellType r_s r_result
+              end }
+    
     ensures { [@expl:wr ({self} union {self}`rep)`contents]
               (wr_frame_contents (old l_s) l_s (Rgn.union (l_self.singleton) (l_s.rep[l_self]))) }
     
@@ -3112,12 +3166,17 @@ module REL_STACK
     
     ensures { [@expl:wr ({self} union {self}`rep)`size] (wr_frame_size (old r_s) r_s (Rgn.union (r_self.singleton) (r_s.rep[r_self]))) }
     
-    ensures { okRefperm l_s r_s pi }
+    ensures { okRefperm l_s r_s pi14 }
     
-    ensures { stackCoupling l_s r_s pi }
+    ensures { stackCoupling l_s r_s pi14 }
     
     ensures { match result with
-              | (l_result, r_result) -> (l_result = r_result)
+              | (l_result, r_result) ->
+                  let l_r = l_result in
+                  let r_r = r_result in
+                  let l_c = l_s.cell_value[l_r] in
+                  let r_c = r_s.cell_value[r_r] in
+                  (l_c = r_c)
               end }
     
     ensures { let l_s_alloc = old l_s.alloct.M.domain in
@@ -3127,26 +3186,33 @@ module REL_STACK
               ((agree_allfields
                   l_s
                   r_s
-                  pi
+                  pi14
                   (Rgn.diff (Rgn.union (Rgn.diff l_s.alloct.M.domain l_s_alloc) l_snap_r1) (Rgn.union l_s.pool (img_rep l_s l_s.pool)))) /\
                  (agree_allfields
                     r_s
                     l_s
-                    (pi.PreRefperm.invert)
+                    (pi14.PreRefperm.invert)
                     (Rgn.diff
                         (Rgn.union (Rgn.diff r_s.alloct.M.domain r_s_alloc) r_snap_r1)
                         (Rgn.union r_s.pool (img_rep r_s r_s.pool))))) }
     
-    ensures { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) }
+    ensures { ((l_s.ArrayStack.STACK.stackPub) /\ (r_s.ListStack.STACK.stackPub)) }
     
-    ensures { ((let rep8 = old (l_s.rep[l_self]) in
+    ensures { ((let rep15 = old (l_s.rep[l_self]) in
                 (l_s.rep[l_self])
                 =
-                rep8) /\
-                 (let rep9 = old (r_s.rep[r_self]) in
+                rep15) /\
+                 (let rep16 = old (r_s.rep[r_self]) in
                   (r_s.rep[r_self])
                   =
-                  rep9)) }
+                  rep16)) }
+    
+    ensures { match result with
+              | (l_result, r_result) ->
+                  ((let rep17 = l_s.rep[l_self] in
+                    Rgn.mem l_result rep17) /\ (let rep18 = r_s.rep[r_self] in
+                                                Rgn.mem r_result rep18))
+              end }
     
     ensures { ((let ostk = old (l_s.contents[l_self]) in
                 (l_s.contents[l_self])
@@ -3160,15 +3226,15 @@ module REL_STACK
     ensures { match result with
               | (l_result, r_result) ->
                   ((let oxs = old (l_s.contents[l_self]) in
-                    let m = oxs.ArrayStack.STACK.hd in
-                    l_result
+                    let t = oxs.ArrayStack.STACK.hd in
+                    (l_s.cell_value[l_result])
                     =
-                    m) /\
+                    t) /\
                      (let oxs = old (r_s.contents[r_self]) in
-                      let m = oxs.ListStack.STACK.hd in
-                      r_result
+                      let t = oxs.ListStack.STACK.hd in
+                      (r_s.cell_value[r_result])
                       =
-                      m))
+                      t))
               end }
     
     ensures { ((let osz = old (l_s.size[l_self]) in
@@ -3188,33 +3254,37 @@ module REL_STACK
                 Rgn.subset bsnap_r25 (Rgn.union l_s.pool (img_rep l_s l_s.pool))) /\
                  (let bsnap_r25 = old (Rgn.union r_s.pool (img_rep r_s r_s.pool)) in
                   Rgn.subset bsnap_r25 (Rgn.union r_s.pool (img_rep r_s r_s.pool)))) }
+    
+    ensures { match result with
+              | (l_result, r_result) -> ((not (l_result = null)) /\ (not (r_result = null)))
+              end }
   = label INIT in
-      let r_result = ref 0 in
-      let l_result = ref 0 in
+      let r_result = ref null in
+      let l_result = ref null in
       let l_self = ref l_self in
       let r_self = ref r_self in
       let l_a = ref null in
-      let l_m = ref 0 in
+      let l_t = ref 0 in
       let r_tmp = ref null in
       let r_nxt = ref null in
       let l_sz = ref 0 in
       let r_sz = ref 0 in
-      let l_pop_car = ref null in
       let ghost l_contents = ref (any intList) in
       let ghost r_contents = ref (any intList) in
       (l_a := ([@expl:a := self.arr] (l_s.arr[! l_self])));
-      (l_m := ([@expl:m := self.top] (l_s.top[! l_self])));
+      (l_t := ([@expl:t := self.top] (l_s.top[! l_self])));
       (r_tmp := ([@expl:tmp := self.head] (r_s.head[! r_self])));
       assert { let stk = r_s.contents[! r_self] in
-               exists h : int, m : intList. stk = (ListStack.STACK.cons h m) };
+               exists h : int, t : intList. stk = (ListStack.STACK.cons h t) };
       assert { (! r_tmp) <> null };
-      assert { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) /\ (stackCoupling l_s r_s pi) };
-      (l_pop_car := ([@expl:pop_car := a.{m}] (A.get (l_s.slots[! l_a]) (! l_m))));
-      assert { stackCoupling l_s r_s pi };
+      assert { (l_s.ArrayStack.arrayStackPriv) /\ (r_s.ListStack.listStackPriv) /\ (stackCoupling l_s r_s pi14) };
+      (l_result := ([@expl:result := a.{t}] (A.get (l_s.slots[! l_a]) (! l_t))));
+      (r_result := ([@expl:result := tmp.car] (r_s.car[! r_tmp])));
+      assert { stackCoupling l_s r_s pi14 };
       assert { let l_sz = l_s.size[! l_self] in
                let r_sz = r_s.size[! r_self] in
                (l_sz = r_sz) };
-      ([@expl:self.top := m - 1] (set_top l_s (! l_self) ((! l_m) - 1)));
+      ([@expl:self.top := t - 1] (set_top l_s (! l_self) ((! l_t) - 1)));
       (r_nxt := ([@expl:nxt := tmp.cdr] (r_s.cdr[! r_tmp])));
       ([@expl:self.head := nxt] (set_head r_s (! r_self) (! r_nxt)));
       (l_sz := ([@expl:sz := self.size] (l_s.size[! l_self])));
@@ -3234,17 +3304,52 @@ module REL_STACK
           (l_s.ArrayStack.arrayStackPriv)
           /\
           (r_s.ListStack.listStackPriv) };
-      (l_result := ([@expl:result := pop_car.cell_value] (l_s.cell_value[! l_pop_car])));
-      (r_result := ([@expl:result := tmp.car] (r_s.car[! r_tmp])));
+      assume {
+        ((let rep19 = l_s.rep[! l_self] in
+          Rgn.mem (! l_result) rep19) /\
+           (let rep20 = r_s.rep[! r_self] in
+            Rgn.mem (! r_result) rep20)) };
+      ((! l_result), (! r_result))
+  
+  let getCellValue (l_s : state) (r_s : state) (pi : PreRefperm.t) (l_c : reference) (r_c : reference) : 
+    (int, int)
+    requires { hasCellType l_s l_c }
+    requires { (l_c <> null) }
+    requires { hasCellType r_s r_c }
+    requires { (r_c <> null) }
+    requires { okRefperm l_s r_s pi }
+    requires { stackCoupling l_s r_s pi }
+    requires { let l_v = l_s.cell_value[l_c] in
+               let r_v = r_s.cell_value[r_c] in
+               (l_v = r_v) }
+    ensures { okRefperm l_s r_s pi }
+    
+    ensures { stackCoupling l_s r_s pi }
+    
+    ensures { match result with
+              | (l_result, r_result) -> (l_result = r_result)
+              end }
+    
+    ensures { ((let bsnap_r25 = old (Rgn.union l_s.pool (img_rep l_s l_s.pool)) in
+                Rgn.subset bsnap_r25 (Rgn.union l_s.pool (img_rep l_s l_s.pool))) /\
+                 (let bsnap_r25 = old (Rgn.union r_s.pool (img_rep r_s r_s.pool)) in
+                  Rgn.subset bsnap_r25 (Rgn.union r_s.pool (img_rep r_s r_s.pool)))) }
+  = label INIT in
+      let r_result = ref 0 in
+      let l_result = ref 0 in
+      let l_c = ref l_c in
+      let r_c = ref r_c in
+      (l_result := ([@expl:result := c.cell_value] (l_s.cell_value[! l_c])));
+      (r_result := ([@expl:result := c.cell_value] (r_s.cell_value[! r_c])));
       ((! l_result), (! r_result))
   
   lemma boundary_frames_coupling_REL_STACK:
-    forall s : state, t : state, s' : state, t' : state, pi10 : PreRefperm.t, pi' : PreRefperm.t, rho : PreRefperm.t.
-      (okRefperm s t pi10)
+    forall s : state, t : state, s' : state, t' : state, pi21 : PreRefperm.t, pi' : PreRefperm.t, rho : PreRefperm.t.
+      (okRefperm s t pi21)
         ->
         (okRefperm s' t' pi')
         ->
-        (PreRefperm.identity pi10 s.alloct.M.domain t.alloct.M.domain)
+        (PreRefperm.identity pi21 s.alloct.M.domain t.alloct.M.domain)
         ->
         (PreRefperm.identity pi' s'.alloct.M.domain t'.alloct.M.domain)
         ->
@@ -3254,9 +3359,9 @@ module REL_STACK
         ->
         (s.maxSize = t.maxSize)
         ->
-        (PreRefperm.idRgn pi10 s.pool t.pool)
+        (PreRefperm.idRgn pi21 s.pool t.pool)
         ->
-        (agree_allfields s t pi10 (Rgn.union s.pool (img_rep s s.pool)))
+        (agree_allfields s t pi21 (Rgn.union s.pool (img_rep s s.pool)))
         ->
         (s'.maxSize = t'.maxSize)
         ->
@@ -3269,10 +3374,10 @@ module REL_STACK
         (stackCoupling t t' rho)
   
   lemma stackCoupling_is_refperm_monotonic:
-    forall s : state, t : state, pi11 : PreRefperm.t.
-      ((okRefperm s t pi11) ->
-         ((stackCoupling s t pi11) ->
-            (forall rho : PreRefperm.t. ((okRefperm s t rho) -> ((PreRefperm.extends pi11 rho) -> (stackCoupling s t rho))))))
+    forall s : state, t : state, pi22 : PreRefperm.t.
+      ((okRefperm s t pi22) ->
+         ((stackCoupling s t pi22) ->
+            (forall rho : PreRefperm.t. ((okRefperm s t rho) -> ((PreRefperm.extends pi22 rho) -> (stackCoupling s t rho))))))
 end
 
 module CLIENT_REL_biinterface
@@ -3281,6 +3386,33 @@ module CLIENT_REL_biinterface
   use Client1
   use Client2
   use REL_STACK
+end
+
+module Cell
+  use prelude.Prelude
+  use State
+  use CELL
+  
+  let init_Cell (s : state) (self : reference) (k : int) : unit
+    requires { hasCellType s self }
+    requires { (self <> null) }
+    writes { s.cell_rep, s.cell_value }
+    ensures { (result = ()) }
+    
+    ensures { [@expl:wr {self}`cell_rep] (wr_frame_cell_rep (old s) s (self.singleton)) }
+    
+    ensures { [@expl:wr {self}`cell_value] (wr_frame_cell_value (old s) s (self.singleton)) }
+    
+    ensures { (s.cell_value[self]) = k }
+    
+    ensures { (s.cell_rep[self]) = (self.singleton) }
+  = label INIT in
+      let result = ref () in
+      let self = ref self in
+      let k = ref k in
+      ([@expl:self.cell_value := k] (set_cell_value s (! self) (! k)));
+      ([@expl:self.cell_rep := {self}] (set_cell_rep s (! self) ((! self).singleton)));
+      (! result)
 end
 
 module MAIN

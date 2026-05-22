@@ -780,17 +780,14 @@ end = struct
     | Biassert rf -> Biassert rf
     | Biupdate (x, x') -> Biupdate (x, x')
     | Biwhile (e, e', ag, wspec, cc) ->
-      let lwrs = write_targets bi_ctxt.lft (projl cc) in
-      let rwrs = write_targets bi_ctxt.rgt (projr cc) in
-      let leff, reff = wspec.biwframe in
-      let leff = refine_effect leff lwrs in
-      let reff = refine_effect reff rwrs in
-      let wspec = {wspec with biwframe = (leff, reff)} in
+      (* Framework frame (biwframe) is part of the loop specification and must NOT be
+         refined: it has to mention every field written under {stk}`any / {stk}`rep`any on
+         each side (as expanded by Resolve_datagroups) so that the post-loop boundary frame
+         (wr_frame_* over pool`rep`any) can be re-established.  Refining it against a single
+         side's body write-targets collapses both sides to one module's fields (e.g. drops
+         ArrayStack's slots/arr/top), making the boundary obligations unprovable.
+         Only method postcondition effects are refined based on actual body writes. *)
       Biwhile (e, e', ag, wspec, refine_bicommand bi_ctxt cc)
-      
-      (* Framework frame (biwframe) is part of the loop specification and should NOT be refined.
-         Only method postcondition effects are refined based on actual body writes. *) 
-      (* Biwhile (e, e', ag, wspec, refine_bicommand bi_ctxt cc) *)
 
   let dest_bimeth_def = function Bimethod (decl, cc) -> (decl, cc)
 
