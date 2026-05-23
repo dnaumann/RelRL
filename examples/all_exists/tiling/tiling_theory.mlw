@@ -1,0 +1,10 @@
+module Tiling_theory
+  use int.Int
+
+  val function f (i:int) : int
+
+  lemma scaling_preserves_inequalities : forall a b c.
+    a > 0 -> b < c -> b * a < c * a
+
+
+end
