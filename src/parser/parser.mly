@@ -267,11 +267,16 @@ let mk_boundary_elt loc desc =
 %nonassoc UMINUS
 
 %start <Ast.program> top
+%start <Ast.rformula Ast.node> rformula_top
 
 %%
 
 top:
   | i=program EOF { i }
+  ;
+
+rformula_top:
+  | rf=rformula EOF { rf }
   ;
 
 simple_lident:

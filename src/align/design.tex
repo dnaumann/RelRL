@@ -1,4 +1,5 @@
 \documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb}
 \usepackage{hyperref}
@@ -14,6 +15,8 @@
   breaklines=true,
 }
 
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+
 \title{Design Document: Align Mode for WhyRel}
 \author{WhyRel Project}
 \date{\today}
@@ -25,248 +28,461 @@
 \newpage
 
 % ============================================================
-\section{Overview}
+\section{About}
 % ============================================================
 
-Align mode (\texttt{-align}) is a tool-assisted workflow within WhyRel for constructing
-\emph{bicommands} --- the relational programs that pair up the execution steps of two
-unary methods and serve as the proof skeleton for relational verification.
-
-Writing bicommands by hand is tedious and error-prone.  The alignment of two programs
-is not unique: many correct alignments exist, and the ``best'' one for a given proof
-depends on the relationship being proved.  Align mode addresses this by:
+\emph{bimethods} are product programs that pair up the execution steps of two
+unary methods, together with annotations that serve as the proof skeleton for
+relational verification. Manual construction of bicommands runs into two issues:
 
 \begin{enumerate}
-  \item Computing a \emph{default alignment} automatically from the two method bodies.
-  \item Displaying the result in a form the user can inspect and refine.
-  \item (Planned) Providing an interactive rewriting interface so the user can pivot to
-        a better alignment without leaving the tool.
+  \item it is tedious, error prone and time consuming; and
+  \item an alignment well suited to the relational specification often takes a
+        few iterations of tinkering to discover.
 \end{enumerate}
 
+\emph{Align mode} is a CLI workflow within WhyRel that helps construct bimethods.
+It:
+
+\begin{enumerate}
+  \item computes a \emph{default alignment} automatically for two unary methods
+        --- the \emph{sequential} bicommand $(C \mid C')$;
+  \item serves it over a local HTTP API (and a browser UI) for inspection; and
+  \item lets the user \emph{rewrite} the alignment interactively --- weaving,
+        unweaving, synchronising, aligning loops/conditionals, undo/redo --- and
+        then export a \code{.rl} bimodule skeleton.
+\end{enumerate}
+
+The rewrites follow the \emph{weaving relation} of Banerjee et al.\ (a version of
+biprograms extended here with \code{assert}/\code{assume} bicommands). Every
+rewrite preserves the projections of the bicommand, so any sequence of rewrites
+applied to the default alignment is again an alignment of the same two unary
+methods.
+
 % ============================================================
-\section{Background}
+\section{Module overview}
 % ============================================================
 
-\subsection{Relational verification in WhyRel}
-
-WhyRel verifies relational properties (equivalence, noninterference, simulation) by
-asking the user to supply a \emph{bimodule}: a pair of modules together with a
-relational specification and a \emph{bicommand} body.  A bicommand is a structured
-interleaving of two unary command sequences; it must project onto the respective
-unary bodies when the left or right side is erased.
-
-The two primitive bicommand constructors are:
 \begin{description}
-  \item[\texttt{|[c, d]|}] (\texttt{Bisync}/\texttt{Biprod}) --- execute $c$ and $d$
-        synchronously; both sides advance together.
-  \item[\texttt{|[c, skip]|} / \texttt{|[skip, d]|}] (\texttt{Bisplit}) --- advance
-        only one side; the other idles.
+  \item[\code{align.ml}] body lookup, the default (sequential) alignment, and the
+        non-interactive entry point \code{Align.run}.
+  \item[\code{rewrites.ml}] the rewrite algebra: weaving/unweaving rules, loop
+        guard synthesis, focus paths, and the \code{auto_align} driver.
+  \item[\code{interactive.ml}] the stateful HTTP session: current bicommand,
+        undo/redo history, relational-spec checking, guard suggestion, export.
+  \item[\code{http_server.ml}] a minimal HTTP/1.x server: the static server and a
+        generic request-dispatching server, both with graceful shutdown.
+  \item[\code{html_server.ml}] HTML rendering of a bicommand and the single-page
+        browser UI for the interactive session.
 \end{description}
 
-Higher-level constructs (\texttt{Bivardecl}, \texttt{Biwhile}, \ldots) handle
-variable scoping and loops.
-
-\subsection{The alignment problem}
-
-Given unary method bodies $L$ and $R$, an alignment is any bicommand $B$ such that
-$\pi_L(B) \equiv L$ and $\pi_R(B) \equiv R$, where $\pi_L$, $\pi_R$ are the left and
-right projection functions.  Alignments that pair corresponding steps with
-\texttt{Bisync} tend to produce the easiest proofs; purely split alignments always
-work but give weak relational structure.
+Dependencies flow one way: \code{interactive.ml} uses \code{align.ml},
+\code{rewrites.ml}, \code{typing.ml} and the servers; \code{align.ml} never
+refers to \code{interactive.ml}.
 
 % ============================================================
-\section{Current Implementation}
+\section{Entry point}
 % ============================================================
 
-\subsection{Entry point}
-
-Align mode is invoked with:
+Align mode is invoked as:
 \begin{lstlisting}
-whyrel -align -l <LMod> <LMeth> -r <RMod> <RMeth> files... [-o <file>] [-man]
+whyrel -align -l <LMod> <LMeth> -r <RMod> <RMeth> files...
+       [-o <file>] [-man] [-i] [-port <n>]
+       [-rpre <rformula>] [-rpost <rformula>]
 \end{lstlisting}
 
-\texttt{main.ml} parses and type-checks the input files in the usual way, then calls
-\texttt{Align.run} instead of the translation pipeline.
-
-\subsection{Default alignment (\texttt{align.ml})}
-
-The default alignment is computed by \texttt{compose\_sequentially}:
-
-\begin{enumerate}
-  \item Look up the bodies of \texttt{LMod.LMeth} and \texttt{RMod.RMeth} in
-        \texttt{penv} via \texttt{find\_method\_body}.
-  \item Call \texttt{build\_default lc rc}, which:
-        \begin{itemize}
-          \item Pierces matching \texttt{Vardecl} nodes on either side with
-                \texttt{Bivardecl}, preserving scoping.
-          \item Flattens remaining sequences with \texttt{flatten\_seq}.
-          \item Interleaves the flat step lists with \texttt{interleave\_steps}: each
-                left step is emitted as \texttt{|[c, skip]|} followed by the
-                corresponding right step as \texttt{|[skip, d]|}; unmatched tail
-                steps are padded with \texttt{skip}.
-        \end{itemize}
-\end{enumerate}
-
-This produces a fully split alignment --- no synchronisation is assumed.  It is always
-valid (projections are correct by construction) but typically not the intended proof
-structure.
-
-\subsection{Output modes}
-
-Two output modes are currently supported, selected by the \texttt{-man} flag.
-
-\paragraph{Default mode (HTTP server, \texttt{http\_server.ml}).}
-The bicommand is pretty-printed to a string and served as plain text over a local HTTP
-server on port 8080 at \texttt{/bicom}.  The client (e.g.\ a browser or \texttt{curl})
-can fetch the alignment text.
-
-\paragraph{Manual / HTML mode (\texttt{-man}, \texttt{html\_server.ml}).}
-The bicommand is rendered as a line-numbered HTML page (dark-theme monospace) and
-served at \texttt{/bicom}.  This is useful for visual inspection.
-
-% ============================================================
-\section{Planned Features}
-% ============================================================
-
-\subsection{Synchronisation heuristics}
-
-The default split-everything alignment is rarely the desired proof structure.  Common
-heuristics to improve it:
-
-\begin{itemize}
-  \item \textbf{Syntactic matching}: pair steps that are syntactically identical
-        (same assignment shape, same field, same operator) as \texttt{Bisync}.
-  \item \textbf{Loop pairing}: when both sides contain a \texttt{While} loop at the
-        same position, emit a \texttt{Biwhile} rather than two split loops.
-  \item \textbf{User-provided hints}: allow the user to annotate the source with
-        alignment hints that override the default.
-\end{itemize}
-
-\subsection{Rewriting rules (\texttt{rewrites.ml})}
-
-Once a default alignment is displayed, the user should be able to refine it by applying
-named rewriting rules that preserve projection correctness.  Candidate rules include:
+\texttt{main.ml} parses and type-checks the input files, then dispatches to
+align mode instead of the translation pipeline.
 
 \begin{description}
-  \item[\textsc{Sync}] Merge \texttt{|[c, skip]| ; |[skip, d]|} into \texttt{|[c, d]|}
-        when $c$ and $d$ are ``related enough'' (e.g.\ same shape).
-  \item[\textsc{SplitL} / \textsc{SplitR}] Reverse of \textsc{Sync}: split a
-        \texttt{Bisync} step into two split steps.
-  \item[\textsc{SwapL} / \textsc{SwapR}] Move a split step past the next step on the
-        same side (commuting independent statements).
-  \item[\textsc{PairWhile}] Convert two consecutive \texttt{While} bisplit loops into a
-        \texttt{Biwhile}.
-  \item[\textsc{UnpairWhile}] Reverse of \textsc{PairWhile}.
+  \item[\code{-l} / \code{-r}] left/right module and method to align.
+  \item[\code{-o <file>}] output file for export (default
+        \code{<stem>_align_output.rl}).
+  \item[\code{-man}] serve the default alignment as a line-numbered HTML page
+        (no rewriting).
+  \item[\code{-i}] start the \emph{interactive} rewriting server (\S\ref{sec:interactive}).
+  \item[\code{-port <n>}] port for any of the servers (default \code{8080}).
+  \item[\code{-rpre} / \code{-rpost}] relational pre/postcondition
+        (\S\ref{sec:spec}).
 \end{description}
 
-Each rule has a \emph{focus}: the line or node in the bicommand where it applies.
-Rules should be invertible where possible to support undo.
+Without \code{-i} the server is read-only: it serves the default alignment as
+text (or, with \code{-man}, as HTML). With \code{-i} it serves the full
+rewriting API.
 
-\subsection{Interactive mode (\texttt{interactive.ml})}
+% ============================================================
+\section{Default alignment: the sequential bicommand}
+% ============================================================
 
-The interactive mode extends the HTTP server with a stateful session:
+The default alignment is computed by \code{Align.compose_sequentially}, which
+looks up the two method bodies (\code{find_method_body}) and calls
+\code{build_default}.
 
-\begin{enumerate}
-  \item The server holds the current bicommand as mutable state.
-  \item \texttt{GET /bicom} returns the current alignment (HTML or plain text).
-  \item \texttt{POST /rewrite} applies a named rewrite rule at a given focus; the
-        server returns the updated alignment.
-  \item \texttt{POST /undo} reverts the last rewrite.
-  \item \texttt{GET /export} writes the current bicommand as a WhyRel bimodule
-        skeleton to the output file.
-\end{enumerate}
+\code{build_default lc rc} produces the bare, \emph{sequential} bicommand
+$(C \mid C')$: it runs all of the left program and then all of the right
+program, making \emph{no} claim about how the two runs line up. Concretely:
 
-A thin browser-side UI (or a CLI companion) can drive this API, letting the user
-iteratively refine the alignment before copying the result into their \texttt{.rl}
-file.
-
-\subsection{Export to bimodule skeleton}
-
-After alignment is finalised, align mode should emit a \texttt{.rl} file containing:
 \begin{itemize}
-  \item The biinterface derived from the two module interfaces.
-  \item A bimodule stub with the aligned bicommand body and placeholder relational
-        specifications (\texttt{requires true}, \texttt{ensures true}).
+  \item leading \code{Vardecl} nodes are lifted to \code{Bivardecl} so the two
+        sides share bi-program scope (pure scoping plumbing --- the projections
+        are unchanged); and
+  \item the remaining bodies become a single \code{Bisplit (lc, rc)}.
 \end{itemize}
-This skeleton can be opened in an editor, filled in with the actual relational
-specifications, and fed back to the full WhyRel pipeline.
+
+This is the least-aligned adequate product (the analogue of self-composition).
+It is always projection-valid, and it is the starting point from which the
+weaving rewrites introduce synchronisation.
+
+\paragraph{Note.} This replaces an earlier default that eagerly split and
+\emph{interleaved} every step. Starting from the sequential bicommand and weaving
+on demand keeps the tool from pre-committing to an alignment the user did not
+ask for.
 
 % ============================================================
-\section{Architecture}
+\section{The rewrite algebra (\texttt{rewrites.ml})}
 % ============================================================
 
-\begin{verbatim}
-Align.run
-  |
-  +-- compose_sequentially     (align.ml)
-  |     |
-  |     +-- find_method_body   lookup in penv
-  |     +-- build_default      structural recursion over Vardecl/Seq
-  |           +-- interleave_steps   flat step pairing
-  |
-  +-- [man_mode = false]  start_server (http_server.ml)   plain text
-  +-- [man_mode = true]   start_html_server (html_server.ml) HTML view
-  |
-  (planned)
-  +-- Interactive.session      stateful rewrite loop
-  |     +-- Rewrites.apply     rewrite rules
-  |     +-- Rewrites.undo      history stack
-  +-- Export.bimodule_skeleton emit .rl stub
-\end{verbatim}
+A rewrite is a partial, projection-preserving transformation on a bicommand:
+\begin{lstlisting}
+type rewrite = bicommand -> bicommand option   (* Some when it applies at the root *)
+\end{lstlisting}
+
+\subsection{Forward weaving (coarse $\to$ fine)}
+
+These introduce synchronisation; they mirror Banerjee's weaving axioms.
+
+\begin{lstlisting}
+weave_vardecl : (Var x | Var y in (C|C'))  ~~>  Var x|y in (C|C')
+weave_seq     : (C1;C2 | C1';C2')          ~~>  (C1|C1') ; (C2|C2')
+weave_sync    : (A | A)                    ~~>  |_ A _|        (* A atomic, sides equal *)
+weave_if      : (if E .. | if E' ..)       ~~>  if E|E' then (..|..) else (..|..)
+weave_if4     : (if E .. | if E' ..)       ~~>  Biif4 with all four branch pairings
+weave_while   : (while E .. | while E' ..) ~~>  while E|E' . <false|false> do (..|..)
+\end{lstlisting}
+
+\begin{itemize}
+  \item \code{weave_seq} is one application of the BiKAT left/right-commute law.
+        Applied repeatedly down a right-nested sequence it peels the two programs
+        apart one statement at a time.
+  \item \code{weave_sync} fires only when the two atomic commands are
+        structurally equal (the test used by \code{Annot.eqv_command}).
+  \item \code{weave_if} produces the two-way \code{Biif} (lockstep); it is
+        projection-valid always but \emph{adequate} only when the guards agree
+        --- that becomes a proof obligation. \code{weave_if4} produces the
+        four-way \code{Biif4}, which is adequate unconditionally but de-aligns;
+        it is offered in \code{/suggest} but never used by \code{auto_align}.
+  \item \code{weave_while} produces the \emph{lockstep} loop (both alignment
+        guards \code{false}) and carries the unary loop invariants across
+        (\S\ref{sec:invariants}).
+\end{itemize}
+
+\subsection{Inverse weaving (fine $\to$ coarse)}
+
+\begin{lstlisting}
+unweave_seq : (C1|C1') ; (C2|C2')  ~~>  (C1;C2 | C1';C2')   (* inverse of weave_seq *)
+unsync      : |_ A _|              ~~>  (A | A)              (* inverse of weave_sync *)
+\end{lstlisting}
+
+\subsection{Loop alignment guards}
+\label{sec:guards}
+
+\code{weave_while} hard-codes the lockstep guard. For other alignments,
+\code{weave_while_guard ag} weaves a loop pair with a chosen
+\code{alignment_guard} \code{ag = (P | P')}, where \code{P} (resp.\ \code{P'})
+is the relational condition under which a \emph{left-only} (resp.\ right-only)
+iteration is taken; when neither holds and both loop guards hold, the iteration
+is lockstep. (Projections ignore the alignment guard, so any guard is
+projection-valid; adequacy is the prover's concern.)
+
+Candidates are \emph{synthesised} from the loop, rather than drawn from a fixed
+list, by \code{guard_candidates}:
+
+\begin{lstlisting}
+lockstep    : (false | false)                         iterate together
+diff        : (<e> /\ ~<e'> | ~<e> /\ <e'>)           lockstep, then drain the lagging loop
+left-first  : (true | false)                          run the left loop, then the right
+right-first : (false | true)                          run the right loop, then the left
+\end{lstlisting}
+
+The headline candidate is the data-dependent \code{diff} alignment, built from
+the two loop guards $e, e'$: it stays in lockstep while both hold and drains
+whichever loop outlasts the other. (Guard direction matches
+\code{Annot.projr_bicommand}.) Truly data-dependent guards that encode a
+\emph{coupling invariant} (e.g.\ \code{w <> 0}) are out of reach of synthesis
+from the loop alone --- see \S\ref{sec:open}.
+
+\subsection{Carrying and suggesting invariants}
+\label{sec:invariants}
+
+Weaving a loop must not discard the invariants the unary loops were verified
+with. \code{lift_unary_invariants} converts them: an invariant present
+(syntactically) on \emph{both} loops becomes \code{Rboth}, a left-only one
+\code{Rleft}, a right-only one \code{Rright}; \code{biwhile_spec_of} also pairs
+the two frames. This is projection-safe --- \code{projl}/\code{projr} recover
+each side's invariants, the other side's projecting to \code{Ftrue} --- and both
+\code{weave_while} and \code{weave_while_guard} use it, so weaving a loop no
+longer throws the invariants away.
+
+On top of the carried invariants the tool suggests \emph{relational} ones.
+\code{coupling_candidates} builds agreement invariants \code{v =:= v} for each
+variable occurring in both loops (collected from the guards and bodies by
+\code{evars_of_exp} / \code{evars_of_command}). These are \emph{candidates}, not
+proven invariants --- a counter that drifts will not agree --- so the user or MCP
+keeps the ones the proof needs.
+
+\code{add_invariant rf} adds a relational invariant \code{rf} to a
+\code{Biwhile}. The interactive layer feeds it either a chosen candidate or an
+arbitrary, MCP-supplied formula (\S\ref{sec:invsuggest}).
+
+\subsection{Focusing}
+
+A rewrite applies at a sub-term selected by a path of child indices:
+\begin{lstlisting}
+type path = int list   (* e.g. [0;1]; [] = root *)
+child_count, get_child, with_child   (* the zipper primitives *)
+apply_at  : path -> rewrite -> bicommand -> bicommand option
+subterm_at: path -> bicommand -> bicommand option
+scope_at  : path -> bicommand -> varbind list * varbind list  (* locals in scope at the focus *)
+suggest_at: path -> bicommand -> (string * bicommand) list  (* applicable rewrites + results *)
+\end{lstlisting}
+
+\code{scope_at} collects the \code{Bivardecl} bindings passed through on the way
+to a focus (split into left/right); with the method parameters it gives the
+typing context for an invariant at a loop (\S\ref{sec:invsuggest}).
+
+\code{all_rewrites} is the named registry used by \code{suggest_at}
+(\code{weave_vardecl}, \code{weave_seq}, \code{weave_sync}, \code{weave_if},
+\code{weave_if4}, \code{weave_while}, \code{unweave_seq}, \code{unsync}).
+
+\subsection{Greedy driver}
+
+\code{auto_align} repeatedly applies the forward weaving rules, descending into
+the structure, to turn the sequential default into the finest \emph{lockstep}
+alignment the shared structure allows. Statements that do not line up are left
+as a \code{Bisplit}. It is only a suggestion; the user refines it.
 
 % ============================================================
-\section{Data Flow}
+\section{Relational specifications}
+\label{sec:spec}
+% ============================================================
+
+A relational pre/postcondition may be supplied with \code{-rpre}/\code{-rpost}.
+Each argument is a single relational formula (e.g.\ \code{"Agree x"},
+\code{"result =:= result"}, \code{"Both(n > 0)"}).
+
+\paragraph{Parsing.} A dedicated parser start symbol \code{rformula_top} (in
+\code{parser.mly}) and \code{Astutil.parse_rformula_string} parse one
+\code{rformula} from a string into the surface AST.
+
+\paragraph{Scope checking.} The formula is type-checked with
+\code{Typing.tc_rformula} against a \emph{restricted} \code{bi_tenv} built by
+\code{restricted_tenv}: starting from \code{initial_tenv} (only \code{alloc}),
+over the program's class table, extended with exactly the method parameters
+---and \code{result} for the postcondition only. Any reference outside the
+arguments (or \code{result}) therefore fails type-checking with an ``unknown
+identifier'' error. This is the requested check that the spec refers only to the
+unary method arguments and the result variable; the precondition cannot mention
+\code{result}.
+
+\paragraph{Limitations.} The restricted environment carries no user-defined
+relational-predicate signatures, so a spec may use arguments, \code{result},
+\code{alloc} and the built-in relational forms (\code{Both}, \code{Agree},
+\code{=:=}, arithmetic, quantifiers) but not user predicates.
+
+\paragraph{Use.} The checked spec is held in the session and reported at
+\code{/spec}. It informs the \emph{ranking} of synthesised loop guards
+(\S\ref{sec:interactive}): the variables it forces to agree (mined from
+\code{Agree}/\code{=:=} atoms by \code{agreed_vars}) decide, when two loop guards
+differ, whether lockstep is still recommended.
+
+% ============================================================
+\section{Interactive server (\texttt{interactive.ml})}
+\label{sec:interactive}
+% ============================================================
+
+With \code{-i}, \code{Interactive.run} builds the default alignment, checks the
+spec, and serves a stateful API on the chosen port. State is a mutable
+\code{current} bicommand plus two stacks: \code{history} (undo) and \code{future}
+(redo).
+
+\subsection{HTTP API}
+
+\begin{lstlisting}
+GET  /                        help text
+GET  /ui                      single-page browser UI
+GET  /bicom                   current alignment (text)
+GET  /bicom.html              current alignment (line-numbered HTML)
+GET  /spec                    relational pre/postcondition
+GET  /history                 undo/redo availability and stack depths (JSON)
+GET  /rules                   all rule names (incl. "undo","redo") (JSON)
+GET  /suggest                 every applicable rewrite, all foci (JSON)
+GET  /suggest?path=0.1        applicable rewrites at one focus (JSON)
+GET  /guards?path=P           synthesised loop alignments at P, spec-ranked (JSON)
+GET  /invariants?path=P       carried invariants + coupling candidates at P (JSON)
+POST /rewrite?rule=R&path=P                 apply rule R at focus P
+POST /rewrite?rule=weave_while&guard=G&path=P   weave a loop with guard G
+POST /rewrite?rule=add_invariant&inv=K&path=P     add coupling candidate K
+POST /rewrite?rule=add_invariant&formula=R&path=P add MCP-supplied invariant R
+POST /rewrite?rule=undo | rule=redo         undo / redo (rule-style)
+POST /undo  /  POST /redo                   undo / redo (verb-style)
+POST /auto                    greedily weave toward lockstep
+POST /reset                   back to the sequential default
+POST /export                  write a .rl bimodule skeleton to the output file
+\end{lstlisting}
+
+A \code{path} is a dot-separated list of child indices (\code{0.1}); empty is the
+root. Mutating endpoints return the updated alignment as text; \code{409} means
+the rule did not apply at the focus, \code{400} a malformed request.
+
+\subsection{Undo / redo}
+
+So that the MCP can undo its rewrites, every successful rewrite \code{snapshot}s
+the previous state onto \code{history} and clears \code{future}; \code{/undo}
+moves the top of \code{history} to \code{future} and back to \code{current};
+\code{/redo} is the mirror image. Undo/redo span \emph{rewrite} steps only:
+\code{/auto} and \code{/reset} clear both stacks. The same operations are reached
+either as verbs (\code{/undo}, \code{/redo}) or as pseudo-rules through
+\code{/rewrite} (\code{rule=undo}, \code{rule=redo}) so a client can drive
+everything through one endpoint; \code{/rules} lists them alongside the real
+rewrites, and \code{/history} reports availability and depths.
+
+\subsection{Guard suggestion}
+
+\code{/guards?path=P} returns the synthesised candidates (\S\ref{sec:guards})
+for a loop focus, each annotated with a one-line \code{rationale} and a
+\code{recommended} flag. The recommendation (\code{recommend}) uses the loop
+structure and the spec: identical loop guards $\Rightarrow$ \code{lockstep}
+(the loops run the same number of times --- e.g.\ a method aligned with itself);
+differing guards $\Rightarrow$ \code{lockstep} only if the spec forces every
+guard variable to agree, otherwise the \code{diff} alignment. Posting
+\code{weave_while} with the query parameter \code{guard=G} at a focus applies the
+named candidate.
+
+\subsection{Invariant suggestion}
+\label{sec:invsuggest}
+
+\code{/invariants?path=P} reports, for a loop focus, the invariants already
+carried (\S\ref{sec:invariants}) and the indexed coupling candidates. There are
+two ways to add one:
+\begin{itemize}
+  \item \code{POST /rewrite?rule=add_invariant&inv=K&path=P} --- add candidate
+        \code{K} from that list; or
+  \item \code{POST /rewrite?rule=add_invariant&formula=R&path=P} --- add an
+        arbitrary, caller- (or MCP-)supplied relational invariant \code{R}.
+\end{itemize}
+
+The \code{formula} form is what lets an agent contribute its own reasoning ---
+e.g.\ a coupling such as \code{i + 1 =:= i} that no \code{v =:= v} candidate can
+express. \code{R} is parsed and type-checked \emph{in the loop's local scope}:
+\code{scope_at} collects the locals in scope at the focus, and
+\code{add_mcp_invariant} builds a \code{bi_tenv} from the method parameters,
+\code{result} and those locals, then runs \code{Typing.tc_rformula} against it.
+A reference to anything not in scope is rejected with a type error. Both forms
+require the loop to be woven (a \code{Biwhile}) first.
+
+% ============================================================
+\section{HTTP servers (\texttt{http\_server.ml}, \texttt{html\_server.ml})}
+% ============================================================
+
+\code{http_server.ml} provides a static server (\code{start_server}, used by the
+read-only modes) and a generic dispatch server (\code{start_dispatch_server},
+used by the interactive session). The dispatch server parses the request line
+into \code{(method, path, query)} (\code{parse_request}, \code{query_params}),
+calls a handler \code{~meth ~path ~query -> (status, content-type, body)},
+and formats the response (\code{http_response}); handler exceptions become
+\code{500}. The interactive API takes all arguments in the query string, so
+request bodies are not parsed; \code{query_params} percent-decodes keys and
+values (via \code{url_decode}), so an argument may contain spaces and
+punctuation --- e.g.\ a relational invariant passed to \code{add_invariant}.
+
+Both servers run through \code{run_accept_loop}, which installs SIGINT/SIGTERM
+handlers and closes the listening socket for a clean shutdown.
+
+\code{html_server.ml} renders a bicommand as a dark-theme, line-numbered HTML
+page (\code{build_html}, served at \code{/bicom.html} and by \code{-man}) and
+builds the single-page UI (\code{build_interactive_html}, served at \code{/ui})
+that drives the API: inspect the current alignment, list suggestions, apply
+rewrites at a focus, choose loop guards, undo/redo, and export.
+
+% ============================================================
+\section{Export}
+% ============================================================
+
+\code{/export} writes a \code{.rl} skeleton (\code{bimodule_skeleton}) to the
+output file: the current woven bicommand wrapped in a \code{bimodule} stub with
+placeholder relational specs (\code{requires true}, \code{ensures true}) and a
+\code{TODO} header. The biinterface and method signatures are left for the user
+to fill in. This is a first cut --- see \S\ref{sec:open}.
+
+% ============================================================
+\section{Pretty-printing}
+% ============================================================
+
+\code{Pretty.pp_bicommand} renders bicommands. The \code{Biwhile} case prints the
+alignment guards \emph{and} the loop invariants in the header
+(\code{while E | E' . P | P' do  invariant {...} ...}); it previously dropped
+both, which made synthesised guards and carried/added invariants invisible.
+
+% ============================================================
+\section{Data flow}
 % ============================================================
 
 \begin{enumerate}
-  \item \textbf{Input}: \texttt{penv} (type-checked program environment),
-        left/right module and method names.
-  \item \textbf{Body extraction}: \texttt{find\_method\_body} returns
-        \texttt{Annot.command option} for each side.
-  \item \textbf{Alignment}: \texttt{build\_default} produces an
-        \texttt{Annot.bicommand}.
-  \item \textbf{Serialisation}: \texttt{Pretty.pp\_bicommand} renders the
-        bicommand to a string.
-  \item \textbf{Serving}: the string (or HTML-wrapped version) is served over
-        HTTP.
-  \item \textbf{(Future) Editing}: rewrite rules transform the bicommand
-        in-place; the updated string is re-served.
-  \item \textbf{(Future) Export}: the final bicommand is written back to a
-        \texttt{.rl} file.
+  \item \textbf{Input}: the type-checked \code{penv} and class table \code{ctbl},
+        the left/right module and method names, optional \code{-rpre}/\code{-rpost}.
+  \item \textbf{Default}: \code{compose_sequentially} builds the sequential
+        bicommand.
+  \item \textbf{Spec}: \code{-rpre}/\code{-rpost} are parsed and scope-checked.
+  \item \textbf{Serve}: read-only (text/HTML) or interactive (the API above).
+  \item \textbf{Edit}: rewrites from \code{rewrites.ml} transform \code{current}
+        (weaving, loop guards, invariants); \code{history}/\code{future} support
+        undo/redo.
+  \item \textbf{Export}: the final bicommand is written as a \code{.rl} stub.
 \end{enumerate}
 
 % ============================================================
-\section{Design Decisions and Open Questions}
+\section{Design decisions and open questions}
+\label{sec:open}
 % ============================================================
 
 \begin{enumerate}
-  \item \textbf{Projection correctness as invariant.}  Every rewrite rule must
-        preserve the projection invariant ($\pi_L(B) \equiv L$, $\pi_R(B) \equiv R$).
-        Rules should be implemented with this as a postcondition and ideally checked
-        by running the WhyRel projection checker after each rewrite.
+  \item \textbf{Projection correctness as invariant.} Every rewrite preserves
+        $\pi_L(B) \equiv L$ and $\pi_R(B) \equiv R$. Rewrites do \emph{not}
+        guarantee fault-freedom/adequacy (e.g.\ \code{weave_if} bets on guard
+        agreement); that remains the prover's responsibility, as in the weaving
+        discipline.
 
-  \item \textbf{Granularity of focus.}  Should rewrites target individual
-        \texttt{Bisplit} nodes (fine-grained) or top-level sequence positions
-        (coarse-grained)?  Fine-grained targeting is more expressive but requires
-        a richer path/zipper representation.
+  \item \textbf{Resolved: configurable port.} Servers take \code{-port}
+        (default 8080), replacing the previously hard-coded port.
 
-  \item \textbf{State representation.}  The interactive server holds mutable OCaml
-        state.  Should this be a simple reference to the current bicommand plus a
-        history stack, or something more structured (e.g.\ a zipper for focus
-        tracking)?
+  \item \textbf{Resolved: state and undo.} The interactive server holds a single
+        \code{current} reference plus \code{history}/\code{future} stacks; focus
+        is an explicit path argument rather than a zipper held in state.
 
-  \item \textbf{Conflict with the normal pipeline.}  Align mode currently skips
-        pre-translation and translation.  If the user wants to verify the resulting
-        bimodule, they must run WhyRel again on the exported \texttt{.rl} file.
-        A tighter integration (e.g.\ align $\to$ verify in one invocation) could
-        be explored.
+  \item \textbf{Guard synthesis vs.\ coupling invariants.} Synthesised guards
+        (\S\ref{sec:guards}) cover lockstep, drains, and the data-dependent
+        \code{diff} alignment. Guards that depend on a coupling invariant over
+        loop-local state (e.g.\ \code{w <> 0}) are not synthesisable from the
+        loop or from pre/post alone. Relational \emph{invariants} of any shape
+        can now be supplied and type-checked at the loop (\S\ref{sec:invsuggest})
+        using the loop-local context from \code{scope_at}; applying the same
+        \code{scope_at}-based typing to a caller-supplied alignment \emph{guard}
+        (so an agent could likewise propose \code{w <> 0}) is the natural next
+        step --- at present only the synthesised guard candidates can be selected.
 
-  \item \textbf{Loop alignment.}  Biwhile pairing requires both sides to have loops
-        at the same structural position.  What should happen when loop bounds differ
-        or loop bodies have different shapes?
+  \item \textbf{Spec environment.} The scope check rejects everything but
+        arguments/result because the restricted environment omits user predicate
+        signatures. Seeding it from the modules' predicate declarations would let
+        specs mention user-defined relational predicates.
 
-  \item \textbf{Port conflicts.}  Both server modes hardcode port 8080.  This should
-        be configurable via a \texttt{-port} flag.
+  \item \textbf{Export fidelity.} The exported skeleton has placeholder method
+        signatures and no biinterface. Deriving the biinterface (cf.\
+        \code{pretrans/derive_biinterface.ml}) and the real signatures would let
+        the result feed straight back into the WhyRel pipeline.
+
+  \item \textbf{Conditional weaving granularity.} \code{weave_if} (two-way) and
+        \code{weave_if4} (four-way) are both offered; the two-way form is the
+        usual proof target and the only one \code{auto_align} uses.
 \end{enumerate}
 
 \end{document}

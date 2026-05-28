@@ -543,9 +543,12 @@ let pp_bicommand outf c =
         pp_exp e1 pp_exp e2 pp_bicommand' then_then pp_bicommand' then_else
         pp_bicommand' else_then pp_bicommand' else_else 
     | Biwhile (e1, e2, (ag1, ag2), spec, c) ->
+      let pp_invs outf invs =
+        List.iter (fun rf -> fprintf outf "@[invariant {%a}@]@;" pp_rformula rf) invs in
       fprintf outf
-        "@[<v 0>@[<v 2>@[<h>while@ %a@ |@ %a@ do@]@;%a@]@;done@]"
-        pp_exp e1 pp_exp e2 pp_bicommand' c
+        "@[<v 0>@[<v 2>@[<h>while@ %a@ |@ %a@ .@ %a@ |@ %a@ do@]@;%a%a@]@;done@]"
+        pp_exp e1 pp_exp e2 pp_rformula ag1 pp_rformula ag2
+        pp_invs spec.biwinvariants pp_bicommand' c
     | Biassume f -> fprintf outf "@[Assume@ {%a}@]" pp_rformula f
     | Biassert f -> fprintf outf "@[Assert@ {%a}@]" pp_rformula f
     | Biupdate (x, y) ->

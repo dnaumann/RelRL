@@ -78,6 +78,14 @@ let parse_file filename =
   lexbuf.lex_curr_p <- { lexbuf.lex_curr_p with pos_fname = filename };
   parse_with_error lexbuf
 
+(* Parse a single relational formula from a string (e.g. a CLI argument).
+   Returns a [result] rather than exiting, so callers can report the error. *)
+let parse_rformula_string (s: string) : (rformula node, string) result =
+  let lexbuf = Lexing.from_string ~with_positions:true s in
+  try Ok (Parser.rformula_top Lexer.token lexbuf) with
+  | Lexer.Lexer_error msg -> Error ("lexer error: " ^ msg)
+  | Parser.Error -> Error "syntax error"
+
 let is_relation_module (p: program_elt node) : bool =
   match p.elt with
   | Rel_mdl _ -> true

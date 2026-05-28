@@ -23,6 +23,10 @@ let all_exists_mode      = ref false
 
 let align_mode = ref false
 let align_man_mode = ref false
+let align_interactive_mode = ref false
+let align_port = ref 8080
+let align_rpre  : string ref = ref ""
+let align_rpost : string ref = ref ""
 
 let align_left_module   : string ref = ref ""
 let align_left_method : string ref = ref ""
@@ -90,6 +94,18 @@ let args =
 
    "-man", Set align_man_mode,
    " In align mode: starts an html server instead of the default http server which writes an HTML file with line-numbered bicom ";
+
+   "-i", Set align_interactive_mode,
+   " In align mode: start the interactive rewriting server (stateful; serves /suggest, /rewrite, /undo, /export)";
+
+   "-port", Set_int align_port,
+   "<n>  In align mode: serve on port <n> (default 8080)";
+
+   "-rpre", Set_string align_rpre,
+   "<rformula>  In align mode: relational precondition (may refer to method args)";
+
+   "-rpost", Set_string align_rpost,
+   "<rformula>  In align mode: relational postcondition (may refer to method args and result)";
   ]
 
 let set_debug_flags () =
@@ -190,9 +206,14 @@ let main () =
         !align_left_module !align_left_method
         !align_right_module !align_right_method
         !output_fname;
-      Align.run penv !align_left_module !align_left_method
-        !align_right_module !align_right_method !output_fname
-        ~man_mode:!align_man_mode
+      if !align_interactive_mode then
+        Interactive.run penv ctbl !align_left_module !align_left_method
+          !align_right_module !align_right_method !output_fname
+          !align_rpre !align_rpost !align_port
+      else
+        Align.run penv !align_left_module !align_left_method
+          !align_right_module !align_right_method !output_fname
+          ~man_mode:!align_man_mode ~port:!align_port
       end
   else begin
       let fmt = get_formatter () in

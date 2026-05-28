@@ -26,3 +26,5 @@ bin/whyrel
 test/*
 *.res
 *.claude
+design.*
+!design.tex
