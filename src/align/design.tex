@@ -105,11 +105,12 @@ identifier'' error. This is the requested check that the spec refers only to the
 unary method arguments and the result variable; the precondition cannot mention
 \code{result}.
 
-\paragraph{Use.} The checked spec is accessed via
-\code{/spec}. It informs the \emph{ranking} of synthesised loop guards
-(\S\ref{sec:interactive}): the variables it forces to agree (mined from
-\code{Agree}/\code{=:=} atoms by \code{agreed_vars}) decide, when two loop guards
-differ, whether lockstep is still recommended.
+\paragraph{Use.} The checked spec is read back via \code{/spec} and consumed by
+\code{/export}: when \code{-rpre}/\code{-rpost} are supplied they become the
+exported \code{requires}/\code{ensures}; otherwise \code{bimodule_skeleton}
+derives relational defaults from the two unary specs
+(\code{default_pre_specs}/\code{default_post_specs}: each side's pre/post lifted
+with \code{Rleft}/\code{Rright}, plus parameter/result \code{=:=} agreements).
 
 % ============================================================
 \section{Default alignment: the sequential alignment}
@@ -157,8 +158,7 @@ weave_while   : (while E .. | while E' ..) -->  while E|E' . <false|false>
 \end{lstlisting}
 
 \begin{itemize}
-  \item \code{weave_seq} is one application of the BiKAT left/right-commute law.
-        Applied repeatedly down a right-nested sequence it peels the two programs
+  \item \code{weave_seq} Applied repeatedly down a right-nested sequence it peels the two programs
         apart one statement at a time.
   \item \code{weave_sync} fires only when the two atomic commands are
         structurally equal (the test used by \code{Annot.eqv_command}).
@@ -176,9 +176,28 @@ weave_while   : (while E .. | while E' ..) -->  while E|E' . <false|false>
 \subsection{Inverse weaving (fine $\to$ coarse)}
 
 \begin{lstlisting}
-unweave_seq : (C1|C1') ; (C2|C2') -->  (C1;C2 | C1';C2')  
-unsync      : |_ A _|             -->  (A | A)            
+unweave_seq : (C1|C1') ; (C2|C2') -->  (C1;C2 | C1';C2')
+unsync      : |_ A _|             -->  (A | A)
 \end{lstlisting}
+
+\subsection{Skip rules (one side at a time)}
+
+These split a \code{Bisplit} into a sequence of one-sided steps, letting the user
+interleave the two programs explicitly rather than run one fully before the other:
+
+\begin{lstlisting}
+skip_split  : (C | C')              -->  (C | skip) ; (skip | C')
+left_first  : (a;rest | C')         -->  (a | skip) ; (rest | C')
+right_first : (C | a;rest)          -->  (skip | a) ; (C | rest)
+lrc         : (C | skip);(skip | D) -->  (skip | D) ; (C | skip)
+\end{lstlisting}
+
+\code{left_first}/\code{right_first} peel one leading atomic step off the named
+side; when that side is already a single atomic command they fall back to
+\code{skip_split}. \code{skip_split} only fires when neither side is already
+\code{skip} (so it cannot loop). \code{lrc} (left/right commute) from bikat \cite{antonopoulose-2023-popl} swaps an
+adjacent left-only step and right-only step --- the two touch disjoint sides, so
+the order is interchangeable and each side's projection is unchanged.
 
 
 \subsection{Carrying and suggesting invariants}
@@ -222,7 +241,12 @@ typing context for an invariant at a loop (\S\ref{sec:invsuggest}).
 
 \code{all_rewrites} is the named registry used by \code{suggest_at}
 (\code{weave_vardecl}, \code{weave_seq}, \code{weave_sync}, \code{weave_if},
-\code{weave_if4}, \code{weave_while}, \code{unweave_seq}, \code{unsync}).
+\code{weave_if4}, \code{weave_while}, \code{unweave_seq}, \code{unsync},
+\code{skip_split}, \code{left_first}, \code{right_first}, \code{lrc}). The
+parameterised
+rewrites (\code{weave_while_guard}, \code{add_invariant}, \code{remove_invariant},
+\code{change_ag}) are \emph{not} in the registry --- they need an argument and are
+dispatched by name in \code{interactive.ml}.
 
 \subsection{Greedy driver}
 
@@ -248,21 +272,23 @@ spec, and serves a stateful API on the chosen port. State is a mutable
 \begin{lstlisting}
 GET  /                        help text
 GET  /ui                      single-page browser UI
-GET  /bicom                   current alignment (text)
-GET  /bicom.html              current alignment (line-numbered HTML)
-GET  /spec                    relational pre/postcondition
+GET  /bicom                   current alignment (canonical text)
+GET  /bicom-tree              current alignment as JSON [{lineno,path,text}]
+GET  /spec                    relational pre/postcondition (read-only)
 GET  /history                 undo/redo availability and stack depths (JSON)
-GET  /rules                   all rule names (incl. "undo","redo") (JSON)
+GET  /rules                   rewrite-registry rule names (JSON)
 GET  /suggest                 every applicable rewrite, all foci (JSON)
 GET  /suggest?path=0.1        applicable rewrites at one focus (JSON)
 GET  /invariants?path=P       carried invariants + coupling candidates at P (JSON)
-POST /rewrite?rule=R&path=P                 apply rule R at focus P
+POST /rewrite?rule=R&path=P                 apply rewrite-registry rule R at focus P
 POST /rewrite?rule=weave_while&guard_left=L&guard_right=R&path=P
                                 weave a loop with custom alignment guard <L|R>
-POST /rewrite?rule=add_invariant&inv=K&path=P     add coupling candidate K
-POST /rewrite?rule=add_invariant&formula=R&path=P add MCP-supplied invariant R
-POST /rewrite?rule=undo | rule=redo         undo / redo (rule-style)
-POST /undo  /  POST /redo                   undo / redo (verb-style)
+                                (empty guards => lockstep default <false|false>)
+POST /rewrite?rule=change_ag&guard_left=L&guard_right=R&path=P
+                                replace a woven loop's alignment guard pair
+POST /rewrite?rule=add_invariant&formula=R&path=P    add relational invariant R
+POST /rewrite?rule=remove_invariant&formula=R&path=P drop carried invariant R
+POST /undo  /  POST /redo                   undo / redo (verb endpoints only)
 POST /auto                    greedily weave toward lockstep
 POST /reset                   back to the sequential default
 POST /export                  write a .rl bimodule skeleton to the output file
@@ -272,19 +298,29 @@ A \code{path} is a dot-separated list of child indices (\code{0.1}); empty is th
 root. Mutating endpoints return the updated alignment as text; \code{409} means
 the rule did not apply at the focus, \code{400} a malformed request.
 
+\code{/bicom} is the canonical \code{Pretty.pp_bicommand} text; \code{/bicom-tree}
+is the per-line JSON the UI renders (each line tagged with the tree path it
+belongs to, for click-to-focus). They carry the same alignment but
+\code{/bicom-tree} rebuilds loop/if headers itself, so the two are not
+byte-identical; \code{/bicom} is kept as the source of the exact text.
+
 \subsection{Undo / redo}
 
 So that the MCP can undo its rewrites, every successful rewrite \code{snapshot}s
 the previous state onto \code{history} and clears \code{future}; \code{/undo}
 moves the top of \code{history} to \code{future} and back to \code{current};
 \code{/redo} is the mirror image. Undo/redo span \emph{rewrite} steps only:
-\code{/auto} and \code{/reset} clear both stacks. The same operations are reached
-either as verbs (\code{/undo}, \code{/redo}) or as pseudo-rules through
-\code{/rewrite} (\code{rule=undo}, \code{rule=redo}) so a client can drive
-everything through one endpoint; \code{/rules} lists them alongside the real
-rewrites, and \code{/history} reports availability and depths.
+\code{/auto} and \code{/reset} clear both stacks.
+
+Undo/redo are kept \emph{distinct} from rewrites: they are session-history
+operations, not tree transformations, so they live only at the verb endpoints
+\code{/undo} and \code{/redo}. \code{/rewrite} applies the
+\code{Rewrites.all_rewrites} registry exclusively --- there are no
+\code{rule=undo}/\code{rule=redo} aliases, and \code{/rules} lists only real
+rewrites. \code{/history} reports availability and stack depths.
 
 \subsection{Biwhile alignment guards}
+\label{sec:guards}
 
 Loop weaving with a custom alignment guard is done directly via:
 \begin{lstlisting}
@@ -307,27 +343,37 @@ The browser UI exposes the two guard fields as \emph{Left Guard} and
 \emph{Right Guard}; leaving both empty applies the lockstep default
 (\code{Both (false)} on each side).
 
+\paragraph{Changing a woven loop's guard.} Once a loop is a \code{Biwhile},
+its alignment guard pair can be replaced in place with
+\begin{lstlisting}
+POST /rewrite?rule=change_ag&guard_left=L&guard_right=R&path=P
+\end{lstlisting}
+\code{change_ag} takes the \emph{pair} \code{(L, R)} (parsed/type-checked by the
+same \code{parse_custom_guard}), since an alignment guard is a left/right pair;
+the UI prefills both fields from the loop's current guards.
+
 \subsection{Biwhile Invariants}
 \label{sec:invsuggest}
 
 \code{/invariants?path=P} reports, for a loop focus, the invariants already
-carried (\S\ref{sec:invariants}) and the indexed coupling candidates. There are
-two ways to add one:
+carried (\S\ref{sec:invariants}) and the coupling candidates (for
+\emph{discovery}). Invariants are added and removed by formula:
 \begin{itemize}
-  \item \code{POST /rewrite?rule=add_invariant&inv=K&path=P} --- add candidate
-        \code{K} from that list; or
   \item \code{POST /rewrite?rule=add_invariant&formula=R&path=P} --- add an
-        arbitrary, caller- (or MCP-)supplied relational invariant \code{R}.
+        arbitrary, caller- (or MCP-)supplied relational invariant \code{R}; and
+  \item \code{POST /rewrite?rule=remove_invariant&formula=R&path=P} --- drop a
+        carried invariant matching \code{R}.
 \end{itemize}
 
-The \code{formula} form is what lets an agent contribute its own reasoning ---
-e.g.\ a coupling such as \code{i + 1 =:= i} that no \code{v =:= v} candidate can
-express. \code{R} is parsed and type-checked \emph{in the loop's local scope}:
-\code{scope_at} collects the locals in scope at the focus, and
-\code{add_mcp_invariant} builds a \code{bi_tenv} from the method parameters,
-\code{result} and those locals, then runs \code{Typing.tc_rformula} against it.
-A reference to anything not in scope is rejected with a type error. Both forms
-require the loop to be woven (a \code{Biwhile}) first.
+There is no candidate-index form: \code{formula} subsumes it (a candidate
+\code{v =:= v} is just added by typing it out), and it lets an agent contribute
+its own reasoning --- e.g.\ a coupling such as \code{i + 1 =:= i} that no
+\code{v =:= v} candidate can express. \code{R} is parsed and type-checked
+\emph{in the loop's local scope}: \code{scope_at} collects the locals in scope at
+the focus, and \code{add_mcp_invariant} builds a \code{bi_tenv} from the method
+parameters, \code{result} and those locals, then runs \code{Typing.tc_rformula}
+against it. A reference to anything not in scope is rejected with a type error.
+Both forms require the loop to be woven (a \code{Biwhile}) first.
 
 % ============================================================
 \section{HTTP transport and browser UI}
@@ -353,19 +399,17 @@ listening socket for a clean shutdown.
 \subsection{Browser UI (\texttt{ui.ml})}
 
 \code{ui.ml} is pure rendering; it contains no socket or HTTP logic.  It
-provides two functions:
-\begin{itemize}
-  \item \code{build_html} --- renders a bicommand as a dark-theme,
-        line-numbered HTML page (served at \code{/bicom.html}).
-  \item \code{build_interactive_html} --- generates the full single-page
-        application served at \code{/ui}.  The page drives the API directly
-        from the browser: inspect the current alignment, load suggestions,
-        apply rewrites at a focus (filling in path, rule, guards, and
-        invariant), undo/redo, auto-align, reset, and export.
-\end{itemize}
+provides one function, \code{build_interactive_html}, which generates the full
+single-page application served at \code{/ui}.  The page drives the API directly
+from the browser: it renders the alignment from \code{/bicom-tree} (each line
+tagged with its tree path, so a line number is click-to-focus), loads
+suggestions from \code{/suggest}, applies rewrites at a focus (filling in path,
+rule, guards, and invariant), and runs undo/redo, auto-align, reset, and export.
+Rendering happens client-side; the server only ships data (see
+\code{docs/align.md} for the request/response cycle).
 
-\code{interactive.ml} calls these two functions when responding to \code{/ui}
-and \code{/bicom.html}; neither function is called from \code{http_server.ml}.
+\code{interactive.ml} calls \code{build_interactive_html} when responding to
+\code{/ui}; it is never called from \code{http_server.ml}.
 
 % ============================================================
 \section{Export}
@@ -441,8 +485,9 @@ both, which made synthesised guards and carried/added invariants invisible.
 \begin{description}
   \item[\code{align.ml}] is the entry point into the workflow.
   \item[\code{auto.ml}] has sequential composition function.
-  \item[\code{rewrites.ml}] the rewrite algebra: weaving/unweaving rules, loop
-        guard synthesis, focus paths, and the \code{auto_align} driver.
+  \item[\code{rewrites.ml}] the rewrite algebra: weaving/unweaving and skip
+        rules, invariant/guard rewrites, coupling-candidate generation, focus
+        paths, and the \code{auto_align} driver.
   \item[\code{interactive.ml}] the stateful session layer: owns the mutable
         \code{current} bicommand, undo/redo stacks, relational-spec checking,
         rewrite dispatch, invariant suggestion, and export.  Calls into
@@ -451,9 +496,9 @@ both, which made synthesised guards and carried/added invariants invisible.
   \item[\code{http_server.ml}] the HTTP transport layer: socket accept loop,
         request-line parsing, response formatting, and graceful SIGINT/SIGTERM
         shutdown.  Has no knowledge of alignments or rewrites.
-  \item[\code{ui.ml}] pure HTML/JS rendering: the static bicommand page
-        (\code{build_html}) and the single-page interactive application
-        (\code{build_interactive_html}).  No socket or session logic.
+  \item[\code{ui.ml}] pure HTML/JS rendering: the single-page interactive
+        application (\code{build_interactive_html}), served at \code{/ui}.  No
+        socket or session logic.
 \end{description}
 
 Dependencies flow one way: \code{interactive.ml} uses \code{auto.ml},
@@ -477,6 +522,12 @@ A.~Banerjee, R.~Nagasamudram, D.~A. Naumann, and M.~Nikouei.
 \newblock \emph{ACM Transactions on Programming Languages and Systems}, 44(4):25:1--25:136, 2023.
 \newblock Issue date: December 2022.
 \newblock \url{https://doi.org/10.1145/3551497}.
+
+\bibitem{antonopoulose-2023-popl}
+T.~Antonopoulos, E.~Koskinen, T.~C. Le, R.~Nagasamudram, D.~A. Naumann, and M.~Ngo.
+\newblock An algebra of alignment for relational verification.
+\newblock \emph{Proceedings of the ACM on Programming Languages}, 7(POPL), Article 20, January 2023, 31 pages.
+\newblock \url{https://doi.org/10.1145/3571213}.
 
 \end{thebibliography}
 

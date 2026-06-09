@@ -3,47 +3,6 @@ open Http_server
 
 (* ---- HTML renderer ------------------------------------------------------ *)
 
-let html_escape s =
-  let buf = Buffer.create (String.length s) in
-  String.iter (function
-    | '<' -> Buffer.add_string buf "&lt;"
-    | '>' -> Buffer.add_string buf "&gt;"
-    | '&' -> Buffer.add_string buf "&amp;"
-    | c   -> Buffer.add_char buf c) s;
-  Buffer.contents buf
-
-let build_html lmod lmeth rmod rmeth bicom_str =
-  let lines = String.split_on_char '\n' bicom_str in
-  let buf = Buffer.create 4096 in
-  let p fmt = Printf.bprintf buf fmt in
-  p "<!DOCTYPE html>\n";
-  p "<html lang=\"en\">\n";
-  p "<head>\n";
-  p "  <meta charset=\"utf-8\">\n";
-  p "  <title>Alignment: %s.%s | %s.%s</title>\n" lmod lmeth rmod rmeth;
-  p "  <style>\n";
-  p "    body{font-family:monospace;background:#1e1e1e;color:#d4d4d4;margin:2em}\n";
-  p "    h1{color:#9cdcfe;font-size:1.1em;margin-bottom:1em}\n";
-  p "    .code{display:table;border-collapse:collapse}\n";
-  p "    .line{display:table-row}\n";
-  p "    .ln{display:table-cell;text-align:right;padding:0 1em 0 0;color:#858585;";
-  p "user-select:none;border-right:1px solid #3c3c3c;min-width:3em}\n";
-  p "    .src{display:table-cell;padding:0 0 0 1em;white-space:pre}\n";
-  p "  </style>\n";
-  p "</head>\n";
-  p "<body>\n";
-  p "  <h1>Alignment: %s.%s &nbsp;|&nbsp; %s.%s</h1>\n" lmod lmeth rmod rmeth;
-  p "  <div class=\"code\">\n";
-  List.iteri (fun i line ->
-    p "    <div class=\"line\">";
-    p "<span class=\"ln\">%d</span>" (i + 1);
-    p "<span class=\"src\">%s</span>" (html_escape line);
-    p "</div>\n"
-  ) lines;
-  p "  </div>\n";
-  p "</body>\n</html>\n";
-  Buffer.contents buf
-
 let build_interactive_html lmod lmeth rmod rmeth =
   let buf = Buffer.create 8192 in
   let p fmt = Printf.bprintf buf fmt in
@@ -64,9 +23,8 @@ let build_interactive_html lmod lmeth rmod rmeth =
   p "    input{flex:1 1 150px} button{cursor:pointer} button:hover{border-color:#54617e} .primary{border-color:#2f6f79;color:#b9f1f8}\n";
   p "    .danger{border-color:#7a2f2f;color:#ffbbbb} .good{border-color:#2f7a4b;color:#c9f9d4}\n";
   p "    #status{font-size:.82rem;color:var(--muted);min-height:1.2rem} #status.ok{color:var(--ok)} #status.err{color:var(--bad)}\n";
-  p "    .kvs{display:grid;grid-template-columns:auto 1fr;gap:.3rem .6rem;font-size:.83rem;color:var(--muted)}\n";
   p "    .code{display:table;border-collapse:collapse;width:100%%} .line{display:table-row}\n";
-  p "    .ln{display:table-cell;text-align:right;padding:0 .8rem 0 0;color:#73809a;user-select:none;border-right:1px solid #2d3445;min-width:3em}\n";
+  p "    .ln{display:table-cell;text-align:right;padding:0 .8rem 0 0;color:#73809a;user-select:none;border-right:1px solid #2d3445;min-width:3em;cursor:pointer}\n";
   p "    .src{display:table-cell;padding:0 0 0 .8rem;white-space:pre-wrap;word-break:break-word}\n";
   p "    #suggestions{display:flex;flex-direction:column;gap:.35rem;max-height:280px;overflow:auto}\n";
   p "    .sitem{display:flex;justify-content:space-between;gap:.5rem;align-items:center;border:1px solid #2f3749;border-radius:8px;padding:.4rem .5rem;font-size:.82rem}\n";
@@ -79,7 +37,7 @@ let build_interactive_html lmod lmeth rmod rmeth =
   p "    <div class=\"grid\">\n";
   p "      <section class=\"panel\">\n";
   p "        <div class=\"row\"><label for=\"path\">Path</label><input id=\"path\" placeholder=\"e.g. 0.1 (empty = root)\"></div>\n";
-  p "        <div class=\"row\"><label for=\"rule\">Rule</label><input id=\"rule\" placeholder=\"weave_seq / undo / redo\"></div>\n";
+  p "        <div class=\"row\"><label for=\"rule\">Rule</label><input id=\"rule\" placeholder=\"weave_seq\"></div>\n";
   p "        <div class=\"row\"><label for=\"guard-left\">Left Guard</label><input id=\"guard-left\" placeholder=\"<| false <]\"></div>\n";
   p "        <div class=\"row\"><label for=\"guard-right\">Right Guard</label><input id=\"guard-right\" placeholder=\"[> false |>\"></div>\n";
   p "        <div class=\"row\"><label for=\"invariant\">Invariant</label><input id=\"invariant\" placeholder=\"rformula for add_invariant\"></div>\n";
@@ -96,13 +54,6 @@ let build_interactive_html lmod lmeth rmod rmeth =
   p "          <button class=\"good\" id=\"btn-export\">Export</button>\n";
   p "        </div>\n";
   p "        <div id=\"status\"></div>\n";
-  p "        <hr style=\"border:none;border-top:1px solid #2d3445;margin:.7rem 0\">\n";
-  p "        <div class=\"kvs\">\n";
-  p "          <div>Undo available</div><div id=\"hv-undo\">-</div>\n";
-  p "          <div>Redo available</div><div id=\"hv-redo\">-</div>\n";
-  p "          <div>Undo depth</div><div id=\"hv-ud\">-</div>\n";
-  p "          <div>Redo depth</div><div id=\"hv-rd\">-</div>\n";
-  p "        </div>\n";
   p "        <hr style=\"border:none;border-top:1px solid #2d3445;margin:.7rem 0\">\n";
   p "        <div style=\"font-size:.84rem;color:var(--muted);margin-bottom:.4rem\">Suggestions</div>\n";
   p "        <div id=\"suggestions\"></div>\n";
@@ -126,14 +77,14 @@ let build_interactive_html lmod lmeth rmod rmeth =
   p "    async function getJson(url){ const t = await getText(url); return JSON.parse(t); }\n";
   p "    async function postText(url){ const r = await fetch(url, {method:'POST'}); const t = await r.text(); if(!r.ok) throw new Error(t || ('HTTP ' + r.status)); return t; }\n";
   p "\n";
-  p "    function renderCode(text){\n";
+  p "    function renderCode(lines){\n";
   p "      const root = qs('code');\n";
   p "      root.textContent = '';\n";
-  p "      const lines = text.split('\\n');\n";
-  p "      lines.forEach((line, i) => {\n";
+  p "      lines.forEach(item => {\n";
   p "        const row = document.createElement('div'); row.className = 'line';\n";
-  p "        const ln = document.createElement('span'); ln.className = 'ln'; ln.textContent = String(i + 1);\n";
-  p "        const src = document.createElement('span'); src.className = 'src'; src.textContent = line;\n";
+  p "        const ln = document.createElement('span'); ln.className = 'ln'; ln.textContent = String(item.lineno);\n";
+  p "        ln.onclick = () => { qs('path').value = item.path; };\n";
+  p "        const src = document.createElement('span'); src.className = 'src'; src.textContent = item.text;\n";
   p "        row.appendChild(ln); row.appendChild(src); root.appendChild(row);\n";
   p "      });\n";
   p "    }\n";
@@ -146,21 +97,26 @@ let build_interactive_html lmod lmeth rmod rmeth =
   p "        const box = document.createElement('div'); box.className = 'sitem';\n";
   p "        const left = document.createElement('div');\n";
   p "        left.textContent = 'path=' + (it.path || '') + ' ' + (it.display || it.rule);\n";
-  p "        const b = document.createElement('button'); b.textContent = 'Apply'; b.className = 'primary';\n";
-  p "        b.onclick = async () => { qs('path').value = it.path || ''; qs('rule').value = it.rule || ''; qs('guard-left').value=''; qs('guard-right').value=''; qs('invariant').value = it.formula || ''; await applyRewrite(); };\n";
+  p "        const b = document.createElement('button'); b.textContent = it.needs_input ? 'Fill' : 'Apply'; b.className = 'primary';\n";
+  p "        b.onclick = async () => {\n";
+  p "          qs('path').value = it.path || ''; qs('rule').value = it.rule || '';\n";
+  p "          qs('guard-left').value = it.guard_left || ''; qs('guard-right').value = it.guard_right || '';\n";
+  p "          qs('invariant').value = it.formula || '';\n";
+  p "          if(it.needs_input){\n";
+  p "            const useGuards = it.rule === 'weave_while' || it.rule === 'change_ag';\n";
+  p "            (useGuards ? qs('guard-left') : qs('invariant')).focus();\n";
+  p "            setStatus(it.rule === 'weave_while'\n";
+  p "              ? 'Fields filled \\u2014 enter alignment guards, or leave empty to use defaults, then Apply Rewrite.'\n";
+  p "              : 'Fields filled \\u2014 edit the input, then Apply Rewrite.', null);\n";
+  p "          } else {\n";
+  p "            await applyRewrite();\n";
+  p "          }\n";
+  p "        };\n";
   p "        box.appendChild(left); box.appendChild(b); root.appendChild(box);\n";
   p "      });\n";
   p "    }\n";
   p "\n";
-  p "    async function refreshHistory(){\n";
-  p "      const h = await getJson('/history');\n";
-  p "      qs('hv-undo').textContent = String(!!h.undo_available);\n";
-  p "      qs('hv-redo').textContent = String(!!h.redo_available);\n";
-  p "      qs('hv-ud').textContent = String(h.undo_depth ?? 0);\n";
-  p "      qs('hv-rd').textContent = String(h.redo_depth ?? 0);\n";
-  p "    }\n";
-  p "\n";
-  p "    async function refreshBicom(){ renderCode(await getText('/bicom')); }\n";
+  p "    async function refreshBicom(){ renderCode(await getJson('/bicom-tree')); }\n";
   p "\n";
   p "    async function applyRewrite(){\n";
   p "      const rule = qs('rule').value.trim();\n";
@@ -174,7 +130,7 @@ let build_interactive_html lmod lmeth rmod rmeth =
   p "      if(guardLeft !== '') url += '&guard_left=' + enc(guardLeft);\n";
   p "      if(guardRight !== '') url += '&guard_right=' + enc(guardRight);\n";
   p "      if(invariant !== '') url += '&formula=' + enc(invariant);\n";
-  p "      try { await postText(url); await refreshBicom(); await refreshHistory(); setStatus('Rewrite applied.', true); }\n";
+  p "      try { await postText(url); await refreshBicom();; setStatus('Rewrite applied.', true); }\n";
   p "      catch (e) { setStatus(String(e.message || e), false); }\n";
   p "    }\n";
   p "\n";
@@ -191,15 +147,15 @@ let build_interactive_html lmod lmeth rmod rmeth =
   p "    }\n";
   p "\n";
   p "    async function postSimple(path, okMsg){\n";
-  p "      try { await postText(path); await refreshBicom(); await refreshHistory(); setStatus(okMsg, true); }\n";
+  p "      try { await postText(path); await refreshBicom();; setStatus(okMsg, true); }\n";
   p "      catch (e) { setStatus(String(e.message || e), false); }\n";
   p "    }\n";
   p "\n";
   p "    qs('btn-apply').onclick = applyRewrite;\n";
   p "    qs('btn-suggest').onclick = suggestAtPath;\n";
   p "    qs('btn-suggest-all').onclick = suggestAll;\n";
-  p "    qs('btn-undo').onclick = () => postSimple('/rewrite?rule=undo', 'Undo applied.');\n";
-  p "    qs('btn-redo').onclick = () => postSimple('/rewrite?rule=redo', 'Redo applied.');\n";
+  p "    qs('btn-undo').onclick = () => postSimple('/undo', 'Undo applied.');\n";
+  p "    qs('btn-redo').onclick = () => postSimple('/redo', 'Redo applied.');\n";
   p "    qs('btn-auto').onclick = () => postSimple('/auto', 'Auto alignment applied.');\n";
   p "    qs('btn-reset').onclick = () => postSimple('/reset', 'Reset to base alignment.');\n";
   p "    qs('btn-export').onclick = async () => {\n";
@@ -208,7 +164,7 @@ let build_interactive_html lmod lmeth rmod rmeth =
   p "    };\n";
   p "\n";
   p "    (async () => {\n";
-  p "      try { await refreshBicom(); await refreshHistory(); await suggestAtPath(); setStatus('Ready.', true); }\n";
+  p "      try { await refreshBicom();; await suggestAtPath(); setStatus('Ready.', true); }\n";
   p "      catch (e) { setStatus(String(e.message || e), false); }\n";
   p "    })();\n";
   p "  </script>\n";

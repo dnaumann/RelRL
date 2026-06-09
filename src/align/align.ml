@@ -1,8 +1,3 @@
-open Ast
-open Astutil
-open Annot
-
-
 let bicommand_to_string bicom =
   let buf = Buffer.create 256 in
   let fmt = Format.formatter_of_buffer buf in

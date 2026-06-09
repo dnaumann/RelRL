@@ -91,28 +91,6 @@ let weave_while : rewrite = function
                    Bisplit (lb, rb)))
   | _ -> None
 
-(* Synthesise alignment-guard candidates for a loop pair at the focus.  Rather
-   than a fixed list, these are built from the actual loop guards e, e'.  The
-   headline candidate is the data-dependent "diff" alignment: stay in lockstep
-   while both guards hold, then drain whichever loop is still running --
-
-     left-only  when  <e> /\ ~<e'>        right-only  when  ~<e> /\ <e'>
-
-   so when both guards hold neither one-sided rule fires (lockstep), and once
-   one loop stops the other drains.  The constant lockstep and one-sided drains
-   are offered alongside it.  (Guard direction matches [Annot.projr_bicommand],
-   whose right projection uses Ffalse|Ftrue.  Invariant-dependent guards such as
-   w <> 0 still need a coupling invariant; [Interactive] ranks these candidates
-   using the relational spec.) *)
-let guard_candidates : bicommand -> (string * alignment_guard) list = function
-  | Bisplit (While (le, _, _), While (re, _, _)) ->
-    let l = Rleft (Fexp le) and r = Rright (Fexp re) in
-    [ "lockstep",    (Rleft Ffalse, Rright Ffalse);
-      "diff",        (Rconn (Ast.Conj, l, Rnot r), Rconn (Ast.Conj, Rnot l, r));
-      "left-first",  (Rleft Ftrue,  Rright Ffalse);
-      "right-first", (Rleft Ffalse, Rright Ftrue) ]
-  | _ -> []
-
 (* Like [weave_while] but with a caller-supplied alignment guard. *)
 let weave_while_guard (ag : alignment_guard) : rewrite = function
   | Bisplit (While (le, ls, lb), While (re, rs, rb)) ->
@@ -182,6 +160,19 @@ let add_invariant (inv : rformula) : rewrite = function
     Some (Biwhile (e, e', ag, { sp with biwinvariants = inv :: sp.biwinvariants }, cc))
   | _ -> None
 
+(* Remove the first occurrence of [inv] from a [Biwhile]'s invariant list. *)
+let remove_invariant (inv : rformula) : rewrite = function
+  | Biwhile (e, e', ag, sp, cc) ->
+    let invs' = List.filter (( <> ) inv) sp.biwinvariants in
+    if List.length invs' = List.length sp.biwinvariants then None
+    else Some (Biwhile (e, e', ag, { sp with biwinvariants = invs' }, cc))
+  | _ -> None
+
+(* Replace the alignment guards of a [Biwhile] with [ag]. *)
+let change_ag (ag : alignment_guard) : rewrite = function
+  | Biwhile (e, e', _, sp, cc) -> Some (Biwhile (e, e', ag, sp, cc))
+  | _ -> None
+
 (* -- Inverse weaving (finer alignment -> coarser): remove synchronisation -- *)
 
 (* (C1 | C1') ; (C2 | C2')  ~~>  (C1;C2 | C1';C2')   -- inverse of [weave_seq] *)
@@ -195,6 +186,38 @@ let unsync : rewrite = function
   | Bisync a -> Some (Bisplit (Acommand a, Acommand a))
   | _ -> None
 
+(* (C | C')  ~~>  (C | skip) ; (skip | C')  -- schedule left then right; neither side may already be skip *)
+let skip_split : rewrite = function
+  | Bisplit (Acommand Skip, _) | Bisplit (_, Acommand Skip) -> None
+  | Bisplit (lc, rc) ->
+    Some (Biseq (Bisplit (lc, Acommand Skip), Bisplit (Acommand Skip, rc)))
+  | _ -> None
+
+(* (a;rest | C')  ~~>  (a | skip) ; (rest | C')
+   (a | C')       ~~>  skip_split                -- left is already atomic *)
+let left_first : rewrite = function
+  | Bisplit (Seq (Acommand a, rest), rc) ->
+    Some (Biseq (Bisplit (Acommand a, Acommand Skip), Bisplit (rest, rc)))
+  | Bisplit (Acommand _, _) as cc -> skip_split cc
+  | _ -> None
+
+(* (C | a;rest)  ~~>  (skip | a) ; (C | rest)
+   (C | a)       ~~>  skip_split                -- right is already atomic *)
+let right_first : rewrite = function
+  | Bisplit (lc, Seq (Acommand a, rest)) ->
+    Some (Biseq (Bisplit (Acommand Skip, Acommand a), Bisplit (lc, rest)))
+  | Bisplit (_, Acommand _) as cc -> skip_split cc
+  | _ -> None
+
+(* (C | skip) ; (skip | D)  ~~>  (skip | D) ; (C | skip)
+   commute a left-only step past the following right-only step.  Projection-safe:
+   each side's projection is unchanged ([C;skip = skip;C] on the left,
+   [skip;D = D;skip] on the right). *)
+let lrc : rewrite = function
+  | Biseq (Bisplit (lc, Acommand Skip), Bisplit (Acommand Skip, rc)) ->
+    Some (Biseq (Bisplit (Acommand Skip, rc), Bisplit (lc, Acommand Skip)))
+  | _ -> None
+
 (* Named registry -- handy for an interactive / MCP "which rewrites apply
    here?" query (see [suggest_at]). *)
 let all_rewrites : (string * rewrite) list =
@@ -205,7 +228,11 @@ let all_rewrites : (string * rewrite) list =
     "weave_if4",     weave_if4;
     "weave_while",   weave_while;
     "unweave_seq",   unweave_seq;
-    "unsync",        unsync ]
+    "unsync",        unsync;
+    "skip_split",    skip_split;
+    "left_first",    left_first;
+    "right_first",   right_first;
+    "lrc",           lrc ]
 
 (* -- Focusing: apply a rewrite at a sub-term identified by a path ----------- *)
 

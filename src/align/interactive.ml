@@ -10,8 +10,8 @@ open Annot
 
    A relational pre/postcondition may be supplied (CLI -rpre/-rpost); it is
    parsed and checked to refer only to the method arguments (and, for the
-   postcondition, [result]).  It then informs the ranking of synthesised loop
-   alignment guards (see [/guards]). *)
+   postcondition, [result]).  It is served read-only at [/spec] and used by
+   [/export] to fill the skeleton's relational requires/ensures. *)
 
 (* ---- paths -------------------------------------------------------------- *)
 
@@ -43,50 +43,161 @@ let rformula_to_string rf =
   Format.pp_print_flush fmt ();
   Buffer.contents buf
 
+let exp_to_string e =
+  let buf = Buffer.create 32 in
+  let fmt = Format.formatter_of_buffer buf in
+  Format.pp_set_margin fmt 80;
+  Pretty.pp_exp fmt e;
+  Format.pp_print_flush fmt ();
+  Buffer.contents buf
+
+let varbind_to_string (vb : varbind option) = match vb with
+  | None -> ""
+  | Some vbind ->
+    let buf = Buffer.create 16 in
+    let fmt = Format.formatter_of_buffer buf in
+    Format.pp_set_margin fmt 80;
+    Pretty.pp_varbind fmt vbind;
+    Format.pp_print_flush fmt ();
+    Buffer.contents buf
+
+(* Walk the bicommand tree, producing [(path, text)] in display order.
+   Leaves render via Align.bicommand_to_string (all lines at path p).
+   Structural nodes emit header/footer lines at p and recurse into children. *)
+let rec alines (p : Rewrites.path) (cc : bicommand)
+    : (Rewrites.path * string) list =
+  let leaf () =
+    let s = Align.bicommand_to_string cc in
+    List.map (fun l -> (p, l)) (String.split_on_char '\n' s)
+  in
+  match cc with
+  | Bisplit _ | Bisync _ | Biassume _ | Biassert _
+  | Bihavoc_right _ | Biupdate _ -> leaf ()
+  | Biseq (bc1, bc2) ->
+    let l1 = alines (p @ [0]) bc1 in
+    let l2 = alines (p @ [1]) bc2 in
+    let l1' = match List.rev l1 with
+      | [] -> []
+      | (lp, lt) :: rest -> List.rev ((lp, lt ^ ";") :: rest)
+    in
+    l1' @ l2
+  | Biwhile (e1, e2, (ag1, ag2), spec, body) ->
+    let header = Printf.sprintf "While %s | %s . %s | %s do"
+        (exp_to_string e1) (exp_to_string e2)
+        (rformula_to_string ag1) (rformula_to_string ag2) in
+    let invs = List.map (fun rf ->
+        (p, "  invariant {" ^ rformula_to_string rf ^ "}"))
+        spec.biwinvariants in
+    let body_lines = List.map (fun (lp, lt) -> (lp, "  " ^ lt))
+        (alines (p @ [0]) body) in
+    [(p, header)] @ invs @ body_lines @ [(p, "done")]
+  | Bivardecl (x, y, body) ->
+    let header = Printf.sprintf "Var %s | %s in"
+        (varbind_to_string x) (varbind_to_string y) in
+    let body_lines = List.map (fun (lp, lt) -> (lp, "  " ^ lt))
+        (alines (p @ [0]) body) in
+    [(p, header)] @ body_lines
+  | Biif (e1, e2, bc_then, bc_else) ->
+    let cond = Printf.sprintf "if %s | %s" (exp_to_string e1) (exp_to_string e2) in
+    let then_lines = List.map (fun (lp, lt) -> (lp, "  " ^ lt))
+        (alines (p @ [0]) bc_then) in
+    let else_lines = List.map (fun (lp, lt) -> (lp, "  " ^ lt))
+        (alines (p @ [1]) bc_else) in
+    [(p, cond); (p, "then")] @ then_lines @ [(p, "else")] @ else_lines @ [(p, "end")]
+  | Biif4 (e1, e2, {then_then; then_else; else_then; else_else}) ->
+    let cond = Printf.sprintf "if %s | %s" (exp_to_string e1) (exp_to_string e2) in
+    let indent ll = List.map (fun (lp, lt) -> (lp, "  " ^ lt)) ll in
+    [(p, cond); (p, "then then")] @
+    indent (alines (p @ [0]) then_then) @
+    [(p, "then else")] @
+    indent (alines (p @ [1]) then_else) @
+    [(p, "else then")] @
+    indent (alines (p @ [2]) else_then) @
+    [(p, "else else")] @
+    indent (alines (p @ [3]) else_else) @
+    [(p, "end")]
+
+let json_of_alines (cc : bicommand) =
+  let lines = alines [] cc in
+  `List (List.mapi (fun i (p, t) ->
+      `Assoc [ "lineno", `Int (i + 1);
+               "path",   `String (string_of_path p);
+               "text",   `String t ]) lines)
+  |> Yojson.Safe.to_string
+
 (* ---- JSON rendering ----------------------------------------------------- *)
 
 type suggestion = {
-  s_path    : Rewrites.path;
-  s_rule    : string;     (* API rule name *)
-  s_display : string;     (* label shown in the UI *)
-  s_formula : string;     (* pre-fill invariant field; "" = not applicable *)
-  s_result  : bicommand;
+  s_path        : Rewrites.path;
+  s_rule        : string;     (* API rule name *)
+  s_display     : string;     (* label shown in the UI *)
+  s_formula     : string;     (* pre-fill invariant field; "" = not applicable *)
+  s_guard_left  : string;     (* pre-fill left guard field; "" = not applicable *)
+  s_guard_right : string;     (* pre-fill right guard field; "" = not applicable *)
+  s_needs_input : bool;       (* true = custom input required, do not auto-apply *)
+  s_result      : bicommand;
 }
+
+let mk_suggestion ?(formula = "") ?(guard_left = "") ?(guard_right = "")
+    ?(needs_input = false) ~path ~rule ~display result =
+  { s_path = path; s_rule = rule; s_display = display; s_formula = formula;
+    s_guard_left = guard_left; s_guard_right = guard_right;
+    s_needs_input = needs_input; s_result = result }
 
 let suggestions_at current p =
   let base =
     List.map (fun (name, cc') ->
-      let display = if name = "weave_while" then "weave_while ?" else name in
-      { s_path = p; s_rule = name; s_display = display; s_formula = ""; s_result = cc' })
+      let display = if name = "weave_while" then "weave_while <ag>?" else name in
+      mk_suggestion ~path:p ~rule:name ~display
+        ~needs_input:(name = "weave_while") cc')
       (Rewrites.suggest_at p current)
   in
   let inv_suggs =
     match Rewrites.subterm_at p current with
-    | None -> []
-    | Some sub ->
-      List.filter_map (fun rf ->
-        match Rewrites.apply_at p (Rewrites.add_invariant rf) current with
-        | None -> None
-        | Some cc' ->
-          let fs = rformula_to_string rf in
-          Some { s_path = p; s_rule = "add_invariant";
-                 s_display = "add_invariant " ^ fs; s_formula = fs; s_result = cc' })
-        (Rewrites.coupling_candidates sub)
+    | Some (Biwhile _) ->
+      [ mk_suggestion ~path:p ~rule:"add_invariant"
+          ~display:"add_invariant <rf>" ~needs_input:true current ]
+    | _ -> []
   in
-  base @ inv_suggs
+  let loop_suggs =
+    match Rewrites.subterm_at p current with
+    | Some (Biwhile (_, _, (ag1, ag2), spec, _)) ->
+      let rm = List.filter_map (fun rf ->
+          match Rewrites.apply_at p (Rewrites.remove_invariant rf) current with
+          | None -> None
+          | Some cc' ->
+            let fs = rformula_to_string rf in
+            Some (mk_suggestion ~path:p ~rule:"remove_invariant"
+                    ~display:("remove_invariant " ^ fs) ~formula:fs cc'))
+          spec.biwinvariants
+      in
+      let cag = mk_suggestion ~path:p ~rule:"change_ag" ~display:"change_ag <ag>"
+          ~guard_left:(rformula_to_string ag1)
+          ~guard_right:(rformula_to_string ag2)
+          ~needs_input:true current
+      in
+      rm @ [cag]
+    | _ -> []
+  in
+  base @ inv_suggs @ loop_suggs
 
 let suggestions_all current =
   List.concat (List.map (suggestions_at current) (all_paths current))
 
 let json_of_suggestions suggs =
   `List (List.map (fun s ->
-      let base = [ "path",    `String (string_of_path s.s_path);
-                   "rule",    `String s.s_rule;
-                   "display", `String s.s_display;
-                   "result",  `String (Align.bicommand_to_string s.s_result) ] in
-      let fields = if s.s_formula <> ""
-        then ("formula", `String s.s_formula) :: base
-        else base in
+      let base = [ "path",        `String (string_of_path s.s_path);
+                   "rule",        `String s.s_rule;
+                   "display",     `String s.s_display;
+                   "needs_input", `Bool s.s_needs_input;
+                   "result",      `String (Align.bicommand_to_string s.s_result) ] in
+      let add key v fs = if v <> "" then (key, `String v) :: fs else fs in
+      let fields =
+        base
+        |> add "formula" s.s_formula
+        |> add "guard_left" s.s_guard_left
+        |> add "guard_right" s.s_guard_right
+      in
       `Assoc fields)
     suggs)
   |> Yojson.Safe.to_string
@@ -252,8 +363,6 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
   let current = ref base in
   let history = ref [] in     (* most-recent-first stack of prior states *)
   let future  = ref [] in     (* most-recent-first stack of undone states *)
-  let mcp_undo_rule = "undo" in
-  let mcp_redo_rule = "redo" in
 
   let find_interface_decl mdl_name meth_name =
     match M.find_opt (Id mdl_name) penv with
@@ -322,28 +431,10 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
     future := []
   in
 
-  (* Resolve a rule name (+ optional [inv] query params at path [p]) to a
-     (label, rewrite).  [add_invariant] takes the index of a coupling candidate;
-     the rest come from the registry. *)
-  let resolve name get p =
-    let assoc () =
-      match List.assoc_opt name Rewrites.all_rewrites with
-      | Some r -> Some (name, r) | None -> None
-    in
-    match name with
-    | "add_invariant" ->
-      (match get "inv", Rewrites.subterm_at p !current with
-       | Some k, Some sub ->
-         (match int_of_string_opt k with
-          | Some i ->
-            let cs = Rewrites.coupling_candidates sub in
-            if i >= 0 && i < List.length cs
-            then Some (Printf.sprintf "add_invariant[%d]" i,
-                       Rewrites.add_invariant (List.nth cs i))
-            else None
-          | None -> None)
-       | _ -> None)
-    | _ -> assoc ()
+  (* Resolve a rule name to a (label, rewrite) from the registry. *)
+  let resolve name =
+    match List.assoc_opt name Rewrites.all_rewrites with
+    | Some r -> Some (name, r) | None -> None
   in
   let apply_rewrite label r p =
     match Rewrites.apply_at p r !current with
@@ -461,7 +552,7 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
                         "invariant", `String (rformula_to_string rf)]) cands);
           "note", `String
             "carried_invariants are already on the loop; add a coupling candidate \
-             with POST /rewrite?rule=add_invariant&inv=<index>&path=<P>" ]
+             with POST /rewrite?rule=add_invariant&formula=<rformula>&path=<P>" ]
         |> Yojson.Safe.to_string
   in
 
@@ -472,7 +563,6 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
         "  GET  /                        this help";
         "  GET  /ui                      browser UI (interactive rewrites)";
         "  GET  /bicom                   current alignment (text)";
-        "  GET  /bicom.html              current alignment (HTML)";
         "  GET  /spec                    relational pre/postcondition";
         "  GET  /history                 undo/redo availability and stack depths (JSON)";
         "  GET  /rules                   names of all rewrite rules (JSON)";
@@ -481,12 +571,8 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
         "  GET  /invariants?path=P       carried invariants + coupling candidates";
         "                                for a loop focus (JSON)";
         "  POST /rewrite?rule=R&path=P   apply rule R at focus P (path optional)";
-        "  POST /rewrite?rule=undo       undo the most recent change";
-        "  POST /rewrite?rule=redo       redo the most recently undone change";
         "  POST /rewrite?rule=weave_while&guard_left=L&guard_right=R&path=P";
         "                                weave a loop with custom guards L|R";
-        "  POST /rewrite?rule=add_invariant&inv=K&path=P   add coupling candidate K";
-        "                                (from /invariants) to the loop at P";
         "  POST /rewrite?rule=add_invariant&formula=R&path=P   add a (caller/MCP-)";
         "                                supplied relational invariant R, type-checked";
         "                                in the loop's local scope";
@@ -510,14 +596,12 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
     | "/ui" ->
       (200, "text/html; charset=utf-8",
        Ui.build_interactive_html lmod lmeth rmod rmeth)
+    | "/bicom-tree"  -> (200, json, json_of_alines !current)
     | "/bicom"       -> (200, text, serialize ())
     | "/spec"        -> (200, text, show_spec ())
     | "/history"     -> (200, json, history_json ())
-    | "/bicom.html"  ->
-      (200, "text/html; charset=utf-8",
-       Ui.build_html lmod lmeth rmod rmeth (serialize ()))
     | "/rules" ->
-      let rules = List.map fst Rewrites.all_rewrites @ [mcp_undo_rule; mcp_redo_rule] in
+      let rules = List.map fst Rewrites.all_rewrites in
       let j = `List (List.map (fun n -> `String n) rules) in
       (200, json, Yojson.Safe.to_string j)
     | "/suggest" ->
@@ -537,14 +621,6 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
     | "/rewrite" ->
       (match get "rule" with
        | None -> (400, text, "missing 'rule' parameter")
-       | Some name when name = mcp_undo_rule ->
-         (match do_undo () with
-          | Ok ()   -> (200, text, serialize ())
-          | Error m -> (409, text, m))
-       | Some name when name = mcp_redo_rule ->
-         (match do_redo () with
-          | Ok ()   -> (200, text, serialize ())
-          | Error m -> (409, text, m))
        | Some "add_invariant" when get "formula" <> None ->
          let s = match get "path" with Some s -> s | None -> "" in
          let f = match get "formula" with Some f -> f | None -> "" in
@@ -554,6 +630,37 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
             (match add_mcp_invariant p f with
              | Ok ()   -> (200, text, serialize ())
              | Error m -> (400, text, m)))
+       | Some "remove_invariant" when get "formula" <> None ->
+         let s = match get "path" with Some s -> s | None -> "" in
+         let f = match get "formula" with Some f -> f | None -> "" in
+         (match parse_path s with
+          | None -> (400, text, "bad path: " ^ s)
+          | Some p ->
+            (match loop_tenv p with
+             | None -> (400, text, "method declarations not found")
+             | Some bienv ->
+               (match Astutil.parse_rformula_string f with
+                | Error e -> (400, text, "parse " ^ e)
+                | Ok rf ->
+                  (match Typing.tc_rformula bienv rf with
+                   | Error e -> (400, text, e)
+                   | Ok trf ->
+                     (match apply_rewrite "remove_invariant" (Rewrites.remove_invariant trf) p with
+                      | Ok () -> (200, text, serialize ())
+                      | Error m -> (409, text, m))))))
+       | Some "change_ag" ->
+         let s = match get "path" with Some s -> s | None -> "" in
+         (match parse_path s with
+          | None -> (400, text, "bad path: " ^ s)
+          | Some p ->
+            let lsrc = match get "guard_left" with Some x -> String.trim x | None -> "false" in
+            let rsrc = match get "guard_right" with Some x -> String.trim x | None -> "false" in
+            (match parse_custom_guard p lsrc rsrc with
+             | Error m -> (400, text, m)
+             | Ok ag ->
+               (match apply_rewrite "change_ag" (Rewrites.change_ag ag) p with
+                | Ok () -> (200, text, serialize ())
+                | Error m -> (409, text, m))))
        | Some "weave_while" when get "guard_left" <> None || get "guard_right" <> None ->
          let s = match get "path" with Some s -> s | None -> "" in
          (match parse_path s with
@@ -572,7 +679,7 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
          (match parse_path s with
           | None   -> (400, text, "bad path: " ^ s)
           | Some p ->
-            (match resolve name get p with
+            (match resolve name with
              | None -> (400, text, Printf.sprintf "unknown rule: %s" name)
              | Some (label, r) ->
                (match apply_rewrite label r p with
