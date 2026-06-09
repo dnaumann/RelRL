@@ -22,7 +22,6 @@ let no_simplify_effects  = ref false
 let all_exists_mode      = ref false
 
 let align_mode = ref false
-let align_man_mode = ref false
 let align_interactive_mode = ref false
 let align_port = ref 8080
 let align_rpre  : string ref = ref ""
@@ -91,9 +90,6 @@ let args =
 
    "-r", Tuple [Set_string align_right_module; Set_string align_right_method],
    "<module> <method>  Right-hand side module and method for alignment";
-
-   "-man", Set align_man_mode,
-   " In align mode: starts an html server instead of the default http server which writes an HTML file with line-numbered bicom ";
 
    "-i", Set align_interactive_mode,
    " In align mode: start the interactive rewriting server (stateful; serves /suggest, /rewrite, /undo, /export)";
@@ -210,10 +206,19 @@ let main () =
         Interactive.run penv ctbl !align_left_module !align_left_method
           !align_right_module !align_right_method !output_fname
           !align_rpre !align_rpost !align_port
-      else
-        Align.run penv !align_left_module !align_left_method
-          !align_right_module !align_right_method !output_fname
-          ~man_mode:!align_man_mode ~port:!align_port
+      else begin
+        let bicom =
+          Auto.compose_sequentially penv
+            !align_left_module !align_left_method
+            !align_right_module !align_right_method
+          |> Rewrites.auto_align
+        in
+        let s = Align.bicommand_to_string bicom in
+        print_string s; print_newline ();
+        let oc = open_out !output_fname in
+        output_string oc s; close_out oc;
+        Printf.printf "Written to %s\n%!" !output_fname
+      end
       end
   else begin
       let fmt = get_formatter () in

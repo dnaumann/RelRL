@@ -96,7 +96,7 @@ module MREL
   use M0
   use M1
   
-  let fact (l_s : state) (r_s : state) (pi : PreRefperm.t) (l_n : int) (r_n : int) : 
+ let  fact (l_s : state) (r_s : state) (pi : PreRefperm.t) (l_n : int) (r_n : int) :   
     (int, int)
     requires { okRefperm l_s r_s pi }
     requires { (l_n = r_n) }
@@ -111,7 +111,8 @@ module MREL
               | (l_result, r_result) -> ((l_result > 0) /\ (r_result > 0))
               end }
     diverges
-  = label INIT in
+  = [@split]
+  label INIT in
       let r_result = ref 0 in
       let l_result = ref 0 in
       let l_n = ref l_n in

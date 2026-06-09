@@ -1562,6 +1562,31 @@ let find_relation_module penv bimdl_name =
   | Relation_module rmdl -> rmdl
   | _ | exception _ -> failwith ("Unknown bimodule: " ^ id_name bimdl_name)
 
+(* Returns [None] if the module or method is absent, or
+   if the method has no implementation (extern / abstract). *)
+let find_method_body (penv : penv) mdl_name meth_name : command option =
+  let mdl_id = Ast.Id mdl_name in
+  let meth_id = Ast.Id meth_name in
+  match M.find_opt mdl_id penv with
+  | Some (Unary_module mdl) ->
+    (match List.find_opt (function
+       | Mdl_mdef (Method (decl, _)) -> decl.meth_name.node = meth_id
+       | _ -> false) mdl.mdl_elts with
+     | Some (Mdl_mdef (Method (_, body))) -> body
+     | _ -> None)
+  | _ -> None
+
+let find_method_decl (penv: penv) mdl_name meth_name : meth_decl option =
+  let mdl_id  = Ast.Id mdl_name  in
+  let meth_id = Ast.Id meth_name in
+  match M.find_opt mdl_id penv with
+  | Some (Unary_module mdl) ->
+    (match List.find_opt (function
+           | Mdl_mdef (Method (decl, _)) -> decl.meth_name.node = meth_id
+           | _ -> false) mdl.mdl_elts with
+     | Some (Mdl_mdef (Method (decl, _))) -> Some decl
+     | _ -> None)
+  | _ -> None
 
 (* -------------------------------------------------------------------------- *)
 (* Compute module dependencies                                                *)

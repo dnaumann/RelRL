@@ -6,7 +6,7 @@ open Annot
    (browser UI, curl, or an MCP) can repeatedly inspect the alignment, ask which
    rewrites apply where, apply them at a focus, undo, and finally export a
    bimodule skeleton.  All rewriting is delegated to [Rewrites]; the default
-   (sequential) alignment is built by [Align.compose_sequentially].
+  (sequential) alignment is built by [Auto.compose_sequentially].
 
    A relational pre/postcondition may be supplied (CLI -rpre/-rpost); it is
    parsed and checked to refer only to the method arguments (and, for the
@@ -35,24 +35,6 @@ let rec all_paths (cc : bicommand) : Rewrites.path list =
                 List.map (fun p -> i :: p)
                   (all_paths (Rewrites.get_child cc i))))
 
-(* ---- JSON rendering ----------------------------------------------------- *)
-
-let suggestions_at current p =
-  List.map (fun (name, cc) -> (p, name, cc)) (Rewrites.suggest_at p current)
-
-let suggestions_all current =
-  List.concat (List.map (suggestions_at current) (all_paths current))
-
-let json_of_suggestions (suggs : (Rewrites.path * string * bicommand) list) =
-  `List (List.map (fun (p, name, cc) ->
-      `Assoc [ "path",   `String (string_of_path p);
-               "rule",   `String name;
-               "result", `String (Align.bicommand_to_string cc) ])
-      suggs)
-  |> Yojson.Safe.to_string
-
-(* ---- relational spec: parse + scope/type-check -------------------------- *)
-
 let rformula_to_string rf =
   let buf = Buffer.create 128 in
   let fmt = Format.formatter_of_buffer buf in
@@ -60,6 +42,56 @@ let rformula_to_string rf =
   Pretty.pp_rformula fmt rf;
   Format.pp_print_flush fmt ();
   Buffer.contents buf
+
+(* ---- JSON rendering ----------------------------------------------------- *)
+
+type suggestion = {
+  s_path    : Rewrites.path;
+  s_rule    : string;     (* API rule name *)
+  s_display : string;     (* label shown in the UI *)
+  s_formula : string;     (* pre-fill invariant field; "" = not applicable *)
+  s_result  : bicommand;
+}
+
+let suggestions_at current p =
+  let base =
+    List.map (fun (name, cc') ->
+      let display = if name = "weave_while" then "weave_while ?" else name in
+      { s_path = p; s_rule = name; s_display = display; s_formula = ""; s_result = cc' })
+      (Rewrites.suggest_at p current)
+  in
+  let inv_suggs =
+    match Rewrites.subterm_at p current with
+    | None -> []
+    | Some sub ->
+      List.filter_map (fun rf ->
+        match Rewrites.apply_at p (Rewrites.add_invariant rf) current with
+        | None -> None
+        | Some cc' ->
+          let fs = rformula_to_string rf in
+          Some { s_path = p; s_rule = "add_invariant";
+                 s_display = "add_invariant " ^ fs; s_formula = fs; s_result = cc' })
+        (Rewrites.coupling_candidates sub)
+  in
+  base @ inv_suggs
+
+let suggestions_all current =
+  List.concat (List.map (suggestions_at current) (all_paths current))
+
+let json_of_suggestions suggs =
+  `List (List.map (fun s ->
+      let base = [ "path",    `String (string_of_path s.s_path);
+                   "rule",    `String s.s_rule;
+                   "display", `String s.s_display;
+                   "result",  `String (Align.bicommand_to_string s.s_result) ] in
+      let fields = if s.s_formula <> ""
+        then ("formula", `String s.s_formula) :: base
+        else base in
+      `Assoc fields)
+    suggs)
+  |> Yojson.Safe.to_string
+
+(* ---- relational spec: parse + scope/type-check -------------------------- *)
 
 (* A tenv exposing only [alloc] (from [initial_tenv]), the given parameters, and
    optionally [result], built over [ctbl] so types resolve but module globals
@@ -90,30 +122,28 @@ let check_rformula ctbl (ldecl : meth_decl) (rdecl : meth_decl) ~with_result src
                right_tenv = restricted_tenv ctbl (params_of rdecl) rres } in
     Typing.tc_rformula bienv rf
 
-(* Variables the spec forces to agree: those under an [Agree]/[=:=] atom (and
-   conjunctions / quantifiers / lets thereof).  Used to rank guard candidates. *)
-let rec agreed_vars rf =
-  match rf with
-  | Rbiequal (e1, e2) when e1 = e2 -> free_vars_exp e1
-  | Ragree (e, _) -> free_vars_exp e
-  | Rconn (Ast.Conj, a, b) -> IdS.union (agreed_vars a) (agreed_vars b)
-  | Rquant (_, _, r) | Rlater r -> agreed_vars r
-  | Rlet (_, _, r) -> agreed_vars r
-  | _ -> IdS.empty
-
-let guard_rationale = function
-  | "lockstep"    -> "iterate both loops together (one body per joint step)"
-  | "diff"        -> "lockstep while both guards hold, then drain the loop still running"
-  | "left-first"  -> "run the left loop to completion, then the right"
-  | "right-first" -> "run the right loop to completion, then the left"
-  | _             -> ""
-
 (* ---- export ------------------------------------------------------------- *)
 
 let param_to_string (p : meth_param_info) =
   Printf.sprintf "%s:%s"
     (Astutil.string_of_ident p.param_name.node)
     (string_of_ity p.param_ty)
+
+let effect_to_string eff =
+  let buf = Buffer.create 128 in
+  let fmt = Format.formatter_of_buffer buf in
+  Format.pp_set_margin fmt 80;
+  Pretty.pp_effect fmt eff;
+  Format.pp_print_flush fmt ();
+  Buffer.contents buf
+
+let effects_of_spec (sp : spec) : effect option =
+  let rec go = function
+    | [] -> None
+    | Effects eff :: _ -> Some eff
+    | _ :: rest -> go rest
+  in
+  go sp
 
 let mk_var_exp id ty =
   Evar (id -: ty) -: ty
@@ -190,7 +220,12 @@ let bimodule_skeleton lmod lmeth rmod rmeth bicom_str ldecl rdecl spec_pre spec_
           | None -> default_post_specs ld rd
         in
         if post_specs = [] then p "    ensures { Both (true) }\n"
-        else List.iter (write_rel_clause "ensures") post_specs)
+        else List.iter (write_rel_clause "ensures") post_specs);
+     (match effects_of_spec ld.meth_spec, effects_of_spec rd.meth_spec with
+      | Some leff, Some reff ->
+        p "    effects  { %s | %s }\n"
+          (effect_to_string leff) (effect_to_string reff)
+      | _ -> ())
    | _ ->
      p "  meth %s ( (* left params *) | (* right params *) ) : ( unit | unit )\n" lmeth;
      let cli_pre = String.trim rpre_src in
@@ -213,7 +248,7 @@ let json = "application/json"
    it behind the rewriting API on [port].  [rpre]/[rpost] are the (possibly
    empty) relational pre/postcondition source strings. *)
 let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
-  let base    = Align.compose_sequentially penv lmod lmeth rmod rmeth in
+  let base    = Auto.compose_sequentially penv lmod lmeth rmod rmeth in
   let current = ref base in
   let history = ref [] in     (* most-recent-first stack of prior states *)
   let future  = ref [] in     (* most-recent-first stack of undone states *)
@@ -231,18 +266,24 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
        | _ -> None)
     | _ -> None
   in
+  let has_effect_spec sp =
+    List.exists (function Effects _ -> true | _ -> false) sp
+  in
+  let merge_method_specs mod_spec intr_spec =
+    if mod_spec = [] then intr_spec
+    else if has_effect_spec mod_spec || not (has_effect_spec intr_spec) then mod_spec
+    else mod_spec @ List.filter (function Effects _ -> true | _ -> false) intr_spec
+  in
   let enrich_decl mdl_name meth_name dopt =
     match dopt with
     | None -> find_interface_decl mdl_name meth_name
     | Some d ->
-      if d.meth_spec <> [] then Some d
-      else
-        (match find_interface_decl mdl_name meth_name with
-         | Some idecl -> Some { d with meth_spec = idecl.meth_spec }
-         | None -> Some d)
+      (match find_interface_decl mdl_name meth_name with
+       | Some idecl -> Some { d with meth_spec = merge_method_specs d.meth_spec idecl.meth_spec }
+       | None -> Some d)
   in
-  let ldecl = enrich_decl lmod lmeth (Align.find_method_decl penv lmod lmeth) in
-  let rdecl = enrich_decl rmod rmeth (Align.find_method_decl penv rmod rmeth) in
+  let ldecl = enrich_decl lmod lmeth (find_method_decl penv lmod lmeth) in
+  let rdecl = enrich_decl rmod rmeth (find_method_decl penv rmod rmeth) in
 
   (* Parse + check the relational spec against the two method signatures. *)
   let spec_pre, spec_post =
@@ -275,54 +316,21 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
     in
     String.concat "; " errs
   in
-  (* Variables the spec forces to agree, across pre and post. *)
-  let agreed =
-    List.fold_left
-      (fun acc -> function Some rf -> IdS.union acc (agreed_vars rf) | None -> acc)
-      IdS.empty [spec_pre; spec_post]
-  in
-
   let serialize () = Align.bicommand_to_string !current in
   let snapshot () =
     history := !current :: !history;
     future := []
   in
 
-  (* The guard candidate recommended for a loop pair.  Identical guards are the
-     dominant signal that the two loops run the same number of times, so lockstep
-     is recommended (this covers aligning a method against itself).  When the
-     guards differ, lockstep is only recommended if the spec forces every guard
-     variable to agree (making them equivalent); otherwise the data-dependent
-     diff alignment, which drains whichever loop outlasts the other. *)
-  let recommend = function
-    | Bisplit (While (le, _, _), While (re, _, _)) ->
-      if le = re then "lockstep"
-      else
-        let vs = IdS.union (free_vars_exp le) (free_vars_exp re) in
-        if not (IdS.is_empty agreed) && IdS.subset vs agreed then "lockstep"
-        else "diff"
-    | _ -> "diff"
-  in
-
-  (* Resolve a rule name (+ optional [guard]/[inv] query params at path [p]) to a
-     (label, rewrite).  [weave_while] takes a synthesised guard; [add_invariant]
-     takes the index of a coupling candidate; the rest come from the registry. *)
+  (* Resolve a rule name (+ optional [inv] query params at path [p]) to a
+     (label, rewrite).  [add_invariant] takes the index of a coupling candidate;
+     the rest come from the registry. *)
   let resolve name get p =
     let assoc () =
       match List.assoc_opt name Rewrites.all_rewrites with
       | Some r -> Some (name, r) | None -> None
     in
     match name with
-    | "weave_while" ->
-      (match get "guard" with
-       | None -> assoc ()
-       | Some g ->
-         (match Rewrites.subterm_at p !current with
-          | None -> None
-          | Some sub ->
-            (match List.assoc_opt g (Rewrites.guard_candidates sub) with
-             | Some ag -> Some (name ^ "[" ^ g ^ "]", Rewrites.weave_while_guard ag)
-             | None -> None)))
     | "add_invariant" ->
       (match get "inv", Rewrites.subterm_at p !current with
        | Some k, Some sub ->
@@ -358,6 +366,23 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
               right_tenv =
                 restricted_tenv ctbl (params_of rd @ List.map vb rvars) (Some rd.result_ty) })
     | _ -> None
+  in
+  let parse_custom_guard p lsrc rsrc =
+    match loop_tenv p with
+    | None -> Error "method declarations not found"
+    | Some bienv ->
+      let parse_one side src =
+        match Astutil.parse_rformula_string src with
+        | Error e -> Error (Printf.sprintf "parse %s guard: %s" side e)
+        | Ok rf ->
+          (match Typing.tc_rformula bienv rf with
+           | Ok trf -> Ok trf
+           | Error e -> Error (Printf.sprintf "typecheck %s guard: %s" side e))
+      in
+      (match parse_one "left" lsrc, parse_one "right" rsrc with
+       | Ok lg, Ok rg -> Ok (lg, rg)
+       | Error e, _ -> Error e
+       | _, Error e -> Error e)
   in
   (* Parse, type-check in the loop's local scope, and add an MCP-supplied
      relational invariant at loop focus [p]. *)
@@ -413,29 +438,6 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
     String.concat "\n" [ line "requires" spec_pre; line "ensures" spec_post; "" ]
   in
 
-  (* Synthesised loop alignments at focus [p], ranked using the spec. *)
-  let guards_at p =
-    match Rewrites.subterm_at p !current with
-    | None -> Yojson.Safe.to_string (`Assoc ["error", `String "no subterm at path"])
-    | Some sub ->
-      match Rewrites.guard_candidates sub with
-      | [] -> Yojson.Safe.to_string
-                (`Assoc ["error",
-                         `String "focus is not a loop pair (Bisplit(while,while))"])
-      | cands ->
-        let best = recommend sub in
-        `List (List.map (fun (name, ag) ->
-            let result = match Rewrites.apply_at p (Rewrites.weave_while_guard ag) !current with
-              | Some cc' -> Align.bicommand_to_string cc'
-              | None -> "(n/a)" in
-            `Assoc [ "guard",       `String name;
-                     "recommended", `Bool (name = best);
-                     "rationale",   `String (guard_rationale name);
-                     "result",      `String result ])
-            cands)
-        |> Yojson.Safe.to_string
-  in
-
   (* Relational invariants for a loop focus [p]: those already carried on the
      loop (lifted from the unary loops by [weave_while]), plus agreement coupling
      candidates (v =:= v) to consider adding. *)
@@ -476,15 +478,13 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
         "  GET  /rules                   names of all rewrite rules (JSON)";
         "  GET  /suggest                 every applicable rewrite, all foci (JSON)";
         "  GET  /suggest?path=0.1        applicable rewrites at one focus (JSON)";
-        "  GET  /guards?path=P           synthesised loop alignments at focus P,";
-        "                                ranked by the spec (JSON)";
         "  GET  /invariants?path=P       carried invariants + coupling candidates";
         "                                for a loop focus (JSON)";
         "  POST /rewrite?rule=R&path=P   apply rule R at focus P (path optional)";
         "  POST /rewrite?rule=undo       undo the most recent change";
         "  POST /rewrite?rule=redo       redo the most recently undone change";
-        "  POST /rewrite?rule=weave_while&guard=G&path=P   weave a loop with a";
-        "                                synthesised guard G (see /guards)";
+        "  POST /rewrite?rule=weave_while&guard_left=L&guard_right=R&path=P";
+        "                                weave a loop with custom guards L|R";
         "  POST /rewrite?rule=add_invariant&inv=K&path=P   add coupling candidate K";
         "                                (from /invariants) to the loop at P";
         "  POST /rewrite?rule=add_invariant&formula=R&path=P   add a (caller/MCP-)";
@@ -509,13 +509,13 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
     | "/" | "/help"  -> (200, text, help)
     | "/ui" ->
       (200, "text/html; charset=utf-8",
-       Html_server.build_interactive_html lmod lmeth rmod rmeth)
+       Ui.build_interactive_html lmod lmeth rmod rmeth)
     | "/bicom"       -> (200, text, serialize ())
     | "/spec"        -> (200, text, show_spec ())
     | "/history"     -> (200, json, history_json ())
     | "/bicom.html"  ->
       (200, "text/html; charset=utf-8",
-       Html_server.build_html lmod lmeth rmod rmeth (serialize ()))
+       Ui.build_html lmod lmeth rmod rmeth (serialize ()))
     | "/rules" ->
       let rules = List.map fst Rewrites.all_rewrites @ [mcp_undo_rule; mcp_redo_rule] in
       let j = `List (List.map (fun n -> `String n) rules) in
@@ -527,13 +527,6 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
          (match parse_path s with
           | None   -> (400, text, "bad path: " ^ s)
           | Some p -> (200, json, json_of_suggestions (suggestions_at !current p))))
-    | "/guards" ->
-      (match get "path" with
-       | None   -> (400, text, "give ?path=P pointing at a loop pair")
-       | Some s ->
-         (match parse_path s with
-          | None   -> (400, text, "bad path: " ^ s)
-          | Some p -> (200, json, guards_at p)))
     | "/invariants" ->
       (match get "path" with
        | None   -> (400, text, "give ?path=P pointing at a loop")
@@ -561,13 +554,26 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
             (match add_mcp_invariant p f with
              | Ok ()   -> (200, text, serialize ())
              | Error m -> (400, text, m)))
+       | Some "weave_while" when get "guard_left" <> None || get "guard_right" <> None ->
+         let s = match get "path" with Some s -> s | None -> "" in
+         (match parse_path s with
+          | None -> (400, text, "bad path: " ^ s)
+          | Some p ->
+            let lsrc = match get "guard_left" with Some x -> String.trim x | None -> "false" in
+            let rsrc = match get "guard_right" with Some x -> String.trim x | None -> "false" in
+            (match parse_custom_guard p lsrc rsrc with
+             | Error m -> (400, text, m)
+             | Ok ag ->
+               (match apply_rewrite "weave_while[custom]" (Rewrites.weave_while_guard ag) p with
+                | Ok () -> (200, text, serialize ())
+                | Error m -> (409, text, m))))
        | Some name ->
          let s = match get "path" with Some s -> s | None -> "" in
          (match parse_path s with
           | None   -> (400, text, "bad path: " ^ s)
           | Some p ->
             (match resolve name get p with
-             | None -> (400, text, Printf.sprintf "unknown rule/guard: %s" name)
+             | None -> (400, text, Printf.sprintf "unknown rule: %s" name)
              | Some (label, r) ->
                (match apply_rewrite label r p with
                 | Ok ()    -> (200, text, serialize ())
