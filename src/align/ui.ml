@@ -83,7 +83,7 @@ let build_interactive_html lmod lmeth rmod rmeth =
   p "      lines.forEach(item => {\n";
   p "        const row = document.createElement('div'); row.className = 'line';\n";
   p "        const ln = document.createElement('span'); ln.className = 'ln'; ln.textContent = String(item.lineno);\n";
-  p "        ln.onclick = () => { qs('path').value = item.path; };\n";
+  p "        ln.onclick = async () => { qs('path').value = item.path; await suggestAtPath(); };\n";
   p "        const src = document.createElement('span'); src.className = 'src'; src.textContent = item.text;\n";
   p "        row.appendChild(ln); row.appendChild(src); root.appendChild(row);\n";
   p "      });\n";

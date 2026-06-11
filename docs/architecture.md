@@ -178,7 +178,13 @@ tc_program input
   ├─ For each bimodule:
   │  ├─ Check interfaces match
   │  ├─ Type check bicommands (2-program execution)
-  │  └─ Type check specifications
+  │  ├─ Type check specifications
+  │  └─ ★ Projection check (wf_bimeth_def @ typing.ml:2099)
+  │     ├─ projl_simplify cc ≡ left unary method body
+  │     ├─ projr_simplify cc ≡ right unary method body
+  │     └─ Error "Malformed bicommand (<side>): <method>" on mismatch
+  │     (Biif4 also asserts left/right projections agree across the
+  │      four branches @ typing.ml:1887)
   │
   └─ Return: (penv, ctbl)
 ```
