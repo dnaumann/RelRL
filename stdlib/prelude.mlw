@@ -6,6 +6,7 @@ module Prelude
   use list.ListRich as L
   use whyrel_array.Array as A
   use set.Fset as Rgn
+  use map.Map as Mp
 
   (* ------------------------------------------------------------------------ *)
   (* References and equality on primitive types                               *)
@@ -32,18 +33,51 @@ module Prelude
 
   (* ------------------------------------------------------------------------ *)
   (* Finite maps with reference keys                                          *)
+  (*                                                                          *)
+  (* Totalized encoding: contents are a raw map.Map (mapped to the native    *)
+  (* SMT array theory by the prover drivers, so select-of-store is decided   *)
+  (* structurally), and the domain is an explicit finite set.  This unwraps  *)
+  (* the abstraction that fmap.Fmap keeps opaque; the M.* surface matches    *)
+  (* the fmap.MapApp clone it replaces.  See docs/why3_hybrid_plan.md.       *)
   (* ------------------------------------------------------------------------ *)
 
-  clone fmap.MapApp as M with type key = reference
+  scope M
 
-  let function ([]) [@rewrite] (m: M.t 'a) (k: reference) : 'a
+    type t 'a = {
+      contents : Mp.map reference 'a;
+      domain   : Rgn.fset reference;
+    }
+
+    predicate mem (k: reference) (m: t 'a) =
+      Rgn.mem k m.domain
+
+    function find (k: reference) (m: t 'a) : 'a =
+      Mp.get m.contents k
+
+    (* program symbol + shallow definitional axiom: map.Map ops are
+       logic-only, so add cannot have an executable body *)
+    val function add (k: reference) (v: 'a) (m: t 'a) : t 'a
+      ensures { result = { contents = Mp.set m.contents k v ;
+                           domain   = Rgn.add k m.domain } }
+
+    axiom add_def : forall k: reference, v: 'a, m: t 'a.
+      add k v m = { contents = Mp.set m.contents k v ;
+                    domain   = Rgn.add k m.domain }
+
+    val function create (_: unit) : t 'a
+      ensures { result.domain = Rgn.empty }
+
+  end
+
+  val function ([]) (m: M.t 'a) (k: reference) : 'a
     requires { M.mem k m }
     ensures  { result = M.find k m }
-  = M.find k m
 
-  let function ( \: ) [@inline:goal] [@rewrite] (k: reference) (m: M.t 'a) : bool
-    ensures { result = M.mem k m }
-  = M.mem k m
+  axiom mixfix_get_def : forall m: M.t 'a, k: reference.
+    m[k] = M.find k m
+
+  val function ( \: ) (k: reference) (m: M.t 'a) : bool
+    ensures { result <-> M.mem k m }
 
   lemma find_syntax : forall m: M.t 'a, k:reference. k \: m -> (m[k] = M.find k m)
   lemma mem_syntax  : forall m: M.t 'a, k:reference. k \: m <-> M.mem k m
@@ -83,11 +117,15 @@ module Prelude
   lemma rgn_union_same : forall r:rgn.
     Rgn.union r r = r
 
+  (* the "by" steps seed set extensionality: prove membership equivalence,
+     then conclude equality via rgn_extensionality *)
   lemma rgn_union_assoc : forall r r' r'':rgn.
     Rgn.union r (Rgn.union r' r'') = Rgn.union (Rgn.union r r') r''
+    by Rgn.(==) (Rgn.union r (Rgn.union r' r'')) (Rgn.union (Rgn.union r r') r'')
 
   lemma rgn_union_swap1 : forall r r' r'':rgn.
     Rgn.union r (Rgn.union r' r'') = Rgn.union r' (Rgn.union r r'')
+    by Rgn.(==) (Rgn.union r (Rgn.union r' r'')) (Rgn.union r' (Rgn.union r r''))
 
   lemma rgn_union_comm : forall r r':rgn.
     Rgn.union r r' = Rgn.union r' r
@@ -96,6 +134,7 @@ module Prelude
     r1 = Rgn.union r2 (singleton p) ->
     not (Rgn.mem p r3) ->
     Rgn.inter r1 r3 = Rgn.inter r2 r3
+    by Rgn.(==) (Rgn.inter r1 r3) (Rgn.inter r2 r3)
 
   lemma rgn_remove_not_in : forall r:rgn, x:reference.
     not (Rgn.mem x r) -> Rgn.remove x r = r
@@ -137,6 +176,7 @@ module Prelude
 
   lemma rgnSubK_idempotent : forall s, m: M.t 'a, v: 'a.
     rgnSubK (rgnSubK s m v) m v = rgnSubK s m v
+    by Rgn.(==) (rgnSubK (rgnSubK s m v) m v) (rgnSubK s m v)
 
   lemma rgnSubK_monotonic : forall s s', m: M.t 'a, v: 'a.
     Rgn.subset s s' -> Rgn.subset (rgnSubK s m v) (rgnSubK s' m v)
@@ -160,8 +200,10 @@ module PreRefperm
   (* Partial bijections and a type for prerefperms                            *)
   (* ------------------------------------------------------------------------ *)
 
+  (* The size-equality clause of the original definition is implied by the
+     mutual-inverse conditions and is dropped: cardinality reasoning is the
+     worst-case workload for SMT solvers. *)
   predicate partialBijection (mTo mOf: M.t reference) =
-    M.size mTo = M.size mOf /\
     (forall x. x \: mTo -> mTo[x] \: mOf) /\
     (forall y. y \: mOf -> mOf[y] \: mTo) /\
     (forall x. x \: mTo -> mOf[mTo[x]] = x) /\
@@ -313,9 +355,16 @@ module PreRefperm
     not (y \: pi.rol) ->
     extends pi (updateRefperm0 pi x y)
 
+  (* the "by" step seeds the rol-direction pivot: extends only constrains
+     lor, so the rol facts must be recovered through the bijection invariant
+     via the witness x = pi.rol[y] *)
   lemma extends_idRgn : forall pi:t, g h: rgn.
     idRgn pi g h ->
     forall rho:t. extends pi rho -> idRgn rho g h
+    by (forall y. y <> null -> Rgn.mem y h ->
+          y \: pi.rol /\
+          (let x = pi.rol[y] in
+           x \: rho.lor /\ rho.lor[x] = y /\ Rgn.mem x g))
 
   lemma extends_idRef : forall pi: t, x y: reference.
     idRef pi x y ->
@@ -373,6 +422,7 @@ module PreRefperm
     identity pi g1 g2 ->
     idRgn pi h1 h2 ->
     h1 = h2
+    by Rgn.(==) h1 h2
 
   lemma identity_null_notin : forall pi g1 g2.
     identity pi g1 g2 ->

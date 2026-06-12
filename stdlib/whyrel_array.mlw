@@ -1,48 +1,56 @@
 module Array
 
+  (* Totalized arrays: elements are a raw map.Map over int (native SMT array
+     theory), bounds discipline comes from the get/set preconditions.  This
+     replaces the fmap.MapApp encoding, whose domain set and size invariant
+     (M.size elts = length) put cardinality axioms in every array VC.
+     map.Map operations are logic-only, so get/set are program symbols
+     (val function) with shallow definitional axioms for logic occurrences. *)
+
   use int.Int
-  use ref.Ref
+  use map.Map as Mp
+  use map.Const as C
 
-  clone fmap.MapApp as M with type key = int
-  
   type array 'a = {
-    elts   : M.t 'a;
+    elts   : Mp.map int 'a;
     length : int;
-  } invariant {
-      length >= 0          /\
-      M.size elts = length /\
-      (forall i:int. 0 <= i < length -> M.mem i elts)
-    } by { length = 0 ; elts = M.create () }
+  } invariant { length >= 0 }
+    by { length = 0 ; elts = any (Mp.map int 'a) }
 
-  let function get (a: array 'a) (i: int) : 'a
+  val function get (a: array 'a) (i: int) : 'a
     requires { [@expl: index is in bounds] 0 <= i < length a }
-    ensures  { result = M.find i a.elts }
-  = M.find i a.elts
-  
-  let function set (a: array 'a) (i: int) (v: 'a) : array 'a
+    ensures  { result = Mp.get a.elts i }
+
+  axiom get_def : forall a: array 'a, i: int.
+    get a i = Mp.get a.elts i
+
+  val function set (a: array 'a) (i: int) (v: 'a) : array 'a
     requires { [@expl: index is in bounds] 0 <= i < length a }
     ensures  { get result i = v }
     ensures  { forall j:int. 0 <= j < length a -> j <> i -> get result j = get a j }
     ensures  { length a = length result }
-  = { a with elts = M.add i v a.elts }
-  
-  let function make (n: int) (v: 'a) : array 'a
+
+  axiom set_def_elts : forall a: array 'a, i: int, v: 'a.
+    (set a i v).elts = Mp.set a.elts i v
+
+  axiom set_def_length : forall a: array 'a, i: int, v: 'a.
+    (set a i v).length = a.length
+
+  val function make (n: int) (v: 'a) : array 'a
      requires { [@expl:array size] n >= 0 }
      ensures  { forall i:int. 0 <= i < n -> get result i = v }
      ensures  { length result = n }
-  = let result = ref (M.create ()) in
-    for i = 0 to n-1 do
-      invariant { forall j:int. 0 <= j < i -> M.mem j !result /\ M.find j !result = v }
-      invariant { forall j:int. i <= j < n -> not (M.mem j !result) }
-      invariant { M.size !result = i }
-      result := M.add i v !result
-    done;
-    { elts = !result; length = n }
+
+  axiom make_def_elts : forall n: int, v: 'a.
+    n >= 0 -> (make n v).elts = C.const v
+
+  axiom make_def_length : forall n: int, v: 'a.
+    n >= 0 -> (make n v).length = n
 
   lemma array_set_get_eq : forall a: array 'a, i: int, v:'a.
     0 <= i < length a ->
     get (set a i v) i = v
-    
+
   lemma array_set_get_neq : forall a: array 'a, i j:int, v:'a.
     0 <= i < length a ->
     0 <= j < length a ->
@@ -56,11 +64,11 @@ module Array
   lemma array_set_shadow : forall a: array 'a, i:int, v v': 'a.
     0 <= i < length a ->
     get (set (set a i v) i v') i = get (set a i v') i
-    
+
   lemma array_index_val : forall a: array 'a, i:int.
     0 <= i < length a ->
     exists v:'a. get a i = v
-    
+
   lemma array_set_permut : forall a: array 'a, i j:int.
     0 <= i < length a ->
     0 <= j < length a ->
