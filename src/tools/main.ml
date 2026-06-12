@@ -203,7 +203,7 @@ let main () =
         !align_right_module !align_right_method
         !output_fname;
       if !align_interactive_mode then
-        Interactive.run penv ctbl !align_left_module !align_left_method
+        Interactive.run penv ctbl !program_files !align_left_module !align_left_method
           !align_right_module !align_right_method !output_fname
           !align_rpre !align_rpost !align_port
       else begin

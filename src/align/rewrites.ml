@@ -173,6 +173,16 @@ let change_ag (ag : alignment_guard) : rewrite = function
   | Biwhile (e, e', _, sp, cc) -> Some (Biwhile (e, e', ag, sp, cc))
   | _ -> None
 
+(* Insert a relational assert after/before the focus.  Used to seed proof
+   hints (e.g. literal lemma instances) when /verify reports unproven goals.
+   Biassert projects to skip on both sides, so projection checks are
+   unaffected. *)
+let add_assert_after (rf : rformula) : rewrite =
+  fun cc -> Some (Biseq (cc, Biassert rf))
+
+let add_assert_before (rf : rformula) : rewrite =
+  fun cc -> Some (Biseq (Biassert rf, cc))
+
 (* -- Inverse weaving (finer alignment -> coarser): remove synchronisation -- *)
 
 (* (C1 | C1') ; (C2 | C2')  ~~>  (C1;C2 | C1';C2')   -- inverse of [weave_seq] *)

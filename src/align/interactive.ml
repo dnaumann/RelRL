@@ -218,6 +218,22 @@ let restricted_tenv ctbl params result_opt =
 let params_of (d : meth_decl) =
   List.map (fun (p : meth_param_info) -> (p.param_name.node, p.param_ty)) d.params
 
+(* All interface-declared globals (module-level state visible to method
+   bodies).  Unlike the -rpre/-rpost spec scope, invariants and asserts added
+   in-session may refer to them, mirroring what unary loop specs may mention. *)
+let interface_globals penv =
+  M.fold
+    (fun _ elt acc ->
+       match elt with
+       | Unary_interface intr ->
+         List.fold_left
+           (fun acc -> function
+              | Intr_vdecl (_, id, ty) -> (id.node, ty) :: acc
+              | _ -> acc)
+           acc intr.intr_elts
+       | _ -> acc)
+    penv []
+
 (* Parse [src] and check it refers only to the args of [ldecl]/[rdecl] (plus
    [result] when [with_result]).  Out-of-scope references surface as the
    type-checker's "unknown variable" error. *)
@@ -348,6 +364,66 @@ let bimodule_skeleton lmod lmeth rmod rmeth bicom_str ldecl rdecl spec_pre spec_
   p "  ;\n\nend\n";
   Buffer.contents buf
 
+(* ---- verify -------------------------------------------------------------- *)
+
+let read_file path =
+  let ic = open_in_bin path in
+  let n = in_channel_length ic in
+  let s = really_input_string ic n in
+  close_in ic; s
+
+(* Repo-root-relative resources (bin/whyrel -> root), env-overridable. *)
+let whyrel_root () =
+  Filename.dirname (Filename.dirname Sys.executable_name)
+
+let stdlib_dir () =
+  try Sys.getenv "WHYREL_STDLIB"
+  with Not_found -> Filename.concat (whyrel_root ()) "stdlib"
+
+let prove_driver () =
+  try Sys.getenv "WHYREL_PROVE"
+  with Not_found ->
+    Filename.concat (whyrel_root ()) "tools/whyrel_prove.py"
+
+(* Translate the original program files plus the exported bimodule skeleton,
+   then discharge the bimodule's theory with the prover portfolio
+   (tools/whyrel_prove.py).  Returns the driver's JSON whether or not all
+   goals discharge (the JSON carries per-goal statuses and triage hints);
+   non-200 only when a pipeline stage itself fails. *)
+let verify_skeleton program_files skel ~bimodule ~timeout ~theory =
+  let text_ct = "text/plain; charset=utf-8" in
+  let tmp_rl   = Filename.temp_file "align_verify" ".rl" in
+  let tmp_mlw  = Filename.temp_file "align_verify" ".mlw" in
+  let tmp_json = Filename.temp_file "align_verify" ".json" in
+  let tmp_log  = Filename.temp_file "align_verify" ".log" in
+  let oc = open_out tmp_rl in
+  output_string oc skel; close_out oc;
+  let q = Filename.quote in
+  let srcs = String.concat " " (List.map q (program_files @ [tmp_rl])) in
+  let translate_cmd =
+    Printf.sprintf "%s %s -o %s > %s 2>&1"
+      (q Sys.executable_name) srcs (q tmp_mlw) (q tmp_log) in
+  if Sys.command translate_cmd <> 0 then
+    (409, text_ct, "verify: translation failed\n\n" ^ read_file tmp_log)
+  else begin
+    let theory = match theory with Some t -> t | None -> bimodule in
+    let lib_dirs =
+      List.sort_uniq compare (List.map Filename.dirname program_files)
+      @ [stdlib_dir ()] in
+    let l_flags =
+      String.concat " " (List.map (fun d -> "-L " ^ q d) lib_dirs) in
+    let prove_cmd =
+      Printf.sprintf "python3 %s %s %s -T %s -t %d --json %s > %s 2>&1"
+        (q (prove_driver ())) (q tmp_mlw) l_flags (q theory) timeout
+        (q tmp_json) (q tmp_log) in
+    let rc = Sys.command prove_cmd in
+    (* driver exits 0 = all proved, 1 = some goals unproven; both carry JSON *)
+    if rc <> 0 && rc <> 1 then
+      (500, text_ct, "verify: prover driver failed\n\n" ^ read_file tmp_log)
+    else
+      (200, "application/json", read_file tmp_json)
+  end
+
 (* ---- session ------------------------------------------------------------ *)
 
 let text = "text/plain; charset=utf-8"
@@ -356,7 +432,7 @@ let json = "application/json"
 (* Build the default (sequential) alignment for the named method pair and serve
    it behind the rewriting API on [port].  [rpre]/[rpost] are the (possibly
    empty) relational pre/postcondition source strings. *)
-let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
+let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost port =
   let base    = Auto.compose_sequentially penv lmod lmeth rmod rmeth in
   let current = ref base in
   let history = ref [] in     (* most-recent-first stack of prior states *)
@@ -444,6 +520,7 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
   (* The relational typing context at loop focus [p]: method params + result +
      the locals in scope there.  Lets an MCP-supplied invariant referring to loop
      variables be type-checked. *)
+  let globals = interface_globals penv in
   let loop_tenv p =
     match ldecl, rdecl with
     | Some ld, Some rd ->
@@ -451,9 +528,9 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
       let vb (id, _, ty) = (id.node, ty) in
       Some (Typing.{ initial_bi_tenv with
               left_tenv  =
-                restricted_tenv ctbl (params_of ld @ List.map vb lvars) (Some ld.result_ty);
+                restricted_tenv ctbl (globals @ params_of ld @ List.map vb lvars) (Some ld.result_ty);
               right_tenv =
-                restricted_tenv ctbl (params_of rd @ List.map vb rvars) (Some rd.result_ty) })
+                restricted_tenv ctbl (globals @ params_of rd @ List.map vb rvars) (Some rd.result_ty) })
     | _ -> None
   in
   let parse_custom_guard p lsrc rsrc =
@@ -488,6 +565,26 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
             (match Rewrites.apply_at p (Rewrites.add_invariant trf) !current with
              | Some cc' -> snapshot (); current := cc'; Ok ()
              | None -> Error "focus is not a loop (weave the loop first)")))
+  in
+  (* Parse, type-check in scope at focus [p], and insert a relational assert
+     before/after the bicommand at [p]. *)
+  let add_mcp_assert ~before p src =
+    match loop_tenv p with
+    | None -> Error "method declarations not found"
+    | Some bienv ->
+      (match Astutil.parse_rformula_string src with
+       | Error e -> Error ("parse " ^ e)
+       | Ok rf ->
+         (match Typing.tc_rformula bienv rf with
+          | Error e -> Error e
+          | Ok trf ->
+            let rw =
+              if before then Rewrites.add_assert_before trf
+              else Rewrites.add_assert_after trf
+            in
+            (match Rewrites.apply_at p rw !current with
+             | Some cc' -> snapshot (); current := cc'; Ok ()
+             | None -> Error "could not insert assert at focus")))
   in
   let do_undo () =
     match !history with
@@ -580,6 +677,10 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
         "  POST /reset                   back to the sequential default";
         "  POST /export                  write a .rl bimodule skeleton to the";
         "                                output file (" ^ output_file ^ ")";
+        "  POST /verify[?t=N&theory=T]   translate the current alignment and";
+        "                                discharge its VCs with the prover";
+        "                                portfolio (default theory: the";
+        "                                bimodule; t = per-goal seconds)";
         "";
         "A path is a dot-separated list of child indices (e.g. 0.1); empty = root.";
         "" ]
@@ -626,6 +727,16 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
           | None   -> (400, text, "bad path: " ^ s)
           | Some p ->
             (match add_mcp_invariant p f with
+             | Ok ()   -> (200, text, serialize ())
+             | Error m -> (400, text, m)))
+       | Some "add_assert" when get "formula" <> None ->
+         let s = match get "path" with Some s -> s | None -> "" in
+         let f = match get "formula" with Some f -> f | None -> "" in
+         let before = (get "where" = Some "before") in
+         (match parse_path s with
+          | None   -> (400, text, "bad path: " ^ s)
+          | Some p ->
+            (match add_mcp_assert ~before p f with
              | Ok ()   -> (200, text, serialize ())
              | Error m -> (400, text, m)))
        | Some "remove_invariant" when get "formula" <> None ->
@@ -705,6 +816,22 @@ let run penv ctbl lmod lmeth rmod rmeth output_file rpre rpost port =
         (200, text, Printf.sprintf "bimodule skeleton written to %s\n" output_file)
       else
         (400, text, "export blocked: " ^ export_error () ^ "\n")
+    | "/verify" ->
+      if cli_pre_ok && cli_post_ok then
+        let skel =
+          bimodule_skeleton lmod lmeth rmod rmeth (serialize ())
+            ldecl rdecl spec_pre spec_post rpre rpost
+        in
+        let timeout =
+          match get "t" with
+          | Some s -> (try int_of_string s with _ -> 30)
+          | None -> 30
+        in
+        let bimodule = Printf.sprintf "%s_%s_REL" lmod rmod in
+        verify_skeleton program_files skel ~bimodule ~timeout
+          ~theory:(get "theory")
+      else
+        (400, text, "verify blocked: " ^ export_error () ^ "\n")
     | _ -> (404, json, {|{"error":"not found"}|})
   in
   Lwt_main.run (Http_server.start_dispatch_server handler port)
