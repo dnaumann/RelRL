@@ -264,7 +264,7 @@ module T
     
     ensures { alloc_does_not_shrink (old s) s }
     
-    ensures { [@expl:wr ({a1} union {a2}`tDslots)`slots]
+    ensures { [@expl:rw ({a1} union {a2}`tDslots)`slots]
               (wr_frame_slots (old s) s (Rgn.union (s.a1.singleton) (img_tDslots s (s.a2.singleton)))) }
 end
 
@@ -279,7 +279,7 @@ module M0
     writes { s.slots }
     ensures { (result = ()) }
     
-    ensures { [@expl:wr ({a1} union {a2}`tDslots)`slots]
+    ensures { [@expl:rw ({a1} union {a2}`tDslots)`slots]
               (wr_frame_slots (old s) s (Rgn.union (s.a1.singleton) (img_tDslots s (s.a2.singleton)))) }
     
     ensures { forall i : int. let len = s.length[s.a1] in
@@ -292,7 +292,7 @@ module M0
       while ((! x) < (s.n * s.m)) do
         invariant { [@expl:globals type invariant] ((hasIntArrayType s s.a1) /\ (hasIntArray2Type s s.a2)) }
         invariant { alloc_does_not_shrink (old s) s }
-        invariant { [@expl:wr {a1}`slots] (wr_frame_slots (old s) s (s.a1.singleton)) }
+        invariant { [@expl:rw {a1}`slots] (wr_frame_slots (old s) s (s.a1.singleton)) }
         invariant { (0 <= (! x)) /\ ((! x) <= s.n * s.m) }
         invariant { forall i : int. ((0 <= i) /\ (i < (! x))) -> ((A.get (s.slots[s.a1]) i) = (i.T.f)) }
         (set_slots s s.a1 ([@expl:a1.{x} := f(x)] (A.set (s.slots[s.a1]) (! x) ((! x).T.f))));
@@ -300,7 +300,7 @@ module M0
         while ((! x) < (s.m * s.n))  && (not ((mod (! x) s.m) = 0)) do
           invariant { [@expl:globals type invariant] ((hasIntArrayType s s.a1) /\ (hasIntArray2Type s s.a2)) }
           invariant { alloc_does_not_shrink (old s) s }
-          invariant { [@expl:wr {a1}`slots] (wr_frame_slots (old s) s (s.a1.singleton)) }
+          invariant { [@expl:rw {a1}`slots] (wr_frame_slots (old s) s (s.a1.singleton)) }
           invariant { (0 <= (! x)) /\ ((! x) <= s.n * s.m) }
           invariant { forall i : int. ((0 <= i) /\ (i < (! x))) -> ((A.get (s.slots[s.a1]) i) = (i.T.f)) }
           (set_slots s s.a1 ([@expl:a1.{x} := f(x)] (A.set (s.slots[s.a1]) (! x) ((! x).T.f))));
@@ -321,7 +321,7 @@ module M1
     writes { s.slots }
     ensures { (result = ()) }
     
-    ensures { [@expl:wr ({a1} union {a2}`tDslots)`slots]
+    ensures { [@expl:rw ({a1} union {a2}`tDslots)`slots]
               (wr_frame_slots (old s) s (Rgn.union (s.a1.singleton) (img_tDslots s (s.a2.singleton)))) }
     
     ensures { forall i : int.
@@ -341,7 +341,7 @@ module M1
         invariant { [@expl:globals type invariant] ((hasIntArrayType s s.a1) /\ (hasIntArray2Type s s.a2)) }
         invariant { [@expl:locals type invariant] (hasIntArrayType s (! row_i)) }
         invariant { alloc_does_not_shrink (old s) s }
-        invariant { [@expl:wr {a2}`tDslots`slots] (wr_frame_slots (old s) s (img_tDslots s (s.a2.singleton))) }
+        invariant { [@expl:rw {a2}`tDslots`slots] (wr_frame_slots (old s) s (img_tDslots s (s.a2.singleton))) }
         invariant { (0 <= (! i)) /\ ((! i) <= s.n) }
         invariant {
           forall p : int.
@@ -360,7 +360,7 @@ module M1
           invariant { [@expl:globals type invariant] ((hasIntArrayType s s.a1) /\ (hasIntArray2Type s s.a2)) }
           invariant { [@expl:locals type invariant] (hasIntArrayType s (! row_i)) }
           invariant { alloc_does_not_shrink (old s) s }
-          invariant { [@expl:wr {a2}`tDslots`slots] (wr_frame_slots (old s) s (img_tDslots s (s.a2.singleton))) }
+          invariant { [@expl:rw {a2}`tDslots`slots] (wr_frame_slots (old s) s (img_tDslots s (s.a2.singleton))) }
           invariant { (0 <= (! i)) /\ ((! i) <= s.n) }
           invariant { (0 <= (! j)) /\ ((! j) <= s.m) }
           invariant {
@@ -431,6 +431,8 @@ module BM
       let r_row_i = ref null in
       (l_x := ([@expl:x := 0] 0));
       (r_i := ([@expl:i := 0] 0));
+      assert { 0 < l_s.n * l_s.m };
+      assert { 0 < r_s.n * r_s.m };
       while ((! l_x) < (l_s.n * l_s.m)) do
         invariant { [@expl:globals type invariant left] ((hasIntArrayType l_s l_s.a1) /\ (hasIntArray2Type l_s l_s.a2)) }
         invariant { [@expl:globals type invariant right] ((hasIntArrayType r_s r_s.a1) /\ (hasIntArray2Type r_s r_s.a2)) }
@@ -441,6 +443,8 @@ module BM
         invariant { (! l_x) = (! r_i) * r_s.m }
         invariant { tilingInv l_s r_s pi (! l_x) (! r_i) 0 }
         invariant { [@expl:lockstep] (((! l_x) < l_s.n * l_s.m) = ((! r_i) < r_s.n)) }
+        assert { ((! r_i) < r_s.n) -> (((! r_i) * r_s.m) < r_s.n * r_s.m) };
+        assert { ((! r_i) <= r_s.n) -> (((! r_i) * r_s.m) <= r_s.n * r_s.m) };
         (r_j := ([@expl:j := 0] 0));
         (set_slots l_s l_s.a1 ([@expl:a1.{x} := f(x)] (A.set (l_s.slots[l_s.a1]) (! l_x) ((! l_x).M0.T.f))));
         (l_x := ([@expl:x := x + 1] ((! l_x) + 1)));
@@ -452,6 +456,8 @@ module BM
                ([@expl:row_i.{j} := f(i * m + j)] (A.set (r_s.slots[! r_row_i]) (! r_j) ((((! r_i) * r_s.m) + (! r_j)).M1.T.f))));
             (r_j := ([@expl:j := j + 1] ((! r_j) + 1))))
          else ());
+        assert { (mod (((! r_i) * r_s.m) + (! r_j)) r_s.m) = (mod (! r_j) r_s.m) };
+        assert { (mod (! l_x) l_s.m) = (mod (! r_j) r_s.m) };
         while ((! l_x) < (l_s.m * l_s.n))  && (not ((mod (! l_x) l_s.m) = 0)) do
           invariant { [@expl:globals type invariant left] ((hasIntArrayType l_s l_s.a1) /\ (hasIntArray2Type l_s l_s.a2)) }
           invariant { [@expl:globals type invariant right] ((hasIntArrayType r_s r_s.a1) /\ (hasIntArray2Type r_s r_s.a2)) }
@@ -469,9 +475,18 @@ module BM
              r_s
              (! r_row_i)
              ([@expl:row_i.{j} := f(i * m + j)] (A.set (r_s.slots[! r_row_i]) (! r_j) ((((! r_i) * r_s.m) + (! r_j)).M1.T.f))));
-          (r_j := ([@expl:j := j + 1] ((! r_j) + 1)))
+          (r_j := ([@expl:j := j + 1] ((! r_j) + 1)));
+          assert { (mod (((! r_i) * r_s.m) + (! r_j)) r_s.m) = (mod (! r_j) r_s.m) };
+          assert { (mod (! l_x) l_s.m) = (mod (! r_j) r_s.m) }
         done;
-        (r_i := ([@expl:i := i + 1] ((! r_i) + 1)))
+        assert { (! r_j) = r_s.m };
+        assert { (mod (((! r_i) * r_s.m) + (! r_j)) r_s.m) = (mod (! r_j) r_s.m) };
+        assert { (mod (! r_j) r_s.m) = 0 };
+        assert { (mod (! l_x) l_s.m) = (mod (! r_j) r_s.m) };
+        assert { (mod (! l_x) l_s.m) = 0 };
+        (r_i := ([@expl:i := i + 1] ((! r_i) + 1)));
+        assert { ((! r_i) < r_s.n) -> (((! r_i) * r_s.m) < r_s.n * r_s.m) };
+        assert { (r_s.n <= (! r_i)) -> ((r_s.n * r_s.m) <= (! r_i) * r_s.m) }
       done;
       ((! l_result), (! r_result))
 end

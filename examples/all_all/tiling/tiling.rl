@@ -127,15 +127,31 @@ bimodule BM (M0 | M1) =
     Var |j:int in
     Var |row_i:IntArray in
     ( x := 0 | i := 0 );
+    /* positivity seeds for the lockstep invariant's initialization:
+       (0 < n*m) =:= (0 < n) given okGlobals' n > 0 /\ m > 0 */
+    Assert { <| 0 < n * m <] };
+    Assert { [> 0 < n * m |> };
     While (x < n*m) | (i < n) . do
       invariant { <| 0 <= x /\ x <= n*m <] }
       invariant { [> 0 <= i /\ i <= n |> }
       invariant { [< x <] = [> i*m >] }
       invariant { tilingInv(x|i,0) }
-      
+
+      /* magnitude bridge: relate right counter i*m to n*m so the outer
+         lockstep (x < n*m) =:= (i < n) closes given [< x <] = [> i*m >] */
+      Assert { [> i < n -> i*m < n*m |> };
+      Assert { [> i <= n -> i*m <= n*m |> };
+
       ( skip | j:=0 );
       ( a1[x] := f(x); x:=x+1
       | if (j < m) then row_i := a2[i]; row_i[j] := f(i*m+j); j:=j+1 end );
+
+      /* x = i*m+j (loop inv) ==> (x mod m) on the left matches (j mod m) on
+         the right; key fact for the inner lockstep (x<m*n && x mod m<>0) =:= (j<m).
+         Seed the literal lemma instance first so any solver's trigger fires;
+         the cross-state equality then follows by congruence via the invariant. */
+      Assert { [> (i*m + j) mod m = j mod m |> };
+      Assert { [< (x mod m) <] = [> (j mod m) >] };
 
       While (x < m*n && x mod m <> 0) | (j < m) . do
         invariant { <| 0 <= x /\ x <= n*m <] }
@@ -146,8 +162,25 @@ bimodule BM (M0 | M1) =
         ( a1[x] := f(x); x:=x+1
         | row_i := a2[i]; row_i[j] := f(i*m+j); j:=j+1 );
 
+        Assert { [> (i*m + j) mod m = j mod m |> };
+        Assert { [< (x mod m) <] = [> (j mod m) >] };
+
       done;
+
+      /* inner loop done: right has j = m, hence on the left x = (i+1)*m and
+         x mod m = 0, which is what makes the inner guard false in lockstep */
+      Assert { [> j = m |> };
+      Assert { [> (i*m + j) mod m = j mod m |> };
+      Assert { [> j mod m = 0 |> };
+      Assert { [< (x mod m) <] = [> (j mod m) >] };
+      Assert { [< (x mod m) = 0 <] };
+
       ( skip | i:=i+1 );
+
+      /* re-establish the magnitude facts for the incremented i (outer lockstep
+         preservation checks the guard equivalence at the NEW i) */
+      Assert { [> i < n -> i*m < n*m |> };
+      Assert { [> n <= i -> n*m <= i*m |> };
     done;
 
 end

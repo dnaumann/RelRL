@@ -1,10 +1,27 @@
 module Tiling_theory
   use int.Int
+  use int.ComputerDivision
 
   val function f (i:int) : int
 
   lemma scaling_preserves_inequalities : forall a b c.
     a > 0 -> b < c -> b * a < c * a
 
+  lemma scaling_preserves_le : forall a b c.
+    a >= 0 -> b <= c -> b * a <= c * a
+
+  (* mod periodicity: the facts behind the lockstep guard bridges
+     (x = i*m + j  ==>  x mod m = j mod m) *)
+  lemma mod_small : forall j m: int.
+    0 <= j < m -> mod j m = j
+
+  lemma mod_mult_plus : forall i j m: int.
+    m > 0 -> 0 <= i -> 0 <= j -> mod (i*m + j) m = mod j m
+
+  lemma mod_mult : forall i m: int.
+    m > 0 -> 0 <= i -> mod (i*m) m = 0
+
+  lemma mod_self : forall m: int.
+    m > 0 -> mod m m = 0
 
 end
