@@ -387,11 +387,29 @@ let prove_driver () =
 
 (* Translate the original program files plus the exported bimodule skeleton,
    then discharge the bimodule's theory with the prover portfolio
-   (tools/whyrel_prove.py).  Returns the driver's JSON whether or not all
-   goals discharge (the JSON carries per-goal statuses and triage hints);
-   non-200 only when a pipeline stage itself fails. *)
-let verify_skeleton program_files skel ~bimodule ~timeout ~theory =
-  let text_ct = "text/plain; charset=utf-8" in
+   (tools/whyrel_prove.py).
+
+   The pipeline runs asynchronously: a blocking run inside the handler
+   would stall the (single-threaded) Lwt server, making it impossible to
+   even receive an abort request while provers run.  POST /verify spawns
+   the pipeline in its own process group (via setsid) and returns
+   immediately; GET /verify/status polls it (reaping on completion and
+   caching the result); POST /verify/abort kills the whole group. *)
+
+type verify_run = { vpid : int; vjson : string; vlog : string }
+
+let verify_state
+  : [ `Idle | `Running of verify_run | `Done of int * string * string ] ref
+  = ref `Idle
+
+let text_ct = "text/plain; charset=utf-8"
+let json_ct = "application/json"
+
+(* distinguishes a translation failure from the driver's own exit codes
+   (0 = all proved, 1 = some goals open, both carry JSON) *)
+let translate_failed_rc = 90
+
+let spawn_verify program_files skel ~bimodule ~timeout ~theory =
   let tmp_rl   = Filename.temp_file "align_verify" ".rl" in
   let tmp_mlw  = Filename.temp_file "align_verify" ".mlw" in
   let tmp_json = Filename.temp_file "align_verify" ".json" in
@@ -400,29 +418,63 @@ let verify_skeleton program_files skel ~bimodule ~timeout ~theory =
   output_string oc skel; close_out oc;
   let q = Filename.quote in
   let srcs = String.concat " " (List.map q (program_files @ [tmp_rl])) in
-  let translate_cmd =
-    Printf.sprintf "%s %s -o %s > %s 2>&1"
-      (q Sys.executable_name) srcs (q tmp_mlw) (q tmp_log) in
-  if Sys.command translate_cmd <> 0 then
-    (409, text_ct, "verify: translation failed\n\n" ^ read_file tmp_log)
-  else begin
-    let theory = match theory with Some t -> t | None -> bimodule in
-    let lib_dirs =
-      List.sort_uniq compare (List.map Filename.dirname program_files)
-      @ [stdlib_dir ()] in
-    let l_flags =
-      String.concat " " (List.map (fun d -> "-L " ^ q d) lib_dirs) in
-    let prove_cmd =
-      Printf.sprintf "python3 %s %s %s -T %s -t %d --json %s > %s 2>&1"
-        (q (prove_driver ())) (q tmp_mlw) l_flags (q theory) timeout
-        (q tmp_json) (q tmp_log) in
-    let rc = Sys.command prove_cmd in
-    (* driver exits 0 = all proved, 1 = some goals unproven; both carry JSON *)
-    if rc <> 0 && rc <> 1 then
-      (500, text_ct, "verify: prover driver failed\n\n" ^ read_file tmp_log)
-    else
-      (200, "application/json", read_file tmp_json)
-  end
+  let theory = match theory with Some t -> t | None -> bimodule in
+  let lib_dirs =
+    List.sort_uniq compare (List.map Filename.dirname program_files)
+    @ [stdlib_dir ()] in
+  let l_flags =
+    String.concat " " (List.map (fun d -> "-L " ^ q d) lib_dirs) in
+  let cmd =
+    Printf.sprintf
+      "%s %s -o %s > %s 2>&1 || exit %d; \
+       exec python3 %s %s %s -T %s -t %d --json %s >> %s 2>&1"
+      (q Sys.executable_name) srcs (q tmp_mlw) (q tmp_log)
+      translate_failed_rc
+      (q (prove_driver ())) (q tmp_mlw) l_flags (q theory) timeout
+      (q tmp_json) (q tmp_log) in
+  let pid =
+    Unix.create_process "setsid" [| "setsid"; "/bin/sh"; "-c"; cmd |]
+      Unix.stdin Unix.stdout Unix.stderr in
+  verify_state := `Running { vpid = pid; vjson = tmp_json; vlog = tmp_log }
+
+let verify_result rc r =
+  if rc = 0 || rc = 1 then (200, json_ct, read_file r.vjson)
+  else if rc = translate_failed_rc then
+    (409, text_ct, "verify: translation failed\n\n" ^ read_file r.vlog)
+  else
+    (500, text_ct,
+     Printf.sprintf "verify: prover driver failed (exit %d)\n\n%s"
+       rc (read_file r.vlog))
+
+(* Poll the running pipeline; transitions Running -> Done exactly once
+   and keeps serving the cached result afterwards. *)
+let verify_status () =
+  match !verify_state with
+  | `Idle -> (200, json_ct, {|{"status":"idle"}|})
+  | `Done (c, ct, body) -> (c, ct, body)
+  | `Running r ->
+    let finish res = verify_state := `Done res; res in
+    (match Unix.waitpid [Unix.WNOHANG] r.vpid with
+     | 0, _ -> (200, json_ct, {|{"status":"running"}|})
+     | _, Unix.WEXITED rc -> finish (verify_result rc r)
+     | _, (Unix.WSIGNALED _ | Unix.WSTOPPED _) ->
+       finish (409, text_ct, "verify: aborted\n")
+     | exception Unix.Unix_error (Unix.ECHILD, _, _) ->
+       (* child reaped elsewhere; fall back to the artifacts *)
+       let j = try read_file r.vjson with _ -> "" in
+       if j <> "" then finish (200, json_ct, j)
+       else finish (500, text_ct,
+                    "verify: child lost\n\n"
+                    ^ (try read_file r.vlog with _ -> "")))
+
+let verify_abort () =
+  match !verify_state with
+  | `Running r ->
+    (* setsid gave the pipeline its own group: -pid kills sh + driver +
+       why3 + provers *)
+    (try Unix.kill (- r.vpid) Sys.sigterm with _ -> ());
+    (200, text_ct, "abort signal sent; poll /verify/status\n")
+  | _ -> (409, text_ct, "no verification running\n")
 
 (* ---- session ------------------------------------------------------------ *)
 
@@ -679,8 +731,12 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost por
         "                                output file (" ^ output_file ^ ")";
         "  POST /verify[?t=N&theory=T]   translate the current alignment and";
         "                                discharge its VCs with the prover";
-        "                                portfolio (default theory: the";
-        "                                bimodule; t = per-goal seconds)";
+        "                                portfolio, asynchronously (default";
+        "                                theory: the bimodule; t = per-goal";
+        "                                seconds); returns 202 immediately";
+        "  GET  /verify/status           running | idle | the finished run's";
+        "                                result (driver JSON or error text)";
+        "  POST /verify/abort            kill the running verification";
         "";
         "A path is a dot-separated list of child indices (e.g. 0.1); empty = root.";
         "" ]
@@ -816,20 +872,31 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost por
         (200, text, Printf.sprintf "bimodule skeleton written to %s\n" output_file)
       else
         (400, text, "export blocked: " ^ export_error () ^ "\n")
+    | "/verify/status" -> verify_status ()
+    | "/verify/abort"  -> verify_abort ()
     | "/verify" ->
-      if cli_pre_ok && cli_post_ok then
-        let skel =
-          bimodule_skeleton lmod lmeth rmod rmeth (serialize ())
-            ldecl rdecl spec_pre spec_post rpre rpost
-        in
-        let timeout =
-          match get "t" with
-          | Some s -> (try int_of_string s with _ -> 30)
-          | None -> 30
-        in
-        let bimodule = Printf.sprintf "%s_%s_REL" lmod rmod in
-        verify_skeleton program_files skel ~bimodule ~timeout
-          ~theory:(get "theory")
+      if cli_pre_ok && cli_post_ok then begin
+        (* reaps a just-finished run so Done doesn't block a new one *)
+        ignore (verify_status ());
+        match !verify_state with
+        | `Running _ ->
+          (409, text,
+           "verification already running; POST /verify/abort to cancel\n")
+        | `Idle | `Done _ ->
+          let skel =
+            bimodule_skeleton lmod lmeth rmod rmeth (serialize ())
+              ldecl rdecl spec_pre spec_post rpre rpost
+          in
+          let timeout =
+            match get "t" with
+            | Some s -> (try int_of_string s with _ -> 30)
+            | None -> 30
+          in
+          let bimodule = Printf.sprintf "%s_%s_REL" lmod rmod in
+          spawn_verify program_files skel ~bimodule ~timeout
+            ~theory:(get "theory");
+          (202, json, {|{"status":"started"}|})
+      end
       else
         (400, text, "verify blocked: " ^ export_error () ^ "\n")
     | _ -> (404, json, {|{"error":"not found"}|})
