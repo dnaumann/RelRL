@@ -358,7 +358,10 @@ and pp_while_spec outf {winvariants; wframe} =
       fprintf outf "@[invariant {%a}@]@ " pp_formula f;
       print_invariants fs
   in
-  print_invariants winvariants; pp_effect outf wframe
+  print_invariants winvariants;
+  (* parser round-trip: loop frames are written "effects { ... }" *)
+  if wframe <> [] then
+    fprintf outf "@[effects {@ %a@ }@]" pp_effect wframe
 
 and pp_modifier outf = function
   | Ast.Ghost -> fprintf outf "ghost"
