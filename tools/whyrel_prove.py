@@ -53,7 +53,17 @@ def run_prover(mlw, prover, args):
         text = (e.stdout or "") + (e.stderr or "")
         print(f"[whyrel-prove] WARNING: {prover} hit wall limit; "
               f"partial results used", file=sys.stderr)
-    return parse_output(text)
+        return parse_output(text)
+    goals = parse_output(text)
+    if out.returncode != 0 and not goals:
+        # why3 failed before producing any task (parse/type/effect error);
+        # 0 goals here must not be reported as 0/0 success.
+        errs = [l for l in out.stderr.splitlines()
+                if l.strip() and not l.startswith("Warning")]
+        msg = "\n  ".join(errs[-5:]) if errs else "(no diagnostic on stderr)"
+        sys.exit(f"[whyrel-prove] ERROR: why3 prove -P {prover} failed to "
+                 f"load {mlw} (exit {out.returncode}):\n  {msg}")
+    return goals
 
 
 def parse_output(text):
