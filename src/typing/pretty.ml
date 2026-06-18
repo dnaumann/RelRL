@@ -561,6 +561,14 @@ let pp_bicommand outf c =
   in
   fprintf outf "@[<hv 2>%a@]" pp_bicommand' c
 
+let bicommand_to_string bicom =
+  let buf = Buffer.create 256 in
+  let fmt = Format.formatter_of_buffer buf in
+  Format.pp_set_margin fmt 80;
+  pp_bicommand fmt bicom;
+  Format.pp_print_flush fmt ();
+  Buffer.contents buf
+
 let pp_bimeth_decl outf {bimeth_name; bimeth_left_params; bimeth_right_params;
                           result_ty; result_is_non_null; bimeth_spec; bimeth_can_diverge} =
   fprintf outf "@[<v 2>@[<h>meth@ %a(@[%a@]|@[%a@])@ :@ (%a@ |@ %a)%s@]"

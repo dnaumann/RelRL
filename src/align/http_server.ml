@@ -2,7 +2,7 @@
 (* ---- Minimal HTTP/1.x server using Lwt_unix ----------------------------- *)
 
 (* Extract the first line (request line) from a raw HTTP request. *)
-let first_line s =
+let first_line s : string =
   match String.index_opt s '\r' with
   | Some i -> String.sub s 0 i
   | None ->
@@ -11,13 +11,13 @@ let first_line s =
      | None -> s)
 
 
-let is_closed_socket_error = function
+let is_closed_socket_error : exn -> bool = function
   | Unix.Unix_error (Unix.EBADF, _, _)
   | Unix.Unix_error (Unix.EINVAL, _, _)
   | Unix.Unix_error (Unix.ENOTSOCK, _, _) -> true
   | _ -> false
 
-let run_accept_loop server_fd on_client banner =
+let run_accept_loop server_fd on_client banner : unit Lwt.t =
   let open Lwt.Infix in
   let stopping = ref false in
   let request_stop _ =
@@ -58,13 +58,13 @@ let run_accept_loop server_fd on_client banner =
 (* ---- Generic dispatch server (for the interactive session) -------------- *)
 
 (* Split a request target "/path?a=1&b=2" into its path and raw query. *)
-let split_target t =
+let split_target t : string * string =
   match String.index_opt t '?' with
   | Some i -> (String.sub t 0 i, String.sub t (i + 1) (String.length t - i - 1))
   | None -> (t, "")
 
 (* Percent-decode a query component ("%20"->" ", "+"->" "). *)
-let url_decode s =
+let url_decode s : string =
   let n = String.length s in
   let buf = Buffer.create n in
   let i = ref 0 in
@@ -82,7 +82,7 @@ let url_decode s =
 
 (* Parse "a=1&b=2" into [("a","1"); ("b","2")], percent-decoding keys and values
    (so e.g. a relational invariant with spaces can be passed as a value). *)
-let query_params q =
+let query_params q : (string * string) list =
   if q = "" then []
   else
     String.split_on_char '&' q
@@ -95,7 +95,7 @@ let query_params q =
 
 (* Extract (method, path, query) from a raw request; the body is not needed
    since the interactive API takes its arguments in the query string. *)
-let parse_request raw =
+let parse_request raw : string * string * string =
   let line = first_line raw in
   let meth, target =
     match String.split_on_char ' ' line with
@@ -106,12 +106,12 @@ let parse_request raw =
   let path, query = split_target target in
   (meth, path, query)
 
-let reason_phrase = function
+let reason_phrase : int -> string = function
   | 200 -> "OK"        | 400 -> "Bad Request"
   | 404 -> "Not Found" | 409 -> "Conflict"
   | 500 -> "Internal Server Error" | _ -> "OK"
 
-let http_response status content_type body =
+let http_response status content_type body : string =
   Printf.sprintf
     "HTTP/1.1 %d %s\r\nContent-Type: %s\r\nContent-Length: %d\r\nAccess-Control-Allow-Origin: *\r\nConnection: close\r\n\r\n%s"
     status (reason_phrase status) content_type (String.length body) body
@@ -119,7 +119,7 @@ let http_response status content_type body =
 (* A [handler] maps a parsed request to a (status, content-type, body) triple. *)
 let handle_dispatch
     (handler : meth:string -> path:string -> query:string -> int * string * string)
-    fd =
+    fd : unit Lwt.t =
   let open Lwt.Infix in
   let buf = Bytes.create 65536 in
   Lwt.finalize
@@ -137,7 +137,7 @@ let handle_dispatch
       Lwt.return ())
     (fun () -> Lwt_unix.close fd)
 
-let start_dispatch_server handler port =
+let start_dispatch_server handler port : unit Lwt.t =
   let open Lwt.Infix in
   let addr = Unix.ADDR_INET (Unix.inet_addr_loopback, port) in
   let server_fd = Lwt_unix.socket Unix.PF_INET Unix.SOCK_STREAM 0 in

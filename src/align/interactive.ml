@@ -1,4 +1,5 @@
 open Annot
+open Align_utils
 
 (* Interactive alignment session.
 
@@ -15,16 +16,9 @@ open Annot
 
 (* ---- paths -------------------------------------------------------------- *)
 
-let string_of_path (p : Rewrites.path) =
-  String.concat "." (List.map string_of_int p)
-
-(* "0.1.2" -> Some [0;1;2] ; "" -> Some [] ; anything non-numeric -> None *)
-let parse_path (s : string) : Rewrites.path option =
-  try
-    Some (String.split_on_char '.' s
-          |> List.filter (fun x -> x <> "")
-          |> List.map int_of_string)
-  with _ -> None
+(* Path <-> string and the pretty-printing wrappers ([string_of_path],
+   [parse_path], [rformula_to_string], [exp_to_string], [varbind_to_string])
+   live in [Align_utils] (opened above). *)
 
 (* Every node position in the tree, root ([]) first, in preorder. *)
 let rec all_paths (cc : bicommand) : Rewrites.path list =
@@ -35,39 +29,13 @@ let rec all_paths (cc : bicommand) : Rewrites.path list =
                 List.map (fun p -> i :: p)
                   (all_paths (Rewrites.get_child cc i))))
 
-let rformula_to_string rf =
-  let buf = Buffer.create 128 in
-  let fmt = Format.formatter_of_buffer buf in
-  Format.pp_set_margin fmt 80;
-  Pretty.pp_rformula fmt rf;
-  Format.pp_print_flush fmt ();
-  Buffer.contents buf
-
-let exp_to_string e =
-  let buf = Buffer.create 32 in
-  let fmt = Format.formatter_of_buffer buf in
-  Format.pp_set_margin fmt 80;
-  Pretty.pp_exp fmt e;
-  Format.pp_print_flush fmt ();
-  Buffer.contents buf
-
-let varbind_to_string (vb : varbind option) = match vb with
-  | None -> ""
-  | Some vbind ->
-    let buf = Buffer.create 16 in
-    let fmt = Format.formatter_of_buffer buf in
-    Format.pp_set_margin fmt 80;
-    Pretty.pp_varbind fmt vbind;
-    Format.pp_print_flush fmt ();
-    Buffer.contents buf
-
 (* Walk the bicommand tree, producing [(path, text)] in display order.
-   Leaves render via Align.bicommand_to_string (all lines at path p).
+   Leaves render via Pretty.bicommand_to_string (all lines at path p).
    Structural nodes emit header/footer lines at p and recurse into children. *)
 let rec alines (p : Rewrites.path) (cc : bicommand)
     : (Rewrites.path * string) list =
   let leaf () =
-    let s = Align.bicommand_to_string cc in
+    let s = Pretty.bicommand_to_string cc in
     List.map (fun l -> (p, l)) (String.split_on_char '\n' s)
   in
   match cc with
@@ -117,7 +85,7 @@ let rec alines (p : Rewrites.path) (cc : bicommand)
     indent (alines (p @ [3]) else_else) @
     [(p, "end")]
 
-let json_of_alines (cc : bicommand) =
+let json_of_alines (cc : bicommand) : string =
   let lines = alines [] cc in
   `List (List.mapi (fun i (p, t) ->
       `Assoc [ "lineno", `Int (i + 1);
@@ -139,12 +107,12 @@ type suggestion = {
 }
 
 let mk_suggestion ?(formula = "") ?(guard_left = "") ?(guard_right = "")
-    ?(needs_input = false) ~path ~rule ~display result =
+    ?(needs_input = false) ~path ~rule ~display result : suggestion =
   { s_path = path; s_rule = rule; s_display = display; s_formula = formula;
     s_guard_left = guard_left; s_guard_right = guard_right;
     s_needs_input = needs_input; s_result = result }
 
-let suggestions_at current p =
+let suggestions_at current p : suggestion list =
   let base =
     List.map (fun (name, cc') ->
       let display = if name = "weave_while" then "weave_while <ag>?" else name in
@@ -181,16 +149,16 @@ let suggestions_at current p =
   in
   base @ inv_suggs @ loop_suggs
 
-let suggestions_all current =
+let suggestions_all current : suggestion list =
   List.concat (List.map (suggestions_at current) (all_paths current))
 
-let json_of_suggestions suggs =
+let json_of_suggestions suggs : string =
   `List (List.map (fun s ->
       let base = [ "path",        `String (string_of_path s.s_path);
                    "rule",        `String s.s_rule;
                    "display",     `String s.s_display;
                    "needs_input", `Bool s.s_needs_input;
-                   "result",      `String (Align.bicommand_to_string s.s_result) ] in
+                   "result",      `String (Pretty.bicommand_to_string s.s_result) ] in
       let add key v fs = if v <> "" then (key, `String v) :: fs else fs in
       let fields =
         base
@@ -202,26 +170,16 @@ let json_of_suggestions suggs =
     suggs)
   |> Yojson.Safe.to_string
 
-(* ---- relational spec: parse + scope/type-check -------------------------- *)
+(* ---- relational spec scope ---------------------------------------------- *)
 
-(* A tenv exposing only [alloc] (from [initial_tenv]), the given parameters, and
-   optionally [result], built over [ctbl] so types resolve but module globals
-   and locals do not.  Type-checking an rformula against it therefore rejects
-   any reference outside the method args (+ result). *)
-let restricted_tenv ctbl params result_opt =
-  let e = Typing.{ initial_tenv with ctbl } in
-  let e = List.fold_left (fun e (x, ty) -> Typing.add_to_ctxt e x ty) e params in
-  match result_opt with
-  | Some ty -> Typing.add_to_ctxt e (ident "result") ty
-  | None -> e
+(* The CLI -rpre/-rpost parse + scope/type-check lives in [Align] now;
+   [Align_utils.restricted_tenv] / [Align_utils.params_of] are the shared
+   typing helpers.
 
-let params_of (d : meth_decl) =
-  List.map (fun (p : meth_param_info) -> (p.param_name.node, p.param_ty)) d.params
-
-(* All interface-declared globals (module-level state visible to method
+   All interface-declared globals (module-level state visible to method
    bodies).  Unlike the -rpre/-rpost spec scope, invariants and asserts added
    in-session may refer to them, mirroring what unary loop specs may mention. *)
-let interface_globals penv =
+let interface_globals penv : (ident * ity) list =
   M.fold
     (fun _ elt acc ->
        match elt with
@@ -234,35 +192,10 @@ let interface_globals penv =
        | _ -> acc)
     penv []
 
-(* Parse [src] and check it refers only to the args of [ldecl]/[rdecl] (plus
-   [result] when [with_result]).  Out-of-scope references surface as the
-   type-checker's "unknown variable" error. *)
-let check_rformula ctbl (ldecl : meth_decl) (rdecl : meth_decl) ~with_result src =
-  match Astutil.parse_rformula_string src with
-  | Error msg -> Error ("parse " ^ msg)
-  | Ok rf ->
-    let lres = if with_result then Some ldecl.result_ty else None in
-    let rres = if with_result then Some rdecl.result_ty else None in
-    let bienv =
-      Typing.{ initial_bi_tenv with
-               left_tenv  = restricted_tenv ctbl (params_of ldecl) lres;
-               right_tenv = restricted_tenv ctbl (params_of rdecl) rres } in
-    Typing.tc_rformula bienv rf
-
 (* ---- export ------------------------------------------------------------- *)
 
-let param_to_string (p : meth_param_info) =
-  Printf.sprintf "%s:%s"
-    (Astutil.string_of_ident p.param_name.node)
-    (string_of_ity p.param_ty)
-
-let effect_to_string eff =
-  let buf = Buffer.create 128 in
-  let fmt = Format.formatter_of_buffer buf in
-  Format.pp_set_margin fmt 80;
-  Pretty.pp_effect fmt eff;
-  Format.pp_print_flush fmt ();
-  Buffer.contents buf
+(* [param_to_string], [effect_to_string], and [mk_var_exp] live in
+   [Align_utils] (opened above). *)
 
 let effects_of_spec (sp : spec) : effect option =
   let rec go = function
@@ -271,9 +204,6 @@ let effects_of_spec (sp : spec) : effect option =
     | _ :: rest -> go rest
   in
   go sp
-
-let mk_var_exp id ty =
-  Evar (id -: ty) -: ty
 
 let param_agreements (ld : meth_decl) (rd : meth_decl) : rformula list =
   let right_params =
@@ -309,7 +239,7 @@ let default_post_specs (ld : meth_decl) (rd : meth_decl) : rformula list =
 (* A .rl skeleton for the current alignment.  Includes concrete method
    parameters/results and relational specs (CLI-provided -rpre/-rpost when
    present, otherwise relational defaults derived from unary specs). *)
-let bimodule_skeleton lmod lmeth rmod rmeth bicom_str ldecl rdecl spec_pre spec_post rpre_src rpost_src =
+let bimodule_skeleton lmod lmeth rmod rmeth bicom_str ldecl rdecl spec_pre spec_post rpre_src rpost_src : string =
   let buf = Buffer.create 1024 in
   let p fmt = Printf.bprintf buf fmt in
   let write_rel_clause kind rf =
@@ -366,21 +296,21 @@ let bimodule_skeleton lmod lmeth rmod rmeth bicom_str ldecl rdecl spec_pre spec_
 
 (* ---- verify -------------------------------------------------------------- *)
 
-let read_file path =
+let read_file path : string =
   let ic = open_in_bin path in
   let n = in_channel_length ic in
   let s = really_input_string ic n in
   close_in ic; s
 
 (* Repo-root-relative resources (bin/whyrel -> root), env-overridable. *)
-let whyrel_root () =
+let whyrel_root () : string =
   Filename.dirname (Filename.dirname Sys.executable_name)
 
-let stdlib_dir () =
+let stdlib_dir () : string =
   try Sys.getenv "WHYREL_STDLIB"
   with Not_found -> Filename.concat (whyrel_root ()) "stdlib"
 
-let prove_driver () =
+let prove_driver () : string =
   try Sys.getenv "WHYREL_PROVE"
   with Not_found ->
     Filename.concat (whyrel_root ()) "tools/whyrel_prove.py"
@@ -409,7 +339,7 @@ let json_ct = "application/json"
    (0 = all proved, 1 = some goals open, both carry JSON) *)
 let translate_failed_rc = 90
 
-let spawn_verify program_files skel ~bimodule ~timeout ~theory =
+let spawn_verify program_files skel ~bimodule ~timeout ~theory : unit =
   let tmp_rl   = Filename.temp_file "align_verify" ".rl" in
   let tmp_mlw  = Filename.temp_file "align_verify" ".mlw" in
   let tmp_json = Filename.temp_file "align_verify" ".json" in
@@ -437,7 +367,7 @@ let spawn_verify program_files skel ~bimodule ~timeout ~theory =
       Unix.stdin Unix.stdout Unix.stderr in
   verify_state := `Running { vpid = pid; vjson = tmp_json; vlog = tmp_log }
 
-let verify_result rc r =
+let verify_result rc r : int * string * string =
   if rc = 0 || rc = 1 then (200, json_ct, read_file r.vjson)
   else if rc = translate_failed_rc then
     (409, text_ct, "verify: translation failed\n\n" ^ read_file r.vlog)
@@ -448,7 +378,7 @@ let verify_result rc r =
 
 (* Poll the running pipeline; transitions Running -> Done exactly once
    and keeps serving the cached result afterwards. *)
-let verify_status () =
+let verify_status () : int * string * string =
   match !verify_state with
   | `Idle -> (200, json_ct, {|{"status":"idle"}|})
   | `Done (c, ct, body) -> (c, ct, body)
@@ -467,7 +397,7 @@ let verify_status () =
                     "verify: child lost\n\n"
                     ^ (try read_file r.vlog with _ -> "")))
 
-let verify_abort () =
+let verify_abort () : int * string * string =
   match !verify_state with
   | `Running r ->
     (* setsid gave the pipeline its own group: -pid kills sh + driver +
@@ -484,74 +414,25 @@ let json = "application/json"
 (* Build the default (sequential) alignment for the named method pair and serve
    it behind the rewriting API on [port].  [rpre]/[rpost] are the (possibly
    empty) relational pre/postcondition source strings. *)
-let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost port =
+let run penv ctbl program_files lmod lmeth rmod rmeth output_file
+    (ctx : pair_ctx) port : unit =
   let base    = Auto.compose_sequentially penv lmod lmeth rmod rmeth in
   let current = ref base in
   let history = ref [] in     (* most-recent-first stack of prior states *)
   let future  = ref [] in     (* most-recent-first stack of undone states *)
 
-  let find_interface_decl mdl_name meth_name =
-    match M.find_opt (Id mdl_name) penv with
-    | Some (Unary_module mdl) ->
-      (match M.find_opt mdl.mdl_interface penv with
-       | Some (Unary_interface intr) ->
-         List.find_map (function
-           | Intr_mdecl d when d.meth_name.node = Id meth_name -> Some d
-           | _ -> None) intr.intr_elts
-       | _ -> None)
-    | _ -> None
-  in
-  let has_effect_spec sp =
-    List.exists (function Effects _ -> true | _ -> false) sp
-  in
-  let merge_method_specs mod_spec intr_spec =
-    if mod_spec = [] then intr_spec
-    else if has_effect_spec mod_spec || not (has_effect_spec intr_spec) then mod_spec
-    else mod_spec @ List.filter (function Effects _ -> true | _ -> false) intr_spec
-  in
-  let enrich_decl mdl_name meth_name dopt =
-    match dopt with
-    | None -> find_interface_decl mdl_name meth_name
-    | Some d ->
-      (match find_interface_decl mdl_name meth_name with
-       | Some idecl -> Some { d with meth_spec = merge_method_specs d.meth_spec idecl.meth_spec }
-       | None -> Some d)
-  in
-  let ldecl = enrich_decl lmod lmeth (find_method_decl penv lmod lmeth) in
-  let rdecl = enrich_decl rmod rmeth (find_method_decl penv rmod rmeth) in
-
-  (* Parse + check the relational spec against the two method signatures. *)
-  let spec_pre, spec_post =
-    match ldecl, rdecl with
-    | Some ld, Some rd ->
-      let chk label ~with_result src =
-        if src = "" then None
-        else match check_rformula ctbl ld rd ~with_result src with
-          | Ok rf -> Printf.printf "[align] %s: OK\n%!" label; Some rf
-          | Error msg -> Printf.printf "[align] %s: REJECTED -- %s\n%!" label msg; None
-      in
-      (chk "relational precondition (-rpre)" ~with_result:false rpre,
-       chk "relational postcondition (-rpost)" ~with_result:true rpost)
-    | _ ->
-      if rpre <> "" || rpost <> "" then
-        Printf.printf "[align] warning: method declarations not found; spec unchecked\n%!";
-      (None, None)
-  in
-  let cli_pre_supplied = String.trim rpre <> "" in
-  let cli_post_supplied = String.trim rpost <> "" in
-  let cli_pre_ok = (not cli_pre_supplied) || spec_pre <> None in
-  let cli_post_ok = (not cli_post_supplied) || spec_post <> None in
-  let export_error () =
-    let errs =
-      (if cli_pre_supplied && not cli_pre_ok
-       then ["-rpre was supplied but failed parse/typecheck"] else [])
-      @
-      (if cli_post_supplied && not cli_post_ok
-       then ["-rpost was supplied but failed parse/typecheck"] else [])
-    in
-    String.concat "; " errs
-  in
-  let serialize () = Align.bicommand_to_string !current in
+  (* Method decls + CLI relational specs are resolved/checked up front in
+     [Align]; unpack them here. *)
+  let ldecl     = ctx.ldecl in
+  let rdecl     = ctx.rdecl in
+  let spec_pre  = ctx.spec_pre in
+  let spec_post = ctx.spec_post in
+  let rpre      = ctx.rpre in
+  let rpost     = ctx.rpost in
+  let spec_errors  = cli_spec_errors ctx in
+  let cli_specs_ok = (spec_errors = []) in
+  let export_error () = String.concat "; " spec_errors in
+  let serialize () = Pretty.bicommand_to_string !current in
   let snapshot () =
     history := !current :: !history;
     future := []
@@ -570,8 +451,8 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost por
   in
 
   (* The relational typing context at loop focus [p]: method params + result +
-     the locals in scope there.  Lets an MCP-supplied invariant referring to loop
-     variables be type-checked. *)
+     the locals in scope there.  Type checks invariant referring to loop
+     variables. *)
   let globals = interface_globals penv in
   let loop_tenv p =
     match ldecl, rdecl with
@@ -604,7 +485,7 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost por
   in
   (* Parse, type-check in the loop's local scope, and add an MCP-supplied
      relational invariant at loop focus [p]. *)
-  let add_mcp_invariant p src =
+  let add_invariant p src =
     match loop_tenv p with
     | None -> Error "method declarations not found"
     | Some bienv ->
@@ -620,7 +501,7 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost por
   in
   (* Parse, type-check in scope at focus [p], and insert a relational assert
      before/after the bicommand at [p]. *)
-  let add_mcp_assert ~before p src =
+  let add_assert ~before p src =
     match loop_tenv p with
     | None -> Error "method declarations not found"
     | Some bienv ->
@@ -782,7 +663,7 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost por
          (match parse_path s with
           | None   -> (400, text, "bad path: " ^ s)
           | Some p ->
-            (match add_mcp_invariant p f with
+            (match add_invariant p f with
              | Ok ()   -> (200, text, serialize ())
              | Error m -> (400, text, m)))
        | Some "add_assert" when get "formula" <> None ->
@@ -792,7 +673,7 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost por
          (match parse_path s with
           | None   -> (400, text, "bad path: " ^ s)
           | Some p ->
-            (match add_mcp_assert ~before p f with
+            (match add_assert ~before p f with
              | Ok ()   -> (200, text, serialize ())
              | Error m -> (400, text, m)))
        | Some "remove_invariant" when get "formula" <> None ->
@@ -861,7 +742,7 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost por
     | "/auto"  -> do_auto ();  (200, text, serialize ())
     | "/reset" -> do_reset (); (200, text, serialize ())
     | "/export" ->
-      if cli_pre_ok && cli_post_ok then
+      if cli_specs_ok then
         let skel =
           bimodule_skeleton lmod lmeth rmod rmeth (serialize ())
             ldecl rdecl spec_pre spec_post rpre rpost
@@ -875,7 +756,7 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file rpre rpost por
     | "/verify/status" -> verify_status ()
     | "/verify/abort"  -> verify_abort ()
     | "/verify" ->
-      if cli_pre_ok && cli_post_ok then begin
+      if cli_specs_ok then begin
         (* reaps a just-finished run so Done doesn't block a new one *)
         ignore (verify_status ());
         match !verify_state with

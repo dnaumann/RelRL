@@ -121,7 +121,7 @@ let rec evars_of_command (c : command) : exp t list =
   | While (e, _, body) -> evars_of_exp e @ evars_of_command body
   | Vardecl (_, _, _, body) -> evars_of_command body
   | Assume _ | Assert _ -> []
-and evars_of_atomic = function
+and evars_of_atomic : atomic_command -> exp t list = function
   | Skip -> []
   | Assign (x, e) | Field_update (x, _, e) | New_array (x, _, e) -> evar x :: evars_of_exp e
   | Havoc x | New_class (x, _) -> [evar x]
@@ -131,7 +131,7 @@ and evars_of_atomic = function
   | Call (xo, _, args) ->
     (match xo with Some x -> [evar x] | None -> []) @ List.map evar args
 
-let var_name (e : exp t) = match e.node with Evar x -> Some x.node | _ -> None
+let var_name (e : exp t) : ident option = match e.node with Evar x -> Some x.node | _ -> None
 
 (* Candidate relational invariants for a loop pair: agreement [v =:= v] for each
    variable that occurs in both loops (guard or body).  These are *candidates*,
@@ -255,7 +255,7 @@ let all_rewrites : (string * rewrite) list =
    Leaves (Bisplit, Bisync, Biassume, ...) have no children. *)
 type path = int list
 
-let child_count = function
+let child_count : bicommand -> int = function
   | Bivardecl _ | Biwhile _ -> 1
   | Biseq _ | Biif _ -> 2
   | Biif4 _ -> 4

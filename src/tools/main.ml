@@ -40,7 +40,9 @@ let margin : int ref = ref 80
 
 let output_fname : string ref = ref ""
 
-let set_output fname = output_fname := fname; output := Some (open_out fname)
+(* Record the output filename only; the channel is opened lazily on first use
+   (get_formatter) so a run that never writes leaves no file behind. *)
+let set_output fname = output_fname := fname
 
 
 let args =
@@ -130,8 +132,14 @@ let close_output () =
 
 let get_formatter () =
   match !output with
-  | None -> Format.std_formatter
   | Some out_chan -> Format.formatter_of_out_channel out_chan
+  | None ->
+    if !output_fname = "" then Format.std_formatter
+    else begin
+      let out_chan = open_out !output_fname in
+      output := Some out_chan;
+      Format.formatter_of_out_channel out_chan
+    end
 
 let parse_program files =
   let progs = concat_map parse_file files in
@@ -202,23 +210,10 @@ let main () =
         !align_left_module !align_left_method
         !align_right_module !align_right_method
         !output_fname;
-      if !align_interactive_mode then
-        Interactive.run penv ctbl !program_files !align_left_module !align_left_method
-          !align_right_module !align_right_method !output_fname
-          !align_rpre !align_rpost !align_port
-      else begin
-        let bicom =
-          Auto.compose_sequentially penv
-            !align_left_module !align_left_method
-            !align_right_module !align_right_method
-          |> Rewrites.auto_align
-        in
-        let s = Align.bicommand_to_string bicom in
-        print_string s; print_newline ();
-        let oc = open_out !output_fname in
-        output_string oc s; close_out oc;
-        Printf.printf "Written to %s\n%!" !output_fname
-      end
+      Align.run penv ctbl !program_files !align_left_module !align_left_method
+        !align_right_module !align_right_method !output_fname
+        !align_rpre !align_rpost !align_port
+        ~interactive:!align_interactive_mode
       end
   else begin
       let fmt = get_formatter () in

@@ -1,11 +1,7 @@
 module Array
 
   (* Totalized arrays: elements are a raw map.Map over int (native SMT array
-     theory), bounds discipline comes from the get/set preconditions.  This
-     replaces the fmap.MapApp encoding, whose domain set and size invariant
-     (M.size elts = length) put cardinality axioms in every array VC.
-     map.Map operations are logic-only, so get/set are program symbols
-     (val function) with shallow definitional axioms for logic occurrences. *)
+     theory), bounds discipline comes from the get/set preconditions.  *)
 
   use int.Int
   use map.Map as Mp

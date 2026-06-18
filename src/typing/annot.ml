@@ -1588,6 +1588,20 @@ let find_method_decl (penv: penv) mdl_name meth_name : meth_decl option =
      | _ -> None)
   | _ -> None
 
+(* Like [find_method_decl], but resolves the method declaration through the
+   module's interface rather than its implementation.  Returns [None] if the
+   module, its interface, or the method is absent. *)
+let find_interface_decl (penv : penv) mdl_name meth_name : meth_decl option =
+  let meth_id = Ast.Id meth_name in
+  match M.find_opt (Ast.Id mdl_name) penv with
+  | Some (Unary_module mdl) ->
+    (match M.find_opt mdl.mdl_interface penv with
+     | Some (Unary_interface intr) ->
+       List.find_opt (fun d -> d.meth_name.node = meth_id)
+         (interface_meth_decls intr)
+     | _ -> None)
+  | _ -> None
+
 (* -------------------------------------------------------------------------- *)
 (* Compute module dependencies                                                *)
 (* -------------------------------------------------------------------------- *)

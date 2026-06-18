@@ -3,7 +3,7 @@ open Http_server
 
 (* ---- HTML renderer ------------------------------------------------------ *)
 
-let build_interactive_html lmod lmeth rmod rmeth =
+let build_interactive_html lmod lmeth rmod rmeth : string =
   let buf = Buffer.create 8192 in
   let p fmt = Printf.bprintf buf fmt in
   p "<!DOCTYPE html>\n";

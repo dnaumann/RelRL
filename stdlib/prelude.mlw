@@ -33,12 +33,6 @@ module Prelude
 
   (* ------------------------------------------------------------------------ *)
   (* Finite maps with reference keys                                          *)
-  (*                                                                          *)
-  (* Totalized encoding: contents are a raw map.Map (mapped to the native    *)
-  (* SMT array theory by the prover drivers, so select-of-store is decided   *)
-  (* structurally), and the domain is an explicit finite set.  This unwraps  *)
-  (* the abstraction that fmap.Fmap keeps opaque; the M.* surface matches    *)
-  (* the fmap.MapApp clone it replaces.  See docs/why3_hybrid_plan.md.       *)
   (* ------------------------------------------------------------------------ *)
 
   scope M
@@ -54,8 +48,6 @@ module Prelude
     function find (k: reference) (m: t 'a) : 'a =
       Mp.get m.contents k
 
-    (* program symbol + shallow definitional axiom: map.Map ops are
-       logic-only, so add cannot have an executable body *)
     val function add (k: reference) (v: 'a) (m: t 'a) : t 'a
       ensures { result = { contents = Mp.set m.contents k v ;
                            domain   = Rgn.add k m.domain } }
@@ -117,8 +109,7 @@ module Prelude
   lemma rgn_union_same : forall r:rgn.
     Rgn.union r r = r
 
-  (* the "by" steps seed set extensionality: prove membership equivalence,
-     then conclude equality via rgn_extensionality *)
+
   lemma rgn_union_assoc : forall r r' r'':rgn.
     Rgn.union r (Rgn.union r' r'') = Rgn.union (Rgn.union r r') r''
     by Rgn.(==) (Rgn.union r (Rgn.union r' r'')) (Rgn.union (Rgn.union r r') r'')
@@ -200,9 +191,6 @@ module PreRefperm
   (* Partial bijections and a type for prerefperms                            *)
   (* ------------------------------------------------------------------------ *)
 
-  (* The size-equality clause of the original definition is implied by the
-     mutual-inverse conditions and is dropped: cardinality reasoning is the
-     worst-case workload for SMT solvers. *)
   predicate partialBijection (mTo mOf: M.t reference) =
     (forall x. x \: mTo -> mTo[x] \: mOf) /\
     (forall y. y \: mOf -> mOf[y] \: mTo) /\

@@ -275,7 +275,214 @@ main () [tools/main.ml]
           └─ Write to .mlw file
 ```
 
+---
 
+## Alignment Subsystem (`align/`)
+
+Besides the default translate-to-Why3 pipeline above, `main.ml` exposes a
+second mode, **`-align`**, that takes a pair of unary methods and produces an
+*aligned biprogram* (a `bicommand`) relating their two executions — the input
+the bimodule translation later consumes. It has two flavors: a one-shot
+**batch** export and a stateful **interactive** HTTP server (`-i`).
+
+A typical interactive invocation:
+
+```
+whyrel -align -i -l M0 fact -r M1 fact -port 8083 prog.rl -o align_output.rl
+```
+
+### Entry and dispatch
+
+```
+main () [tools/main.ml]   (-align mode)
+  │
+  ├─ Arg.parse sets flags; parse_program → typecheck_program → (penv, ctbl)
+  │    -l <mod> <meth>   left method        -i           interactive server
+  │    -r <mod> <meth>   right method       -port <n>    server port
+  │    -rpre / -rpost    relational spec    -o <file>    output .rl
+  │
+  └─ Align.run penv ctbl program_files lmod lmeth rmod rmeth
+               output_file rpre rpost port ~interactive   [align/align.ml]
+       │
+       ├─ interactive = false  (batch):
+       │    Auto.compose_sequentially  →  Rewrites.auto_align
+       │      → Pretty.bicommand_to_string → stdout + output_file
+       │
+       └─ interactive = true:
+            Interactive.run …   (HTTP rewriting server; blocks on Lwt loop)
+```
+
+`Align.run` is the single root for both modes; `main.ml` does no alignment
+work beyond flag parsing. (The batch/interactive branching and the CLI
+parameters formerly threaded directly into `Interactive.run` from `main.ml`
+were consolidated into `Align.run`.)
+
+### Modules in `align/`
+
+```
+            ┌──────────────────────────────────────────────┐
+            │ Align        align.ml — root: dispatch        │
+            │              batch vs. interactive            │
+            └───────┬───────────────────────────┬──────────┘
+                    ↓                           ↓
+        ┌───────────────────────┐   ┌──────────────────────────┐
+        │ Auto                  │   │ Interactive               │
+        │ compose_sequentially  │   │ stateful HTTP API: holds  │
+        │ (default bialignment) │   │ current bicommand,/suggest│
+        │ enrich_decl,          │   │ /rewrite /undo /export    │
+        │ merge_method_specs    │   │ /verify, serves UI        │
+        └───────────┬───────────┘   └──────┬─────────────┬──────┘
+                    │                       ↓             ↓
+                    │              ┌────────────────┐ ┌─────────┐
+                    │              │ Http_server    │ │ Ui      │
+                    │              │ (Lwt server)   │ │ (/ui    │
+                    │              └────────────────┘ │ client) │
+                    ↓                                  └─────────┘
+        ┌───────────────────────────────────────────┐
+        │ Rewrites                                   │
+        │ rewrite registry: weave_seq/sync/if/if4/   │
+        │ while, add_invariant, change_ag,           │
+        │ add_assert_*, un-weave; auto_align;        │
+        │ path navigation (apply_at, subterm_at)     │
+        └───────────────────────────────────────────┘
+
+  Bicommand pretty-printing: Pretty.bicommand_to_string (typing/pretty.ml),
+  shared by Align and Interactive — align/ has no internal pretty-printer and
+  nothing in align/ depends back on Align.
+```
+
+- **`auto.ml`** — `compose_sequentially` builds the default alignment: leading
+  `Vardecl`s are lifted to shared `Bivardecl` scope and the remaining bodies
+  become a single `Bisplit (lc, rc)`. `enrich_decl`/`merge_method_specs`/
+  `has_effect_spec` resolve a method's decl, folding interface specs (notably
+  the effects clause) into the implementation decl.
+- **`rewrites.ml`** — the rewrite algebra over `bicommand` trees:
+  `type rewrite = bicommand -> bicommand option`, the named registry
+  (`weave_*`, `add_invariant`, `remove_invariant`, `change_ag`,
+  `add_assert_before/after`, `unweave_seq`, `unsync`, `skip_split`),
+  `auto_align` (greedy weave to lockstep), and path-based navigation
+  (`apply_at`, `subterm_at`, `child_count`, `scope_at`, `suggest_at`).
+- **`interactive.ml`** — the stateful rewriting session behind an HTTP API
+  (`Interactive.run`).
+- **`http_server.ml`** — a minimal Lwt-based HTTP server (request parsing,
+  query decoding, dispatch) used only by `Interactive`.
+- **`ui.ml`** — the single-page browser client served at `/ui`.
+
+### Interactive session setup (`Interactive.run`)
+
+When `Align.run` enters interactive mode it hands the same CLI parameters to
+`Interactive.run`, which:
+
+1. `Auto.compose_sequentially penv lmod lmeth rmod rmeth` builds the default
+   `Bisplit(lc, rc)` (leading `Vardecl`s lifted); stored as `base` and the
+   mutable `current`.
+2. `find_method_decl` + `Annot.find_interface_decl` + `Auto.enrich_decl`
+   → `ldecl`, `rdecl` (signatures with interface specs merged in).
+3. `check_rformula` (if `-rpre`/`-rpost` supplied) → `spec_pre`, `spec_post`,
+   via `Astutil.parse_rformula_string` then `Typing.tc_rformula` against a
+   `restricted_tenv` (method args + `result` only).
+4. Closes over `current`, `history`, `future` and defines `handler`.
+5. `Http_server.start_dispatch_server handler port`.
+
+### `http_server.ml` — transport loop
+
+`run_accept_loop` binds the socket; per connection it reads raw bytes →
+`parse_request` → `(meth, path, query)` → `query_params` (percent-decodes) →
+calls the single `handler` → `http_response` → writes bytes. There is no
+routing framework: the handler is one large `match` on `(path, get "rule")`.
+
+### `Interactive` per-request dispatch (`handler`)
+
+| Request | Path through handler |
+|---|---|
+| `GET /` , `GET /help` | the `help` string (endpoint listing) |
+| `GET /ui` | `Ui.build_interactive_html` → HTML string |
+| `GET /bicom` | `serialize ()` = `Pretty.bicommand_to_string !current` (canonical text) |
+| `GET /bicom-tree` | `json_of_alines !current` → JSON `[{lineno, path, text}]` (the form the UI renders) |
+| `GET /spec` | `show_spec ()` → relational pre/postcondition (read-only) |
+| `GET /history` | `history_json ()` → undo/redo availability + stack depths |
+| `GET /rules` | names in `Rewrites.all_rewrites` (rewrite registry only) |
+| `GET /suggest[?path=P]` | `suggestions_at` / `suggestions_all` → `Rewrites.suggest_at` + per-loop `add_invariant` / `remove_invariant` / `change_ag` suggestions → `json_of_suggestions` |
+| `GET /invariants?path=P` | `Rewrites.subterm_at` + `coupling_candidates` → JSON (carried invariants + `v =:= v` candidates) |
+| `POST /rewrite?rule=R&path=P` | `resolve` looks up `R` in `Rewrites.all_rewrites` → `apply_rewrite` → `Rewrites.apply_at p r !current`; on success: `snapshot` (push to `history`, clear `future`), `current := cc'` |
+| `POST /rewrite?rule=weave_while&guard_left=L&guard_right=R` | `parse_custom_guard` (parses + type-checks L, R in loop-local `bi_tenv` from `loop_tenv`/`scope_at`) → `Rewrites.weave_while_guard ag`; no guards ⇒ registry `weave_while` (default `<false \| false>`) |
+| `POST /rewrite?rule=change_ag&guard_left=L&guard_right=R&path=P` | `parse_custom_guard` → `Rewrites.change_ag ag` (replace a woven loop's guard pair) |
+| `POST /rewrite?rule=add_invariant&formula=F` | `add_mcp_invariant`: `parse_rformula_string` + `tc_rformula` in loop scope → `Rewrites.apply_at p (Rewrites.add_invariant trf)` |
+| `POST /rewrite?rule=remove_invariant&formula=F` | parse + type-check `F`, then `Rewrites.remove_invariant trf` |
+| `POST /undo` / `POST /redo` | `do_undo` / `do_redo`: swap between `history`, `current`, `future` stacks. **Not** routed through `/rewrite`. |
+| `POST /auto` | `Rewrites.auto_align !current`; clears both stacks |
+| `POST /reset` | `current := base`; clears both stacks |
+| `POST /export` | `bimodule_skeleton` assembles `.rl` text from `serialize()`, `ldecl`/`rdecl`, `spec_pre`/`spec_post`; writes to `output_file` |
+| `POST /verify[?t=N&theory=T]` | translate program + exported skeleton, then discharge the bimodule's VCs with the prover portfolio (`tools/whyrel_prove.py`) asynchronously (`setsid` process group); returns `202` |
+| `GET /verify/status` | poll the running pipeline → `running` / `idle` / cached driver JSON or error text |
+| `POST /verify/abort` | kill the verification process group |
+
+### `rewrites.ml` — core rewriting (called from the handler paths above)
+
+- `suggest_at`: filters `all_rewrites` by `apply_at` applicability.
+- `apply_at`: navigates the tree by path using `get_child`/`with_child`,
+  applies the rewrite at the focus.
+- `weave_while` / `weave_while_guard`: match `Bisplit(While, While)` →
+  `Biwhile` via `biwhile_spec_of` (lifts unary invariants and frames).
+- `auto_align`: recursively applies forward weaving rules depth-first until
+  fixpoint (also the batch path's lockstep weave).
+
+### How the browser UI talks to the handler
+
+The UI is a **single-page app**: the HTML is served *once* (`GET /ui` →
+`Ui.build_interactive_html`, a self-contained page with markup, CSS, and inlined
+JS). After that the browser never reloads; all interaction exchanges *data*
+(JSON/text) via `fetch()`.
+
+```
+        Browser (stateless view)              Server (OCaml, holds the truth)
+   +------------------------------+      +---------------------------------+
+   |  DOM built from JSON          |      |  current : bicommand ref        |
+   |  fetch() GET  ----- reads --->| ---> |  history / future : stacks      |
+   |  fetch() POST ---- mutates -->| ---> |  handler closure over them      |
+   |  re-GET to redraw  <----------|      |                                 |
+   +------------------------------+      +---------------------------------+
+```
+
+- **Bootstrap**: on load an IIFE fires `refreshBicom()` (`GET /bicom-tree`) and
+  `suggestAtPath()` (`GET /suggest`); the browser builds the DOM (`renderCode` /
+  `renderSuggestions`). The server does no HTML rendering past the initial load.
+- **Mutation**: clicking "Apply Rewrite" issues
+  `fetch('/rewrite?rule=R&path=P&...', {method:'POST'})` — **parameters ride in
+  the query string, not a body** — and on success re-issues a fresh
+  `GET /bicom-tree` to redraw. A POST never returns HTML.
+- **Where state lives**: `current` and the undo/redo stacks are plain OCaml
+  `ref`s captured in the handler closure set up by `Interactive.run`. The
+  browser holds no authoritative state, so two tabs on the same port share and
+  edit one session.
+
+### Design decisions (endpoint surface)
+
+The endpoint surface was deliberately trimmed; rationale for anyone tempted to
+re-add things:
+
+- **Undo/redo are kept distinct from rewrites.** `/rewrite` only applies entries
+  from `Rewrites.all_rewrites` (pure tree transformations); undo/redo are
+  *session-history* operations over `history`/`future` at their own `POST /undo`
+  / `POST /redo`. The old `/rewrite?rule=undo|redo` aliases were removed, so
+  `rule=undo` returns `unknown rule` and `/rules` lists only real rewrites.
+- **`change_ag` operates on the guard *pair*** (`guard_left`/`guard_right` via
+  the same `parse_custom_guard` as `weave_while`), not a single `formula`,
+  because a loop's alignment guard is a left/right pair. The UI prefills both.
+- **`add_invariant` takes a `formula`, not a candidate index.** `formula=<rformula>`
+  can express any invariant, including a typed-out coupling candidate `v =:= v`;
+  `/invariants` still *lists* candidates for discovery.
+- **Removed `/bicom.html` + `Ui.build_html`** (a static HTML view, superseded by
+  the client-rendered `/ui`); its `html_escape` helper went with it.
+- **`/bicom` (text) is kept despite overlapping `/bicom-tree`.** `/bicom` is the
+  *canonical* `Pretty.pp_bicommand` output, whereas `/bicom-tree`'s `alines`
+  rebuilds `While`/`Var`/`if` headers itself for the per-line path mapping — so
+  the two are content-equivalent but not byte-identical. `/bicom` is retained as
+  the exact pretty-printer text for scripts/MCP.
+- **`Rewrites.guard_candidates` was deleted** as dead code; the live candidate
+  generator is `coupling_candidates` (used by `/invariants`).
+
+---
 
 ## Data Flow Through Processing Stages
 

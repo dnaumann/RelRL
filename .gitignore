@@ -28,3 +28,4 @@ test/*
 *.claude
 design.*
 !design.tex
+plas/

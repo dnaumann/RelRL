@@ -1,4 +1,5 @@
 /* left  = M0.fact   right = M1.fact */
+
 bimodule M0_M1_REL (M0 | M1) =
 
   meth fact (n:int|n:int) : (int|int)
@@ -16,8 +17,7 @@ bimodule M0_M1_REL (M0 | M1) =
     | i := 1);
     (result := 1
     | result := 1);
-    While i < n | i <= n . <| False <] | [> False |> do
-      invariant {i + 1 =:= i}
+    While i < n | i <= n . <| True <] | [> False |> do
       invariant {Both (result > 0)}
       invariant {<| 0 <= i /\ i <= n <]}
       invariant {[> 1 <= i /\ i <= n + 1 |>}

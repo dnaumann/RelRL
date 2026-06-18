@@ -25,8 +25,25 @@ from concurrent.futures import ThreadPoolExecutor
 
 DEFAULT_PROVERS = ["alt-ergo", "cvc5", "z3"]
 
+# Why3's built-in Auto_level_3 strategy drives this 4-prover set with
+# escalating budgets (1s -> 5s -> 30s) and an interleaved transformation
+# pipeline (split_vc -> introduce_premises/inline_goal -> split_all_full).
+# The parallel racing and the cheap early tiers only affect *latency*, not
+# which goals close, so for a coverage-faithful batch run we drive the
+# deepest split (split_all_full) at the top timeout tier (30s) over the
+# union of the four provers.
+AUTO3_PROVERS = ["z3", "alt-ergo", "cvc4", "cvc5"]
+AUTO3_TRANSFORMS = ["split_all_full"]
+AUTO3_TIMEOUT = 30
+
+# Two why3-prove output shapes for the location line:
+#   flat:            File "path.mlw", line 341, characters 22-42:
+#   after splitting: File path.mlw:              (no quotes, no location)
+# In the split form the source location is gone; the goal is then
+# identified only by its <vc> name + sub-goal explanation on the next line.
 GOAL_RE = re.compile(
-    r'^File "(?P<file>[^"]+)", (?P<loc>line \d+.*?):\s*$'
+    r'^File (?:"(?P<fileq>[^"]+)"|(?P<filep>[^,:]+))'
+    r'(?:, (?P<loc>line \d+[^:]*?))?:\s*$'
 )
 SUBGOAL_RE = re.compile(r"^Sub-goal (?P<expl>.*?) of goal (?P<vc>\S+)\.$")
 GOALNAME_RE = re.compile(r"^Goal (?P<vc>\S+)\.$")
@@ -42,8 +59,8 @@ def run_prover(mlw, prover, args):
         cmd += ["-L", inc]
     if args.theory:
         cmd += ["-T", args.theory]
-    if args.split:
-        cmd += ["-a", "split_vc"]
+    for t in args.transforms:
+        cmd += ["-a", t]
     try:
         out = subprocess.run(
             cmd, capture_output=True, text=True, timeout=args.wall_limit
@@ -72,7 +89,8 @@ def parse_output(text):
     for line in text.splitlines():
         m = GOAL_RE.match(line)
         if m:
-            cur = {"file": m["file"], "loc": m["loc"], "expl": "", "vc": ""}
+            cur = {"file": m["fileq"] or m["filep"], "loc": m["loc"] or "",
+                   "expl": "", "vc": ""}
             continue
         m = SUBGOAL_RE.match(line)
         if m and cur is not None:
@@ -144,15 +162,40 @@ def main():
     ap.add_argument("mlw")
     ap.add_argument("-L", dest="libdirs", action="append", default=[])
     ap.add_argument("-T", dest="theory", default=None)
-    ap.add_argument("-t", dest="timeout", type=int, default=60)
+    ap.add_argument("-t", dest="timeout", type=int, default=None)
     ap.add_argument("-P", dest="provers", action="append", default=None)
-    ap.add_argument("--no-split", dest="split", action="store_false")
+    ap.add_argument("-a", "--apply", dest="apply", action="append",
+                    default=None, help="transformation(s) applied to every "
+                    "task before proving (repeatable; default: split_vc)")
+    ap.add_argument("--no-split", dest="no_split", action="store_true",
+                    help="apply no transformation (overrides -a)")
+    ap.add_argument("--strategy", choices=["auto3"], default=None,
+                    help="emulate a Why3 strategy's coverage. 'auto3' = "
+                    "Auto_level_3: provers z3,alt-ergo,cvc4,cvc5 with "
+                    "split_all_full at 30s (latency-only steps omitted)")
     ap.add_argument("--sequential", action="store_true",
                     help="run provers one after another (clean timings)")
     ap.add_argument("--wall-limit", type=int, default=7200)
     ap.add_argument("--json", dest="json_out", default=None)
     args = ap.parse_args()
-    provers = args.provers or DEFAULT_PROVERS
+
+    # Resolve provers / transforms / timeout against the optional strategy.
+    if args.strategy == "auto3":
+        provers = args.provers or AUTO3_PROVERS
+        default_transforms = AUTO3_TRANSFORMS
+        args.timeout = args.timeout if args.timeout is not None \
+            else AUTO3_TIMEOUT
+    else:
+        provers = args.provers or DEFAULT_PROVERS
+        default_transforms = ["split_vc"]
+        args.timeout = args.timeout if args.timeout is not None else 60
+
+    if args.no_split:
+        args.transforms = []
+    elif args.apply is not None:
+        args.transforms = args.apply
+    else:
+        args.transforms = default_transforms
 
     results = {}
     if args.sequential:
@@ -168,8 +211,12 @@ def main():
     total = len(table)
     proved = sum(1 for r in table if r["proved"])
 
+    tinfo = (f"strategy={args.strategy}" if args.strategy
+             else ("transforms=" + ",".join(args.transforms)
+                   if args.transforms else "no-transform"))
     print(f"\n== whyrel-prove: {args.mlw}"
-          + (f" -T {args.theory}" if args.theory else ""))
+          + (f" -T {args.theory}" if args.theory else "")
+          + f"  [{tinfo}, t={args.timeout}s]")
     for p in provers:
         ok = sum(1 for r in table if r["statuses"].get(p) == "Valid")
         print(f"   {p:>10}: {ok}/{total}")
@@ -198,6 +245,8 @@ def main():
         with open(args.json_out, "w") as f:
             json.dump({"file": args.mlw, "theory": args.theory,
                        "timeout": args.timeout, "provers": provers,
+                       "strategy": args.strategy,
+                       "transforms": args.transforms,
                        "total": total, "proved": proved,
                        "goals": table}, f, indent=1)
         print(f"\n(json written to {args.json_out})")
