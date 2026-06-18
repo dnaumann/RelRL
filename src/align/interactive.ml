@@ -172,9 +172,7 @@ let json_of_suggestions suggs : string =
 
 (* ---- relational spec scope ---------------------------------------------- *)
 
-(* The CLI -rpre/-rpost parse + scope/type-check lives in [Align] now;
-   [Align_utils.restricted_tenv] / [Align_utils.params_of] are the shared
-   typing helpers.
+(*
 
    All interface-declared globals (module-level state visible to method
    bodies).  Unlike the -rpre/-rpost spec scope, invariants and asserts added
