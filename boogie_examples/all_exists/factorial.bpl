@@ -7,7 +7,8 @@ procedure fact' (x: int) returns (z: int)
   while (y <= x) { z := z*y; y := y+1; } }
 
 procedure fact_eq (x, x': int) returns (z, z': int)
-  requires x == x' && x >= 0;    ensures z == z';                     
+  requires x == x' && x >= 0;
+  ensures z == z';                     
 { var y, y': int; 
   y := 0; y' := 1; z := 1; z' := 1; 
   while (y < x) 
@@ -21,7 +22,8 @@ procedure fact_eq (x, x': int) returns (z, z': int)
 /* equivalence example from Shemer et al ATVA'23. */
 
 procedure dblsq (x: int) returns (r: int)
-  requires x >= 0; ensures r == 2 * x * x;
+  requires x >= 0;
+  ensures r == 2 * x * x;
 { var z: int; 
   r := 0; z := 2 * x; 
   while (z > 0)
@@ -30,7 +32,8 @@ procedure dblsq (x: int) returns (r: int)
 }
 
 procedure dblsq' (x: int) returns (r: int)
-  requires x >= 0; ensures r == 2 * x * x;
+  requires x >= 0;
+  ensures r == 2 * x * x;
 { var z: int; 
   r := 0; z := x; 
   while (z > 0)
@@ -40,7 +43,8 @@ procedure dblsq' (x: int) returns (r: int)
 }
 
 procedure dblsq_eq (x, x': int) returns (r, r': int)
-  requires x == x' && x >= 0; ensures r == r'; 
+  requires x == x' && x >= 0;
+  ensures r == r'; 
 { var z, z': int; 
   r := 0; z := 2*x; 
   r' := 0; z' := x;

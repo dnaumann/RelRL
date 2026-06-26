@@ -20,14 +20,16 @@ while (sum <= 100 && sum' <= 100)
    invariant sum == sum'; 
   {
     // left program
-    havoc r; assume 0 <= r && r < 11;
+    havoc r;
+    assume 0 <= r && r < 11;
     sum := sum + r;
 
    // inserted by chk
    assert (exists v: int :: 0 <= v && v < 10 && r == v);
 
    // right program
-   havoc r'; assume 0 <= r' && r' < 10;
+   havoc r';
+   assume 0 <= r' && r' < 10;
    // filter 
    assume r == r'; 
 

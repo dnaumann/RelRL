@@ -1,6 +1,6 @@
 /* encoding of runtime error with global flag */
 /* example lowErrow in Fig 3 of Hypra OOPSLA'24 */
-
+// remark from paper: no hints were used while verifying
 // globals; whether a runtime error has occurred
 var err, err': bool; 
 

@@ -18,11 +18,11 @@
 
 | Example | Spec | Loop | Pred | Lemma | Assert | Havoc | Total |
 |---------|------:|------:|------:|------:|------:|------:|------:|
-| all_all/Veracity/dihedral.bpl | 64 | 24 | 3 | 0 | 45 | 0 | 136 |
+| all_all/Veracity/dihedral.bpl | 70 | 24 | 3 | 0 | 45 | 0 | 142 |
 | all_all/Veracity/fizzbuzz.bpl | 22 | 32 | 1 | 4 | 17 | 0 | 76 |
 | all_all/Veracity/simple_io.bpl | 25 | 41 | 0 | 0 | 15 | 0 | 81 |
 | all_all/Veracity/simple_vector.bpl | 2 | 14 | 0 | 0 | 3 | 1 | 20 |
-| **Subtotal** | **113** | **111** | **4** | **4** | **80** | **1** | **313** |
+| **Subtotal** | **119** | **111** | **4** | **4** | **80** | **1** | **319** |
 
 ---
 
@@ -31,8 +31,9 @@
 | Example | Spec | Loop | Pred | Lemma | Assert | Havoc | Total |
 |---------|------:|------:|------:|------:|------:|------:|------:|
 | all_exists/BoogieExamples.bpl | 8 | 7 | 0 | 0 | 6 | 4 | 25 |
-| all_exists/Conditional_Loop.bpl | 8 | 14 | 0 | 0 | 12 | 6 | 40 |
-| all_exists/Conditional_Loop_LockstepAttempt.bpl | 4 | 1 | 0 | 0 | 0 | 0 | 5 |
+| all_exists/Conditional_Loop.bpl | 4 | 7 | 0 | 0 | 7 | 4 | 22 |
+| all_exists/Conditional_Loop_LockstepAttempt.bpl | 4 | 1 | 0 | 0 | 0 | 4 | 9 |
+| all_exists/Conditional_Loop_v2.bpl | 4 | 7 | 0 | 0 | 7 | 4 | 22 |
 | all_exists/Forex/Hypa/Not_Applicable/counter_sum.bpl | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | all_exists/Forex/Hypa/asynch_gni.bpl | 2 | 2 | 0 | 0 | 2 | 2 | 8 |
 | all_exists/Forex/Hypa/compiler_opt.bpl | 2 | 3 | 0 | 0 | 2 | 2 | 9 |
@@ -57,41 +58,43 @@
 | all_exists/Forex/K_Safety/multi_equiv.bpl | 3 | 2 | 0 | 0 | 0 | 0 | 5 |
 | all_exists/Forex/K_Safety/squares_sum.bpl | 3 | 4 | 0 | 0 | 0 | 0 | 7 |
 | all_exists/Hypra/lowError.bpl | 12 | 0 | 0 | 0 | 0 | 0 | 12 |
-| all_exists/Itzhaky.bpl | 2 | 6 | 1 | 0 | 9 | 4 | 22 |
-| all_exists/PCSat/paper_gni_example.bpl | 5 | 8 | 1 | 0 | 16 | 25 | 55 |
+| all_exists/Itzhaky.bpl | 2 | 6 | 1 | 0 | 9 | 6 | 24 |
+| all_exists/PCSat/paper_gni_example.bpl | 3 | 3 | 1 | 0 | 15 | 12 | 34 |
+| all_exists/PCSat/paper_gni_example_v2.bpl | 1 | 0 | 0 | 0 | 0 | 3 | 4 |
+| all_exists/PCSat/paper_gni_example_v3.bpl | 3 | 5 | 0 | 0 | 13 | 12 | 33 |
 | all_exists/PCSat/ti_gni_hff.bpl | 2 | 2 | 0 | 0 | 4 | 4 | 12 |
 | all_exists/PCSat/ti_gni_hft.bpl | 2 | 1 | 0 | 0 | 2 | 3 | 8 |
 | all_exists/PCSat/ti_gni_htt.bpl | 2 | 0 | 0 | 0 | 2 | 2 | 6 |
 | all_exists/PCSat/ts_gni_hff.bpl | 2 | 2 | 0 | 0 | 4 | 4 | 12 |
 | all_exists/PCSat/ts_gni_hft.bpl | 3 | 1 | 0 | 0 | 2 | 3 | 9 |
 | all_exists/PCSat/ts_gni_htt.bpl | 3 | 0 | 0 | 0 | 2 | 2 | 7 |
-| all_exists/RHLE/API_Refinement/add3_shuffled.bpl | 3 | 0 | 3 | 1 | 4 | 2 | 13 |
-| all_exists/RHLE/API_Refinement/add3_sorted.bpl | 3 | 0 | 3 | 2 | 3 | 2 | 13 |
+| all_exists/RHLE/API_Refinement/add3_shuffled.bpl | 3 | 0 | 3 | 1 | 5 | 2 | 14 |
+| all_exists/RHLE/API_Refinement/add3_sorted.bpl | 3 | 0 | 3 | 2 | 4 | 2 | 14 |
 | all_exists/RHLE/API_Refinement/conditional_nonrefinement.bpl | 2 | 0 | 1 | 0 | 3 | 2 | 8 |
 | all_exists/RHLE/API_Refinement/conditional_refinement.bpl | 2 | 0 | 1 | 0 | 3 | 2 | 8 |
-| all_exists/RHLE/API_Refinement/loop_nonrefinement.bpl | 2 | 1 | 0 | 0 | 2 | 2 | 7 |
-| all_exists/RHLE/API_Refinement/loop_refinement.bpl | 2 | 1 | 0 | 0 | 2 | 2 | 7 |
-| all_exists/RHLE/API_Refinement/loop_refinement2.bpl | 2 | 1 | 0 | 0 | 2 | 2 | 7 |
+| all_exists/RHLE/API_Refinement/loop_nonrefinement.bpl | 2 | 1 | 0 | 0 | 4 | 2 | 9 |
+| all_exists/RHLE/API_Refinement/loop_refinement.bpl | 2 | 1 | 0 | 0 | 4 | 2 | 9 |
+| all_exists/RHLE/API_Refinement/loop_refinement2.bpl | 2 | 1 | 0 | 0 | 4 | 2 | 9 |
 | all_exists/RHLE/API_Refinement/perm_inv_refinement.bpl | 3 | 0 | 3 | 2 | 5 | 2 | 15 |
-| all_exists/RHLE/API_Refinement/simple_nonrefinement.bpl | 2 | 0 | 0 | 0 | 2 | 2 | 6 |
-| all_exists/RHLE/API_Refinement/simple_refinement.bpl | 2 | 0 | 0 | 0 | 2 | 2 | 6 |
+| all_exists/RHLE/API_Refinement/simple_nonrefinement.bpl | 2 | 0 | 0 | 0 | 4 | 2 | 8 |
+| all_exists/RHLE/API_Refinement/simple_refinement.bpl | 2 | 0 | 0 | 0 | 4 | 2 | 8 |
 | all_exists/RHLE/Blackjack/do_nothing.bpl | 3 | 0 | 0 | 0 | 1 | 0 | 4 |
-| all_exists/RHLE/Blackjack/draw_once.bpl | 3 | 0 | 0 | 0 | 3 | 1 | 7 |
-| all_exists/RHLE/Blackjack/draw_until_21.bpl | 3 | 1 | 0 | 0 | 3 | 1 | 8 |
+| all_exists/RHLE/Blackjack/draw_once.bpl | 3 | 0 | 0 | 0 | 4 | 1 | 8 |
+| all_exists/RHLE/Blackjack/draw_until_21.bpl | 3 | 1 | 0 | 0 | 4 | 1 | 9 |
 | all_exists/RHLE/Delimited_Release/median.bpl | 3 | 0 | 1 | 0 | 0 | 0 | 4 |
 | all_exists/RHLE/Delimited_Release/parity.bpl | 4 | 0 | 0 | 0 | 0 | 0 | 4 |
 | all_exists/RHLE/Delimited_Release/parity2.bpl | 4 | 0 | 0 | 0 | 0 | 0 | 4 |
-| all_exists/RHLE/Delimited_Release/parity_fun.bpl | 4 | 0 | 0 | 0 | 2 | 2 | 8 |
+| all_exists/RHLE/Delimited_Release/parity_fun.bpl | 4 | 0 | 0 | 0 | 4 | 2 | 10 |
 | all_exists/RHLE/Delimited_Release/parity_no_dr.bpl | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
 | all_exists/RHLE/Delimited_Release/wallet.bpl | 4 | 0 | 0 | 0 | 0 | 0 | 4 |
 | all_exists/RHLE/Delimited_Release/wallet_no_dr.bpl | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
 | all_exists/RHLE/GNI/denning1.bpl | 3 | 2 | 1 | 0 | 0 | 0 | 6 |
 | all_exists/RHLE/GNI/denning2.bpl | 3 | 2 | 1 | 1 | 0 | 0 | 7 |
 | all_exists/RHLE/GNI/denning3.bpl | 4 | 2 | 0 | 0 | 0 | 0 | 6 |
-| all_exists/RHLE/GNI/nondet_leak.bpl | 3 | 0 | 0 | 0 | 2 | 2 | 7 |
-| all_exists/RHLE/GNI/nondet_leak2.bpl | 3 | 0 | 0 | 0 | 2 | 2 | 7 |
-| all_exists/RHLE/GNI/nondet_nonleak.bpl | 3 | 0 | 0 | 0 | 2 | 2 | 7 |
-| all_exists/RHLE/GNI/nondet_nonleak2.bpl | 3 | 0 | 0 | 0 | 2 | 2 | 7 |
+| all_exists/RHLE/GNI/nondet_leak.bpl | 3 | 0 | 0 | 0 | 3 | 2 | 8 |
+| all_exists/RHLE/GNI/nondet_leak2.bpl | 3 | 0 | 0 | 0 | 3 | 2 | 8 |
+| all_exists/RHLE/GNI/nondet_nonleak.bpl | 3 | 0 | 0 | 0 | 3 | 2 | 8 |
+| all_exists/RHLE/GNI/nondet_nonleak2.bpl | 3 | 0 | 0 | 0 | 3 | 2 | 8 |
 | all_exists/RHLE/GNI/simple_leak.bpl | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
 | all_exists/RHLE/GNI/simple_nonleak.bpl | 3 | 0 | 0 | 0 | 0 | 0 | 3 |
 | all_exists/RHLE/GNI/smith1.bpl | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
@@ -102,10 +105,10 @@
 | all_exists/Veracity/simple_vector.bpl | 3 | 24 | 0 | 0 | 9 | 1 | 37 |
 | all_exists/ccr.bpl | 21 | 4 | 0 | 0 | 0 | 1 | 26 |
 | all_exists/data.bpl | 1 | 0 | 2 | 0 | 4 | 0 | 7 |
-| all_exists/factorial.bpl | 4 | 6 | 0 | 0 | 0 | 0 | 10 |
-| all_exists/hiccupSum.bpl | 2 | 6 | 1 | 0 | 4 | 12 | 25 |
-| all_exists/lmcsExample.bpl | 9 | 7 | 1 | 0 | 0 | 0 | 17 |
-| **Subtotal** | **281** | **217** | **22** | **10** | **198** | **140** | **868** |
+| all_exists/factorial.bpl | 8 | 6 | 0 | 0 | 0 | 0 | 14 |
+| all_exists/hiccupSum.bpl | 4 | 6 | 1 | 0 | 6 | 14 | 31 |
+| all_exists/lmcsExample.bpl | 9 | 7 | 1 | 0 | 0 | 12 | 29 |
+| **Subtotal** | **289** | **217** | **22** | **10** | **234** | **164** | **936** |
 
 ---
 
@@ -113,4 +116,4 @@
 
 | Spec | Loop | Pred | Lemma | Assert | Havoc | Total |
 |------:|------:|------:|------:|------:|------:|------:|
-| **394** | **328** | **26** | **14** | **278** | **141** | **1181** |
+| **408** | **328** | **26** | **14** | **314** | **165** | **1255** |

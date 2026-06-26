@@ -18,7 +18,8 @@ procedure biprog () returns ()
   
   assume 1 <= choice_var && choice_var <= 10;
   assert ((handValue + choice_var) == 21 );
-  havoc draw_ret; assume draw_ret == choice_var;
+  havoc draw_ret;
+  assume draw_ret == choice_var;
   assume (draw_ret + (handValue) == 21);
 
   handValue := handValue + draw_ret;

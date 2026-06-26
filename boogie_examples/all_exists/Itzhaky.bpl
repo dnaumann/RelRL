@@ -69,7 +69,8 @@ procedure p (A1: [int] int, A2: [int] int, n1: int, n2: int)
   if (b1 <= 0 && b2 > 0) { // unreachable 
     i1 := 1;
     while (i1 < n1)
-    { havoc y1; sum1 := sum1 + A1[i1] + y1; i1 := i1 + 1; } 
+    {
+    havoc y1; sum1 := sum1 + A1[i1] + y1; i1 := i1 + 1; } 
     i2 := 0;
     while (i2 < n2 - 2)
     { 
@@ -83,7 +84,8 @@ procedure p (A1: [int] int, A2: [int] int, n1: int, n2: int)
       invariant i1 < n1 <==> i2 < n2;
        invariant i1 == i2;
        invariant sum1 == sum2; 
-    { havoc y1; 
+    {
+    havoc y1; 
       sum1 := sum1 + A1[i1] + y1; 
       i1 := i1 + 1;  
       assert inst( - A2[i2] - sum2 + sum1 ); 

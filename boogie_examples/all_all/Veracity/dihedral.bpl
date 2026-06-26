@@ -403,7 +403,9 @@ procedure run_two_motions(a: [int]int, r1: int, s1: bool, r2: int, s2: bool, n: 
 
 // Case 1: two pure rotations always commute
 procedure lemma_case1(e: int, r1: int, r2: int, n: int)
-  requires n > 1; requires 0 <= r1 && r1 < n; requires 0 <= r2 && r2 < n;
+  requires n > 1;
+  requires 0 <= r1 && r1 < n;
+  requires 0 <= r2 && r2 < n;
   requires 0 <= e && e < n;
   ensures motion(motion(e, r1, false, n), r2, false, n) ==
           motion(motion(e, r2, false, n), r1, false, n);
@@ -414,7 +416,8 @@ procedure lemma_case1(e: int, r1: int, r2: int, n: int)
 
 // Case 2a: s1, !s2, r2 == 0
 procedure lemma_case2a(e: int, r1: int, n: int)
-  requires n > 1; requires 0 <= r1 && r1 < n;
+  requires n > 1;
+  requires 0 <= r1 && r1 < n;
   requires 0 <= e && e < n;
   ensures motion(motion(e, r1, true, n), 0, false, n) ==
           motion(motion(e, 0, false, n), r1, true, n);
@@ -427,7 +430,8 @@ procedure lemma_case2a(e: int, r1: int, n: int)
 
 // Case 2b: s1, !s2, n even, r2 == n/2
 procedure lemma_case2b(e: int, r1: int, n: int)
-  requires n > 1; requires n mod 2 == 0;
+  requires n > 1;
+  requires n mod 2 == 0;
   requires 0 <= r1 && r1 < n;
   requires 0 <= e && e < n;
   ensures motion(motion(e, r1, true, n), n div 2, false, n) ==
@@ -442,7 +446,8 @@ procedure lemma_case2b(e: int, r1: int, n: int)
 
 // Case 3a: !s1, s2, r1 == 0
 procedure lemma_case3a(e: int, r2: int, n: int)
-  requires n > 1; requires 0 <= r2 && r2 < n;
+  requires n > 1;
+  requires 0 <= r2 && r2 < n;
   requires 0 <= e && e < n;
   ensures motion(motion(e, 0, false, n), r2, true, n) ==
           motion(motion(e, r2, true, n), 0, false, n);
@@ -455,7 +460,8 @@ procedure lemma_case3a(e: int, r2: int, n: int)
 
 // Case 3b: !s1, s2, n even, r1 == n/2
 procedure lemma_case3b(e: int, r2: int, n: int)
-  requires n > 1; requires n mod 2 == 0;
+  requires n > 1;
+  requires n mod 2 == 0;
   requires 0 <= r2 && r2 < n;
   requires 0 <= e && e < n;
   ensures motion(motion(e, n div 2, false, n), r2, true, n) ==

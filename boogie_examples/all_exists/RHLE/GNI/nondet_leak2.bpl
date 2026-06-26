@@ -17,7 +17,8 @@ procedure biprog () returns ()
   var choice_var: int;
 
   // left program calls with universal spec
-  havoc flipcoin_ret1; assume (0 == flipcoin_ret1 || flipcoin_ret1 == 1);
+  havoc flipcoin_ret1;
+  assume (0 == flipcoin_ret1 || flipcoin_ret1 == 1);
 
   // right program calls with existential spec with choicevar instantiated with flipcoin_ret1
   choice_var := flipcoin_ret1;

@@ -37,7 +37,8 @@ procedure biprog () returns ()
      var shuffle_ret, sort_ret, choice_list : list;
 
      // left program calls shuffle with universal spec
-     havoc shuffle_ret; assume (is_permutation3(list_1, shuffle_ret));
+     havoc shuffle_ret;
+     assume (is_permutation3(list_1, shuffle_ret));
 
      // right program calls sort with existential spec instantiated with choice_list.
      assume (is_sorted3(choice_list));

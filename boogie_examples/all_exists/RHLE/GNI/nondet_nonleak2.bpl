@@ -35,7 +35,8 @@ procedure biprog () returns ()
   }
 
   // left program calls with universal spec
-  havoc flipcoin_ret1; assume (0 == flipcoin_ret1 || flipcoin_ret1 == 1);
+  havoc flipcoin_ret1;
+  assume (0 == flipcoin_ret1 || flipcoin_ret1 == 1);
 
   // Picking choice variable instantiation
   if (low_1 == low_2)

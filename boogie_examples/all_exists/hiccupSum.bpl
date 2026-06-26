@@ -17,11 +17,13 @@ procedure hiccupSum (n: int) returns (r: int)
 
 // the user-provided product to show hiccupSum refines itself 
 procedure hiccupSum_ref (n, n': int) returns (r, r': int)
-  requires n == n';   ensures r == r';                     
+  requires n == n';
+  ensures r == r';                     
 { 
   var h, h': bool; var i, i': int; 
   i, r := 0, 0;   i', r' := 0, 0;   // lockstep alignment
-  havoc h;       havoc h';      
+  havoc h;
+  havoc h';      
 
   while (i < n || i' < n') // left alignment condition: h
                            // right alignment condition: !h && h'
@@ -36,7 +38,8 @@ procedure hiccupSum_ref (n, n': int) returns (r, r': int)
           havoc h;
       } else if (i' < n' && !h && h') { // right only 
           if (!h') { r' := r'+i'; i' := i'+1; } 
-          havoc h'; assume !h'; // havoc-filter
+          havoc h';
+          assume !h'; // havoc-filter
       } else { 
           assert (i < n && i' < n' && !h && !(!h && h')); // just a remark; from adequacy
           if (!h) { r := r+i; i := i+1; }    // sequential alignment 
@@ -49,11 +52,13 @@ procedure hiccupSum_ref (n, n': int) returns (r, r': int)
 
 // transformed from the user-provided product 
 procedure hiccupSum_ref_chk (n, n': int) returns (r, r': int)
-  requires n == n';   ensures r == r';                     
+  requires n == n';
+  ensures r == r';                     
 { 
   var h, h': bool; var i, i': int;   var vsnap: int; var rosnap: bool;
   i, r := 0, 0;   i', r' := 0, 0;
-  havoc h; havoc h';
+  havoc h;
+  havoc h';
 
   while (i < n || i' < n') 
     invariant i == i';  
@@ -69,7 +74,8 @@ procedure hiccupSum_ref_chk (n, n': int) returns (r, r': int)
       } else if (i' < n' && !h && h') {  
           if (!h') { r' := r'+i'; i' := i'+1; } 
           assert (exists v:bool :: v == !h');  // added by chk
-          havoc h'; assume !h';        
+          havoc h';
+          assume !h';        
       } else { 
           if (!h) { r := r+i; i := i+1; } 
           havoc h;

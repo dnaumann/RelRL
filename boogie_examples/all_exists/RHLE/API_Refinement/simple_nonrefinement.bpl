@@ -10,14 +10,16 @@ procedure simpleNonRefinement () returns (zL: int, zR: int)
           ensures zL == zR;
 {
 // left program
-havoc zL; assume 0 <= zL && zL < 25;  
+havoc zL;
+assume 0 <= zL && zL < 25;  
 
 // inserted by chk -- should fail 
 assert (exists v: int :: 0 <= v && v < 20
        && zL == v); 
 
 // right program
-havoc zR; assume 0 <= zR && zR < 20;
+havoc zR;
+assume 0 <= zR && zR < 20;
 
 // filter 
 assume zL == zR; 

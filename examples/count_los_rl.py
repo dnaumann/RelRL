@@ -73,11 +73,57 @@ def gather(root):
     return examples
 
 
+def count_file(path):
+    counts = defaultdict(int)
+    with open(path, encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            cat = classify(line)
+            if cat:
+                counts[cat] += 1
+    return counts
+
+
+def render_single(path, counts):
+    cols = CAT_ORDER + ["Total"]
+    row = {c: counts.get(c, 0) for c in CAT_ORDER}
+    row["Total"] = sum(counts.values())
+    w = max(len(c) for c in cols)
+    out = [path, ""]
+    for c in cols:
+        out.append(f"  {c:<{w}}  {row[c]:>5}")
+    return "\n".join(out)
+
+
 def main():
+    args = [a for a in sys.argv[1:] if not a.startswith("-")]
+    flags = [a for a in sys.argv[1:] if a.startswith("-")]
+
+    # Per-file mode: one or more .rl paths given as arguments.
+    if args:
+        blocks = []
+        for path in args:
+            if not os.path.exists(path):
+                print(f"error: file not found: {path}", file=sys.stderr)
+                return 1
+            counts = count_file(path)
+            if "--md" in flags:
+                row = {c: counts.get(c, 0) for c in CAT_ORDER}
+                row["Total"] = sum(counts.values())
+                cols = CAT_ORDER + ["Total"]
+                if not blocks:
+                    blocks.append("| File | " + " | ".join(cols) + " |")
+                    blocks.append("|------|" + "|".join(["------:"] * len(cols)) + "|")
+                blocks.append(f"| {path} | " + " | ".join(str(row[c]) for c in cols) + " |")
+            else:
+                blocks.append(render_single(path, counts))
+        print("\n\n".join(blocks) if "--md" not in flags else "\n".join(blocks))
+        return
+
+    # Directory mode: scan all .rl files under this script's directory.
     root = os.path.dirname(os.path.abspath(__file__))
     examples = gather(root)
 
-    if "--md" in sys.argv[1:]:
+    if "--md" in flags:
         print(render_markdown(examples))
     else:
         print(render_plain(examples))

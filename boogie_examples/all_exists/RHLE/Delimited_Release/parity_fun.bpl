@@ -14,11 +14,13 @@ procedure biprog() returns ()
   var p1: int; var p2: int;
 
   // left prog calls with universal spec
-  havoc p1; assume (h1 mod 2) ==  p1;
+  havoc p1;
+  assume (h1 mod 2) ==  p1;
 
   assert (exists v: int :: v == p1);
   // right prog calls with existential spec
-  havoc p2; assume (h2 mod 2) ==  p2;
+  havoc p2;
+  assume (h2 mod 2) ==  p2;
   assume p2 == p1;
 
   if (p1 == 1) 

@@ -13,7 +13,8 @@ procedure biprog () returns (ret_1, ret_2: int)
   var choice_var: int;
 
   // left program calls with universal spec
-  havoc randint_ret1; assume (0 <= randint_ret1 && randint_ret1 < 100);
+  havoc randint_ret1;
+  assume (0 <= randint_ret1 && randint_ret1 < 100);
 
   // right program calls with existential spec with choicevar instantiated with randint_ret1
   choice_var := randint_ret1;

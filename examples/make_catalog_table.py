@@ -125,7 +125,7 @@ GROUPS = [
         (16, "Double_Square_NI",   f"{K}/Double_Square_NI",    "all_exists/Forex/K_Safety/double_square_ni.bpl",("ForEx", FOREXL, "k_safety/double_square_ni.txt")),
         (17, "Fig_2",              f"{K}/Fig2",                "all_exists/Forex/K_Safety/fig2.bpl",            ("ForEx", FOREXL, "k_safety/fig2.txt")),
     ]),
-    ("ForEx/PCSat", [
+    ("PCSat", [
         (18, "Paper_GNI_Example",  f"{P}/Paper_GNI_Example",   "all_exists/PCSat/paper_gni_example.bpl",         None),
         (19, "Ti_GNI_HFF",         f"{P}/Ti_GNI_HFF",          "all_exists/PCSat/ti_gni_hff.bpl",               ("pfwnCSP", CSPL, "cav2021rel/TI_GNI_hFF.clp")),
         (20, "Ti_GNI_HFT",         f"{P}/Ti_GNI_HFT",          "all_exists/PCSat/ti_gni_hft.bpl",               ("pfwnCSP", CSPL, "cav2021rel/TI_GNI_hFT.clp")),
@@ -187,7 +187,7 @@ GROUPS = [
         (62, "Havoc_Test",       "all_exists/Havoc_Test",       None,                              None),
         (63, "CCR_fig_1",        "all_exists/CCR",              "all_exists/ccr.bpl",              None),
         (64, "hiccupSum",        "all_exists/HiccupSum",        "all_exists/hiccupSum.bpl",        None),
-        (65, "lowError",         "all_exists/Hypra/LowError",   "all_exists/Hypra/lowError.bpl",   None),
+        (65, "lowError",         "all_exists/Hypra/LowError",   "all_exists/Hypra/lowError.bpl",   ("Hypra", "__lit__", (3, 0, 0))),
     ]),
 ]
 
@@ -233,9 +233,12 @@ def build():
                 org_tool, org = "", (None, None, None)
             else:
                 org_tool, src, okey = origin
-                org = cell(src, okey)
-                if org[0] is None:
-                    warnings.append(f"#{num} {name}: origin key not found: {okey}")
+                if src == "__lit__":          # hard-coded (spec, aux, internal)
+                    org = okey
+                else:
+                    org = cell(src, okey)
+                    if org[0] is None:
+                        warnings.append(f"#{num} {name}: origin key not found: {okey}")
             vals = quad(rl) + quad(wh) + quad(bp) + quad(org)
             for tag, val in zip(TAGS, vals):
                 if val is not None:
@@ -256,10 +259,11 @@ def render_md(records, sums):
         "across the encodings we measured. Values are read from the per-system "
         "generated `.md` summaries. Each source is split into three buckets:",
         "",
-        "- **S (Spec)** — the specification / contract: `requires`/`ensures`, "
-        "`pre`/`post`, `forall`/`exists` declarations (the `Goal` clauses for pfwnCSP).",
+        "- **S (Spec)** — the specification / contract: `requires`/`ensures` and "
+        "frame/effects clauses (`effects`/`reads`/`writes`/`modifies`/`diverges`), "
+        "plus `pre`/`post` and `forall`/`exists` declarations (the `Goal` clauses for PCSat).",
         "- **A (Auxiliary)** — auxiliary `predicate`/`function`/`lemma`/`axiom` "
-        "declarations (the `Def` predicate clauses for pfwnCSP).",
+        "declarations (the `Def` predicate clauses for PCSat).",
         "- **I (Internal)** — remaining internal proof annotations: loop "
         "invariants/variants, `assert`/`assume`, `havoc` (`I = Total − Spec − Aux`).",
         "",
@@ -267,12 +271,12 @@ def render_md(records, sums):
         "",
         "Sources: **RelRL** `examples/los.md`, **WhyML** `examples/los_whyml.md`, "
         "**Boogie** `boogie_examples/burden_bpl.md`, **Origin** = source repo's own "
-        "encoding where measured (ForEx 1–17, pfwnCSP 19–24, RHLE 25–52).",
+        "encoding where measured (ForEx 1–17, PCSat 19–24, RHLE 25–52).",
         "",
         "| # | Example | RL S | RL A | RL I | RL T | WhyML S | WhyML A | WhyML I | WhyML T "
-        "| Bgie S | Bgie A | Bgie I | Bgie T | Org S | Org A | Org I | Org T | Origin tool |",
+        "| Bgie S | Bgie A | Bgie I | Bgie T | Org S | Org A | Org I | Org T |",
         "|--:|---------|-----:|-----:|-----:|-----:|--------:|--------:|--------:|--------:"
-        "|-------:|-------:|-------:|-------:|------:|------:|------:|------:|-------------|",
+        "|-------:|-------:|-------:|-------:|------:|------:|------:|------:|",
     ]
     blank = "| | **%s** " + "| " * len(TAGS) + "|"
     for rec in records:
@@ -280,10 +284,9 @@ def render_md(records, sums):
             out.append(blank % rec[1])
         else:
             _, num, name, vals, tool = rec
-            out.append(f"| {num} | {name} | " + " | ".join(fmt(v) for v in vals)
-                       + f" | {tool} |")
+            out.append(f"| {num} | {name} | " + " | ".join(fmt(v) for v in vals) + " |")
     out.append("| | **Total (measured)** | "
-               + " | ".join(f"**{sums[t]}**" for t in TAGS) + " | |")
+               + " | ".join(f"**{sums[t]}**" for t in TAGS) + " |")
     return "\n".join(out)
 
 
@@ -292,44 +295,60 @@ def tex_escape(s):
 
 
 def render_tex(records, sums):
-    ncol = 2 + len(TAGS) + 1  # # , Example, 16 numbers, Tool
+    ncol = 2 + len(TAGS)  # # , Example, 16 numbers
+
+    group_hdr = (r"& & \multicolumn{4}{c|}{\textbf{RelRL}} "
+                 r"& \multicolumn{4}{c|}{\textbf{WhyML}} "
+                 r"& \multicolumn{4}{c|}{\textbf{Boogie}} "
+                 r"& \multicolumn{4}{c}{\textbf{Origin}} \\")
+    col_hdr = (r"\textbf{\#} & \textbf{Example} & S & A & I & T & S & A & I & T "
+               r"& S & A & I & T & S & A & I & T \\")
+
     out = [
         "% Annotation-burden catalog for the forall-exists benchmarks.",
         "% Auto-generated by make_catalog_table.py --latex (reads per-system los .md).",
         "% S=Spec (contract), A=Auxiliary (predicate/lemma/axiom), I=Internal",
         "% (loop invariants/asserts/havoc), T=Total. '-' = no artifact collected.",
-        r"\begin{table}[h!]",
-        r"\centering",
+        "% Uses longtable so the table may break across pages (needs \\usepackage{longtable}).",
+        r"\begingroup",
+        r"\scriptsize",
+        r"\setlength{\tabcolsep}{3pt}",
+        r"\begin{longtable}{rl|rrrr|rrrr|rrrr|rrrr}",
         r"\caption{Annotation burden across encodings for the $\forall\exists$ "
-        r"benchmarks of Table~\ref{tab:Catalog}. For each tool: S=spec (contract), "
+        r"benchmarks of Table~\ref{tab:Catalog}. For each tool: S=spec (contract, "
+        r"incl.\ frame/effects clauses), "
         r"A=auxiliary predicate/lemma/axiom declarations, I=internal proof "
         r"annotations (loop invariants/variants, asserts, havoc), T=total. "
         r"Origin is the source repo's own encoding where measured "
-        r"(ForEx, pfwnCSP, RHLE).}",
-        r"\label{tab:burden}",
-        r"\resizebox{\textwidth}{!}{%",
-        r"\begin{tabular}{rl|rrrr|rrrr|rrrr|rrrr|l}",
+        r"(ForEx, PCSat, RHLE).}"
+        r"\label{tab:burden}\\",
+        # head shown on the first page
+        r"\hline", group_hdr, col_hdr, r"\hline\hline",
+        r"\endfirsthead",
+        # head repeated on continuation pages
+        r"\multicolumn{%d}{l}{\textit{Table~\ref{tab:burden} (continued)}}\\" % ncol,
+        r"\hline", group_hdr, col_hdr, r"\hline\hline",
+        r"\endhead",
+        # foot on every page except the last
         r"\hline",
-        r"& & \multicolumn{4}{c|}{\textbf{RelRL}} & \multicolumn{4}{c|}{\textbf{WhyML}}"
-        r" & \multicolumn{4}{c|}{\textbf{Boogie}} & \multicolumn{4}{c|}{\textbf{Origin}}"
-        r" & \\",
-        r"\textbf{\#} & \textbf{Example} & S & A & I & T & S & A & I & T & S & A & I & T"
-        r" & S & A & I & T & \textbf{Tool} \\",
-        r"\hline\hline",
+        r"\multicolumn{%d}{r}{\textit{continued on next page}}\\" % ncol,
+        r"\endfoot",
+        # foot on the last page
+        r"\hline",
+        r"\endlastfoot",
     ]
     for rec in records:
         if rec[0] == "group":
             out.append(r"\multicolumn{%d}{|l|}{\textbf{%s}} \\ \hline"
                        % (ncol, tex_escape(rec[1])))
         else:
-            _, num, name, vals, tool = rec
+            _, num, name, vals, _tool = rec
             cells = " & ".join(fmt(v) for v in vals)
-            out.append(f"{num} & {tex_escape(name)} & {cells} & {tex_escape(tool)} "
-                       r"\\")
+            out.append(f"{num} & {tex_escape(name)} & {cells} " r"\\")
     out.append(r"\hline")
     totals = " & ".join(r"\textbf{%d}" % sums[t] for t in TAGS)
-    out.append(r"\multicolumn{2}{|l|}{\textbf{Total (measured)}} & " + totals + r" & \\")
-    out += [r"\hline", r"\end{tabular}}", r"\end{table}"]
+    out.append(r"\multicolumn{2}{|l|}{\textbf{Total (measured)}} & " + totals + r" \\")
+    out += [r"\hline", r"\end{longtable}", r"\endgroup"]
     return "\n".join(out)
 
 

@@ -22,7 +22,8 @@ procedure biprog () returns ()
     assume 1 <= choice_var && choice_var <= 10;
     assume ((handValue + choice_var) <= 21 );
     assert (exists v: int :: v == choice_var);
-    havoc draw_ret; assume draw_ret == choice_var;  // models existential call to draw.
+    havoc draw_ret;
+    assume draw_ret == choice_var;  // models existential call to draw.
 
     
     handValue := handValue + draw_ret;

@@ -203,13 +203,49 @@ def render_markdown(examples, missing):
     return "\n".join(out)
 
 
+def render_single(path, counts):
+    cols = CAT_ORDER + ["Total"]
+    row = {c: counts.get(c, 0) for c in CAT_ORDER}
+    row["Total"] = sum(counts.values())
+    w = max(len(c) for c in cols)
+    out = [path, ""]
+    for c in cols:
+        out.append(f"  {c:<{w}}  {row[c]:>5}")
+    return "\n".join(out)
+
+
 def main():
+    args = [a for a in sys.argv[1:] if not a.startswith("-")]
+    flags = [a for a in sys.argv[1:] if a.startswith("-")]
+
+    # Per-file mode: one or more .mlw paths given as arguments.
+    if args:
+        blocks = []
+        for path in args:
+            if not os.path.exists(path):
+                print(f"error: file not found: {path}", file=sys.stderr)
+                return 1
+            counts = count_file(path)
+            if "--md" in flags:
+                row = {c: counts.get(c, 0) for c in CAT_ORDER}
+                row["Total"] = sum(counts.values())
+                cols = CAT_ORDER + ["Total"]
+                if not blocks:
+                    blocks.append("| File | " + " | ".join(cols) + " |")
+                    blocks.append("|------|" + "|".join(["------:"] * len(cols)) + "|")
+                blocks.append(f"| {path} | " + " | ".join(str(row[c]) for c in cols) + " |")
+            else:
+                blocks.append(render_single(path, counts))
+        print("\n\n".join(blocks) if "--md" not in flags else "\n".join(blocks))
+        return
+
+    # Directory mode: discover generated WhyML files via Makefiles and scan them.
     root = os.path.dirname(os.path.abspath(__file__))
     examples, missing = gather(root)
     if not examples:
         print("No generated WhyML files found.", file=sys.stderr)
         return 1
-    if "--md" in sys.argv[1:]:
+    if "--md" in flags:
         print(render_markdown(examples, missing))
     else:
         print(render_plain(examples, missing))

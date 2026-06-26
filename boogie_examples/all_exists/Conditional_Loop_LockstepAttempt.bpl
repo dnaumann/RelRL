@@ -22,23 +22,27 @@ procedure loop1 (x1: int, n1: int, x2: int, n2: int)
   invariant w1 == 0 <==> w2 == 0; 
   {
        if (w1 == 0)
-       { havoc z1; y1 := y1 - 1; }
+       {
+       havoc z1; y1 := y1 - 1; }
        w1 := (w1 + 1) mod n1; 
 
        if (w2 == 0)
-       { havoc z2; y2 := y2 - 1; }
+       {
+       havoc z2; y2 := y2 - 1; }
        w2 := (w2 + 1) mod n2;         
   } 
   while (y1 > 0 && y2 <= 0)
   {
        if (w1 == 0)
-       { havoc z1; y1 := y1 - 1; }
+       {
+       havoc z1; y1 := y1 - 1; }
        w1 := (w1 + 1) mod n1; 
   } 
   while (y1 <= 0 && y2 > 0)
   {
        if (w2 == 0)
-       { havoc z2; y2 := y2 - 1; }
+       {
+       havoc z2; y2 := y2 - 1; }
        w2 := (w2 + 1) mod n2;         
   } 
 
