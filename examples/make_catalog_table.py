@@ -7,7 +7,7 @@ collection scripts). Each summary's table has the example key in the first colum
 and its Total in the last column; this joins those totals per benchmark.
 
 Sources (generated .md files):
-  RelRL   -- examples/los.md                       (.rl source spec)
+  WhyRel  -- examples/los.md                       (.rl source spec)
   WhyML   -- examples/los_whyml.md                  (generated .mlw burden)
   Boogie  -- boogie_examples/burden_bpl.md          (.bpl burden)
   Origin  -- the source repo's own encoding, where measured:
@@ -212,6 +212,28 @@ def fmt(v):
     return "-" if v is None else str(v)
 
 
+def ratio_cell(vals):
+    """WhyRel total (vals[3]) / Origin total (vals[15]), or '-' if unavailable."""
+    wr, org = vals[3], vals[15]
+    if wr is None or org is None or org == 0:
+        return "-"
+    return f"{wr / org:.2f}"
+
+
+def matched_ratio(records):
+    """Overall WhyRel/Origin ratio summed only over rows where both are measured
+    (so the numerator excludes benchmarks that have no origin encoding)."""
+    wr = org = 0
+    for rec in records:
+        if rec[0] != "row":
+            continue
+        vals = rec[3]
+        if vals[3] is not None and vals[15] not in (None, 0):
+            wr += vals[3]
+            org += vals[15]
+    return f"{wr / org:.2f}" if org else "-"
+
+
 TAGS = [f"{s}_{c}" for s in ("RL", "WH", "BP", "OR") for c in ("S", "A", "I", "T")]
 
 
@@ -244,7 +266,7 @@ def build():
                 if val is not None:
                     sums[tag] += val
             if rl[0] is None:
-                warnings.append(f"#{num} {name}: RelRL key not found: {rl_key}")
+                warnings.append(f"#{num} {name}: WhyRel key not found: {rl_key}")
             if bpl_key and bp[0] is None:
                 warnings.append(f"#{num} {name}: Boogie key not found: {bpl_key}")
             records.append(("row", num, name, vals, org_tool))
@@ -269,24 +291,31 @@ def render_md(records, sums):
         "",
         "`-` means no artifact was collected.",
         "",
-        "Sources: **RelRL** `examples/los.md`, **WhyML** `examples/los_whyml.md`, "
+        "The **WR/Org** column is the WhyRel/Origin total ratio (WR T / Org T) per "
+        "benchmark, shown only where an origin encoding was measured. The bottom-row "
+        "WR/Org is summed over those origin-measured rows only (so the WhyRel "
+        "numerator excludes benchmarks with no origin tool).",
+        "",
+        "Sources: **WhyRel** `examples/los.md`, **WhyML** `examples/los_whyml.md`, "
         "**Boogie** `boogie_examples/burden_bpl.md`, **Origin** = source repo's own "
         "encoding where measured (ForEx 1–17, PCSat 19–24, RHLE 25–52).",
         "",
-        "| # | Example | RL S | RL A | RL I | RL T | WhyML S | WhyML A | WhyML I | WhyML T "
-        "| Bgie S | Bgie A | Bgie I | Bgie T | Org S | Org A | Org I | Org T |",
+        "| # | Example | WR S | WR A | WR I | WR T | WhyML S | WhyML A | WhyML I | WhyML T "
+        "| Bgie S | Bgie A | Bgie I | Bgie T | Org S | Org A | Org I | Org T | WR/Org |",
         "|--:|---------|-----:|-----:|-----:|-----:|--------:|--------:|--------:|--------:"
-        "|-------:|-------:|-------:|-------:|------:|------:|------:|------:|",
+        "|-------:|-------:|-------:|-------:|------:|------:|------:|------:|-------:|",
     ]
-    blank = "| | **%s** " + "| " * len(TAGS) + "|"
+    blank = "| | **%s** " + "| " * (len(TAGS) + 1) + "|"
     for rec in records:
         if rec[0] == "group":
             out.append(blank % rec[1])
         else:
             _, num, name, vals, tool = rec
-            out.append(f"| {num} | {name} | " + " | ".join(fmt(v) for v in vals) + " |")
+            out.append(f"| {num} | {name} | " + " | ".join(fmt(v) for v in vals)
+                       + f" | {ratio_cell(vals)} |")
+    overall = matched_ratio(records)
     out.append("| | **Total (measured)** | "
-               + " | ".join(f"**{sums[t]}**" for t in TAGS) + " |")
+               + " | ".join(f"**{sums[t]}**" for t in TAGS) + f" | **{overall}** |")
     return "\n".join(out)
 
 
@@ -295,14 +324,14 @@ def tex_escape(s):
 
 
 def render_tex(records, sums):
-    ncol = 2 + len(TAGS)  # # , Example, 16 numbers
+    ncol = 2 + len(TAGS) + 1  # # , Example, 16 numbers, WhyRel/Origin ratio
 
-    group_hdr = (r"& & \multicolumn{4}{c|}{\textbf{RelRL}} "
+    group_hdr = (r"& & \multicolumn{4}{c|}{\textbf{WhyRel}} "
                  r"& \multicolumn{4}{c|}{\textbf{WhyML}} "
                  r"& \multicolumn{4}{c|}{\textbf{Boogie}} "
-                 r"& \multicolumn{4}{c}{\textbf{Origin}} \\")
+                 r"& \multicolumn{4}{c|}{\textbf{Origin}} & \\")
     col_hdr = (r"\textbf{\#} & \textbf{Example} & S & A & I & T & S & A & I & T "
-               r"& S & A & I & T & S & A & I & T \\")
+               r"& S & A & I & T & S & A & I & T & \textbf{$\frac{\text{WR}}{\text{Org}}$} \\")
 
     out = [
         "% Annotation-burden catalog for the forall-exists benchmarks.",
@@ -313,14 +342,15 @@ def render_tex(records, sums):
         r"\begingroup",
         r"\scriptsize",
         r"\setlength{\tabcolsep}{3pt}",
-        r"\begin{longtable}{rl|rrrr|rrrr|rrrr|rrrr}",
+        r"\begin{longtable}{rl|rrrr|rrrr|rrrr|rrrr|r}",
         r"\caption{Annotation burden across encodings for the $\forall\exists$ "
         r"benchmarks of Table~\ref{tab:Catalog}. For each tool: S=spec (contract, "
         r"incl.\ frame/effects clauses), "
         r"A=auxiliary predicate/lemma/axiom declarations, I=internal proof "
         r"annotations (loop invariants/variants, asserts, havoc), T=total. "
         r"Origin is the source repo's own encoding where measured "
-        r"(ForEx, PCSat, RHLE).}"
+        r"(ForEx, PCSat, RHLE). The last column is the WhyRel/Origin total ratio "
+        r"(WR\,T\,/\,Org\,T) where both are measured.}"
         r"\label{tab:burden}\\",
         # head shown on the first page
         r"\hline", group_hdr, col_hdr, r"\hline\hline",
@@ -344,10 +374,12 @@ def render_tex(records, sums):
         else:
             _, num, name, vals, _tool = rec
             cells = " & ".join(fmt(v) for v in vals)
-            out.append(f"{num} & {tex_escape(name)} & {cells} " r"\\")
+            out.append(f"{num} & {tex_escape(name)} & {cells} & {ratio_cell(vals)} " r"\\")
     out.append(r"\hline")
     totals = " & ".join(r"\textbf{%d}" % sums[t] for t in TAGS)
-    out.append(r"\multicolumn{2}{|l|}{\textbf{Total (measured)}} & " + totals + r" \\")
+    overall = matched_ratio(records)
+    out.append(r"\multicolumn{2}{|l|}{\textbf{Total (measured)}} & " + totals
+               + r" & \textbf{" + overall + r"} \\")
     out += [r"\hline", r"\end{longtable}", r"\endgroup"]
     return "\n".join(out)
 

@@ -6,101 +6,101 @@
 \begingroup
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\begin{longtable}{rl|rrrr|rrrr|rrrr|rrrr}
-\caption{Annotation burden across encodings for the $\forall\exists$ benchmarks of Table~\ref{tab:Catalog}. For each tool: S=spec (contract, incl.\ frame/effects clauses), A=auxiliary predicate/lemma/axiom declarations, I=internal proof annotations (loop invariants/variants, asserts, havoc), T=total. Origin is the source repo's own encoding where measured (ForEx, PCSat, RHLE).}\label{tab:burden}\\
+\begin{longtable}{rl|rrrr|rrrr|rrrr|rrrr|r}
+\caption{Annotation burden across encodings for the $\forall\exists$ benchmarks of Table~\ref{tab:Catalog}. For each tool: S=spec (contract, incl.\ frame/effects clauses), A=auxiliary predicate/lemma/axiom declarations, I=internal proof annotations (loop invariants/variants, asserts, havoc), T=total. Origin is the source repo's own encoding where measured (ForEx, PCSat, RHLE). The last column is the WhyRel/Origin total ratio (WR\,T\,/\,Org\,T) where both are measured.}\label{tab:burden}\\
 \hline
-& & \multicolumn{4}{c|}{\textbf{RelRL}} & \multicolumn{4}{c|}{\textbf{WhyML}} & \multicolumn{4}{c|}{\textbf{Boogie}} & \multicolumn{4}{c}{\textbf{Origin}} \\
-\textbf{\#} & \textbf{Example} & S & A & I & T & S & A & I & T & S & A & I & T & S & A & I & T \\
+& & \multicolumn{4}{c|}{\textbf{WhyRel}} & \multicolumn{4}{c|}{\textbf{WhyML}} & \multicolumn{4}{c|}{\textbf{Boogie}} & \multicolumn{4}{c|}{\textbf{Origin}} & \\
+\textbf{\#} & \textbf{Example} & S & A & I & T & S & A & I & T & S & A & I & T & S & A & I & T & \textbf{$\frac{\text{WR}}{\text{Org}}$} \\
 \hline\hline
 \endfirsthead
-\multicolumn{18}{l}{\textit{Table~\ref{tab:burden} (continued)}}\\
+\multicolumn{19}{l}{\textit{Table~\ref{tab:burden} (continued)}}\\
 \hline
-& & \multicolumn{4}{c|}{\textbf{RelRL}} & \multicolumn{4}{c|}{\textbf{WhyML}} & \multicolumn{4}{c|}{\textbf{Boogie}} & \multicolumn{4}{c}{\textbf{Origin}} \\
-\textbf{\#} & \textbf{Example} & S & A & I & T & S & A & I & T & S & A & I & T & S & A & I & T \\
+& & \multicolumn{4}{c|}{\textbf{WhyRel}} & \multicolumn{4}{c|}{\textbf{WhyML}} & \multicolumn{4}{c|}{\textbf{Boogie}} & \multicolumn{4}{c|}{\textbf{Origin}} & \\
+\textbf{\#} & \textbf{Example} & S & A & I & T & S & A & I & T & S & A & I & T & S & A & I & T & \textbf{$\frac{\text{WR}}{\text{Org}}$} \\
 \hline\hline
 \endhead
 \hline
-\multicolumn{18}{r}{\textit{continued on next page}}\\
+\multicolumn{19}{r}{\textit{continued on next page}}\\
 \endfoot
 \hline
 \endlastfoot
-\multicolumn{18}{|l|}{\textbf{ForEx/HyPa}} \\ \hline
-1 & Asynch\_Opt & 3 & 0 & 3 & 6 & 9 & 6 & 7 & 22 & 2 & 0 & 6 & 8 & 4 & 0 & 0 & 4 \\
-2 & Compiler\_Opt & 4 & 0 & 3 & 7 & 11 & 6 & 9 & 26 & 2 & 0 & 7 & 9 & 4 & 0 & 0 & 4 \\
-3 & Compiler\_Opt2 & 3 & 0 & 4 & 7 & 11 & 6 & 12 & 29 & 2 & 0 & 8 & 10 & 4 & 0 & 0 & 4 \\
-4 & Counter\_Diff & 3 & 0 & 4 & 7 & 10 & 6 & 9 & 25 & 2 & 0 & 5 & 7 & 4 & 0 & 0 & 4 \\
-5 & Non\_Det\_Add & 3 & 0 & 3 & 6 & 9 & 6 & 7 & 22 & 2 & 1 & 7 & 10 & 4 & 0 & 0 & 4 \\
-6 & P1\_GNI & 2 & 0 & 1 & 3 & 8 & 6 & 3 & 17 & 2 & 0 & 4 & 6 & 4 & 0 & 0 & 4 \\
-7 & P2\_GNI & 3 & 0 & 1 & 4 & 10 & 6 & 3 & 19 & 3 & 0 & 4 & 7 & 4 & 0 & 0 & 4 \\
-8 & P3\_GNI & 1 & 0 & 1 & 2 & 6 & 6 & 3 & 15 & 1 & 0 & 4 & 5 & 4 & 0 & 0 & 4 \\
-9 & P4\_GNI & 1 & 0 & 5 & 6 & 6 & 6 & 7 & 19 & 1 & 0 & 12 & 13 & 4 & 0 & 0 & 4 \\
-10 & Paper\_Example\_Fig3 & 3 & 0 & 2 & 5 & 11 & 6 & 10 & 27 & 2 & 0 & 7 & 9 & 4 & 0 & 0 & 4 \\
-11 & Refine & 10 & 0 & 14 & 24 & 49 & 15 & 53 & 117 & 2 & 0 & 18 & 20 & 4 & 0 & 0 & 4 \\
-12 & Refine2 & 4 & 0 & 14 & 18 & 53 & 15 & 47 & 115 & 2 & 0 & 16 & 18 & 4 & 0 & 0 & 4 \\
-13 & Smaller & 3 & 0 & 3 & 6 & 10 & 6 & 8 & 24 & 2 & 0 & 6 & 8 & 4 & 0 & 0 & 4 \\
-\multicolumn{18}{|l|}{\textbf{ForEx/K\_Safety}} \\ \hline
-14 & Coll\_Item\_Sym & 2 & 0 & 0 & 2 & 26 & 6 & 1 & 33 & 2 & 0 & 0 & 2 & 4 & 0 & 0 & 4 \\
-15 & Counter\_Det & 4 & 0 & 2 & 6 & 23 & 6 & 5 & 34 & 3 & 0 & 2 & 5 & 4 & 0 & 0 & 4 \\
-16 & Double\_Square\_NI & 4 & 0 & 2 & 6 & 27 & 6 & 7 & 40 & 3 & 0 & 2 & 5 & 4 & 0 & 2 & 6 \\
-17 & Fig\_2 & 4 & 0 & 2 & 6 & 25 & 6 & 7 & 38 & 3 & 0 & 2 & 5 & 4 & 0 & 1 & 5 \\
-\multicolumn{18}{|l|}{\textbf{PCSat}} \\ \hline
-18 & Paper\_GNI\_Example & 4 & 0 & 11 & 15 & 6 & 6 & 39 & 51 & 3 & 1 & 30 & 34 & - & - & - & - \\
-19 & Ti\_GNI\_HFF & 2 & 0 & 3 & 5 & 9 & 6 & 8 & 23 & 2 & 0 & 10 & 12 & 3 & 4 & 1 & 8 \\
-20 & Ti\_GNI\_HFT & 2 & 0 & 2 & 4 & 9 & 6 & 5 & 20 & 2 & 0 & 6 & 8 & 3 & 4 & 1 & 8 \\
-21 & Ti\_GNI\_HTT & 2 & 0 & 1 & 3 & 8 & 6 & 3 & 17 & 2 & 0 & 4 & 6 & 3 & 4 & 1 & 8 \\
-22 & Ts\_GNI\_HFF & 2 & 0 & 3 & 5 & 9 & 6 & 8 & 23 & 2 & 0 & 10 & 12 & 4 & 4 & 1 & 9 \\
-23 & Ts\_GNI\_HFT & 2 & 0 & 2 & 4 & 9 & 6 & 8 & 23 & 3 & 0 & 6 & 9 & 4 & 4 & 2 & 10 \\
-24 & Ts\_GNI\_HTT & 2 & 0 & 1 & 3 & 9 & 6 & 7 & 22 & 3 & 0 & 4 & 7 & 4 & 4 & 2 & 10 \\
-\multicolumn{18}{|l|}{\textbf{RHLE/API\_Refinement}} \\ \hline
-25 & Add3\_Shuffled & 3 & 4 & 1 & 8 & 10 & 10 & 6 & 26 & 3 & 4 & 7 & 14 & 7 & 0 & 1 & 8 \\
-26 & Add3\_Sorted & 9 & 8 & 3 & 20 & 10 & 10 & 7 & 27 & 3 & 5 & 6 & 14 & 7 & 0 & 1 & 8 \\
-27 & Conditional\_Nonrefinement & 2 & 0 & 1 & 3 & 6 & 6 & 4 & 16 & 2 & 1 & 5 & 8 & 8 & 0 & 1 & 9 \\
-28 & Conditional\_Refinement & 2 & 0 & 1 & 3 & 6 & 6 & 4 & 16 & 2 & 1 & 5 & 8 & 8 & 0 & 1 & 9 \\
-29 & Loop\_Nonrefinement & 2 & 0 & 2 & 4 & 7 & 6 & 7 & 20 & 2 & 0 & 7 & 9 & 6 & 0 & 3 & 9 \\
-30 & Loop\_Refinement & 2 & 0 & 2 & 4 & 7 & 6 & 7 & 20 & 2 & 0 & 7 & 9 & 7 & 0 & 5 & 12 \\
-31 & Loop\_Refinement2 & 2 & 0 & 2 & 4 & 7 & 6 & 7 & 20 & 2 & 0 & 7 & 9 & 7 & 0 & 5 & 12 \\
-32 & Perm\_Inv\_Refinement & 2 & 5 & 1 & 8 & 8 & 12 & 6 & 26 & 3 & 5 & 7 & 15 & 8 & 0 & 1 & 9 \\
-33 & Simple\_Refinement & 2 & 0 & 1 & 3 & 6 & 6 & 4 & 16 & 2 & 0 & 6 & 8 & 7 & 0 & 1 & 8 \\
-34 & Simple\_Nonrefinement & 2 & 0 & 1 & 3 & 6 & 6 & 4 & 16 & 2 & 0 & 6 & 8 & 7 & 0 & 1 & 8 \\
-\multicolumn{18}{|l|}{\textbf{RHLE/Delimited\_Release}} \\ \hline
-35 & Parity & 5 & 0 & 0 & 5 & 18 & 6 & 1 & 25 & 4 & 0 & 0 & 4 & 4 & 0 & 0 & 4 \\
-36 & Parity2 & 5 & 0 & 0 & 5 & 18 & 6 & 1 & 25 & 4 & 0 & 0 & 4 & 4 & 0 & 0 & 4 \\
-37 & Parity\_Fun & 5 & 0 & 1 & 6 & 18 & 6 & 4 & 28 & 4 & 0 & 6 & 10 & 8 & 0 & 0 & 8 \\
-38 & Parity\_No\_Dr & 4 & 0 & 0 & 4 & 16 & 6 & 1 & 23 & 3 & 0 & 0 & 3 & 4 & 0 & 0 & 4 \\
-39 & Wallet & 6 & 0 & 0 & 6 & 22 & 6 & 1 & 29 & 4 & 0 & 0 & 4 & 4 & 0 & 0 & 4 \\
-40 & Wallet\_No\_Dr & 5 & 0 & 0 & 5 & 20 & 6 & 1 & 27 & 3 & 0 & 0 & 3 & 4 & 0 & 0 & 4 \\
-\multicolumn{18}{|l|}{\textbf{RHLE/GNI}} \\ \hline
-41 & Denning1 & 4 & 0 & 3 & 7 & 21 & 6 & 6 & 33 & 3 & 1 & 2 & 6 & 4 & 0 & 2 & 6 \\
-42 & Denning2 & 4 & 0 & 2 & 6 & 21 & 6 & 5 & 32 & 3 & 2 & 2 & 7 & 4 & 0 & 2 & 6 \\
-43 & Denning3 & 4 & 0 & 2 & 6 & 23 & 6 & 5 & 34 & 4 & 0 & 2 & 6 & 4 & 0 & 2 & 6 \\
-44 & Model\_Leak & 5 & 0 & 1 & 6 & 17 & 6 & 4 & 27 & 3 & 0 & 5 & 8 & 8 & 0 & 1 & 9 \\
-45 & Nondet\_Leak2 & 4 & 0 & 1 & 5 & 16 & 6 & 4 & 26 & 3 & 0 & 5 & 8 & 8 & 0 & 1 & 9 \\
-46 & Nondet\_Nonleak & 5 & 0 & 1 & 6 & 17 & 6 & 4 & 27 & 3 & 0 & 5 & 8 & 8 & 0 & 1 & 9 \\
-47 & Nondet\_Nonleak2 & 4 & 0 & 1 & 5 & 16 & 6 & 4 & 26 & 3 & 0 & 5 & 8 & 8 & 0 & 1 & 9 \\
-48 & Simple\_Leak & 5 & 0 & 0 & 5 & 17 & 6 & 1 & 24 & 3 & 0 & 0 & 3 & 4 & 0 & 0 & 4 \\
-49 & Simple\_Nonleak & 5 & 0 & 0 & 5 & 17 & 6 & 1 & 24 & 3 & 0 & 0 & 3 & 4 & 0 & 0 & 4 \\
-50 & Smith1 & 1 & 0 & 0 & 1 & 6 & 6 & 1 & 13 & 1 & 0 & 0 & 1 & 3 & 0 & 0 & 3 \\
-\multicolumn{18}{|l|}{\textbf{RHLE/Param\_Usage}} \\ \hline
-51 & Det\_Unused & 3 & 0 & 0 & 3 & 12 & 6 & 1 & 19 & 2 & 0 & 0 & 2 & 4 & 0 & 0 & 4 \\
-52 & Even\_Odd & 3 & 0 & 0 & 3 & 12 & 6 & 1 & 19 & 2 & 0 & 0 & 2 & 4 & 0 & 0 & 4 \\
-\multicolumn{18}{|l|}{\textbf{WhyRel}} \\ \hline
-53 & tabulate & 37 & 2 & 26 & 65 & 225 & 26 & 76 & 327 & - & - & - & - & - & - & - & - \\
-54 & sumpub & 10 & 6 & 14 & 30 & 75 & 34 & 47 & 156 & - & - & - & - & - & - & - & - \\
-55 & stack & 88 & 3 & 48 & 139 & 679 & 67 & 206 & 952 & - & - & - & - & - & - & - & - \\
-56 & tiling & 14 & 3 & 33 & 50 & 96 & 29 & 76 & 201 & - & - & - & - & - & - & - & - \\
-\multicolumn{18}{|l|}{\textbf{Veracity}} \\ \hline
-57 & Fizzbuzz & 27 & 0 & 87 & 114 & 87 & 6 & 138 & 231 & 22 & 5 & 53 & 80 & - & - & - & - \\
-58 & Simple\_IO & 20 & 0 & 56 & 76 & 68 & 6 & 77 & 151 & 25 & 0 & 58 & 83 & - & - & - & - \\
-59 & Simple\_Vector & 36 & 0 & 46 & 82 & 123 & 15 & 103 & 241 & 3 & 0 & 34 & 37 & - & - & - & - \\
-\multicolumn{18}{|l|}{\textbf{Additional}} \\ \hline
-60 & Itzhaky\_Example & 5 & 0 & 13 & 18 & 51 & 15 & 40 & 106 & 2 & 1 & 21 & 24 & - & - & - & - \\
-61 & Conditional\_Loop & 4 & 0 & 6 & 10 & 7 & 6 & 14 & 27 & 4 & 0 & 18 & 22 & - & - & - & - \\
-62 & Havoc\_Test & 5 & 0 & 5 & 10 & 6 & 6 & 13 & 25 & - & - & - & - & - & - & - & - \\
-63 & CCR\_fig\_1 & 71 & 3 & 1 & 75 & 323 & 26 & 16 & 365 & 21 & 0 & 5 & 26 & - & - & - & - \\
-64 & hiccupSum & 2 & 0 & 4 & 6 & 9 & 6 & 14 & 29 & 4 & 1 & 26 & 31 & - & - & - & - \\
-65 & lowError & 7 & 0 & 0 & 7 & 13 & 6 & 1 & 20 & 12 & 0 & 0 & 12 & 3 & 0 & 0 & 3 \\
+\multicolumn{19}{|l|}{\textbf{ForEx/HyPa}} \\ \hline
+1 & Asynch\_Opt & 3 & 0 & 3 & 6 & 9 & 6 & 7 & 22 & 2 & 0 & 6 & 8 & 4 & 0 & 0 & 4 & 1.50 \\
+2 & Compiler\_Opt & 4 & 0 & 3 & 7 & 11 & 6 & 9 & 26 & 2 & 0 & 7 & 9 & 4 & 0 & 0 & 4 & 1.75 \\
+3 & Compiler\_Opt2 & 3 & 0 & 4 & 7 & 11 & 6 & 12 & 29 & 2 & 0 & 8 & 10 & 4 & 0 & 0 & 4 & 1.75 \\
+4 & Counter\_Diff & 3 & 0 & 4 & 7 & 10 & 6 & 9 & 25 & 2 & 0 & 5 & 7 & 4 & 0 & 0 & 4 & 1.75 \\
+5 & Non\_Det\_Add & 3 & 0 & 3 & 6 & 9 & 6 & 7 & 22 & 2 & 1 & 7 & 10 & 4 & 0 & 0 & 4 & 1.50 \\
+6 & P1\_GNI & 2 & 0 & 1 & 3 & 8 & 6 & 3 & 17 & 2 & 0 & 4 & 6 & 4 & 0 & 0 & 4 & 0.75 \\
+7 & P2\_GNI & 3 & 0 & 1 & 4 & 10 & 6 & 3 & 19 & 3 & 0 & 4 & 7 & 4 & 0 & 0 & 4 & 1.00 \\
+8 & P3\_GNI & 1 & 0 & 1 & 2 & 6 & 6 & 3 & 15 & 1 & 0 & 4 & 5 & 4 & 0 & 0 & 4 & 0.50 \\
+9 & P4\_GNI & 1 & 0 & 5 & 6 & 6 & 6 & 7 & 19 & 1 & 0 & 12 & 13 & 4 & 0 & 0 & 4 & 1.50 \\
+10 & Paper\_Example\_Fig3 & 3 & 0 & 2 & 5 & 11 & 6 & 10 & 27 & 2 & 0 & 7 & 9 & 4 & 0 & 0 & 4 & 1.25 \\
+11 & Refine & 10 & 0 & 14 & 24 & 49 & 15 & 53 & 117 & 2 & 0 & 18 & 20 & 4 & 0 & 0 & 4 & 6.00 \\
+12 & Refine2 & 4 & 0 & 14 & 18 & 53 & 15 & 47 & 115 & 2 & 0 & 16 & 18 & 4 & 0 & 0 & 4 & 4.50 \\
+13 & Smaller & 3 & 0 & 3 & 6 & 10 & 6 & 8 & 24 & 2 & 0 & 6 & 8 & 4 & 0 & 0 & 4 & 1.50 \\
+\multicolumn{19}{|l|}{\textbf{ForEx/K\_Safety}} \\ \hline
+14 & Coll\_Item\_Sym & 2 & 0 & 0 & 2 & 26 & 6 & 1 & 33 & 2 & 0 & 0 & 2 & 4 & 0 & 0 & 4 & 0.50 \\
+15 & Counter\_Det & 4 & 0 & 2 & 6 & 23 & 6 & 5 & 34 & 3 & 0 & 2 & 5 & 4 & 0 & 0 & 4 & 1.50 \\
+16 & Double\_Square\_NI & 4 & 0 & 2 & 6 & 27 & 6 & 7 & 40 & 3 & 0 & 2 & 5 & 4 & 0 & 2 & 6 & 1.00 \\
+17 & Fig\_2 & 4 & 0 & 2 & 6 & 25 & 6 & 7 & 38 & 3 & 0 & 2 & 5 & 4 & 0 & 1 & 5 & 1.20 \\
+\multicolumn{19}{|l|}{\textbf{PCSat}} \\ \hline
+18 & Paper\_GNI\_Example & 4 & 0 & 11 & 15 & 6 & 6 & 39 & 51 & 3 & 1 & 30 & 34 & - & - & - & - & - \\
+19 & Ti\_GNI\_HFF & 2 & 0 & 3 & 5 & 9 & 6 & 8 & 23 & 2 & 0 & 10 & 12 & 3 & 4 & 1 & 8 & 0.62 \\
+20 & Ti\_GNI\_HFT & 2 & 0 & 2 & 4 & 9 & 6 & 5 & 20 & 2 & 0 & 6 & 8 & 3 & 4 & 1 & 8 & 0.50 \\
+21 & Ti\_GNI\_HTT & 2 & 0 & 1 & 3 & 8 & 6 & 3 & 17 & 2 & 0 & 4 & 6 & 3 & 4 & 1 & 8 & 0.38 \\
+22 & Ts\_GNI\_HFF & 2 & 0 & 3 & 5 & 9 & 6 & 8 & 23 & 2 & 0 & 10 & 12 & 4 & 4 & 1 & 9 & 0.56 \\
+23 & Ts\_GNI\_HFT & 2 & 0 & 2 & 4 & 9 & 6 & 8 & 23 & 3 & 0 & 6 & 9 & 4 & 4 & 2 & 10 & 0.40 \\
+24 & Ts\_GNI\_HTT & 2 & 0 & 1 & 3 & 9 & 6 & 7 & 22 & 3 & 0 & 4 & 7 & 4 & 4 & 2 & 10 & 0.30 \\
+\multicolumn{19}{|l|}{\textbf{RHLE/API\_Refinement}} \\ \hline
+25 & Add3\_Shuffled & 3 & 4 & 1 & 8 & 10 & 10 & 6 & 26 & 3 & 4 & 7 & 14 & 7 & 0 & 1 & 8 & 1.00 \\
+26 & Add3\_Sorted & 9 & 8 & 3 & 20 & 10 & 10 & 7 & 27 & 3 & 5 & 6 & 14 & 7 & 0 & 1 & 8 & 2.50 \\
+27 & Conditional\_Nonrefinement & 2 & 0 & 1 & 3 & 6 & 6 & 4 & 16 & 2 & 1 & 5 & 8 & 8 & 0 & 1 & 9 & 0.33 \\
+28 & Conditional\_Refinement & 2 & 0 & 1 & 3 & 6 & 6 & 4 & 16 & 2 & 1 & 5 & 8 & 8 & 0 & 1 & 9 & 0.33 \\
+29 & Loop\_Nonrefinement & 2 & 0 & 2 & 4 & 7 & 6 & 7 & 20 & 2 & 0 & 7 & 9 & 6 & 0 & 3 & 9 & 0.44 \\
+30 & Loop\_Refinement & 2 & 0 & 2 & 4 & 7 & 6 & 7 & 20 & 2 & 0 & 7 & 9 & 7 & 0 & 5 & 12 & 0.33 \\
+31 & Loop\_Refinement2 & 2 & 0 & 2 & 4 & 7 & 6 & 7 & 20 & 2 & 0 & 7 & 9 & 7 & 0 & 5 & 12 & 0.33 \\
+32 & Perm\_Inv\_Refinement & 2 & 5 & 1 & 8 & 8 & 12 & 6 & 26 & 3 & 5 & 7 & 15 & 8 & 0 & 1 & 9 & 0.89 \\
+33 & Simple\_Refinement & 2 & 0 & 1 & 3 & 6 & 6 & 4 & 16 & 2 & 0 & 6 & 8 & 7 & 0 & 1 & 8 & 0.38 \\
+34 & Simple\_Nonrefinement & 2 & 0 & 1 & 3 & 6 & 6 & 4 & 16 & 2 & 0 & 6 & 8 & 7 & 0 & 1 & 8 & 0.38 \\
+\multicolumn{19}{|l|}{\textbf{RHLE/Delimited\_Release}} \\ \hline
+35 & Parity & 5 & 0 & 0 & 5 & 18 & 6 & 1 & 25 & 4 & 0 & 0 & 4 & 4 & 0 & 0 & 4 & 1.25 \\
+36 & Parity2 & 5 & 0 & 0 & 5 & 18 & 6 & 1 & 25 & 4 & 0 & 0 & 4 & 4 & 0 & 0 & 4 & 1.25 \\
+37 & Parity\_Fun & 5 & 0 & 1 & 6 & 18 & 6 & 4 & 28 & 4 & 0 & 6 & 10 & 8 & 0 & 0 & 8 & 0.75 \\
+38 & Parity\_No\_Dr & 4 & 0 & 0 & 4 & 16 & 6 & 1 & 23 & 3 & 0 & 0 & 3 & 4 & 0 & 0 & 4 & 1.00 \\
+39 & Wallet & 6 & 0 & 0 & 6 & 22 & 6 & 1 & 29 & 4 & 0 & 0 & 4 & 4 & 0 & 0 & 4 & 1.50 \\
+40 & Wallet\_No\_Dr & 5 & 0 & 0 & 5 & 20 & 6 & 1 & 27 & 3 & 0 & 0 & 3 & 4 & 0 & 0 & 4 & 1.25 \\
+\multicolumn{19}{|l|}{\textbf{RHLE/GNI}} \\ \hline
+41 & Denning1 & 4 & 0 & 3 & 7 & 21 & 6 & 6 & 33 & 3 & 1 & 2 & 6 & 4 & 0 & 2 & 6 & 1.17 \\
+42 & Denning2 & 4 & 0 & 2 & 6 & 21 & 6 & 5 & 32 & 3 & 2 & 2 & 7 & 4 & 0 & 2 & 6 & 1.00 \\
+43 & Denning3 & 4 & 0 & 2 & 6 & 23 & 6 & 5 & 34 & 4 & 0 & 2 & 6 & 4 & 0 & 2 & 6 & 1.00 \\
+44 & Model\_Leak & 5 & 0 & 1 & 6 & 17 & 6 & 4 & 27 & 3 & 0 & 5 & 8 & 8 & 0 & 1 & 9 & 0.67 \\
+45 & Nondet\_Leak2 & 4 & 0 & 1 & 5 & 16 & 6 & 4 & 26 & 3 & 0 & 5 & 8 & 8 & 0 & 1 & 9 & 0.56 \\
+46 & Nondet\_Nonleak & 5 & 0 & 1 & 6 & 17 & 6 & 4 & 27 & 3 & 0 & 5 & 8 & 8 & 0 & 1 & 9 & 0.67 \\
+47 & Nondet\_Nonleak2 & 4 & 0 & 1 & 5 & 16 & 6 & 4 & 26 & 3 & 0 & 5 & 8 & 8 & 0 & 1 & 9 & 0.56 \\
+48 & Simple\_Leak & 5 & 0 & 0 & 5 & 17 & 6 & 1 & 24 & 3 & 0 & 0 & 3 & 4 & 0 & 0 & 4 & 1.25 \\
+49 & Simple\_Nonleak & 5 & 0 & 0 & 5 & 17 & 6 & 1 & 24 & 3 & 0 & 0 & 3 & 4 & 0 & 0 & 4 & 1.25 \\
+50 & Smith1 & 1 & 0 & 0 & 1 & 6 & 6 & 1 & 13 & 1 & 0 & 0 & 1 & 3 & 0 & 0 & 3 & 0.33 \\
+\multicolumn{19}{|l|}{\textbf{RHLE/Param\_Usage}} \\ \hline
+51 & Det\_Unused & 3 & 0 & 0 & 3 & 12 & 6 & 1 & 19 & 2 & 0 & 0 & 2 & 4 & 0 & 0 & 4 & 0.75 \\
+52 & Even\_Odd & 3 & 0 & 0 & 3 & 12 & 6 & 1 & 19 & 2 & 0 & 0 & 2 & 4 & 0 & 0 & 4 & 0.75 \\
+\multicolumn{19}{|l|}{\textbf{WhyRel}} \\ \hline
+53 & tabulate & 37 & 2 & 26 & 65 & 225 & 26 & 76 & 327 & - & - & - & - & - & - & - & - & - \\
+54 & sumpub & 10 & 6 & 14 & 30 & 75 & 34 & 47 & 156 & - & - & - & - & - & - & - & - & - \\
+55 & stack & 88 & 3 & 48 & 139 & 679 & 67 & 206 & 952 & - & - & - & - & - & - & - & - & - \\
+56 & tiling & 14 & 3 & 33 & 50 & 96 & 29 & 76 & 201 & - & - & - & - & - & - & - & - & - \\
+\multicolumn{19}{|l|}{\textbf{Veracity}} \\ \hline
+57 & Fizzbuzz & 27 & 0 & 87 & 114 & 87 & 6 & 138 & 231 & 22 & 5 & 53 & 80 & - & - & - & - & - \\
+58 & Simple\_IO & 20 & 0 & 56 & 76 & 68 & 6 & 77 & 151 & 25 & 0 & 58 & 83 & - & - & - & - & - \\
+59 & Simple\_Vector & 36 & 0 & 46 & 82 & 123 & 15 & 103 & 241 & 3 & 0 & 34 & 37 & - & - & - & - & - \\
+\multicolumn{19}{|l|}{\textbf{Additional}} \\ \hline
+60 & Itzhaky\_Example & 5 & 0 & 13 & 18 & 51 & 15 & 40 & 106 & 2 & 1 & 21 & 24 & - & - & - & - & - \\
+61 & Conditional\_Loop & 4 & 0 & 6 & 10 & 7 & 6 & 14 & 27 & 4 & 0 & 18 & 22 & - & - & - & - & - \\
+62 & Havoc\_Test & 5 & 0 & 5 & 10 & 6 & 6 & 13 & 25 & - & - & - & - & - & - & - & - & - \\
+63 & CCR\_fig\_1 & 71 & 3 & 1 & 75 & 323 & 26 & 16 & 365 & 21 & 0 & 5 & 26 & - & - & - & - & - \\
+64 & hiccupSum & 2 & 0 & 4 & 6 & 9 & 6 & 14 & 29 & 4 & 1 & 26 & 31 & - & - & - & - & - \\
+65 & lowError & 7 & 0 & 0 & 7 & 13 & 6 & 1 & 20 & 12 & 0 & 0 & 12 & 3 & 0 & 0 & 3 & 2.33 \\
 \hline
-\multicolumn{2}{|l|}{\textbf{Total (measured)}} & \textbf{504} & \textbf{34} & \textbf{453} & \textbf{991} & \textbf{2505} & \textbf{592} & \textbf{1199} & \textbf{4296} & \textbf{224} & \textbf{28} & \textbf{490} & \textbf{742} & \textbf{255} & \textbf{24} & \textbf{41} & \textbf{320} \\
+\multicolumn{2}{|l|}{\textbf{Total (measured)}} & \textbf{504} & \textbf{34} & \textbf{453} & \textbf{991} & \textbf{2505} & \textbf{592} & \textbf{1199} & \textbf{4296} & \textbf{224} & \textbf{28} & \textbf{490} & \textbf{742} & \textbf{255} & \textbf{24} & \textbf{41} & \textbf{320} & \textbf{0.94} \\
 \hline
 \end{longtable}
 \endgroup
