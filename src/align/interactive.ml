@@ -481,7 +481,7 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file
        | Error e, _ -> Error e
        | _, Error e -> Error e)
   in
-  (* Parse, type-check in the loop's local scope, and add an MCP-supplied
+  (* Parse, type-check in the loop's local scope, and add an user-supplied
      relational invariant at loop focus [p]. *)
   let add_invariant p src =
     match loop_tenv p with
@@ -599,7 +599,7 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file
         "  POST /rewrite?rule=R&path=P   apply rule R at focus P (path optional)";
         "  POST /rewrite?rule=weave_while&guard_left=L&guard_right=R&path=P";
         "                                weave a loop with custom guards L|R";
-        "  POST /rewrite?rule=add_invariant&formula=R&path=P   add a (caller/MCP-)";
+        "  POST /rewrite?rule=add_invariant&formula=R&path=P   add a (caller)";
         "                                supplied relational invariant R, type-checked";
         "                                in the loop's local scope";
         "  POST /undo                    revert the last change";
@@ -621,10 +621,24 @@ let run penv ctbl program_files lmod lmeth rmod rmeth output_file
         "" ]
   in
 
+  (* Endpoints that mutate server state (the alignment, the exported file,
+     or a verification process). These require POST: a browser prefetch,
+     a link preview, or a stray GET must never rewrite the biprogram or
+     start/kill a prover run. Read-only endpoints stay GET-able. *)
+  let is_mutating = function
+    | "/rewrite" | "/undo" | "/redo" | "/auto" | "/reset" | "/export"
+    | "/verify" | "/verify/abort" -> true
+    | _ -> false
+  in
+
   let handler ~meth ~path ~query =
-    ignore meth;
     let params = Http_server.query_params query in
     let get k = List.assoc_opt k params in
+    if is_mutating path && meth <> "POST" then
+      (405, text,
+       Printf.sprintf
+         "%s changes server state and requires POST (got %s)\n" path meth)
+    else
     match path with
     | "/" | "/help"  -> (200, text, help)
     | "/ui" ->

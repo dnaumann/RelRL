@@ -107,8 +107,10 @@ let parse_request raw : string * string * string =
   (meth, path, query)
 
 let reason_phrase : int -> string = function
-  | 200 -> "OK"        | 400 -> "Bad Request"
-  | 404 -> "Not Found" | 409 -> "Conflict"
+  | 200 -> "OK"        | 202 -> "Accepted"
+  | 400 -> "Bad Request"
+  | 404 -> "Not Found" | 405 -> "Method Not Allowed"
+  | 409 -> "Conflict"
   | 500 -> "Internal Server Error" | _ -> "OK"
 
 let http_response status content_type body : string =

@@ -478,7 +478,7 @@ re-add things:
   *canonical* `Pretty.pp_bicommand` output, whereas `/bicom-tree`'s `alines`
   rebuilds `While`/`Var`/`if` headers itself for the per-line path mapping — so
   the two are content-equivalent but not byte-identical. `/bicom` is retained as
-  the exact pretty-printer text for scripts/MCP.
+  the exact pretty-printer text for scripts.
 - **`Rewrites.guard_candidates` was deleted** as dead code; the live candidate
   generator is `coupling_candidates` (used by `/invariants`).
 

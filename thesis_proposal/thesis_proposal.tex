@@ -1,0 +1,349 @@
+%% Thesis / Research Proposal
+%% Build:  latexmk -pdf thesis_proposal.tex
+%%   (or)  pdflatex -> bibtex -> pdflatex x2
+
+\documentclass[12pt,letterpaper]{article}
+
+%% ---------------------------------------------------------------------
+%% Page geometry & spacing
+%% ---------------------------------------------------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+%% ---------------------------------------------------------------------
+%% Fonts & micro-typography
+%% ---------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+%% ---------------------------------------------------------------------
+%% Math & logic
+%% ---------------------------------------------------------------------
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathpartir}
+
+%% ---------------------------------------------------------------------
+%% Code listings
+%% ---------------------------------------------------------------------
+\usepackage{listings}
+\lstdefinestyle{whyrel}{
+  basicstyle=\small\ttfamily,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{gray!40},
+}
+\lstset{style=whyrel}
+
+%% ---------------------------------------------------------------------
+%% Tables, figures, references
+%% ---------------------------------------------------------------------
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[hidelinks,
+            colorlinks=true,
+            linkcolor=blue!60!black,
+            citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+\setcitestyle{authoryear}
+%% ---------------------------------------------------------------------
+%% Section formatting
+%% ---------------------------------------------------------------------
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.5em}{}
+
+%% ---------------------------------------------------------------------
+%% Title page helpers
+%% ---------------------------------------------------------------------
+\newcommand{\proposaltitle}{An Interactive Alignment Workflow for
+  2-Safety and 2-Liveness Verification}
+\newcommand{\proposalauthor}{Jude Kanjamala}
+\newcommand{\proposaldate}{June 2026}
+
+%% ---------------------------------------------------------------------
+
+\begin{document}
+
+%% =====================================================================
+%% Title page
+%% =====================================================================
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+
+  {\LARGE\bfseries Research Proposal\par}
+  \vspace{1.5cm}
+
+  {\large\bfseries \proposaltitle \par}
+  \vspace{1.5cm}
+
+  {\large \proposalauthor \par}
+  \vspace{0.5cm}
+
+  {\normalsize Department of Computer Science \par}
+  \vspace{2cm}
+
+  % {\normalsize Submitted in partial fulfillment of the requirements\\
+  %  for the degree of Master of Science in Computer Science \par}
+  % \vspace{2cm}
+
+  {\normalsize \proposaldate \par}
+\end{titlepage}
+
+%% =====================================================================
+%% Abstract
+%% =====================================================================
+\begin{abstract}
+\noindent
+  % TODO. Sketch:
+  %  - context: WhyRel, relational region logic, biprograms over Why3
+  %  - problem: prelude/stdlib leaned on cardinality + fmap axioms and
+  %    on ITP sessions bound to a pinned prover, hurting SMT robustness
+  %  - contribution 1: SMT-first re-encoding (raw map.Map + explicit Fset
+  %    domains; in-source `by` proof seeds replacing ITP sessions)
+  %  - contribution 2: an interactive alignment workflow with push-button
+  %    verification of the aligned biprogram
+  %  - results: per-solver robustness and latency gains; ablation
+  %    separating the encoding from the proof seeds
+  This proposal is under preparation.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+%% =====================================================================
+\section{Introduction and Motivation}
+\label{sec:intro}
+%% =====================================================================
+
+
+There has been several works focused on automated alignment of programs.
+\cite{naumann_isola_2020} related section gives more details on
+the development of the field.
+
+\cite{misu_2024_fse} Our main aim is to evaluate how well LLMs can synthesize
+correct Dafny code, including the formal specifications and validation
+conditions so that the code passes the Dafny verifier: as part of that effort,
+we are also interested in how the additional logical rigor required by
+verification enhances or degrades generation performance. 
+- We conduct the first empirical study of LLMs synthesizing verifiable Dafny methods.
+- We demonstrate that a prompt following the principles of Chain of Thought (CoT) [Wei
+et al. 2022] with retrieval augmentation generated [Lewis et al. 2020] semantically similar few shot examples explaining a problem decomposition step-by-step, can synthesize
+verified and correct Dafny methods with meaningful specifications for 58\% of problems
+in our test dataset.
+Using 178 problems from the MBPP dataset, we prompt two contemporary models
+(GPT-4 and PaLM-2) to synthesize Dafny methods including annotations. We use
+three different types of prompts: a direct Contextless prompt; a Signature
+prompt that includes a method signature and test cases, and a Chain of Thought
+(CoT) prompt that decomposes the problem into steps and includes retrieval
+augmentation generated example problems and solutions. Our results show that
+GPT-4 performs better than PaLM-2 on these tasks, and that both models perform
+best with the retrieval augmentation generated CoT prompt. GPT-4 was able to
+generate verified, human-evaluated, Dafny methods for 58\% of the problems,
+however GPT-4 managed only 19\% of the problems with the Contextless prompt, and
+even fewer (10\%) for the Signature prompt. 
+
+- We release the dataset MBPP-DFY-153, a collection of 153 programming problems
+with specifications, solutions and tests in/for Dafny, based on the MBPP (Mostly Basic
+Python Programming) dataset curated by Google Research [Austin et al. 2021].
+50 that we wrote manually and 103 synthesized by GPT-4. 
+
+Given that we were already using LLMs to find solutions, we were also able to
+employ the same LLMs to find prompts, a technique known as prompt chaining [Wei
+et al. 2022] or model cascading [Dohan et al. 2022]. For each new problem, in a
+first phase we prompt the LLM to generate method specifications (signature and
+postconditions). Then in a second phase, we used the results of the first phase
+to prompt for Dafny method implementations. The inclusion of
+semantically-similar context in prompts is known as Retrieval Augmented
+Generation (RAG) [Lewis et al. 2020]. Figure 3 demonstrates the resulting
+high-level architecture of our RAG pipeline for prompt chaining.
+
+in the first phase we prompt the LLM to generate the method specifications
+---signature and postconditions. To teach LLM how to generate such specifications,
+we provide three examples of problem descriptions, method signatures, and
+postconditions, taken from our MBPP-DFY-50 dataset. We select these examples
+based on the semantic similarity of the problem descriptions. Figure 4 (top)
+shows an example of a first phase specification prompt. In the second phase, we
+search for semantically similar Dafny methods in our MBPP-DFY-50 dataset,
+incorporating the LLM's first phase response. We use the OpenAI embedding API to
+compute semantic similarity based on cosine distance. For the specification
+generated in the first phase, we select the top five Dafny similar examples from
+our MBPP-DFY-50 dataset. We use five examples so that the whole prompt fits
+inside the LLMs' context length. With these examples, we then prepare a CoT
+prompt that first instructs the LLM to synthesize the specifications according
+the problem decomposition steps, and then synthesize a Dafny method that
+satisfies these specifications
+
+we use verify@k metric (similar to pass@k), where k sample methods are synthesized
+per problem; a problem is considered to be verified if any attempt verifies. s. In order to assess the semantic correctness of the generated verification
+code, we manually reviewed all verified methods. We also manually inspected all the generated
+methods that failed to verify, to identify what types of errors prevented verification.
+
+Variation by temperature. We chose a random sample of 50 problems from our test dataset MBPP-san-DFY of
+178 problems employing the sampling procedures with 90% confidence interval and 10% margin of
+error. Next, for each type of prompt, we executed these 50 problems at four
+different temperatures $T$ $\in$ {0.0, 0.25, 0.5, 0.75} in both GPT-4 and PaLM-2
+
+parse errors and type errors decreased with RAG.
+
+Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia, Ed H. Chi, Quoc V. Le, and Denny Zhou.
+2022. Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. In Advances in Neural Information
+Processing Systems 35: Annual Conference on Neural Information Processing Systems 2022, NeurIPS 2022, New Orleans, LA,
+USA, November 28 - December 9, 2022, Sanmi Koyejo, S. Mohamed, A. Agarwal, Danielle Belgrave, K. Cho, and A. Oh
+(Eds.). \url{http://papers.nips.cc/paper_files/paper/2022/hash/9d5609613524ecf4f15af0f7b31abca4-Abstract-Conference.html}
+
+David Dohan, Winnie Xu, Aitor Lewkowycz, Jacob Austin, David Bieber, Raphael Gontijo Lopes, Yuhuai Wu, Henryk
+Michalewski, Rif A. Saurous, Jascha Sohl-Dickstein, Kevin Murphy, and Charles Sutton. 2022. Language Model Cascades.
+
+Patrick S. H. Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir
+Karpukhin, Naman Goyal, Heinrich K\"uttler, Mike Lewis, Wen-tau Yih, Tim
+Rockt\"aschel, Sebastian Riedel, and Douwe Kiela. 2020. Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks. In Advances in Neural Information
+Processing Systems 33: Annual Conference on Neural Information Processing
+Systems 2020, NeurIPS 2020, December 6-12, 2020, virtual, Hugo Larochelle,
+Marc'Aurelio Ranzato, Raia Hadsell, Maria-Florina Balcan, and Hsuan-Tien Lin
+(Eds.). \url{https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html}
+
+\cite{xu2025localsuccessdoescompose} DAFNYCOMP
+focuses on programs composed of multiple interacting functions with necessary data dependencies,
+requiring LLMs to produce specifications that ensure correctness across component boundaries.
+
+Cite wu et all neurips 2022 autoformalization, 
+
+\cite{chenyuan_2025_oopsla}summarize common proof strategies used by Verus
+experts and is added to the prompt. AutoVerus to orchestrate these agents
+following the proof-development process of Verus experts. Human experts do not aim to write a perfect proof like the one in Figure
+1 in one attempt, neither does AutoVerus.
+
+\cite{sun_2024_saiv} CLover bench as a paradigm for programming and verification that is highly amenable to llm use for synthesis of program from annotation, annotation from natural language description and inbetween translations.
+
+\cite{loughridge2025dafnybench} focuses on annotation synthesis and thus more aligned with our own focus. It provides a benchmarks called Dafnybench having public scraped dafny programs along with cloverbench and dafny-synthesis benchmark. DafnyBench benchmark contains 782 ground-truth stand-alone Dafny programs that
+compile
+
+For hyperparameters, we set \texttt{max\_tokens} = 4096, which corresponds to the lowest
+max output token limit among all the evaluated models, and we set temperature =
+0.3. We gave each model up to n = 10 attempts at a given file. If it succeeded
+on an attempt before the nth , it would be early stopped. If the model failed on
+any of the intermediate attempts, it received the Dafny error message and was
+asked to fill in the annotations again with the error message taken into
+consideration. If it failed on all n attempts, it was considered to fail on that
+specific test program.
+
+innovation on the algorithmic side: out-of-the-box LLMs
+provide a floor but not a ceiling for possible performance on this benchmark. For example, fine-tuning
+or search-based inference-time algorithms might boost models' performances on this benchmark
+(Brandfonbrener et al., 2023).
+
+also look at \cite{mugnier_2025_oopsla}
+
+(actually lift the dafnybench setup for ours)
+- Reserach Questions?
+- How much does the setup improve over teh baseline prompting.
+- What is the test data (all whyrel examples) i.e benchmarks
+- Task is filling annotation and finding alignments.
+- pilot study.
+- instead of using rag with examples, have the llms access to the internet.
+- SMT solver cannot arbitrary Valid VCs and requires helping assertions.
+- Prior work have demonstrated applicability of llms towards the task of synthesising intermediate assertions.
+- Quantitative 
+  - verified / unverified for different temperatures
+- Qualitative Analysis
+  - quality of preconditions, postcondition, invariants and alignments.
+- types of failure
+- Threats to validity
+This work is the first application of llm to task of alignment selection and demonstrate the comlementary nature of llms and verifiers.
+
+- Wanted a full loop discharge (can be put in future work section)
+- for modules as well \cite{zhong_2025_LMPL}
+
+
+The remainder of this proposal is organized as follows.
+Section~\ref{sec:background} provides background on relational verification
+and the WhyRel toolchain.
+Section~\ref{sec:proposed} describes the proposed approach and research
+questions.
+Section~\ref{sec:prelim} summarizes preliminary results.
+Section~\ref{sec:related} surveys related work.
+Section~\ref{sec:plan} outlines the research plan and timeline.
+
+%% =====================================================================
+\section{Background}
+\label{sec:background}
+%% =====================================================================
+
+\subsection{Relational Region Logic and WhyRel}
+
+% TODO: expand background on RRL, biprograms, Why3 encoding.
+
+\subsection{SMT Encoding Considerations}
+\label{sec:encoding}
+
+% raw map.Map + explicit Fset domains; portfolio (alt-ergo/z3/cvc5);
+% in-source `by` extensionality and witness seeds.
+
+%% =====================================================================
+\section{Proposed Work}
+\label{sec:proposed}
+%% =====================================================================
+
+\subsection{Objectives}
+
+\begin{enumerate}
+  \item Automate alignment construction and annotation suggestion to reduce
+        manual proof effort without sacrificing verifiability.
+  \item Evaluate whether an SMT-first re-encoding of the WhyRel prelude
+        improves solver robustness and latency across a representative
+        benchmark suite.
+  \item Characterize the interaction between the re-encoding and automated
+        alignment, measuring whether the two contributions compose favorably.
+\end{enumerate}
+
+\subsection{Interactive Alignment Workflow}
+\label{sec:align}
+
+
+
+% TODO: brief description of the implementation.
+
+%% =====================================================================
+\section{Preliminary Results}
+\label{sec:prelim}
+%% =====================================================================
+
+% TODO: suite-wide before/after; tiling latency ablation (encoding vs seeds).
+
+%% =====================================================================
+\section{Related Work}
+\label{sec:related}
+%% =====================================================================
+
+While the current workflow is focused on bimethods, there has been work on
+whole-project synthesis~\cite{zhong_2025_LMPL}.
+
+%% =====================================================================
+\section{Research Plan and Timeline}
+\label{sec:plan}
+%% =====================================================================
+
+% TODO: milestones and expected completion dates.
+
+%% =====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+%% =====================================================================
+
+%% =====================================================================
+%% Bibliography
+%% =====================================================================
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}

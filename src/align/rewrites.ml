@@ -228,7 +228,7 @@ let lrc : rewrite = function
     Some (Biseq (Bisplit (Acommand Skip, rc), Bisplit (lc, Acommand Skip)))
   | _ -> None
 
-(* Named registry -- handy for an interactive / MCP "which rewrites apply
+(* Named registry -- handy for an interactive user "which rewrites apply
    here?" query (see [suggest_at]). *)
 let all_rewrites : (string * rewrite) list =
   [ "weave_vardecl", weave_vardecl;

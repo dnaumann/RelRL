@@ -13,7 +13,13 @@ order), and reports:
 
 Usage:
   whyrel_prove.py prog.mlw -L . -L ../../../stdlib [-T THEORY] [-t 60]
-                  [-P z3 -P alt-ergo -P cvc5] [--sequential] [--json out.json]
+                  [-P z3 -P alt-ergo -P cvc5] [-a TRANSF | --no-split]
+                  [--emulate-auto3] [--sequential] [--json out.json]
+
+Note: `why3 prove` is single-prover -- passing several -P flags does not
+error and does not run a portfolio, the LAST one silently wins. The
+portfolio here is therefore one why3 invocation per prover, merged by
+goal position.
 """
 
 import argparse
@@ -25,16 +31,34 @@ from concurrent.futures import ThreadPoolExecutor
 
 DEFAULT_PROVERS = ["alt-ergo", "cvc5", "z3"]
 
-# Why3's built-in Auto_level_3 strategy drives this 4-prover set with
-# escalating budgets (1s -> 5s -> 30s) and an interleaved transformation
-# pipeline (split_vc -> introduce_premises/inline_goal -> split_all_full).
-# The parallel racing and the cheap early tiers only affect *latency*, not
-# which goals close, so for a coverage-faithful batch run we drive the
-# deepest split (split_all_full) at the top timeout tier (30s) over the
-# union of the four provers.
-AUTO3_PROVERS = ["z3", "alt-ergo", "cvc4", "cvc5"]
-AUTO3_TRANSFORMS = ["split_all_full"]
-AUTO3_TIMEOUT = 30
+# A PARTIAL emulation of Why3's built-in Auto_level_3 strategy, which is:
+#
+#   start:  c Z3 1s / c AE 1s / c CVC4 1s / c CVC5 1s
+#           t split_vc start                     <- recurses to start
+#           c Z3|AE|CVC4|CVC5 5s
+#           t introduce_premises ; t inline_goal
+#           t split_all_full start               <- recurses to start
+#   trylongertime:
+#           c Z3|AE|CVC4|CVC5 30s
+#
+# We take its prover set and its deepest split at the top timeout tier.
+# What we do NOT reproduce, and why it matters:
+#   - introduce_premises / inline_goal are skipped. inline_goal unfolds
+#     definitions, so it can change what is PROVABLE, not just how fast.
+#   - split_vc is skipped (we go straight to split_all_full: a different
+#     decomposition, not a deeper one).
+#   - no recursion back to `start`, so subgoals never re-enter the pipeline.
+#   - no per-tier memory limits (the strategy sets 1000/2000/4000 MB).
+# We are more generous in exactly one way: every goal gets the full 30s,
+# not just the survivors of the cheap tiers.
+#
+# Consequence: a result here does NOT license the claim "Auto_level_3
+# leaves goal X open" -- only "split_all_full + this 4-prover union at 30s
+# leaves X open". Running the real strategy needs `why3 shell` (why3 prove
+# has no strategy flag); not implemented.
+EMULATE_AUTO3_PROVERS = ["z3", "alt-ergo", "cvc4", "cvc5"]
+EMULATE_AUTO3_TRANSFORMS = ["split_all_full"]
+EMULATE_AUTO3_TIMEOUT = 30
 
 # Two why3-prove output shapes for the location line:
 #   flat:            File "path.mlw", line 341, characters 22-42:
@@ -169,22 +193,25 @@ def main():
                     "task before proving (repeatable; default: split_vc)")
     ap.add_argument("--no-split", dest="no_split", action="store_true",
                     help="apply no transformation (overrides -a)")
-    ap.add_argument("--strategy", choices=["auto3"], default=None,
-                    help="emulate a Why3 strategy's coverage. 'auto3' = "
-                    "Auto_level_3: provers z3,alt-ergo,cvc4,cvc5 with "
-                    "split_all_full at 30s (latency-only steps omitted)")
+    ap.add_argument("--emulate-auto3", dest="emulate_auto3",
+                    action="store_true",
+                    help="approximate Why3's Auto_level_3: provers "
+                    "z3,alt-ergo,cvc4,cvc5 under split_all_full at 30s. "
+                    "NOT the real strategy -- it omits introduce_premises "
+                    "and inline_goal (which can change provability), "
+                    "split_vc, and the recursion. See the module header.")
     ap.add_argument("--sequential", action="store_true",
                     help="run provers one after another (clean timings)")
     ap.add_argument("--wall-limit", type=int, default=7200)
     ap.add_argument("--json", dest="json_out", default=None)
     args = ap.parse_args()
 
-    # Resolve provers / transforms / timeout against the optional strategy.
-    if args.strategy == "auto3":
-        provers = args.provers or AUTO3_PROVERS
-        default_transforms = AUTO3_TRANSFORMS
+    # Resolve provers / transforms / timeout against the optional emulation.
+    if args.emulate_auto3:
+        provers = args.provers or EMULATE_AUTO3_PROVERS
+        default_transforms = EMULATE_AUTO3_TRANSFORMS
         args.timeout = args.timeout if args.timeout is not None \
-            else AUTO3_TIMEOUT
+            else EMULATE_AUTO3_TIMEOUT
     else:
         provers = args.provers or DEFAULT_PROVERS
         default_transforms = ["split_vc"]
@@ -211,7 +238,7 @@ def main():
     total = len(table)
     proved = sum(1 for r in table if r["proved"])
 
-    tinfo = (f"strategy={args.strategy}" if args.strategy
+    tinfo = ("emulate-auto3 (NOT the real strategy)" if args.emulate_auto3
              else ("transforms=" + ",".join(args.transforms)
                    if args.transforms else "no-transform"))
     print(f"\n== whyrel-prove: {args.mlw}"
@@ -245,7 +272,7 @@ def main():
         with open(args.json_out, "w") as f:
             json.dump({"file": args.mlw, "theory": args.theory,
                        "timeout": args.timeout, "provers": provers,
-                       "strategy": args.strategy,
+                       "emulate_auto3": args.emulate_auto3,
                        "transforms": args.transforms,
                        "total": total, "proved": proved,
                        "goals": table}, f, indent=1)

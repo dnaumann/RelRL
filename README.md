@@ -86,6 +86,10 @@ instructions on how to install these and other supported provers.  See also `exa
 
 ## Usage
 
+This branch adds an interactive alignment workflow feature. For more details,
+see the design.tex file in src/align. The rest of this section describes normal
+use.
+
 To compile a file called `foo.rl` run
 
 ```

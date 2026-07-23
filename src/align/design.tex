@@ -31,20 +31,21 @@
 \section{About}
 % ============================================================
 
-\emph{bicommands} are product programs that pair up the execution steps of two
-unary methods, together with annotations that serve as the proof skeleton for
-relational verification. Manual construction of bicommands runs into two issues:
+\cite{banerjee-toplas-2022} provide a framework for verifying 2-safety which involves
+constructing 2-products from unary while-programs with heaps called
+\emph{bicommands} (Bicoms). This is translated to WhyML while
+respecting the underlying relational region logic and then verified using Why3. The current implementation of the
+framework, i.e. WhyRel, applies to 2-liveness verification as well by extending the language
+of biprograms. In general, Bicoms pair the execution steps of two unary methods,
+together with annotations that serve as the proof skeleton for relational
+verification. The choice of pairing determines the intermediate annotation needed to verify the specification. Thus an alignment that yields simple intermediate assertions is needed. Manual construction of alignment i.e. bicommands is tedious, error-prone, and
+time-consuming; moreover, an alignment suited to the relational
+specification often requires several iterations to discover.  
+
+This document presents \emph{Align mode}, a workflow within WhyRel that helps construct \emph{bimethods} which are bicommands over unary methods. The steps are as follows:
 
 \begin{enumerate}
-  \item it is tedious, error prone and time consuming; and
-  \item an alignment well suited to the relational specification often takes a
-        few iterations of tinkering to discover.
-\end{enumerate}
-
-\emph{Align mode} is a workflow within WhyRel that helps construct bimethods which are bicommands over unary methods. The steps are as follows:
-
-\begin{enumerate}
-  \item CLI invocation (\S\ref{sec:call}): Receives two unary methods along with a relational specification from command line.
+  \item CLI invocation (\S\ref{sec:use}): Receives two unary methods along with a relational specification from command line.
   \item Default Alignment: Computes a \emph{sequential alignment}, the bicommand $(C \mid C')$, of two unary method bodies $C$, $C'$
   \item Serving: A local HTTP API (and a browser UI) for inspection; and
   read-only (text/HTML) or interactive (the API above).
@@ -55,8 +56,8 @@ relational verification. Manual construction of bicommands runs into two issues:
 An overview of the codebase is in \S\ref{sec:code}.
 
 % ============================================================
-\section{Calling Align}
-\label{sec:call}
+\section{Usage}
+\label{sec:use}
 % ============================================================
 
 Align mode is invoked as:
@@ -65,9 +66,6 @@ whyrel -align -l <LMod> <LMeth> -r <RMod> <RMeth> files...
        [-o <file>] [-i] [-port <n>]
        [-rpre <rformula>] [-rpost <rformula>]
 \end{lstlisting}
-    
-\texttt{main.ml} parses and type-checks the input files, then dispatches to
-align mode instead of the translation pipeline.
 
 \begin{description}
   \item[\code{-l} / \code{-r}] left/right module and method to align.
@@ -79,51 +77,47 @@ align mode instead of the translation pipeline.
       (e.g.\ \code{"Agree x"}, \code{"result =:= result"}, \code{"Both(n > 0)"}). More in (\S\ref{sec:spec}).
 \end{description}
 
-Without \code{-i}, the auto-aligned bicommand is written to the output file and
-printed to stdout, then the process exits.  With \code{-i} the full interactive
-rewriting server is started, including the browser UI at \code{/ui}.
+Example: cd to \code{examples/all_all/factorial} and run \code{whyrel -align -i -l M0 fact -r M1 fact -port 8083 prog.rl}
 
 
+The specified methods and specifications are parsed and type-checked. An http server is setup at localhost:8083 serving a bicommand over M0-fact
+and M1-fact methods in a default alignment. A browser ui is available at
+\code{/ui} endpoint. Without \code{-i}, the default aligned bicommand is written to
+the output file and printed to stdout, then the process exits.  
+
+Since the interaction is mediated via http server, one can direct an LLM to this
+section and have it figure out the rewrite functionality by reading the help
+descriptions provided.
 
 % ============================================================
 \section{Relational specifications}
 \label{sec:spec}
 % ============================================================
-\code{-rpre}/\code{-rpost} are parsed and scope-checked.
+\code{-rpre}/\code{-rpost} are parsed using a new parser start symbol \code{rformula_top} added in \code{parser.mly} and a new function
+\code{parse_rformula_string} in \code{Astutil}. The formula is then type-checked with \code{Typing.tc_rformula}
+against a \emph{restricted} \code{bi_tenv} built by \code{restricted_tenv}:
+starting from \code{initial_tenv} (only \code{alloc}), over the program's class
+table, extended with exactly the method parameters ---and \code{result} for the
+postcondition only. Any reference outside the arguments (or \code{result})
+therefore fails type-checking with an ``unknown identifier'' error. 
 
-\paragraph{Parsing} A dedicated parser start symbol \code{rformula_top} (in
-\code{parser.mly}) and \code{Astutil.parse_rformula_string} parse one
-\code{rformula} from a string into the surface AST.
-
-\paragraph{Scope checking.} The formula is type-checked with
-\code{Typing.tc_rformula} against a \emph{restricted} \code{bi_tenv} built by
-\code{restricted_tenv}: starting from \code{initial_tenv} (only \code{alloc}),
-over the program's class table, extended with exactly the method parameters
----and \code{result} for the postcondition only. Any reference outside the
-arguments (or \code{result}) therefore fails type-checking with an ``unknown
-identifier'' error. This is the requested check that the spec refers only to the
-unary method arguments and the result variable; the precondition cannot mention
-\code{result}.
-
-\paragraph{Use.} The checked spec is read back via \code{/spec} and consumed by
+\code{-rpre}/\code{-rpost} can be accessed via \code{/spec} endpoint. For
 \code{/export}: when \code{-rpre}/\code{-rpost} are supplied they become the
 exported \code{requires}/\code{ensures}; otherwise \code{bimodule_skeleton}
-derives relational defaults from the two unary specs
-(\code{default_pre_specs}/\code{default_post_specs}: each side's pre/post lifted
-with \code{Rleft}/\code{Rright}, plus parameter/result \code{=:=} agreements).
+derives relational defaults from the two unary specs (each side's pre/post
+lifted with \code{Rleft}/\code{Rright}, plus parameter/result \code{=:=}
+agreements).
 
 % ============================================================
-\section{Default alignment: the sequential alignment}
+\section{Default alignment}
 % ============================================================
 
-The default alignment is computed by \code{Auto.compose_sequentially}. It
- produces the bare, \emph{sequential} bicommand
+The default alignment is the sequential alignment and is computed in \code{Auto.compose_sequentially}. It
+ produces the \emph{sequential} bicommand
 $(C \mid C')$: it runs all of the left program and then all of the right
 program. This is the least aligned adequate product.
 It is always projection-valid, and it is the starting point from which the
 weaving rewrites introduce synchronisation.
-
-
 
 % ============================================================
 \section{The rewrite algebra (\texttt{rewrites.ml})}
@@ -166,7 +160,7 @@ weave_while   : (while E .. | while E' ..) -->  while E|E' . <false|false>
         projection-valid always but \emph{adequate} only when the guards agree
         --- that becomes a proof obligation. \code{weave_if4} produces the
         four-way \code{Biif4}, which is adequate unconditionally but de-aligns;
-        it is offered in \code{/suggest} but never used by \code{auto_align}.
+        it is offered in \code{/suggest} but not used by \code{auto_align}.
   \item \code{weave_while} generates the \emph{lockstep} loop (both alignment
         guards \code{false}) and carries the unary loop invariants across
         (\S\ref{sec:invariants}).
@@ -182,8 +176,7 @@ unsync      : |_ A _|             -->  (A | A)
 
 \subsection{Skip rules (one side at a time)}
 
-These split a \code{Bisplit} into a sequence of one-sided steps, letting the user
-interleave the two programs explicitly rather than run one fully before the other:
+These split a \code{Bisplit} into a sequence of one-sided steps:
 
 \begin{lstlisting}
 skip_split  : (C | C')              -->  (C | skip) ; (skip | C')
@@ -192,9 +185,7 @@ right_first : (C | a;rest)          -->  (skip | a) ; (C | rest)
 lrc         : (C | skip);(skip | D) -->  (skip | D) ; (C | skip)
 \end{lstlisting}
 
-\code{left_first}/\code{right_first} peel one leading atomic step off the named
-side; when that side is already a single atomic command they fall back to
-\code{skip_split}. \code{skip_split} only fires when neither side is already
+\code{skip_split} only fires when neither side is already
 \code{skip} (so it cannot loop). \code{lrc} (left/right commute) from bikat \cite{antonopoulose-2023-popl} swaps an
 adjacent left-only step and right-only step --- the two touch disjoint sides, so
 the order is interchangeable and each side's projection is unchanged.
@@ -215,13 +206,11 @@ longer throws the invariants away.
 On top of the carried invariants the tool suggests \emph{relational} ones.
 \code{coupling_candidates} builds agreement invariants \code{v =:= v} for each
 variable occurring in both loops (collected from the guards and bodies by
-\code{evars_of_exp} / \code{evars_of_command}). These are \emph{candidates}, not
-proven invariants --- a counter that drifts will not agree --- so the user or MCP
-keeps the ones the proof needs.
+\code{evars_of_exp} / \code{evars_of_command}). 
 
 \code{add_invariant rf} adds a relational invariant \code{rf} to a
 \code{Biwhile}. The interactive layer feeds it either a chosen candidate or an
-arbitrary, MCP-supplied formula (\S\ref{sec:invsuggest}).
+arbitrary, user supplied formula (\S\ref{sec:invsuggest}).
 
 \subsection{Focusing}
 
@@ -248,7 +237,7 @@ rewrites (\code{weave_while_guard}, \code{add_invariant}, \code{remove_invariant
 \code{change_ag}) are \emph{not} in the registry --- they need an argument and are
 dispatched by name in \code{interactive.ml}.
 
-\subsection{Greedy driver}
+\subsection{Auto Alignment}
 
 \code{auto_align} repeatedly applies the forward weaving rules, descending into
 the structure, to turn the sequential default into the finest \emph{lockstep}
@@ -279,7 +268,7 @@ GET  /history                 undo/redo availability and stack depths (JSON)
 GET  /rules                   rewrite-registry rule names (JSON)
 GET  /suggest                 every applicable rewrite, all foci (JSON)
 GET  /suggest?path=0.1        applicable rewrites at one focus (JSON)
-GET  /invariants?path=P       carried invariants + coupling candidates at P (JSON)
+GET  /invariants?path=P       carried invariants + invariant candidates at P (JSON)
 POST /rewrite?rule=R&path=P                 apply rewrite-registry rule R at focus P
 POST /rewrite?rule=weave_while&guard_left=L&guard_right=R&path=P
                                 weave a loop with custom alignment guard <L|R>
@@ -292,11 +281,27 @@ POST /undo  /  POST /redo                   undo / redo (verb endpoints only)
 POST /auto                    greedily weave toward lockstep
 POST /reset                   back to the sequential default
 POST /export                  write a .rl bimodule skeleton to the output file
+POST /verify?t=N&theory=T     translate the skeleton and discharge its VCs with
+                                the prover portfolio, asynchronously; returns 202
+                                immediately (t = per-goal seconds, default 30;
+                                theory defaults to the bimodule)
+GET  /verify/status           running | idle | the finished run's result
+                                (driver JSON, or error text)
+POST /verify/abort            kill the running verification
 \end{lstlisting}
 
 A \code{path} is a dot-separated list of child indices (\code{0.1}); empty is the
 root. Mutating endpoints return the updated alignment as text; \code{409} means
 the rule did not apply at the focus, \code{400} a malformed request.
+
+The verbs are enforced, not decorative: every state-changing endpoint
+(\code{/rewrite}, \code{/undo}, \code{/redo}, \code{/auto}, \code{/reset},
+\code{/export}, \code{/verify}, \code{/verify/abort}) rejects a non-\code{POST}
+request with \code{405}. Read-only endpoints remain \code{GET}-able. This
+matters because the server is a plain unauthenticated localhost service: a
+browser prefetch, a link preview, or a stray \code{GET} of \code{/verify} would
+otherwise silently start a prover run --- or, at \code{/reset}, discard the
+user's alignment.
 
 \code{/bicom} is the canonical \code{Pretty.pp_bicommand} text; \code{/bicom-tree}
 is the per-line JSON the UI renders (each line tagged with the tree path it
@@ -306,7 +311,7 @@ byte-identical; \code{/bicom} is kept as the source of the exact text.
 
 \subsection{Undo / redo}
 
-So that the MCP can undo its rewrites, every successful rewrite \code{snapshot}s
+Every successful rewrite \code{snapshot}s
 the previous state onto \code{history} and clears \code{future}; \code{/undo}
 moves the top of \code{history} to \code{future} and back to \code{current};
 \code{/redo} is the mirror image. Undo/redo span \emph{rewrite} steps only:
@@ -327,17 +332,10 @@ Loop weaving with a custom alignment guard is done directly via:
 POST /rewrite?rule=weave_while&guard_left=L&guard_right=R&path=P
 \end{lstlisting}
 where \code{L} and \code{R} are arbitrary relational formulas (rformulas) for
-the left-side and right-side drain conditions of the alignment guard. Each
+the left-side and right-side alignment guards. Each
 side is parsed with \code{parse_rformula_string} and type-checked in the
 loop-local \code{bi_tenv} (method parameters, \code{result}, and all locals
 in scope at the focus) before the rewrite is applied.
-
-\paragraph{Syntax note.} Guards must be top-level rformulas. The bare
-literals \code{True} and \code{False} are unary formula atoms and are not
-valid at the rformula level; use \code{Both (true)}, \code{Both (false)},
-\code{<| true <]}, or \code{[> false |>} instead. Any rformula involving
-\code{Agree}, \code{=:=}, \code{Both}, \code{<| \ldots <]}, or
-\code{[> \ldots |>} is accepted provided all variables type-check.
 
 The browser UI exposes the two guard fields as \emph{Left Guard} and
 \emph{Right Guard}; leaving both empty applies the lockstep default
@@ -349,31 +347,84 @@ its alignment guard pair can be replaced in place with
 POST /rewrite?rule=change_ag&guard_left=L&guard_right=R&path=P
 \end{lstlisting}
 \code{change_ag} takes the \emph{pair} \code{(L, R)} (parsed/type-checked by the
-same \code{parse_custom_guard}), since an alignment guard is a left/right pair;
-the UI prefills both fields from the loop's current guards.
+same \code{parse_custom_guard}), since an alignment guard is a left/right pair.
 
 \subsection{Biwhile Invariants}
 \label{sec:invsuggest}
 
 \code{/invariants?path=P} reports, for a loop focus, the invariants already
-carried (\S\ref{sec:invariants}) and the coupling candidates (for
+carried (\S\ref{sec:invariants}) and the relational candidates (for
 \emph{discovery}). Invariants are added and removed by formula:
 \begin{itemize}
   \item \code{POST /rewrite?rule=add_invariant&formula=R&path=P} --- add an
-        arbitrary, caller- (or MCP-)supplied relational invariant \code{R}; and
+        arbitrary, user supplied relational invariant \code{R}; and
   \item \code{POST /rewrite?rule=remove_invariant&formula=R&path=P} --- drop a
         carried invariant matching \code{R}.
 \end{itemize}
 
-There is no candidate-index form: \code{formula} subsumes it (a candidate
-\code{v =:= v} is just added by typing it out), and it lets an agent contribute
-its own reasoning --- e.g.\ a coupling such as \code{i + 1 =:= i} that no
-\code{v =:= v} candidate can express. \code{R} is parsed and type-checked
-\emph{in the loop's local scope}: \code{scope_at} collects the locals in scope at
-the focus, and \code{add_mcp_invariant} builds a \code{bi_tenv} from the method
-parameters, \code{result} and those locals, then runs \code{Typing.tc_rformula}
-against it. A reference to anything not in scope is rejected with a type error.
 Both forms require the loop to be woven (a \code{Biwhile}) first.
+
+\subsection{Verification (\texttt{/verify})}
+\label{sec:verify}
+
+\code{/verify} closes the loop from alignment to proof: it takes the alignment
+currently in the session, runs it through the same skeleton generation as
+\code{/export}, translates it to WhyML, and discharges the resulting VCs with the
+prover portfolio --- without leaving the browser. The user edits an alignment,
+presses \emph{Verify}, and sees which VCs survive.
+
+\paragraph{The pipeline.} \code{spawn_verify} writes the bimodule skeleton to a
+temporary \code{.rl}, then runs a two-stage shell command:
+\begin{lstlisting}
+whyrel <program files> <tmp.rl> -o <tmp.mlw>  || exit 90
+python3 tools/whyrel_prove.py <tmp.mlw> -L <dirs> -T <theory> -t N --json <tmp.json>
+\end{lstlisting}
+The library flags are the directories of the program files plus the stdlib. The
+sentinel exit code \code{90} (\code{translate_failed_rc}) distinguishes a
+\emph{translation} failure from the driver's own exit codes, which are \code{0}
+(all goals proved) and \code{1} (some goals open) --- both of which carry a valid
+JSON result. Without the sentinel the two cases are indistinguishable, since a
+failed translation also exits nonzero.
+
+\paragraph{Asynchrony.} The server is single-threaded (\code{Lwt}), so a
+synchronous prover run would block the accept loop --- and in particular would
+make \code{/verify/abort} unreachable, since the abort request could not be
+received while the handler it must interrupt is still running. Verification is
+therefore spawned as a detached child and polled. Session state is
+\begin{lstlisting}
+[ `Idle | `Running of verify_run | `Done of int * string * string ]
+\end{lstlisting}
+where \code{verify_run} records the child pid and the temporary JSON and log
+paths. \code{/verify} returns \code{202 Accepted} the moment the child is
+spawned; \code{/verify/status} calls \code{waitpid} with \code{WNOHANG},
+transitions \code{Running} $\to$ \code{Done} exactly once, and serves the cached
+result thereafter. Starting a run while one is in flight is a \code{409}, not a
+second process. On \code{ECHILD} --- the child already reaped, e.g.\ across a
+restart --- status falls back to reading the artifacts on disk.
+
+\paragraph{Aborting.} The child is launched under \code{setsid}, so it heads its
+own process group. \code{/verify/abort} signals the \emph{group}
+(\code{kill(-pid)}), not just the shell: the pipeline spawns \code{whyrel},
+\code{python3}, and in turn several prover processes, and signalling only the
+immediate child would orphan the provers, leaving them to burn CPU after the
+user has already moved on.
+
+\paragraph{Status codes.} \code{200} with the driver's JSON for a completed run
+(exit \code{0} or \code{1}); \code{409} plus the captured log if translation
+failed; \code{500} plus the log for any other driver failure; \code{400} if the
+CLI specs are incomplete, in which case verification is blocked for the same
+reason \code{/export} is.
+
+\paragraph{Prover configuration.} \code{/verify} invokes
+\code{whyrel_prove.py} with its defaults --- the three-prover portfolio
+(\code{alt-ergo}, \code{cvc5}, \code{z3}) under \code{split_vc}, at \code{-t 30}.
+It does not currently expose the driver's \code{--emulate-auto3} flag, so the
+push-button path runs the flat configuration rather than the driver's
+partial emulation of Why3's \code{Auto\_level\_3} (four provers under
+\code{split\_all\_full}; note this omits the strategy's
+\code{introduce\_premises} and \code{inline\_goal} steps, so it is not
+equivalent to the strategy itself). Threading a strategy selector through
+\code{/verify} and the UI is an obvious next step (\S\ref{sec:open}).
 
 % ============================================================
 \section{HTTP transport and browser UI}
@@ -381,8 +432,7 @@ Both forms require the loop to be woven (a \code{Biwhile}) first.
 
 \subsection{HTTP transport (\texttt{http\_server.ml})}
 
-\code{http_server.ml} is the transport layer; it knows nothing about alignments.
-It provides \code{start_dispatch_server}: a generic request-dispatching server
+\code{http_server.ml} contains \code{start_dispatch_server}: a generic request-dispatching server
 used by the interactive session.  The caller supplies a handler
 \code{~meth ~path ~query -> (status, content-type, body)}; the server parses the
 request line (\code{parse_request}, \code{query_params}), calls the handler, and
@@ -398,37 +448,32 @@ listening socket for a clean shutdown.
 
 \subsection{Browser UI (\texttt{ui.ml})}
 
-\code{ui.ml} is pure rendering; it contains no socket or HTTP logic.  It
-provides one function, \code{build_interactive_html}, which generates the full
-single-page application served at \code{/ui}.  The page drives the API directly
-from the browser: it renders the alignment from \code{/bicom-tree} (each line
-tagged with its tree path, so a line number is click-to-focus), loads
-suggestions from \code{/suggest}, applies rewrites at a focus (filling in path,
-rule, guards, and invariant), and runs undo/redo, auto-align, reset, and export.
-Rendering happens client-side; the server only ships data (see
-\code{docs/align.md} for the request/response cycle).
+\code{ui.ml} contains the rendering function \code{build_interactive_html},
+which generates the full single-page application served at \code{/ui}.  The page
+drives the API directly from the browser: it renders the alignment from
+\code{/bicom-tree} (each line tagged with its tree path, so a line number is
+click-to-focus), loads suggestions from \code{/suggest}, applies rewrites at a
+focus (filling in path, rule, guards, and invariant), and runs undo/redo,
+auto-align, reset, and export. Rendering happens client-side; the server only
+ships data (see \code{docs/align.md} for the request/response cycle).
+
+The page also drives verification (\S\ref{sec:verify}): \emph{Verify} posts to
+\code{/verify} with the timeout from a small input box, then polls
+\code{/verify/status} every two seconds, swapping the button pair
+(\code{verifyUiRunning}) so that \emph{Abort} is live exactly while a run is in
+flight. \code{renderVerify} summarises the driver JSON --- per-prover counts, the
+union, and each open goal with its explanation --- into the verification panel.
 
 \code{interactive.ml} calls \code{build_interactive_html} when responding to
 \code{/ui}; it is never called from \code{http_server.ml}.
 
 % ============================================================
-\section{Export}
+\section{Export and Pretty Printing}
 % ============================================================
 
-\code{/export} writes a \code{.rl} skeleton (\code{bimodule_skeleton}) to the
-output file: the current woven bicommand wrapped in a \code{bimodule} stub with
-placeholder relational specs (\code{requires true}, \code{ensures true}) and a
-\code{TODO} header. The biinterface and method signatures are left for the user
-to fill in. This is a first cut --- see \S\ref{sec:open}.
-
-% ============================================================
-\section{Pretty-printing}
-% ============================================================
-
-\code{Pretty.pp_bicommand} renders bicommands. The \code{Biwhile} case prints the
-alignment guards \emph{and} the loop invariants in the header
-(\code{while E | E' . P | P' do  invariant {...} ...}); it previously dropped
-both, which made synthesised guards and carried/added invariants invisible.
+\code{/export} writes to the
+output file the current woven bicommand wrapped in a \code{bimodule} stub. The biinterface and method signatures are left for the user
+to fill in. \code{Pretty.pp_bicommand} renders bicommands.
 
 
 % ============================================================
@@ -450,16 +495,6 @@ both, which made synthesised guards and carried/added invariants invisible.
         \code{current} reference plus \code{history}/\code{future} stacks; focus
         is an explicit path argument rather than a zipper held in state.
 
-  \item \textbf{Custom guards at loop focus.} Relational
-        \emph{invariants} of any shape can be supplied and type-checked at the
-        loop (\S\ref{sec:invsuggest}) using the loop-local context from
-        \code{scope_at}. The same scope-aware typing applies to caller-supplied
-        alignment \emph{guards} (\S\ref{sec:guards}): \code{guard_left} and
-        \code{guard_right} each accept any well-formed rformula
-        (e.g.\ \code{Both (true)}, \code{Agree x}, \code{i =:= i}),
-        parsed and type-checked in the loop-local \code{bi_tenv} before the
-        rewrite is applied.
-
   \item \textbf{Spec environment.} The scope check rejects everything but
         arguments/result because the restricted environment omits user predicate
         signatures. Seeding it from the modules' predicate declarations would let
@@ -470,9 +505,6 @@ both, which made synthesised guards and carried/added invariants invisible.
         \code{pretrans/derive_biinterface.ml}) and the real signatures would let
         the result feed straight back into the WhyRel pipeline.
 
-  \item \textbf{Conditional weaving granularity.} \code{weave_if} (two-way) and
-        \code{weave_if4} (four-way) are both offered; the two-way form is the
-        usual proof target and the only one \code{auto_align} uses.
 \end{enumerate}
 
 
