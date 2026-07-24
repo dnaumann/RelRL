@@ -426,6 +426,74 @@ partial emulation of Why3's \code{Auto\_level\_3} (four provers under
 equivalent to the strategy itself). Threading a strategy selector through
 \code{/verify} and the UI is an obvious next step (\S\ref{sec:open}).
 
+\subsection{Worked example: \texttt{factorial}}
+\label{sec:verify-factorial}
+
+\code{examples/all_all/factorial} aligns two implementations of \code{fact}
+that compute the same value out of phase: \code{M0} runs \code{i} from
+\code{0} while \code{i < n}, incrementing before multiplying; \code{M1} runs
+\code{i} from \code{1} while \code{i <= n}, multiplying before incrementing.
+Started with \code{-l M0 fact -r M1 fact}, the whole session is four requests.
+
+\paragraph{The default alignment does not verify.} Pressing \emph{Verify}
+immediately gives \textbf{15/16}, with the \code{Agree result} postcondition
+open. This is not a prover weakness. The default alignment is the sequential
+\code{(left | right)}, so the translated \code{M0\_M1\_REL} contains two
+\emph{consecutive} \code{while} loops carrying only their own unary invariants
+(\code{0 <= l_i <= l_n}, \code{l_result > 0}, and the mirror images). Nothing
+relates \code{l_result} to \code{r_result}, so the postcondition is not
+derivable. The open goal names the missing alignment, not a missing lemma.
+
+\paragraph{Weaving and coupling.} \code{/auto} weaves the two loops into a
+single lockstep \code{Biwhile} in one step, carrying the unary invariants
+across:
+\begin{lstlisting}
+POST /auto
+  => While i < n | i <= n . <| False <] | [> False |> do
+       invariant {Both (result > 0)}
+       invariant {<| 0 <= i /\ i <= n <]}
+       invariant {[> 1 <= i /\ i <= n + 1 |>}
+\end{lstlisting}
+\code{/invariants?path=0.0.1.1} then reports these as \code{carried_invariants}
+and offers \code{coupling_candidates} \code{Agree i}, \code{Agree n},
+\code{Agree result}. The candidates are \emph{suggestions, not theorems}:
+\code{Agree i} is false here, since the two counters differ by one throughout.
+The two that are needed are added by formula:
+\begin{lstlisting}
+POST /rewrite?rule=add_invariant&formula=Agree result&path=0.0.1.1
+POST /rewrite?rule=add_invariant&formula=[< i <] + [1] = [> i >]&path=0.0.1.1
+\end{lstlisting}
+The coupling \code{Agree result} comes from the candidate list; the phase
+relation is not inferred and must be written by hand, using the relational
+term syntax (\code{[< t <]} left, \code{[> t >]} right, \code{[c]} for a
+constant on both sides).
+
+\paragraph{Result.} \code{POST /verify?t=20} now reports \textbf{18/18}. The
+goal count rises from 16 because the added invariants generate their own
+preservation obligations. The session reproduces what the hand-written
+\code{MREL} bimodule in \code{prog.rl} achieves --- the same coupling
+(\code{l_result = r_result}) and phase (\code{l_i + 1 = r_i}) invariants ---
+without its explicit \code{[@expl:lockstep]} guard invariant, which the
+lockstep alignment guard \code{<|False<] | [>False|>} makes unnecessary here.
+
+\paragraph{Reproducing the pipeline by hand.} The exported skeleton is
+byte-identical to what \code{/verify} sends, so the two stages can be run
+directly. Note the argument order: the original sources first, the exported
+skeleton last (it refers to modules they define), no \code{-L} on translation,
+and \code{-T} naming the generated bimodule.
+\begin{lstlisting}
+whyrel examples/all_all/factorial/prog.rl aligned.rl -o out.mlw
+python3 tools/whyrel_prove.py out.mlw \
+    -L examples/all_all/factorial -L stdlib -T M0_M1_REL -t 20
+\end{lstlisting}
+The generated \code{out.mlw} is the file the example's \code{Makefile} would
+produce \emph{plus} two modules, \code{M0\_M1\_REL} and
+\code{M0\_M1\_REL\_biinterface}; the hand-written \code{MREL} is still present,
+which is why \code{-T} matters --- without it the run covers both bimodules.
+On this example the portfolio is doing real work: \code{alt-ergo} and
+\code{z3} close 18/18 while \code{cvc5} reaches 17/18, so a single-prover run
+would look like a failure.
+
 % ============================================================
 \section{HTTP transport and browser UI}
 % ============================================================

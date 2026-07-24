@@ -17,8 +17,9 @@ bimodule M0_M1_REL (M0 | M1) =
     | i := 1);
     (result := 1
     | result := 1);
-    While i < n | i <= n . <| True <] | [> False |> do
+    While i < n | i <= n . <| False <] | [> False |> do
       invariant {Both (result > 0)}
+      invariant {i + 1 =:= 1}
       invariant {<| 0 <= i /\ i <= n <]}
       invariant {[> 1 <= i /\ i <= n + 1 |>}
       effects {  |  }

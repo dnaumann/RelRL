@@ -254,7 +254,7 @@ let pp_effect outf eff = fprintf outf "@[%a@]" pp_effect' eff
 
 let rec pp_value_in_state outf = function
   | Left e -> fprintf outf "@[[<%a<]@]" pp_exp e
-  | Right e -> fprintf outf "@[[<%a<]@]"pp_exp e
+  | Right e -> fprintf outf "@[[>%a>]@]" pp_exp e
 
 let rec pp_biexp' k outf b =
   match b.node with
@@ -514,7 +514,7 @@ let pp_module_def outf _ = fprintf outf "(module_def)"
 
 let pp_value_in_state outf = function
   | Left e -> fprintf outf "@[[<%a<]@]" pp_exp e
-  | Right e -> fprintf outf "@[[<%a<]@]"pp_exp e
+  | Right e -> fprintf outf "@[[>%a>]@]" pp_exp e
 
 let pp_varbind outf (id, modif, ty) =
   fprintf outf "@[%a@ %a:@ %a@]"
