@@ -86,6 +86,10 @@ instructions on how to install these and other supported provers.  See also `exa
 
 ## Usage
 
+There is replay capability. Look into examples/README.md for more details. 
+
+The *alignment_mcp* branch has an http interaction mode that is amenable to LLMs.
+
 To compile a file called `foo.rl` run
 
 ```
