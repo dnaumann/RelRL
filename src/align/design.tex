@@ -60,6 +60,10 @@ An overview of the codebase is in \S\ref{sec:code}.
 \label{sec:use}
 % ============================================================
 
+\textbf{Recommended Usage}: Since the interaction is mediated via http server, one can direct an LLM to this
+section and have it figure out the rewrite functionality by reading the help
+descriptions provided.
+
 Align mode is invoked as:
 \begin{lstlisting}
 whyrel -align -l <LMod> <LMeth> -r <RMod> <RMeth> files...
@@ -85,9 +89,7 @@ and M1-fact methods in a default alignment. A browser ui is available at
 \code{/ui} endpoint. Without \code{-i}, the default aligned bicommand is written to
 the output file and printed to stdout, then the process exits.  
 
-Since the interaction is mediated via http server, one can direct an LLM to this
-section and have it figure out the rewrite functionality by reading the help
-descriptions provided.
+
 
 % ============================================================
 \section{Relational specifications}
