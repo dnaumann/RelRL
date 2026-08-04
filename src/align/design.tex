@@ -81,7 +81,7 @@ whyrel -align -l <LMod> <LMeth> -r <RMod> <RMeth> files...
       (e.g.\ \code{"Agree x"}, \code{"result =:= result"}, \code{"Both(n > 0)"}). More in (\S\ref{sec:spec}).
 \end{description}
 
-Example: cd to \code{examples/all_all/factorial} and run \code{whyrel -align -i -l M0 fact -r M1 fact -port 8083 prog.rl}
+Example: cd to \code{examples/all_all/factorial} and run \code{whyrel -align -i -l M0 fact -r M1 fact -port 8083 prog.rl}. \ref{sec:factorial} describes the running in detail.
 
 
 The specified methods and specifications are parsed and type-checked. An http server is setup at localhost:8083 serving a bicommand over M0-fact
@@ -428,8 +428,8 @@ partial emulation of Why3's \code{Auto\_level\_3} (four provers under
 equivalent to the strategy itself). Threading a strategy selector through
 \code{/verify} and the UI is an obvious next step (\S\ref{sec:open}).
 
-\subsection{Worked example: \texttt{factorial}}
-\label{sec:verify-factorial}
+\subsection{Example: \texttt{factorial}}
+\label{sec:factorial}
 
 \code{examples/all_all/factorial} aligns two implementations of \code{fact}
 that compute the same value out of phase: \code{M0} runs \code{i} from
@@ -439,15 +439,15 @@ Started with \code{-l M0 fact -r M1 fact}, the whole session is four requests.
 
 \paragraph{The default alignment does not verify.} Pressing \emph{Verify}
 immediately gives \textbf{15/16}, with the \code{Agree result} postcondition
-open. This is not a prover weakness. The default alignment is the sequential
+open. The default alignment is the sequential
 \code{(left | right)}, so the translated \code{M0\_M1\_REL} contains two
 \emph{consecutive} \code{while} loops carrying only their own unary invariants
 (\code{0 <= l_i <= l_n}, \code{l_result > 0}, and the mirror images). Nothing
 relates \code{l_result} to \code{r_result}, so the postcondition is not
-derivable. The open goal names the missing alignment, not a missing lemma.
+derivable. 
 
-\paragraph{Weaving and coupling.} \code{/auto} weaves the two loops into a
-single lockstep \code{Biwhile} in one step, carrying the unary invariants
+\paragraph{Weaving and coupling.} Typically, manual weaving is needed to get the desired alignment however in this example \code{/auto} will do the job of 
+lockstep alignment in one step while carrying the unary invariants
 across:
 \begin{lstlisting}
 POST /auto
@@ -472,15 +472,10 @@ constant on both sides).
 
 \paragraph{Result.} \code{POST /verify?t=20} now reports \textbf{18/18}. The
 goal count rises from 16 because the added invariants generate their own
-preservation obligations. The session reproduces what the hand-written
-\code{MREL} bimodule in \code{prog.rl} achieves --- the same coupling
-(\code{l_result = r_result}) and phase (\code{l_i + 1 = r_i}) invariants ---
-without its explicit \code{[@expl:lockstep]} guard invariant, which the
-lockstep alignment guard \code{<|False<] | [>False|>} makes unnecessary here.
+preservation obligations. 
 
-\paragraph{Reproducing the pipeline by hand.} The exported skeleton is
-byte-identical to what \code{/verify} sends, so the two stages can be run
-directly. Note the argument order: the original sources first, the exported
+The exported skeleton is
+byte-identical to what \code{/verify} sends to the protfolio script, so the same result as pressing \code{/verify} can be obtained by manually running the script on the exported bicommand. Note the argument order: the original sources first, the exported
 skeleton last (it refers to modules they define), no \code{-L} on translation,
 and \code{-T} naming the generated bimodule.
 \begin{lstlisting}
@@ -492,9 +487,6 @@ The generated \code{out.mlw} is the file the example's \code{Makefile} would
 produce \emph{plus} two modules, \code{M0\_M1\_REL} and
 \code{M0\_M1\_REL\_biinterface}; the hand-written \code{MREL} is still present,
 which is why \code{-T} matters --- without it the run covers both bimodules.
-On this example the portfolio is doing real work: \code{alt-ergo} and
-\code{z3} close 18/18 while \code{cvc5} reaches 17/18, so a single-prover run
-would look like a failure.
 
 % ============================================================
 \section{HTTP transport and browser UI}
@@ -609,6 +601,140 @@ and \code{ui.ml}; \code{http_server.ml} and \code{ui.ml} are independent of
 each other and of \code{interactive.ml}; \code{align.ml} never refers to
 \code{interactive.ml}.
 
+There were changes made to the main branch WhyRel prelude to facilitate SMT solving. Finite maps were reencoded as raw map.Map + explicit Fset domains and in-source `by` extensionality and witness seeds were added. These led to faster VC discharge but  did not change the count of VCs discharged.
+
+% ===============
+
+% \section{Related Work}
+% \label{sec:related}
+
+% % ===============
+
+% There has been several works focused on automated alignment of programs.
+% \cite{naumann_isola_2020} related section mentions several before 2020. And there has been a lot of work since then.
+
+% There has been work on using Generative AI for code generation since late 2010s.
+% \cite{misu_2024_fse} seems to the first to use it in a verifier setting
+% specifically synthesizing correct Dafny code, including the formal
+% specifications and validation conditions so that the code passes the Dafny
+% verifier: as part of that effort, we are also interested in how the additional
+% logical rigor required by verification enhances or degrades generation
+% performance. - We conduct the first empirical study of LLMs synthesizing
+% verifiable Dafny methods. - We demonstrate that a prompt following the
+% principles of Chain of Thought (CoT) [Wei et al. 2022] with retrieval
+% augmentation generated [Lewis et al. 2020] semantically similar few shot
+% examples explaining a problem decomposition step-by-step, can synthesize
+% verified and correct Dafny methods with meaningful specifications for 58\% of
+% problems in our test dataset. Using 178 problems from the MBPP dataset, we
+% prompt two contemporary models (GPT-4 and PaLM-2) to synthesize Dafny methods
+% including annotations. We use three different types of prompts: a direct
+% Contextless prompt; a Signature prompt that includes a method signature and test
+% cases, and a Chain of Thought (CoT) prompt that decomposes the problem into
+% steps and includes retrieval augmentation generated example problems and
+% solutions. Our results show that GPT-4 performs better than PaLM-2 on these
+% tasks, and that both models perform best with the retrieval augmentation
+% generated CoT prompt. GPT-4 was able to generate verified, human-evaluated,
+% Dafny methods for 58\% of the problems, however GPT-4 managed only 19\% of the
+% problems with the Contextless prompt, and even fewer (10\%) for the Signature
+% prompt. 
+
+% - We release the dataset MBPP-DFY-153, a collection of 153 programming problems
+% with specifications, solutions and tests in/for Dafny, based on the MBPP (Mostly Basic
+% Python Programming) dataset curated by Google Research [Austin et al. 2021].
+% 50 that we wrote manually and 103 synthesized by GPT-4. 
+
+% Given that we were already using LLMs to find solutions, we were also able to
+% employ the same LLMs to find prompts, a technique known as prompt chaining [Wei
+% et al. 2022] or model cascading [Dohan et al. 2022]. For each new problem, in a
+% first phase we prompt the LLM to generate method specifications (signature and
+% postconditions). Then in a second phase, we used the results of the first phase
+% to prompt for Dafny method implementations. The inclusion of
+% semantically-similar context in prompts is known as Retrieval Augmented
+% Generation (RAG) [Lewis et al. 2020]. Figure 3 demonstrates the resulting
+% high-level architecture of our RAG pipeline for prompt chaining.
+
+% in the first phase we prompt the LLM to generate the method specifications
+% ---signature and postconditions. To teach LLM how to generate such specifications,
+% we provide three examples of problem descriptions, method signatures, and
+% postconditions, taken from our MBPP-DFY-50 dataset. We select these examples
+% based on the semantic similarity of the problem descriptions. Figure 4 (top)
+% shows an example of a first phase specification prompt. In the second phase, we
+% search for semantically similar Dafny methods in our MBPP-DFY-50 dataset,
+% incorporating the LLM's first phase response. We use the OpenAI embedding API to
+% compute semantic similarity based on cosine distance. For the specification
+% generated in the first phase, we select the top five Dafny similar examples from
+% our MBPP-DFY-50 dataset. We use five examples so that the whole prompt fits
+% inside the LLMs' context length. With these examples, we then prepare a CoT
+% prompt that first instructs the LLM to synthesize the specifications according
+% the problem decomposition steps, and then synthesize a Dafny method that
+% satisfies these specifications
+
+% we use verify@k metric (similar to pass@k), where k sample methods are synthesized
+% per problem; a problem is considered to be verified if any attempt verifies. s. In order to assess the semantic correctness of the generated verification
+% code, we manually reviewed all verified methods. We also manually inspected all the generated
+% methods that failed to verify, to identify what types of errors prevented verification.
+
+% Variation by temperature. We chose a random sample of 50 problems from our test dataset MBPP-san-DFY of
+% 178 problems employing the sampling procedures with 90% confidence interval and 10% margin of
+% error. Next, for each type of prompt, we executed these 50 problems at four
+% different temperatures $T$ $\in$ {0.0, 0.25, 0.5, 0.75} in both GPT-4 and PaLM-2
+
+% parse errors and type errors decreased with RAG.
+
+% Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia, Ed H. Chi, Quoc V. Le, and Denny Zhou.
+% 2022. Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. In Advances in Neural Information
+% Processing Systems 35: Annual Conference on Neural Information Processing Systems 2022, NeurIPS 2022, New Orleans, LA,
+% USA, November 28 - December 9, 2022, Sanmi Koyejo, S. Mohamed, A. Agarwal, Danielle Belgrave, K. Cho, and A. Oh
+% (Eds.). \url{http://papers.nips.cc/paper_files/paper/2022/hash/9d5609613524ecf4f15af0f7b31abca4-Abstract-Conference.html}
+
+% David Dohan, Winnie Xu, Aitor Lewkowycz, Jacob Austin, David Bieber, Raphael Gontijo Lopes, Yuhuai Wu, Henryk
+% Michalewski, Rif A. Saurous, Jascha Sohl-Dickstein, Kevin Murphy, and Charles Sutton. 2022. Language Model Cascades.
+
+% Patrick S. H. Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir
+% Karpukhin, Naman Goyal, Heinrich K\"uttler, Mike Lewis, Wen-tau Yih, Tim
+% Rockt\"aschel, Sebastian Riedel, and Douwe Kiela. 2020. Retrieval-Augmented
+% Generation for Knowledge-Intensive NLP Tasks. In Advances in Neural Information
+% Processing Systems 33: Annual Conference on Neural Information Processing
+% Systems 2020, NeurIPS 2020, December 6-12, 2020, virtual, Hugo Larochelle,
+% Marc'Aurelio Ranzato, Raia Hadsell, Maria-Florina Balcan, and Hsuan-Tien Lin
+% (Eds.). \url{https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html}
+
+% \cite{xu2025localsuccessdoescompose} DAFNYCOMP
+% focuses on programs composed of multiple interacting functions with necessary data dependencies,
+% requiring LLMs to produce specifications that ensure correctness across component boundaries.
+
+% Cite wu et all neurips 2022 autoformalization, 
+
+% \cite{chenyuan_2025_oopsla}summarize common proof strategies used by Verus
+% experts and is added to the prompt. AutoVerus to orchestrate these agents
+% following the proof-development process of Verus experts. Human experts do not aim to write a perfect proof like the one in Figure
+% 1 in one attempt, neither does AutoVerus.
+
+% \cite{sun_2024_saiv} CLover bench as a paradigm for programming and verification that is highly amenable to llm use for synthesis of program from annotation, annotation from natural language description and inbetween translations.
+
+% \cite{loughridge2025dafnybench} focuses on annotation synthesis and thus more aligned with our own focus. It provides a benchmarks called Dafnybench having public scraped dafny programs along with cloverbench and dafny-synthesis benchmark. DafnyBench benchmark contains 782 ground-truth stand-alone Dafny programs that
+% compile
+
+% For hyperparameters, we set \texttt{max\_tokens} = 4096, which corresponds to the lowest
+% max output token limit among all the evaluated models, and we set temperature =
+% 0.3. We gave each model up to n = 10 attempts at a given file. If it succeeded
+% on an attempt before the nth , it would be early stopped. If the model failed on
+% any of the intermediate attempts, it received the Dafny error message and was
+% asked to fill in the annotations again with the error message taken into
+% consideration. If it failed on all n attempts, it was considered to fail on that
+% specific test program.
+
+% innovation on the algorithmic side: out-of-the-box LLMs
+% provide a floor but not a ceiling for possible performance on this benchmark. For example, fine-tuning
+% or search-based inference-time algorithms might boost models' performances on this benchmark
+% (Brandfonbrener et al., 2023).
+
+% also look at \cite{mugnier_2025_oopsla}
+
+
+% While the current workflow is focused on bimethods, there has been work on
+% whole-project synthesis~\cite{zhong_2025_LMPL}.
+
 
 
 
@@ -630,6 +756,251 @@ T.~Antonopoulos, E.~Koskinen, T.~C. Le, R.~Nagasamudram, D.~A. Naumann, and M.~N
 \newblock An algebra of alignment for relational verification.
 \newblock \emph{Proceedings of the ACM on Programming Languages}, 7(POPL), Article 20, January 2023, 31 pages.
 \newblock \url{https://doi.org/10.1145/3571213}.
+
+
+% @inproceedings{naumann_isola_2020,
+%   author    = {David A. Naumann},
+%   title     = {Thirty-Seven Years of Relational {Hoare} Logic: Remarks on Its Principles and History},
+%   booktitle = {Leveraging Applications of Formal Methods, Verification and Validation: Engineering Principles},
+%   editor    = {Tiziana Margaria and Bernhard Steffen},
+%   publisher = {Springer International Publishing},
+%   address   = {Cham},
+%   year      = {2020},
+%   pages     = {93--116},
+%   doi       = {10.1007/978-3-030-61470-6_7},
+%   isbn      = {978-3-030-61470-6},
+% }
+
+% @article{francez_1983,
+%   author    = {Nissim Francez},
+%   title     = {Product properties and their direct verification},
+%   journal   = {Acta Informatica},
+%   year      = {1983},
+%   volume    = {20},
+%   number    = {4},
+%   pages     = {329--344},
+%   doi       = {10.1007/BF00264278},
+% }
+
+% @inproceedings{
+% zeng2026veriequivbench,
+% title={VeriEquivBench: An Equivalence Score for Ground-Truth-Free Evaluation of Formally Verifiable Code},
+% author={Lingfei Zeng and Fengdi Che and Xuhan Huang and Fei Ye and Xu Xu and Binhang Yuan and Jie Fu},
+% booktitle={The Fourteenth International Conference on Learning Representations},
+% year={2026},
+% url={https://openreview.net/forum?id=tRRHVUwP2B}
+% }
+
+% @misc{xu2025localsuccessdoescompose,
+%       title={Local Success Does Not Compose: Benchmarking Large Language Models for Compositional Formal Verification}, 
+%       author={Xu Xu and Xin Li and Xingwei Qu and Jie Fu and Binhang Yuan},
+%       year={2025},
+%       eprint={2509.23061},
+%       archivePrefix={arXiv},
+%       primaryClass={cs.PL},
+%       url={https://arxiv.org/abs/2509.23061}, 
+% }
+
+% @misc{banerjee2026dafnyprollmassistedautomatedverification,
+%       title={DafnyPro: LLM-Assisted Automated Verification for Dafny Programs}, 
+%       author={Debangshu Banerjee and Olivier Bouissou and Stefan Zetzsche},
+%       year={2026},
+%       eprint={2601.05385},
+%       archivePrefix={arXiv},
+%       primaryClass={cs.SE},
+%       url={https://arxiv.org/abs/2601.05385}, 
+% }
+
+% @inproceedings{
+% breen2026dafnyprover,
+% title={DafnyProver: Agentic Verified Code Generation in Dafny},
+% author={Benjamin Breen and Austin Letson and Borja Requena and Leopoldo Sarra},
+% booktitle={3rd AI for Math Workshop: Toward Self-Evolving Scientific Agents},
+% year={2026},
+% url={https://openreview.net/forum?id=gDzS44BgiM}
+% }
+
+% @misc{weng2025autoformalizationeralargelanguage,
+%       title={Autoformalization in the Era of Large Language Models: A Survey}, 
+%       author={Ke Weng and Lun Du and Sirui Li and Wangyue Lu and Haozhe Sun and Hengyu Liu and Tiancheng Zhang},
+%       year={2025},
+%       eprint={2505.23486},
+%       archivePrefix={arXiv},
+%       primaryClass={cs.AI},
+%       url={https://arxiv.org/abs/2505.23486}, 
+% }
+
+
+% @inproceedings{prasita_2025_ase,
+% author = {Mukherjee, Prasita and Lu, Minghai and Delaware, Benjamin},
+% title = {LLM-Assisted Synthesis of High-Assurance C Programs},
+% year = {2025},
+% publisher = {IEEE Press},
+% url = {https://doi.org/10.1109/ASE63991.2025.00255},
+% doi = {10.1109/ASE63991.2025.00255},
+% abstract = {We present SynVer — a novel, general purpose synthesizer for C programs equipped with machine-checked proofs of correctness using the Verified Software Toolchain. To do so, SynVer employs two Large Language Models (LLMs): the first generates candidate programs from user-provided specifications, and the second helps automatically construct formal proofs of their correctness in the Rocq proof assistant. To facilitate verification, SynVer places a set of syntactic restrictions on candidate programs that make them amenable to automated reasoning. SynVer uses a hybrid verification strategy that combines symbolic reasoning with LLM-powered proof generation to discharge proof obligations that the symbolic engine cannot handle on its own. We demonstrate the applicability of SynVer using a diverse set of benchmarks drawn from the program synthesis and verification literature.},
+% booktitle = {2025 40th IEEE/ACM International Conference on Automated Software Engineering (ASE)},
+% pages = {3108},
+% numpages = {1},
+% location = {Seoul, Korea, Republic of}
+% }
+
+
+% @article{cai_2025_popl,
+% author = {Cai, Yufan and Hou, Zhe and Sanan, David and Luan, Xiaokun and Lin, Yun and Sun, Jun and Dong, Jin Song},
+% title = {Automated Program Refinement: Guide and Verify Code Large Language Model with Refinement Calculus},
+% year = {2025},
+% issue_date = {January 2025},
+% publisher = {Association for Computing Machinery},
+% address = {New York, NY, USA},
+% volume = {9},
+% number = {POPL},
+% url = {https://doi.org/10.1145/3704905},
+% doi = {10.1145/3704905},
+% abstract = {Recently, the rise of code-centric Large Language Models (LLMs) has reshaped the software engineering world with low-barrier tools like Copilot that can easily generate code. However, there is no correctness guarantee for the code generated by LLMs, which suffer from the hallucination problem, and their output is fraught with risks. Besides, the end-to-end process from specification to code through LLMs is a non-transparent and uncontrolled black box. This opacity makes it difficult for users to understand and trust the generated code. Addressing these challenges is both necessary and critical. In contrast, program refinement transforms high-level specification statements into executable code while preserving correctness. Traditional tools for program refinement are primarily designed for formal methods experts and lack automation and extensibility. We apply program refinement to guide LLM and validate the LLM-generated code while transforming refinement into a more accessible and flexible framework. To initiate this vision, we propose Refine4LLM, an approach that aims to:(1) Formally refine the specifications, (2) Automatically prompt and guide the LLM using refinement calculus, (3) Interact with the LLM to generate the code, (4) Verify that the generated code satisfies the constraints, thus guaranteeing its correctness, (5) Learn and build more advanced refinement laws to extend the refinement calculus. We evaluated Refine4LLM against the state-of-the-art baselines on program refinement and LLMs benchmarks. The experiment results show that Refine4LLM can efficiently generate more robust code and reduce the time for refinement and verification.},
+% journal = {Proc. ACM Program. Lang.},
+% month = jan,
+% articleno = {69},
+% numpages = {33},
+% keywords = {Program Refinement, Large Language Model, Program Synthesis}
+% }
+
+% @article{misu_2024_fse,
+% author = {Misu, Md Rakib Hossain and Lopes, Cristina V. and Ma, Iris and Noble, James},
+% title = {Towards AI-Assisted Synthesis of Verified Dafny Methods},
+% year = {2024},
+% issue_date = {July 2024},
+% publisher = {Association for Computing Machinery},
+% address = {New York, NY, USA},
+% volume = {1},
+% number = {FSE},
+% url = {https://doi.org/10.1145/3643763},
+% doi = {10.1145/3643763},
+% abstract = {Large language models show great promise in many domains, including programming. A promise is easy to make but hard to keep, and language models often fail to keep their promises, generating erroneous code. A promising avenue to keep models honest is to incorporate formal verification: generating programs’ specifications as well as code, so that the code can be proved correct with respect to the specifications. Unfortunately, existing large language models show a severe lack of proficiency in verified programming.In this paper, we demonstrate how to improve two pretrained models’ proficiency in the Dafny verification-aware language. Using 178 problems from the MBPP dataset, we prompt two contemporary models (GPT-4 and PaLM-2) to synthesize Dafny methods. We use three different types of prompts: a direct Contextless prompt; a Signature prompt that includes a method signature and test cases, and a Chain of Thought (CoT) prompt that decomposes the problem into steps and includes retrieval augmentation generated example problems and solutions. Our results show that GPT-4 performs better than PaLM-2 on these tasks, and that both models perform best with the retrieval augmentation generated CoT prompt. GPT-4 was able to generate verified, human-evaluated, Dafny methods for 58\% of the problems, however GPT-4 managed only 19\% of the problems with the Contextless prompt, and even fewer (10\%) for the Signature prompt. We are thus able to contribute 153 verified Dafny solutions to MBPP problems, 50 that we wrote manually and 103 synthesized by GPT-4.Our results demonstrate that the benefits of formal program verification are now within reach of codegenerating large language models. Likewise, program verification systems can benefit from large language models, whether to synthesize code wholesale, to generate specifications, or to act as a “programmer’s verification apprentice”, to construct annotations such as loop invariants which are hard for programmers to write or verification tools to find. Finally, we expect that the approach we have pioneered here — generating candidate solutions that are subsequently formally checked for correctness — should transfer to other domains (e.g., legal arguments, transport signaling, structural engineering) where solutions must be correct, where that correctness must be demonstrated, explained and understood by designers and end-users.},
+% journal = {Proc. ACM Softw. Eng.},
+% month = jul,
+% articleno = {37},
+% numpages = {24},
+% keywords = {Program Synthesis, Dafny, LLM, Program Verification}
+% }
+
+% @inproceedings{terauchi_2005_sas,
+% author = {Terauchi, Tachio and Aiken, Alex},
+% title = {Secure information flow as a safety problem},
+% year = {2005},
+% isbn = {3540285849},
+% publisher = {Springer-Verlag},
+% address = {Berlin, Heidelberg},
+% url = {https://doi.org/10.1007/11547662_24},
+% doi = {10.1007/11547662_24},
+% abstract = {The termination insensitive secure information flow problem can be reduced to solving a safety problem via a simple program transformation. Barthe, D'Argenio, and Rezk coined the term “self-composition” to describe this reduction. This paper generalizes the self-compositional approach with a form of information downgrading recently proposed by Li and Zdancewic. We also identify a problem with applying the self-compositional approach in practice, and we present a solution to this problem that makes use of more traditional type-based approaches. The result is a framework that combines the best of both worlds, i.e., better than traditional type-based approaches and better than the self-compositional approach.},
+% booktitle = {Proceedings of the 12th International Conference on Static Analysis},
+% pages = {352–367},
+% numpages = {16},
+% location = {London, UK},
+% series = {SAS'05}
+% }
+
+% @article{mugnier_2025_oopsla,
+% author = {Mugnier, Eric and Gonzalez, Emmanuel Anaya and Polikarpova, Nadia and Jhala, Ranjit and Yuanyuan, Zhou},
+% title = {Laurel: Unblocking Automated Verification with Large Language Models},
+% year = {2025},
+% issue_date = {April 2025},
+% publisher = {Association for Computing Machinery},
+% address = {New York, NY, USA},
+% volume = {9},
+% number = {OOPSLA1},
+% url = {https://doi.org/10.1145/3720499},
+% doi = {10.1145/3720499},
+% abstract = {Program verifiers such as Dafny automate proofs by outsourcing them to an SMT solver. This automation is not perfect, however, and the solver often requires hints in the form of assertions, creating a burden for the proof engineer. In this paper, we propose , a tool that alleviates this burden by automatically generating assertions using large language models (LLMs).  To improve the success rate of LLMs in this task, we design two domain-specific prompting techniques. First, we help the LLM determine the location of the missing assertion by analyzing the verifier’s error message and inserting an assertion placeholder at that location. Second, we provide the LLM with example assertions from the same codebase, which we select based on a new proof similarity metric. We evaluate our techniques on our new benchmark , a dataset of complex lemmas we extracted from three real-world Dafny codebases. Our evaluation shows that is able to generate over 56.6\% of the required assertions given only a few attempts, making LLMs an affordable tool for unblocking program verifiers without human intervention.},
+% journal = {Proc. ACM Program. Lang.},
+% month = apr,
+% articleno = {134},
+% numpages = {27},
+% keywords = {Dafny, LLM, Program Synthesis}
+% }
+
+% @article{
+% loughridge2025dafnybench,
+% title={DafnyBench: A Benchmark for Formal Software Verification},
+% author={Chloe R Loughridge and Qinyi Sun and Seth Ahrenbach and Federico Cassano and Chuyue Sun and Ying Sheng and Anish Mudide and Md Rakib Hossain Misu and Nada Amin and Max Tegmark},
+% journal={Transactions on Machine Learning Research},
+% issn={2835-8856},
+% year={2025},
+% url={https://openreview.net/forum?id=yBgTVWccIx},
+% note={}
+% }
+
+% @article{clarkson_2010,
+% author = {Clarkson, Michael R. and Schneider, Fred B.},
+% title = {Hyperproperties},
+% year = {2010},
+% issue_date = {September 2010},
+% publisher = {IOS Press},
+% address = {NLD},
+% volume = {18},
+% number = {6},
+% issn = {0926-227X},
+% abstract = {Trace properties, which have long been used for reasoning about systems, are sets of execution traces. Hyperproperties, introduced here, are sets of trace properties. Hyperproperties can express security policies, such as secure information flow and service level agreements, that trace properties cannot. Safety and liveness are generalized to hyperproperties, and every hyperproperty is shown to be the intersection of a safety hyperproperty and a liveness hyperproperty. A verification technique for safety hyperproperties is given and is shown to generalize prior techniques for verifying secure information flow. Refinement is shown to be applicable with safety hyperproperties. A topological characterization of hyperproperties is given.},
+% journal = {J. Comput. Secur.},
+% month = sep,
+% pages = {1157–1210},
+% numpages = {54},
+% keywords = {safety, liveness, information flow, Security policies}
+% }
+
+% @inproceedings{sun_2024_saiv,
+% author = {Sun, Chuyue and Sheng, Ying and Padon, Oded and Barrett, Clark},
+% title = {Clover: Closed-Loop Verifiable Code Generation},
+% year = {2024},
+% isbn = {978-3-031-65111-3},
+% publisher = {Springer-Verlag},
+% address = {Berlin, Heidelberg},
+% url = {https://doi.org/10.1007/978-3-031-65112-0_7},
+% doi = {10.1007/978-3-031-65112-0_7},
+% abstract = {The use of large language models for code generation is a rapidly growing trend in software development. However, without effective methods for ensuring the correctness of generated code, this trend could lead to undesirable outcomes. In this paper, we introduce a new approach for addressing this challenge: the Clover paradigm, short for Closed-Loop Verifiable Code Generation, which uses consistency checking to provide a strong filter for incorrect code. Clover performs consistency checks among code, docstrings, and formal annotations. The checker is implemented using a novel integration of formal verification tools and large language models. We provide a theoretical analysis to support our thesis that Clover should be effective at consistency checking. We also empirically investigate its performance on a hand-designed dataset (CloverBench) featuring annotated Dafny programs at a textbook level of difficulty. Experimental results show that for this dataset: (i) LLMs are reasonably successful at automatically generating formal specifications; and (ii) our consistency checker achieves a promising acceptance rate (up to 87\%) for correct instances while maintaining zero tolerance for adversarial incorrect ones (no false positives). Clover also discovered 6 incorrect programs in the existing human-written dataset MBPP-DFY-50.},
+% booktitle = {AI Verification: First International Symposium, SAIV 2024, Montreal, QC, Canada, July 22–23, 2024, Proceedings},
+% pages = {134–155},
+% numpages = {22},
+% location = {Montreal, QC, Canada}
+% }
+
+% @article{chenyuan_2025_oopsla,
+% author = {Yang, Chenyuan and Li, Xuheng and Misu, Md Rakib Hossain and Yao, Jianan and Cui, Weidong and Gong, Yeyun and Hawblitzel, Chris and Lahiri, Shuvendu and Lorch, Jacob R. and Lu, Shuai and Yang, Fan and Zhou, Ziqiao and Lu, Shan},
+% title = {AutoVerus: Automated Proof Generation for Rust Code},
+% year = {2025},
+% issue_date = {October 2025},
+% publisher = {Association for Computing Machinery},
+% address = {New York, NY, USA},
+% volume = {9},
+% number = {OOPSLA2},
+% url = {https://doi.org/10.1145/3763174},
+% doi = {10.1145/3763174},
+% abstract = {Generative AI has shown its value for many software engineering tasks. Still in its infancy, large language model (LLM)-based proof generation lags behind LLM-based code generation. In this paper, we present AutoVerus. AutoVerus uses LLMs to automatically generate correctness proof for Rust code. AutoVerus is designed to match the unique features of Verus, a verification tool that can prove the correctness of Rust code using proofs and specifications also written in Rust. AutoVerus consists of a network of agents that are crafted and orchestrated to mimic human experts' three phases of proof construction: preliminary proof generation, proof refinement guided by generic tips, and proof debugging guided by verification errors. To thoroughly evaluate AutoVerus and help foster future research in this direction, we have built a benchmark suite of 150 non-trivial proof tasks, based on existing code-generation benchmarks and verification benchmarks. Our evaluation shows that AutoVerus can automatically generate correct proof for more than 90\% of them, with more than half of them tackled in less than 30 seconds or 3 LLM calls.},
+% journal = {Proc. ACM Program. Lang.},
+% month = oct,
+% articleno = {396},
+% numpages = {29},
+% keywords = {Large Language Models, Program Synthesis, Program Verification, Verus}
+% }
+
+% @inproceedings{zhong_2025_LMPL,
+% author = {Zhong, Si Cheng and Si, Xujie},
+% title = {Towards Repository-Level Program Verification with Large Language Models},
+% year = {2025},
+% isbn = {9798400721489},
+% publisher = {Association for Computing Machinery},
+% address = {New York, NY, USA},
+% url = {https://doi.org/10.1145/3759425.3763382},
+% doi = {10.1145/3759425.3763382},
+% abstract = {Recent advancements in large language models (LLMs) suggest great promises in code and proof generations. However, scaling automated formal verification to real-world projects requires resolving cross-module dependencies and global contexts, which are crucial challenges overlooked by existing LLM-based methods with a special focus on targeting isolated, function-level verification tasks. To systematically explore and address the significant challenges of verifying entire software repositories, we introduce RVBench, the first verification benchmark explicitly designed for repository-level evaluation, constructed from four diverse and complex open-source Verus projects.   We further introduce RagVerus, an extensible framework that synergizes retrieval-augmented generation with context-aware prompting to automate proof synthesis for multi-module repositories. RagVerus triples proof pass rates on existing benchmarks under constrained model inference budgets, and achieves a 27\% relative improvement on the more challenging RVBench benchmark, demonstrating a scalable and sample-efficient verification solution.},
+% booktitle = {Proceedings of the 1st ACM SIGPLAN International Workshop on Language Models and Programming Languages},
+% pages = {27–39},
+% numpages = {13},
+% keywords = {Large Language Model, Trustworthy Code Generation},
+% location = {Singapore, Singapore},
+% series = {LMPL '25}
+% }
 
 \end{thebibliography}
 
