@@ -1,0 +1,42 @@
+# OCamlbuild
+_build/
+*.byte
+*.native
+
+# OCaml
+*.annot
+*.cmo
+*.cmi
+*.cma
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+
+
+bin/whyrel
+
+*notes.md
+*.dot
+*.png
+*.svg
+tools/
+*code-workspace
+test/*
+*.res
+*.claude
+plas/
+thesis_proposal/
+
+# Latex
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.aux
+*.pdf
+
+*.cpython*
