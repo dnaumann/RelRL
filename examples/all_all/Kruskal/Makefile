@@ -14,6 +14,9 @@ uf.mlw: $(FILES) # preuf.mlw
 	sed -f $(POST_PROCESS) -i $@
 	# python3 post-process.py $< > $@
 
+stats: $(FILES)
+	$(WHYREL) -stats-csv $^
+
 ide: uf.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 

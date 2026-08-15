@@ -8,6 +8,9 @@ fact.mlw: fact.rl
 	$(WHYREL) -margin 136 -o $@ $^
 
 
+stats: fact.rl
+	$(WHYREL) -stats-csv $^
+
 ide: fact.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) $<
 

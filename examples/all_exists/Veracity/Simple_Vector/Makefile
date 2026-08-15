@@ -7,6 +7,9 @@ all: prog.mlw
 prog.mlw: prog.rl
 	$(WHYREL) -all-exists -margin 136 -o $@ $^
 
+stats: prog.rl
+	$(WHYREL) -stats-csv $^
+
 ide: prog.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 

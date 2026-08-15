@@ -9,6 +9,9 @@ sumpub.mlw: sumpub.rl
 	$(WHYREL) -margin 80 -o $@ $^
 
 
+stats: sumpub.rl
+	$(WHYREL) -stats-csv $^
+
 ide: sumpub.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) -L $(THEORY_DIR) $<
 

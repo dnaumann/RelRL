@@ -8,6 +8,9 @@ all: prog.mlw
 prog.mlw: $(FILES)
 	$(WHYREL) -margin 136 -o $@ $^
 
+stats: $(FILES)
+	$(WHYREL) -stats-csv $^
+
 ide: prog.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 

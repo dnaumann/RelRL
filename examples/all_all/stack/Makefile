@@ -10,6 +10,9 @@ prog.mlw: $(FILES)
 	python3 add_lemmas.py $@
 
 
+stats: $(FILES)
+	$(WHYREL) -stats-csv $^
+
 ide: prog.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 

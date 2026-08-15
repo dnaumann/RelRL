@@ -51,7 +51,7 @@ module QuickFind : UNIONFIND =
     { ufPriv() };
     { forall p:Ufind in pool. p <> self -> p.id <> prt };
     while (i < k) do
-      invariant { let s = prt.slots in length(s) = k }
+      invariant { let sl = prt.slots in length(sl) = k }
       invariant { forall p:Ufind in pool. p <> self -> p.id <> prt }
       invariant { 0 <= i /\ i <= k }
       invariant { forall j: int. 0 <= j -> j < i -> prt[j] = j }

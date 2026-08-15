@@ -7,6 +7,9 @@ all: prog.mlw
 prog.mlw: prog.rl
 	$(WHYREL) -margin 136 -o $@ $^
 
+stats:
+	@echo "Skipping statistics: no WhyRel source files"
+
 ide: prog.mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 

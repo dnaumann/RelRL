@@ -7,6 +7,9 @@ all: cell.mlw
 cell.mlw: cell.rl
 	$(WHYREL) -margin 136 -o $@ $^
 
+stats: cell.rl
+	$(WHYREL) -stats-csv $^
+
 ide: cell.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) $<
 

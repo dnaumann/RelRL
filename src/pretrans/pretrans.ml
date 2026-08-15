@@ -9,6 +9,7 @@ open Rename_locals
 
 let simplify_effects = ref true
 
+
 (* -------------------------------------------------------------------------- *)
 (* Expand specs to include invariants, and in modules, the interface spec     *)
 (* -------------------------------------------------------------------------- *)
@@ -1396,6 +1397,10 @@ end
 (* -------------------------------------------------------------------------- *)
 
 let process ctbl penv =
+  (* Measure statistics *)
+  let _stats = Measure_stats.measure penv in
+
+
   (* Add invariants (public/private/coupling) to method specs; further, for each
      public method conjoin its interface spec to its module spec. *)
   let penv = Expand_method_spec.expand penv in

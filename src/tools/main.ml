@@ -12,6 +12,9 @@ let program_files : pathname list ref = ref []
 
 let only_parse_flag      = ref false
 let only_typecheck_flag  = ref false
+let stats_flag           = ref false
+let stats_html_flag      = ref false
+let stats_csv_flag       = ref false
 let debug                = ref false
 let only_print_version   = ref false
 let no_encap_check       = ref false
@@ -94,7 +97,20 @@ let run () =
   let program = parse_program !program_files in
   if !only_parse_flag then () else
     let penv, ctbl = typecheck_program program in
-    if !only_typecheck_flag then () else begin
+    if !stats_flag || !stats_html_flag || !stats_csv_flag then begin
+      let fmt = get_formatter () in
+      Format.pp_set_margin fmt !margin;
+      let stats = Measure_stats.measure penv in
+      if !stats_csv_flag
+      then Measure_stats.pp_stats_csv fmt stats
+      else begin
+        if !stats_html_flag
+        then Measure_stats.pp_stats_html fmt stats
+        else Measure_stats.pp_stats fmt stats;
+        Format.pp_force_newline fmt ()
+      end;
+      Format.pp_print_flush fmt ()
+    end else if !only_typecheck_flag then () else begin
       let fmt = get_formatter () in
       Format.pp_set_margin fmt !margin;
       let penv = Pretrans.process ctbl penv in
@@ -152,6 +168,15 @@ let args =
    "-type-check", Set only_typecheck_flag,
    " Type check program and exit";
 
+   "-stats", Set stats_flag,
+   " Type check program, print statistics, and exit";
+
+   "-stats-html", Set stats_html_flag,
+   " Type check program, print statistics as HTML, and exit";
+
+   "-stats-csv", Set stats_csv_flag,
+   " Type check program, print statistics as CSV, and exit";
+
    "-all-exists", Set all_exists_mode,
    " Intepret relational specs as forall-exists";
 
@@ -196,7 +221,9 @@ let set_behaviour_flags () =
   Translate.gen_frame_lemma := not !no_frame_lemma;
   Pretrans.simplify_effects := not !no_simplify_effects;
   Typing.all_exists_mode := !all_exists_mode;
-  Typing.only_parse_or_typecheck := !only_parse_flag || !only_typecheck_flag;
+  Typing.only_parse_or_typecheck :=
+    !only_parse_flag || !only_typecheck_flag || !stats_flag ||
+    !stats_html_flag || !stats_csv_flag;
   ()
 
 let main () =

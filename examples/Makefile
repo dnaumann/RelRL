@@ -37,8 +37,11 @@ BUILD_TARGETS := $(addprefix build-,$(SUBDIRS))
 # Define the replay targets based on subdirectories
 REPLAY_TARGETS := $(addprefix replay-,$(SUBDIRS))
 
+# Define the stats targets based on subdirectories
+STATS_TARGETS := $(addprefix stats-,$(SUBDIRS))
 
-.PHONY: all replay clean summary $(BUILD_TARGETS) $(REPLAY_TARGETS)
+
+.PHONY: all replay stats clean summary $(BUILD_TARGETS) $(REPLAY_TARGETS) $(STATS_TARGETS)
 
 # The 'all' target now calls specific build-prefix targets
 all: $(BUILD_TARGETS)
@@ -47,6 +50,9 @@ all: $(BUILD_TARGETS)
 
 # The top-level replay target
 replay: $(REPLAY_TARGETS)
+
+# The top-level stats target
+stats: $(STATS_TARGETS)
 
 # This rule uses the 'build-' prefix to stay unique
 $(BUILD_TARGETS): build-%:
@@ -70,6 +76,10 @@ $(REPLAY_TARGETS): replay-%:
 		printf '$(RED)   Time: %ds$(NC)\n' $$elapsed; \
 		printf "$* : $(RED)FAILED$(NC) [%ds]\n" $$elapsed > $(RESULT_DIR)/$(subst /,_,$*).res; \
 	fi
+
+$(STATS_TARGETS): stats-%:
+	@echo "== Statistics: $* =="
+	@$(MAKE) -C $* stats
 
 # The Summary Reporter
 summary:

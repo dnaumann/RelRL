@@ -8,6 +8,9 @@ all: $(PROG).mlw
 $(PROG).mlw: $(PROG).rl
 	$(WHYREL) -debug -all-exists -margin 80 -o $@ $^
 
+stats: $(PROG).rl
+	$(WHYREL) -stats-csv $^
+
 ide: $(PROG).mlw
 	$(WHY3) ide -L . -L $(WHYREL_STDLIB) $^
 

@@ -9,6 +9,9 @@ all: prog.mlw
 prog.mlw: $(FILES)
 	$(WHYREL) -all-exists  -margin 136 -o $@ $^
 
+stats: $(FILES)
+	$(WHYREL) -stats-csv $^
+
 ide: prog.mlw
 	$(WHY3) ide -L $(WHYREL_STDLIB) -L $(EXTERN_FILES_DIR) $<
 
