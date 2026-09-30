@@ -222,7 +222,7 @@ let pp_atomic_command_special outf ac =
 
 let pp_effect_kind outf = function
   | Ast.Read -> fprintf outf "rd"
-  | Ast.Write -> fprintf outf "rw"
+  | Ast.Write -> fprintf outf "wr"
 
 let pp_effect_desc outf = function
   | Effvar id -> pp_ident outf id.node

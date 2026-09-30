@@ -117,7 +117,7 @@ let set_behaviour_flags () =
   Encap_check.do_encap_check := not !no_encap_check;
   Translate.gen_frame_lemma := not !no_frame_lemma;
   Pretrans.simplify_effects := not !no_simplify_effects;
-  Pretrans.resolve_for_locEq := not !no_simplify_effects;
+  Pretrans.resolve_for_locEq := not !no_resolve_for_locEq;
   Typing.all_exists_mode := !all_exists_mode;
   Typing.only_parse_or_typecheck := !only_parse_flag || !only_typecheck_flag;
   ()
@@ -180,14 +180,15 @@ let main () =
   Printf.fprintf stderr "Error! No input files specified\n"  else
   let program = parse_program !program_files  in
   if !only_parse_flag then () else
-  let penv, ctbl = typecheck_program program in
-    (* if !align_mode then Align.align penv ctbl set_output else (); *)
-  if !only_typecheck_flag then () else 
-  if !locEq_method <> "" then 
+  if !locEq_method <> "" then begin
       let meth_name = Id !locEq_method in
       let program = filter_out is_relation_module program in
       let penv, ctbl = typecheck_program program in
-      Pretrans.handle_local_equivalence meth_name penv ctbl  else
+      if !only_typecheck_flag then () else
+      Pretrans.handle_local_equivalence meth_name penv ctbl
+  end else begin
+  let penv, ctbl = typecheck_program program in
+  if !only_typecheck_flag then () else begin
   if !output_fname = "" && !align_mode then
     (let base = Filename.basename (List.hd !program_files) in
      let stem = try Filename.chop_extension base with Invalid_argument _ -> base in
@@ -220,8 +221,9 @@ let main () =
       Format.pp_set_margin fmt !margin;
       let penv = Pretrans.process ctbl penv in
       translate_program fmt penv ctbl
-      end;
-  
+      end
+  end
+  end;
   close_output ()
 
 ;;
