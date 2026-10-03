@@ -1,0 +1,8 @@
+"Kind","Owner","Method","Preconditions","Postconditions","Frame effects","Declaration annotations","Body annotations","Command nodes","Assertions/assumptions","Invariants","Unary command nodes","Relational command nodes","Unary assertions/assumptions","Relational assertions/assumptions","Unary invariants","Relational invariants","HavocR","BiLinks","Auxiliary definitions"
+"Unary method","M","main","0","0","0","0","0","0","0","0","","","","","","","","",""
+"Unary method","M","errAssert","1","1","2","4","0","0","0","0","","","","","","","","",""
+"Relational method","MM","main","2","1","4","7","0","","","","26","2","0","0","0","0","0","0",""
+"Auxiliary","Interfaces","","","","","","","","","","","","","","","","","","0"
+"Auxiliary","Unary modules","","","","","","","","","","","","","","","","","","0"
+"Auxiliary","Relational modules","","","","","","","","","","","","","","","","","","0"
+"Auxiliary","Total","","","","","","","","","","","","","","","","","","0"

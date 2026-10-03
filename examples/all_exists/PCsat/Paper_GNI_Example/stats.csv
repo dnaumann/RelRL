@@ -1,0 +1,7 @@
+"Kind","Owner","Method","Preconditions","Postconditions","Frame effects","Declaration annotations","Body annotations","Command nodes","Assertions/assumptions","Invariants","Unary command nodes","Relational command nodes","Unary assertions/assumptions","Relational assertions/assumptions","Unary invariants","Relational invariants","HavocR","BiLinks","Auxiliary definitions"
+"Unary method","U","noninterference","0","0","2","2","0","19","0","0","","","","","","","","",""
+"Relational method","UREL","noninterference","1","1","4","6","17","","","","38","47","1","2","1","4","6","0",""
+"Auxiliary","Interfaces","","","","","","","","","","","","","","","","","","0"
+"Auxiliary","Unary modules","","","","","","","","","","","","","","","","","","0"
+"Auxiliary","Relational modules","","","","","","","","","","","","","","","","","","0"
+"Auxiliary","Total","","","","","","","","","","","","","","","","","","0"

@@ -1,0 +1,8 @@
+"Kind","Owner","Method","Preconditions","Postconditions","Frame effects","Declaration annotations","Body annotations","Command nodes","Assertions/assumptions","Invariants","Unary command nodes","Relational command nodes","Unary assertions/assumptions","Relational assertions/assumptions","Unary invariants","Relational invariants","HavocR","BiLinks","Auxiliary definitions"
+"Interface","I","counter_diff","0","0","1","1","0","","","","","","","","","","","",""
+"Unary method","A","counter_diff","0","0","0","0","0","12","0","0","","","","","","","","",""
+"Relational method","FREL","counter_diff","1","1","0","2","4","","","","2","14","0","0","0","3","1","0",""
+"Auxiliary","Interfaces","","","","","","","","","","","","","","","","","","0"
+"Auxiliary","Unary modules","","","","","","","","","","","","","","","","","","0"
+"Auxiliary","Relational modules","","","","","","","","","","","","","","","","","","0"
+"Auxiliary","Total","","","","","","","","","","","","","","","","","","0"

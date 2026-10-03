@@ -79,7 +79,7 @@ $(REPLAY_TARGETS): replay-%:
 
 $(STATS_TARGETS): stats-%:
 	@echo "== Statistics: $* =="
-	@$(MAKE) -C $* stats
+	@$(MAKE) --no-print-directory -s -C $* stats > "$*/stats.csv"
 
 # The Summary Reporter
 summary:
