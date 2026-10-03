@@ -22,6 +22,8 @@ let no_frame_lemma       = ref false
 let no_resolve_for_locEq = ref false
 let no_simplify_effects  = ref false
 let all_exists_mode      = ref false
+let prove_mode           = ref false
+let output_path : pathname option ref = ref None
 
 let output : out_channel option ref = ref None
 
@@ -29,12 +31,17 @@ let locEq_method : string ref = ref ""
 
 let margin : int ref = ref 136
 
-let set_output fname = output := Some (open_out fname)
+let set_output fname = output_path := Some fname
+
+let open_output () =
+  match !output_path with
+  | None -> ()
+  | Some fname -> output := Some (open_out fname)
 
 let close_output () =
   match !output with
   | None -> ()
-  | Some out_chan -> close_out out_chan
+  | Some out_chan -> close_out out_chan; output := None
 
 let get_formatter () =
   match !output with
@@ -77,7 +84,7 @@ let translate_program fmt penv ctbl =
     Why3.Mlw_printer.pp_mlw_file fmt mlw;
     Format.pp_print_newline fmt ();
     Format.pp_print_newline fmt ();
-    Format.print_flush () in
+    Format.pp_print_flush fmt () in
   let ctxt, state_module = Translate.Build_State.mk (penv,ctbl) in
   let mlw_files = compile_penv ctxt penv in
   emit_mlw state_module;
@@ -226,19 +233,70 @@ let set_behaviour_flags () =
     !stats_html_flag || !stats_csv_flag;
   ()
 
+let prove_program sources file =
+  let executable = Unix.realpath Sys.executable_name in
+  let library = Filename.concat
+      (Filename.dirname (Filename.dirname executable)) "stdlib" in
+  if not (Sys.file_exists library) then
+    failwith ("WhyRel standard library directory does not exist: " ^ library);
+  if not (Sys.is_directory library) then
+    failwith ("WhyRel standard library path is not a directory: " ^ library);
+  let directories = List.sort_uniq String.compare
+      (List.map Filename.dirname sources) in
+  let run_prover prover =
+    let args = ["why3"; "prove"; "-L"; library] @
+        List.concat_map (fun dir -> ["-L"; dir]) directories @
+        ["-a"; "split_vc"; "-P"; prover; "-t"; "5"; "-m"; "1024"; file] in
+    Printf.printf "Running %s\n%!"
+      (String.concat " " (List.map Filename.quote args));
+    let pid = Unix.create_process "why3" (Array.of_list args)
+        Unix.stdin Unix.stdout Unix.stderr in
+    match snd (Unix.waitpid [] pid) with
+    | Unix.WEXITED (0 | 2 as code) -> code
+    | Unix.WEXITED code ->
+      failwith (Printf.sprintf "Why3 failed (exit %d); see diagnostics above" code)
+    | _ -> failwith "Why3 was interrupted" in
+  if run_prover "Alt-Ergo,," = 0 then 0
+  else run_prover "Z3,,"
+
 let main () =
-  let add_program_file s = program_files := s :: !program_files in
+  let add_program_file s =
+    if s = "prove" && !program_files = [] then prove_mode := true
+    else program_files := s :: !program_files in
   Arg.parse (Arg.align args) add_program_file usage;
   program_files := List.rev !program_files;
   set_debug_flags ();
   set_behaviour_flags ();
+  if !prove_mode && (!only_parse_flag || !only_typecheck_flag ||
+      !stats_flag || !stats_html_flag || !stats_csv_flag || !locEq_method <> "") then
+    raise (Arg.Bad "prove cannot be combined with parse, type-check, stats, or locEq modes");
   if !only_print_version then print_version () else
-  if List.length !program_files = 0 then () else
+  if List.length !program_files = 0 then begin
+    if !prove_mode then raise (Arg.Bad "prove requires a source program")
+  end else
   if !locEq_method <> "" then handle_local_equivalence !locEq_method
-  else run (); close_output ()
+  else if !prove_mode then begin
+    let file, temporary = match !output_path with
+      | Some file -> file, false
+      | None -> Filename.temp_file "whyrel-" ".mlw", true in
+    let cleanup () =
+      close_output ();
+      if temporary then Sys.remove file in
+    let code = Fun.protect ~finally:cleanup (fun () ->
+      output_path := Some file;
+      open_output ();
+      run ();
+      close_output ();
+      prove_program !program_files file) in
+    exit code
+  end else begin open_output (); run (); close_output () end
 
 ;;
 
 if not !Sys.interactive
-then main ()
+then (try main () with
+  | Arg.Bad msg | Failure msg | Sys_error msg ->
+    Printf.eprintf "WhyRel: %s\n" msg; exit 1
+  | Unix.Unix_error (err, fn, arg) ->
+    Printf.eprintf "WhyRel: %s %s: %s\n" fn arg (Unix.error_message err); exit 1)
 else ()

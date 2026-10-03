@@ -122,9 +122,15 @@ verification, pass the `-all-exists` option. For example:
 whyrel -all-exists foo.rl -o foo.mlw
 ```
 
+To translate and automatically prove an example without invoking Why3, run:
+
+```
+whyrel prove foo.rl
+```
+
+Note that this uses Why3's `prove` facility with a default set of
+flags that seem to only work well on small examples.
 
 The experimental `-locEq` option can be used to derive the local equivalence
 spec for a given method.
-
-
 
