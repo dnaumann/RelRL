@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Run WhyRel's default proof command on Hypra, RHLE, Itzhaky, and PCsat.
+"""Run WhyRel's default proof command on valid Hypra, RHLE, Itzhaky, and PCsat candidates.
+
+Exclude specifications documented as invalid in examples/all_exists/README.md.
+Valid candidates remain included even if automatic proof currently fails.
 
 Run from any directory: python3 /path/to/RelRL/test_whyrel_prove.py
 Requires a built bin/whyrel and configured Alt-Ergo/Z3 provers.
@@ -18,6 +21,35 @@ import time
 ROOT = Path(__file__).resolve().parent
 EXAMPLES = ROOT / "examples" / "all_exists"
 GROUPS = ("Hypra", "RHLE", "Itzhaky", "PCsat")
+
+# Explicit exclusions from examples/all_exists/README.md, rather than filtering
+# by solver results or occurrences of "false" in the source (which may be valid).
+INVALID_EXAMPLES = frozenset({
+    "RHLE/API_Refinement/Add3_Shuffled",
+    "RHLE/API_Refinement/Conditional_Nonrefinement",
+    "RHLE/API_Refinement/Loop_Nonrefinement",
+    "RHLE/API_Refinement/Simple_Nonrefinement",
+    "RHLE/Delimited_Release/Parity_No_Dr",
+    "RHLE/Delimited_Release/Wallet_No_Dr",
+    "RHLE/GNI/Denning2",
+    "RHLE/GNI/Denning3",
+    "RHLE/GNI/Nondet_Leak",
+    "RHLE/GNI/Nondet_Leak2",
+    "RHLE/GNI/Simple_Leak",
+    "RHLE/GNI/Smith1",
+    "RHLE/Param_Usage/Even_Odd",
+})
+
+
+def candidate_sources():
+    """Return proof candidates and the documented-invalid sources skipped."""
+    sources = sorted(source for group in GROUPS
+                     for source in (EXAMPLES / group).rglob("*.rl"))
+    candidates, skipped = [], []
+    for source in sources:
+        example = source.parent.relative_to(EXAMPLES).as_posix()
+        (skipped if example in INVALID_EXAMPLES else candidates).append(source)
+    return candidates, skipped
 
 
 def stop_process(process):
@@ -115,8 +147,11 @@ def main():
     if missing:
         print(f"Missing example directories: {', '.join(missing)}", file=sys.stderr)
         return 1
-    # Include every .rl program, including Add3_Sorted/prog_vars.rl.
-    sources = sorted(source for group in GROUPS for source in (EXAMPLES / group).rglob("*.rl"))
+    # Keep all variants of valid examples, including Add3_Sorted/prog_vars.rl.
+    sources, skipped = candidate_sources()
+    print(f"Testing {len(sources)} candidates; skipping {len(skipped)} documented-invalid programs.")
+    for source in skipped:
+        print(f"  SKIPPED (invalid specification): {source.relative_to(EXAMPLES)}")
     results = []
     interrupted = False
     try:
