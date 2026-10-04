@@ -29,6 +29,17 @@ module List3
     listNth3 2 (cons x1 (cons x2 (cons x3 l))) = x3
 
 
+  let lemma list3_shape (l: intList)
+    requires { listLength l = 3 }
+    ensures { l = cons (listNth3 0 l) (cons (listNth3 1 l) (cons (listNth3 2 l) nil)) }
+  = match l with
+    | Cons a (Cons b (Cons c Nil)) ->
+      assert { l = cons a (cons b (cons c nil)) };
+      assert { listNth3 0 l = a };
+      assert { listNth3 1 l = b };
+      assert { listNth3 2 l = c }
+    | _ -> absurd
+    end
 
   predicate is_sorted3 (xs: intList) =
     listLength(xs) = 3 /\
@@ -55,19 +66,27 @@ module List3
   let rec function upd_list  (k: int) (v: int) (xs:intList) : intList
     requires { 0 <= k < listLength(xs) } =
     match xs with
-    | nil -> nil
+    | Nil -> Nil
     | (Cons h t) -> if (k = 0) then  (Cons v t) else Cons h (upd_list (k - 1) v t)
     end
 
   let rec function sum (l: intList): int =
     match l with
-    | nil -> 0
+    | Nil -> 0
     | Cons h t -> h + (sum t)
     end
 
-
-
+  let lemma sum3 (l: intList)
+    requires { listLength l = 3 }
+    ensures { sum l = listNth3 0 l + listNth3 1 l + listNth3 2 l }
+  = list3_shape l;
+    match l with
+    | Cons a (Cons b (Cons c Nil)) ->
+      assert { sum l = a + b + c };
+      assert { l = cons a (cons b (cons c nil)) };
+      assert { listNth3 0 l = a };
+      assert { listNth3 1 l = b };
+      assert { listNth3 2 l = c }
+    | _ -> absurd
+    end
 end
-
-
-

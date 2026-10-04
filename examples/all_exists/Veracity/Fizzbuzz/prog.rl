@@ -285,6 +285,7 @@ module SumAB : B =
       i := i + 1;
     done;
     { result = count(hmap, 0, n / 2) + count(hmap, n / 2, n) };
+    { count(hmap, 0, n) = count(hmap, 0, n / 2) + count(hmap, n / 2, n) };
     { result = count(hmap, 0, n) };
 end
 
@@ -314,6 +315,7 @@ module SumBA : B =
       i := i + 1;
     done;
     { result = count(hmap, n / 2, n) + count(hmap, 0, n / 2) };
+    { count(hmap, 0, n) = count(hmap, 0, n / 2) + count(hmap, n / 2, n) };
     { result = count(hmap, 0, n) };
 end
 

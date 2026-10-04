@@ -42,6 +42,7 @@ bimodule FREL (A | B) =
 
 
   import theory List3
+  extern bipredicate is_permutation3(intList | intList)
 
   meth prog (l: intList|  l: intList) : (intList | intList)
   requires {Both (listLength(l) = 3)}
@@ -58,6 +59,7 @@ bimodule FREL (A | B) =
     (skip | assume { is_sorted3(choice_list) });
     (skip | assume { is_permutation3(l, choice_list) });
     HavocR shuffle_ret { [> shuffle_ret = choice_list |> };
+    Assert { is_permutation3(sort_ret | shuffle_ret) };
     Assert { sort_ret =:= shuffle_ret };
 
      (l := sort_ret | l := shuffle_ret);
