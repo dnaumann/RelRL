@@ -92,7 +92,19 @@ bimodule Birefine ( A | A ) =
         done;
     end | skip);
 
-    HavocR b { ~ (b =:= b) };
+
+    /* Originally, we verified this using HavocR b { ~(b =:= b) }
+       but this version with If4's helps `whyrel prove` automatically verify this example. */
+    If4 (b) | (false)
+    thenThen
+        HavocR b { [> b = false |> };
+    thenElse
+        HavocR b { [> b = false |> };
+    elseThen
+        HavocR b { [> b = true |> };
+    elseElse
+        HavocR b { [> b = true |> };
+    end;
     
     If4 (false) | (b) 
     thenThen
