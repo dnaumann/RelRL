@@ -1151,10 +1151,11 @@ let rec remove_last_in_seq (c: command) : command =
 
 (* simplify_command c = c'
 
-   rewrite every occurence of skip ; D or D ; skip in c to D in c';
-   rewrite assert { f } and assume { f } in c to skip in c';
-   rewrite while false do C done to skip
-   rewrite while e do c; if e then c end to while e do c
+   rewrite every occurence of (skip ; D) or (D ; skip) in c to D in c';
+   rewrite (assert { f }) and (assume { f }) in c to skip in c';
+   rewrite (while false do C done) to skip
+   rewrite (while e do C; if e then C end) in c to (while e do C) in c'
+   rewrite (if e then C else C) in c to c'
 *)
 let rec simplify_command (c: command) : command =
   match c with
@@ -1167,7 +1168,10 @@ let rec simplify_command (c: command) : command =
       | Acommand Skip, d | d, Acommand Skip -> d
       | _, _ -> Seq (c1', c2')
     end
-  | If (e, c1, c2) -> If (e, simplify_command c1, simplify_command c2)
+  | If (e, c1, c2) ->
+    let c1' = simplify_command c1 in
+    let c2' = simplify_command c2 in
+    if eqv_command c1' c2' then c1' else If (e, c1', c2')
   | While ({node=Econst {node=Ebool false}}, _, _) -> Acommand Skip
   | While (e, {winvariants; wframe; wvariant}, c) ->
     let winvariants = map simplify_formula winvariants in
