@@ -73,13 +73,29 @@ bimodule FREL (A | A) =
   (assume {0 = flipcoin_ret \/ flipcoin_ret = 1} | skip );
 
 
-  /* right program calls with existential spec with choicevar */
-  /* Translates to (low =:= low -> flipcoin_ret =:= flipcoin_ret) /\
-        [< low <]  <> [> low >] -> (let x | x = flipcoin_ret | 1 - flipcoin_ret in x =:= x) */
-  HavocR flipcoin_ret {(low =:= low /\ flipcoin_ret =:= flipcoin_ret) \/
-                       ([< low <]  <> [> low >] /\ 
-                    (let x | x = flipcoin_ret | 1 - flipcoin_ret in x =:= x))};
-  
+  /* We originally verified a version of this program using the
+     following HavocR filter
+
+       HavocR flipcoin_ret 
+               {(low =:= low /\ flipcoin_ret =:= flipcoin_ret) \/
+                  ([< low <]  <> [> low >] /\ 
+                  (let x | x = flipcoin_ret | 1 - flipcoin_ret in x =:= x))}
+
+     but at the cost of additional user interaction in Why3 (tactics
+     doing case splits).  Using the If4 below, we can lift the case
+     splits up and automatically verify the example using `whyrel prove`.
+  */
+  Assert { Both (low = 0 \/ low = 1) };
+  If4 (low = 0) | (low = 0)
+  thenThen
+    HavocR flipcoin_ret { flipcoin_ret =:= flipcoin_ret };
+  thenElse
+    HavocR flipcoin_ret { [> flipcoin_ret >] = [> 1 >] - [< flipcoin_ret <] };
+  elseThen
+    HavocR flipcoin_ret { [> flipcoin_ret >] = [> 1 >] - [< flipcoin_ret <] };
+  elseElse
+    HavocR flipcoin_ret { flipcoin_ret =:= flipcoin_ret };
+  end;
 
   (if (flipcoin_ret = 0) 
   then

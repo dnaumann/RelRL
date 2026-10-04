@@ -51,7 +51,7 @@ bimodule FREL (A | A) =
 
     |_ sum := 0 _|;
     (havoc b | skip);
-    HavocR b { [> b < 0 |> };
+    HavocR b { [> b = -1 |> }; /* b < 0 is an adequate filter, but this filter makes it easy for the solver to prove the existential in the check */
 
     If4 (b > 0) | (b > 0) 
     thenThen
