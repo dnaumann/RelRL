@@ -15,6 +15,9 @@ To run the examples simply invoke `boogie filename.bpl`.
 They were tested using boogie version 3.5.8 but likely run
 on other versions.  Boogie requires the Z3 SMT solver.
 
+_Expected successes:_ all examples should verify fully except those 
+    that begin with comments that say `EXPECT ...failures`. 
+
 The python files and burden_bpl.md are WIP about annotation statistics
 and should probably be deleted.  
 

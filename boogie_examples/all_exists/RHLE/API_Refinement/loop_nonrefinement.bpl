@@ -1,3 +1,4 @@
+/* EXPECT verification failure */
 /*
 https://github.com/rcdickerson/rhle-benchmarks/blob/main/api-refinement/loop-nonrefinement.imp
 // A nonrefinement involving a simple loop.

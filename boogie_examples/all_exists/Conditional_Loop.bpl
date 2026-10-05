@@ -39,7 +39,7 @@ In fact we do two versions, to illustrate a technical point.
 
 /* First version: simple non-exclusive alignment conditions; fails
    to verify unless the RO snapshot include exclusion condition.
-   We add it here --see NOTE-- but that diverges from def of chk
+   We add it here --see NOTE-- but that differs from def of chk
    function for filter-adequacy. */
 
 procedure loop1 (x1: int, n1: int, x2: int, n2: int)
@@ -95,7 +95,7 @@ procedure loop1 (x1: int, n1: int, x2: int, n2: int)
     vnt := (n2 - w2) mod n2;
     // snapshot RO condition (added by chk)
     ro := (y2 > 0 && w2 != 0) 
-         && !(y1 > 0 && w1 != 0); // NOTE: not really added by chk
+         && !(y1 > 0 && w1 != 0); // NOTE: conjunct not really added by chk
 
     // left-only condition
     if (y1 > 0 && w1 != 0)

@@ -1,5 +1,8 @@
+/* EXPECT some verification failures */ 
+
 /* demonstrates the difficulty of finding invariant 
-   for Conditional_Loop using eager lockstep loop alignment */
+   for Conditional_Loop using eager lockstep loop alignment 
+*/
 
 procedure loop1 (x1: int, n1: int, x2: int, n2: int)
   returns (z1: int, z2: int)

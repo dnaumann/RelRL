@@ -1,6 +1,6 @@
-/* https://github.com/rcdickerson/rhle-benchmarks/blob/main/api-refinement/add3-shuffled.imp
+/* EXPECT verification failure */
+/* https://github.com/rcdickerson/rhle-benchmarks/blob/main/api-refinement/add3-shuffled.imp */
 
-*/
 
 type list = [int]int;
 

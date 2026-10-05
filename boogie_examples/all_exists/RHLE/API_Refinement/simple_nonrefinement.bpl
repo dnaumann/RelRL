@@ -1,3 +1,4 @@
+/* EXPECT verification failure */
 /*
 https://github.com/rcdickerson/rhle-benchmarks/blob/main/api-refinement/simple-nonrefinement.imp
 // A program together with an invalid refinement.

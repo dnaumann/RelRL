@@ -33,7 +33,12 @@ procedure p (A1: [int] int, A2: [int] int, n1: int, n2: int)
   havoc b1;
   sum2 := 0;
   havoc b2;
+/* Unproved filter.  Semantically ok but SMT doesn't find witness.
+  assert (exists v:int :: b2 < 0); // inserted by chk
   assume b2 < 0; 
+*/ 
+  assert (exists v:int :: v == -1); // inserted by chk
+  assume b2 == -1; // Stronger filter that works for SMT.  
 
   if (b1 > 0 && b2 > 0) { // unreachable 
     i1 := 0;

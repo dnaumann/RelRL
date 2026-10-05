@@ -1,5 +1,4 @@
 
-
 /* Second version: formulate the alignment conditions to be 
    mutually exclusive, and strictly follow the RO snapshot in 
    def of chk for filter-adequacy. */

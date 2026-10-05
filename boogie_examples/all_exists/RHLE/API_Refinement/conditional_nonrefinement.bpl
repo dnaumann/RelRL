@@ -1,3 +1,4 @@
+/* EXPECT verification failure */
 // An invalid refinement involving a simple conditional.
 /* https://github.com/rcdickerson/rhle-benchmarks/blob/main/api-refinement/conditional-nonrefinement.imp
 

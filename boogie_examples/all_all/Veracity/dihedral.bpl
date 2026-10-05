@@ -1,4 +1,4 @@
-//  WIP
+/* EXPECT some verification failures - Work in Progress */ 
 
 // Translated from Veracity: https://github.com/veracity-lang/veracity/blob/main/benchmarks/manual/dihedral.vcy
 

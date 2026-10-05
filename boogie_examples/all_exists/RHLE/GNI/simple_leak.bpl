@@ -1,3 +1,4 @@
+/* EXPECT verification failure */
 /*
 https://github.com/rcdickerson/rhle-benchmarks/blob/main/gni/simple-leak.imp
 */
