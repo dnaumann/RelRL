@@ -131,6 +131,21 @@ whyrel prove foo.rl
 Note that this uses Why3's `prove` facility with a default set of
 flags that seem to only work well on small examples.
 
+
+For examples with a saved session, prover timing can be obtained in two ways using the why3 session command.  For min/max/average time per VC, e.g.:
+
+```
+.../all_exists/tiling>why3 session info --provers-stats prog 
+
+```
+
+Detailed stats can be found in an html generated into the target directory, e.g.:
+
+```
+.../all_exists/tiling>why3 session html prog 
+
+```
+
 The experimental `-locEq` option can be used to derive the local equivalence
 spec for a given method.
 
