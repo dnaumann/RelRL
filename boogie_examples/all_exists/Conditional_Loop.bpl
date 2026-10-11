@@ -41,6 +41,7 @@ In fact we do two versions, to illustrate a technical point.
    to verify unless the RO snapshot include exclusion condition.
    We add it here --see NOTE-- but that differs from def of chk
    function for filter-adequacy. */
+/* Second version is in Conditional_Loop_v2.bpl. */
 
 procedure loop1 (x1: int, n1: int, x2: int, n2: int)
   returns (z1: int, z2: int)

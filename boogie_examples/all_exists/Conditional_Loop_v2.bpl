@@ -1,6 +1,6 @@
 
-/* Second version: formulate the alignment conditions to be 
-   mutually exclusive, and strictly follow the RO snapshot in 
+/* Second version of Conditional_Loop: formulate the alignment conditions 
+   to be mutually exclusive, and strictly follow the RO snapshot in 
    def of chk for filter-adequacy. */
 
 procedure loop2 (x1: int, n1: int, x2: int, n2: int)
