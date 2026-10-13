@@ -39,6 +39,7 @@ interface I =
     ensures { rep_closed(self) }
     effects { rd self; rw {self}`head, {self}`rep }
 
+/* An abitrary function, to be 'sampled'. */
   meth f (i:int) : int
     requires { i >= 0 }
     effects { rd i }
@@ -80,7 +81,7 @@ module M0 : I =
       i := i + 1;
       var j: int in
       j := i;
-      k := f(j);
+      k := f(j); /* sample f at current index j */
       p := new Node;
       Node(p, k);
       var hd: Node in
@@ -145,7 +146,7 @@ module M1 : I =
       var j: int in
       havoc j;
       assume { j >= 0 };
-      k := f(j);
+      k := f(j);  /* sample f at arbitrary value */ 
       p := new Node;
       Node(p, k);
       var hd: Node in

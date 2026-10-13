@@ -1,16 +1,24 @@
-WHY3 ?= why3
-WHYREL ?= ../../../bin/whyrel
-WHYREL_STDLIB ?= ../../../stdlib
+WHY3=why3
+WHYREL=../../../bin/whyrel
+WHYREL_STDLIB=../../../stdlib
+THEORY=.
+PROG = prog
 
-.PHONY: all prove replay
+all: $(PROG).mlw
 
-all: prog.mlw
+$(PROG).mlw: $(PROG).rl
+	$(WHYREL) -debug -all-exists -margin 80 -o $@ $^
 
-prog.mlw: prog.rl
-	$(WHYREL) -all-exists -o $@ $<
+stats: $(PROG).rl
+	$(WHYREL) -stats-csv $^
 
-prove:
-	$(WHYREL) prove -all-exists -o prog.mlw prog.rl
+ide: $(PROG).mlw
+	$(WHY3) ide -L . -L $(WHYREL_STDLIB) -L $(THEORY)  $^
 
-replay: prog.mlw
-	$(WHY3) replay -L . -L $(WHYREL_STDLIB) prog
+replay: $(PROG).mlw $(PROG)/why3session.xml
+	$(WHY3) replay -L . -L $(WHYREL_STDLIB) $(PROG)
+
+.PHONY: clean
+clean:
+	rm -f $(PROG).mlw
+
