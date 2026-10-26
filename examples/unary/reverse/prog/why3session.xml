@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"https://www.why3.org/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="CVC5" version="1.3.4.dev+main@9dd384b" timelimit="30" steplimit="0" memlimit="1024"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="prog.mlw"/>
+<theory name="State" proved="true">
+ <goal name="state&#39;vc" expl="VC for state" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="state&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.047260" steps="22192"/></proof>
+  </goal>
+  <goal name="state&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.071144" steps="28703"/></proof>
+  </goal>
+  <goal name="state&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.073281" steps="29898"/></proof>
+  </goal>
+  <goal name="state&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.059038" steps="28379"/></proof>
+  </goal>
+  <goal name="state&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.061347" steps="28566"/></proof>
+  </goal>
+  <goal name="state&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.036705" steps="26019"/></proof>
+  </goal>
+  <goal name="state&#39;vc.6" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.037645" steps="26029"/></proof>
+  </goal>
+  <goal name="state&#39;vc.7" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.060769" steps="28684"/></proof>
+  </goal>
+  <goal name="state&#39;vc.8" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.060582" steps="28973"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="REVERSE" proved="true">
+ <goal name="segment_tail" proved="true">
+ <transf name="unfold" proved="true" arg1="segment">
+  <goal name="segment_tail.0" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="segment_tail.0.0" proved="true">
+   <proof prover="0"><result status="valid" time="0.040826" steps="28925"/></proof>
+   </goal>
+   <goal name="segment_tail.0.1" proved="true">
+   <proof prover="0"><result status="valid" time="0.028054" steps="28035"/></proof>
+   </goal>
+   <goal name="segment_tail.0.2" proved="true">
+   <proof prover="0"><result status="valid" time="0.028690" steps="28026"/></proof>
+   </goal>
+   <goal name="segment_tail.0.3" proved="true">
+   <proof prover="0"><result status="valid" time="0.080681" steps="37546"/></proof>
+   </goal>
+   <goal name="segment_tail.0.4" proved="true">
+   <proof prover="0"><result status="valid" time="0.043183" steps="29184"/></proof>
+   </goal>
+   <goal name="segment_tail.0.5" proved="true">
+   <transf name="case" proved="true" arg1="lo + 1 = hi">
+    <goal name="segment_tail.0.5.0" expl="true case" proved="true">
+    <transf name="assert" proved="true" arg1="forall p:reference. not mem1 p (diff nodes (singleton1 head1))">
+     <goal name="segment_tail.0.5.0.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="0.281204" steps="107531"/></proof>
+     </goal>
+     <goal name="segment_tail.0.5.0.1" expl="true case" proved="true">
+     <proof prover="0"><result status="valid" time="0.081230" steps="37506"/></proof>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="segment_tail.0.5.1" expl="false case" proved="true">
+    <proof prover="0"><result status="valid" time="0.092787" steps="37769"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="segment_tail.0.6" proved="true">
+   <proof prover="0"><result status="valid" time="0.066662" steps="32072"/></proof>
+   </goal>
+   <goal name="segment_tail.0.7" proved="true">
+   <proof prover="0"><result status="valid" time="0.065556" steps="31854"/></proof>
+   </goal>
+   <goal name="segment_tail.0.8" proved="true">
+   <proof prover="0"><result status="valid" time="0.065394" steps="32056"/></proof>
+   </goal>
+   <goal name="segment_tail.0.9" proved="true">
+   <proof prover="0"><result status="valid" time="0.125470" steps="45624"/></proof>
+   </goal>
+   <goal name="segment_tail.0.10" proved="true">
+   <proof prover="0"><result status="valid" time="0.075299" steps="33027"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="segment_cons" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="segment_cons.0" proved="true">
+  <proof prover="0"><result status="valid" time="0.986515" steps="159752"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Reverse" proved="true">
+ <goal name="reverse&#39;vc" expl="VC for reverse" proved="true">
+ <transf name="unfold" proved="true" arg1="listrep">
+  <goal name="reverse&#39;vc.0" expl="VC for reverse" proved="true">
+  <transf name="unfold" proved="true" arg1="segment">
+   <goal name="reverse&#39;vc.0.0" expl="VC for reverse" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="reverse&#39;vc.0.0.0" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.047300" steps="31673"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.1" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.030764" steps="30824"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.2" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.030349" steps="30825"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.3" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.068657" steps="33195"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.4" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.030906" steps="30878"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.5" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.069797" steps="34502"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.6" expl="original := self.contents" proved="true">
+    <proof prover="0"><result status="valid" time="0.073818" steps="34632"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.7" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.031634" steps="31936"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.8" expl="current := self.head" proved="true">
+    <proof prover="0"><result status="valid" time="0.074951" steps="34927"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.9" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.032784" steps="32055"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.10" expl="todo := self.rep" proved="true">
+    <proof prover="0"><result status="valid" time="0.077672" steps="37237"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.11" expl="locals type invariant" proved="true">
+    <proof prover="0"><result status="valid" time="0.093599" steps="43132"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.12" expl="loop invariant init" proved="true">
+    <proof prover="0"><result status="valid" time="0.073663" steps="37353"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.13" expl="wr {self}`rep`nxt" proved="true">
+    <proof prover="0"><result status="valid" time="0.073685" steps="37478"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.14" expl="wr {self}`rep`pos" proved="true">
+    <proof prover="0"><result status="valid" time="0.074917" steps="37589"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.15" expl="loop invariant init" proved="true">
+    <proof prover="0"><result status="valid" time="0.050083" steps="35775"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.16" expl="loop invariant init" proved="true">
+    <proof prover="0"><result status="valid" time="0.049567" steps="35785"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.17" expl="loop invariant init" proved="true">
+    <proof prover="0"><result status="valid" time="0.033428" steps="32529"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.18" expl="loop invariant init" proved="true">
+    <proof prover="0"><result status="valid" time="0.032724" steps="32530"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.19" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.032686" steps="32532"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.20" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.033267" steps="32532"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.21" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.034838" steps="32654"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.22" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.050027" steps="35803"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.23" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.050434" steps="35792"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.24" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.050734" steps="35927"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.25" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.078591" steps="39085"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.26" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.079192" steps="39082"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.27" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.079639" steps="39281"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.28" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.080569" steps="39309"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.29" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.054620" steps="35935"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.30" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.033555" steps="32536"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.31" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.032318" steps="32536"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.32" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.049522" steps="35827"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.33" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.083483" steps="38653"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.34" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.068216" steps="36077"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.35" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.033777" steps="32609"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.36" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.055472" steps="36129"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.37" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.054955" steps="36111"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.38" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.056147" steps="36151"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.39" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.056171" steps="36253"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.40" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.056821" steps="36224"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.41" expl="loop invariant init" proved="true">
+    <proof prover="0"><result status="valid" time="0.168900" steps="58180"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.42" expl="loop invariant init" proved="true">
+    <proof prover="0"><result status="valid" time="0.052645" steps="35976"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.43" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.035967" steps="33679"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.44" expl="assertion" proved="true">
+    <proof prover="0"><result status="valid" time="0.055618" steps="37563"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.45" expl="next := current.nxt" proved="true">
+    <proof prover="0"><result status="valid" time="0.093342" steps="42112"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.46" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.053768" steps="37498"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.47" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.036231" steps="33734"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.48" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.040513" steps="33726"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.49" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.151387" steps="55202"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.50" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.062660" steps="37671"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.51" expl="VC for reverse" proved="true">
+    <transf name="case" proved="true" arg1="(k + 1) = size">
+     <goal name="reverse&#39;vc.0.0.51.0" expl="true case" proved="true">
+     <transf name="assert" proved="true" arg1="forall p:reference. not mem1 p (diff todo (singleton1 current))">
+      <goal name="reverse&#39;vc.0.0.51.0.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="4.130256" steps="458096"/></proof>
+      </goal>
+      <goal name="reverse&#39;vc.0.0.51.0.1" expl="true case" proved="true">
+      <proof prover="0"><result status="valid" time="0.121926" steps="54886"/></proof>
+      </goal>
+     </transf>
+     </goal>
+     <goal name="reverse&#39;vc.0.0.51.1" expl="false case" proved="true">
+     <proof prover="0"><result status="valid" time="0.158808" steps="57178"/></proof>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.52" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.100785" steps="44170"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.53" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.082044" steps="42487"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.54" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.082072" steps="42702"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.55" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.209398" steps="68739"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.56" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.084309" steps="43262"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.57" expl="current.nxt := previous" proved="true">
+    <proof prover="0"><result status="valid" time="0.033372" steps="33718"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.58" expl="current.nxt := previous" proved="true">
+    <proof prover="0"><result status="valid" time="0.033904" steps="33721"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.59" expl="current.nxt := previous" proved="true">
+    <proof prover="0"><result status="valid" time="0.033295" steps="33722"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.60" expl="current.pos := size - k - 1" proved="true">
+    <proof prover="0"><result status="valid" time="0.033229" steps="33948"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.61" expl="current.pos := size - k - 1" proved="true">
+    <proof prover="0"><result status="valid" time="0.081257" steps="42248"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.62" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.052831" steps="38080"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.63" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.033896" steps="34269"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.64" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.033410" steps="34261"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.65" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.092982" steps="44193"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.66" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.055188" steps="38253"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.67" expl="VC for reverse" proved="true">
+    <transf name="case" proved="true" arg1="(k + 1) = size">
+     <goal name="reverse&#39;vc.0.0.67.0" expl="true case" proved="true">
+     <transf name="assert" proved="true" arg1="forall p:reference. not mem1 p (diff todo (singleton1 current))">
+      <goal name="reverse&#39;vc.0.0.67.0.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="4.451560" steps="502698"/></proof>
+      </goal>
+      <goal name="reverse&#39;vc.0.0.67.0.1" expl="true case" proved="true">
+      <proof prover="0"><result status="valid" time="0.125956" steps="56369"/></proof>
+      </goal>
+     </transf>
+     </goal>
+     <goal name="reverse&#39;vc.0.0.67.1" expl="false case" proved="true">
+     <proof prover="0"><result status="valid" time="0.403388" steps="105011"/></proof>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.68" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.398600" steps="108002"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.69" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.311737" steps="101937"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.70" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.152522" steps="65469"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.71" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="5.259371" steps="426024"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.72" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.428417" steps="113786"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.73" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.033277" steps="34264"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.74" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.033580" steps="34264"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.75" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.033123" steps="34261"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.76" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.092956" steps="43878"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.77" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.033619" steps="34259"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.78" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.107948" steps="45661"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.79" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.371772" steps="125197"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.80" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.369178" steps="125202"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.81" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.131925" steps="48912"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.82" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="20.395457" steps="1152014"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.83" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.488727" steps="137795"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.84" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.034318" steps="34265"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.85" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.052576" steps="38071"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.86" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.033225" steps="34261"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.87" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.129800" steps="59743"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.88" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.152793" steps="63022"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.89" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.127463" steps="56330"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.90" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.397926" steps="127545"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.91" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.389780" steps="128194"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.92" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="1.258537" steps="172815"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.93" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="10.325244" steps="665124"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.94" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.583176" steps="144652"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.95" expl="locals type invariant" proved="true">
+    <proof prover="0"><result status="valid" time="0.320385" steps="97569"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.96" expl="loop invariant preservation" proved="true">
+    <proof prover="0"><result status="valid" time="0.086914" steps="44578"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.97" expl="wr {self}`rep`nxt" proved="true">
+    <proof prover="0"><result status="valid" time="0.262651" steps="94270"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.98" expl="wr {self}`rep`pos" proved="true">
+    <proof prover="0"><result status="valid" time="0.266399" steps="93660"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.99" expl="loop invariant preservation" proved="true">
+    <proof prover="0"><result status="valid" time="0.053445" steps="38990"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.100" expl="loop invariant preservation" proved="true">
+    <proof prover="0"><result status="valid" time="0.034503" steps="34856"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.101" expl="loop invariant preservation" proved="true">
+    <proof prover="0"><result status="valid" time="0.034809" steps="34857"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.102" expl="loop invariant preservation" proved="true">
+    <proof prover="0"><result status="valid" time="0.034791" steps="34858"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.103" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.034507" steps="34860"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.104" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.035002" steps="34860"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.105" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.034778" steps="34857"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.106" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.096570" steps="45620"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.107" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.055911" steps="39117"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.108" expl="VC for reverse" proved="true">
+    <transf name="case" proved="true" arg1="k = size">
+     <goal name="reverse&#39;vc.0.0.108.0" expl="true case" proved="true">
+     <transf name="assert" proved="true" arg1="forall p:reference. not mem1 p todo">
+      <goal name="reverse&#39;vc.0.0.108.0.0" expl="asserted formula" proved="true">
+      <proof prover="0"><result status="valid" time="8.718216" steps="707254"/></proof>
+      </goal>
+      <goal name="reverse&#39;vc.0.0.108.0.1" expl="true case" proved="true">
+      <proof prover="0"><result status="valid" time="0.148936" steps="58388"/></proof>
+      </goal>
+     </transf>
+     </goal>
+     <goal name="reverse&#39;vc.0.0.108.1" expl="false case" proved="true">
+     <proof prover="0"><result status="valid" time="0.525139" steps="119988"/></proof>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.109" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.475972" steps="116142"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.110" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.391603" steps="111384"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.111" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.166406" steps="65070"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.112" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="7.460117" steps="530851"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.113" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.489032" steps="127051"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.114" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.035395" steps="34864"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.115" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.034033" steps="34864"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.116" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.034014" steps="34857"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.117" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.147756" steps="62675"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.118" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.091386" steps="46300"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.119" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.095336" steps="46054"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.120" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.474204" steps="138461"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.121" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.481927" steps="139376"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.122" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="1.432212" steps="189923"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.123" expl="VC for reverse" proved="true">
+    <transf name="case" proved="true" arg1="p = current1">
+     <goal name="reverse&#39;vc.0.0.123.0" expl="true case" proved="true">
+     <proof prover="0"><result status="valid" time="0.262212" steps="74587"/></proof>
+     </goal>
+     <goal name="reverse&#39;vc.0.0.123.1" expl="false case" proved="true">
+     <proof prover="0"><result status="valid" time="18.603304" steps="961913"/></proof>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.124" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.761396" steps="183833"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.125" expl="loop invariant preservation" proved="true">
+    <proof prover="0"><result status="valid" time="0.446082" steps="126282"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.126" expl="loop invariant preservation" proved="true">
+    <proof prover="0"><result status="valid" time="0.581266" steps="136050"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.127" expl="self.head := previous" proved="true">
+    <proof prover="0"><result status="valid" time="0.034314" steps="33665"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.128" expl="self.head := previous" proved="true">
+    <proof prover="0"><result status="valid" time="0.033595" steps="33668"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.129" expl="self.head := previous" proved="true">
+    <proof prover="0"><result status="valid" time="0.034239" steps="33669"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.130" expl="self.contents := reversed" proved="true">
+    <proof prover="0"><result status="valid" time="0.033572" steps="33897"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.131" expl="self.contents := reversed" proved="true">
+    <proof prover="0"><result status="valid" time="0.080977" steps="41290"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.132" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.031128" steps="31322"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.133" expl="wr {self}`rep`pos" proved="true">
+    <proof prover="0"><result status="valid" time="0.086052" steps="42397"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.134" expl="wr {self}`rep`nxt" proved="true">
+    <proof prover="0"><result status="valid" time="0.085498" steps="42394"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.135" expl="wr {self}`contents" proved="true">
+    <proof prover="0"><result status="valid" time="0.133570" steps="52499"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.136" expl="wr {self}`head" proved="true">
+    <proof prover="0"><result status="valid" time="0.134924" steps="52705"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.137" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.034176" steps="34328"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.138" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.031275" steps="31509"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.139" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.082734" steps="42717"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.140" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.030873" steps="31509"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.141" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.100093" steps="43814"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.142" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.054907" steps="38351"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.143" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.089068" steps="43341"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.144" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.097245" steps="44994"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.145" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.099240" steps="45302"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.146" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.100306" steps="45515"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.147" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.103996" steps="45999"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.148" expl="VC for reverse" proved="true">
+    <proof prover="0"><result status="valid" time="0.102762" steps="46225"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.149" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.055666" steps="38352"/></proof>
+    </goal>
+    <goal name="reverse&#39;vc.0.0.150" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.053084" steps="38270"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+<file format="whyml" proved="true">
+<path name=".."/><path name="reverse_theory.mlw"/>
+<theory name="Reverse_theory" proved="true">
+ <goal name="rev&#39;vc" expl="VC for rev" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="rev&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.017408" steps="6934"/></proof>
+  </goal>
+  <goal name="rev&#39;vc.1" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.010662" steps="7321"/></proof>
+  </goal>
+  <goal name="rev&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.021420" steps="8066"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="rev_length" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="rev_length.0" proved="true">
+  <proof prover="0"><result status="valid" time="0.013402" steps="7135"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="rev_nth" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="rev_nth.0" proved="true">
+  <proof prover="0"><result status="valid" time="0.020202" steps="7742"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="move_region_partition&#39;vc" expl="VC for move_region_partition" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="move_region_partition&#39;vc.0" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.027519" steps="12492"/></proof>
+  </goal>
+  <goal name="move_region_partition&#39;vc.1" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.024126" steps="10701"/></proof>
+  </goal>
+  <goal name="move_region_partition&#39;vc.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="2.240294" steps="368429"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

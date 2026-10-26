@@ -1,0 +1,31 @@
+module Reverse_theory
+  use int.Int
+  use seq.Seq
+  use set.Fset as Regions
+
+  type intSeq = seq int
+  constant emptySeq : intSeq = empty
+
+  let function seqLength (xs:intSeq) : int = length xs
+  let function seqNth (i:int) (xs:intSeq) : int = xs[i]
+  let function rev (xs:intSeq) : intSeq
+    ensures { length result = length xs }
+    ensures { forall i:int. 0 <= i < length xs ->
+                result[i] = xs[length xs - 1 - i] }
+  = create (length xs) (fun i -> xs[length xs - 1 - i])
+
+  lemma rev_length : forall xs:intSeq. seqLength(rev xs) = seqLength xs
+
+  lemma rev_nth : forall xs:intSeq, i:int.
+    0 <= i < seqLength xs ->
+    seqNth (seqLength xs - 1 - i) (rev xs) = seqNth i xs
+
+  let lemma move_region_partition (left right moved:Regions.fset 'a)
+    requires { Regions.subset moved left /\ Regions.disjoint left right }
+    ensures { Regions.disjoint (Regions.diff left moved) (Regions.union right moved) }
+    ensures { Regions.union (Regions.diff left moved) (Regions.union right moved)
+                = Regions.union left right }
+  = assert { forall p:'a.
+      Regions.mem p (Regions.union (Regions.diff left moved) (Regions.union right moved))
+      <-> Regions.mem p (Regions.union left right) }
+end
