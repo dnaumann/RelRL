@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*- 
+
 (setq whyrel-keywords
       '("meth" "requires" "ensures" "effects" "reads" "writes" "reads/writes"
         "inductive" "predicate" "lemma" "axiom" "boundary" "ghost" "datagroup"
